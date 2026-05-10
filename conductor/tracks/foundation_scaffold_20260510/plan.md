@@ -9,9 +9,9 @@
 - [x] Verify: `pnpm astro --version` shows Astro 6.x (deviation: v6.3.1 installed) [5c9240f]
 
 ### Task 1.2: Install All Dependencies
-- [~] Install runtime deps: `nanostores`, `@nanostores/react`
-- [ ] Install dev deps: `typescript`, `@types/react`, `vitest`, `eslint`, `prettier`, `husky`, `lint-staged`
-- [ ] Verify: `pnpm ls --depth=0` shows all expected packages
+- [x] Install runtime deps: `nanostores`, `@nanostores/react` [de1b56a]
+- [x] Install dev deps: `vitest`, `eslint`, `prettier`, `husky`, `lint-staged` [de1b56a]
+- [x] Verify: `pnpm ls --depth=0` shows all expected packages [de1b56a]
 
 ### Task 1.3: Create Directory Structure
 - [ ] Create `src/components/desktop/`, `src/components/taskbar/`, `src/components/window/`, `src/components/apps/`, `src/components/mobile/`
