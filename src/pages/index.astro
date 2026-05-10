@@ -2,6 +2,7 @@
 import DesktopLayout from '../layouts/DesktopLayout.astro';
 import Wallpaper from '../components/desktop/Wallpaper.astro';
 import DesktopIcon from '../components/desktop/DesktopIcon.astro';
+import Taskbar from '../components/taskbar/Taskbar';
 ---
 <DesktopLayout>
   <div id="wallpaper-area" class="absolute inset-0 z-0">
@@ -36,6 +37,7 @@ import DesktopIcon from '../components/desktop/DesktopIcon.astro';
     />
   </div>
 
-  <!-- Taskbar mount point (placeholder for future Phase) -->
-  <div id="taskbar" class="absolute bottom-0 left-0 right-0 z-50"></div>
+  <div id="taskbar" class="absolute bottom-0 left-0 right-0 z-50">
+    <Taskbar client:load />
+  </div>
 </DesktopLayout>
