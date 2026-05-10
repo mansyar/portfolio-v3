@@ -27,7 +27,7 @@
 ## Phase 2: Code Quality Tooling
 
 ### Task 2.1: Configure TypeScript
-- [ ] Create/update `tsconfig.json` with strict mode enabled
+- [~] Create/update `tsconfig.json` with strict mode enabled
 - [ ] Configure path aliases (e.g., `@/` → `src/`)
 - [ ] Verify: `pnpm astro check` passes with no errors
 
