@@ -43,19 +43,19 @@
 
 ### Task 3.1: Write Test for Wallpaper
 
-- [ ] Write failing test (`tests/wallpaper.test.ts`) verifying Wallpaper.astro renders SVG/CSS art with correct z-index, full viewport coverage, and accepts optional `imageSrc` prop
+- [x] Write failing test (`tests/wallpaper.test.ts`) — Red phase confirmed: 5/5 tests fail as expected
 
 ### Task 3.2: Implement Wallpaper
 
-- [ ] Create `src/components/desktop/Wallpaper.astro` — custom SVG/CSS-generated rolling hills art inspired by XP Bliss
-- [ ] Accept optional `imageSrc` prop for future fallback to a real bitmap wallpaper in `public/wallpapers/`
-- [ ] Ensure full-viewport coverage with responsive sizing (100vw × 100vh)
-- [ ] Ensure z-index: 0 (below all interactive content)
-- [ ] Run tests: confirm Wallpaper test passes (Green phase)
+- [x] Create `src/components/desktop/Wallpaper.astro` — custom SVG/CSS-generated rolling hills art inspired by XP Bliss `bac7b18`
+- [x] Accept optional `imageSrc` prop for future fallback to a real bitmap wallpaper in `public/wallpapers/`
+- [x] Ensure full-viewport coverage with responsive sizing (w-screen × h-screen)
+- [x] Ensure z-index: 0 (below all interactive content)
+- [x] Run tests: confirm Wallpaper test passes (Green phase) — 41/41 tests pass
 
 ### Task 3.3: Mount Wallpaper in index.astro
 
-- [ ] Import and render Wallpaper.astro into the `#wallpaper-area` mount point in `src/pages/index.astro`
+- [x] Import and render Wallpaper.astro into the `#wallpaper-area` mount point in `src/pages/index.astro`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Wallpaper Component' (Protocol in workflow.md)
 
