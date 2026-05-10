@@ -124,3 +124,13 @@
 - [x] Verify: `pnpm build` produces valid static output with XP blue background and Tahoma font [07b3d91]
 
 ### Task 5.5: Conductor - User Manual Verification 'Phase 0 — Foundation & Scaffold' (Protocol in workflow.md)
+
+## Phase: Review Fixes
+
+### Task R1: Apply review suggestions
+
+- [x] Alphabetize CSS declarations per Google style guide [6f130ae]
+- [x] Fix path handling in modularity script (use path.relative) [6f130ae]
+- [x] Update test assertions to match Prettier CSS style [6f130ae]
+- [x] Add trailing newlines to config files [6f130ae]
+- [x] Apply Prettier formatting consistency [6f130ae]
