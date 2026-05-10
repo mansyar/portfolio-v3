@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Bin body -->
+  <path d="M12 14 L14 42 L34 42 L36 14 Z" fill="#a0a0a0" stroke="#707070" stroke-width="1.5"/>
+  <!-- Bin body shading -->
+  <path d="M12 14 L14 42 L24 42 L24 14 Z" fill="#b5b5b5" opacity="0.5"/>
+  <!-- Lid -->
+  <rect x="10" y="10" width="28" height="5" rx="1" fill="#909090" stroke="#707070" stroke-width="1.5"/>
+  <!-- Lid handle -->
+  <rect x="20" y="6" width="8" height="5" rx="2" fill="#808080" stroke="#606060" stroke-width="1"/>
+  <!-- Recycle arrows -->
+  <path d="M18 24 L20 20 L22 24 Z" fill="#4a8c3f"/>
+  <path d="M26 24 L28 20 L30 24 Z" fill="#4a8c3f"/>
+  <path d="M22 30 L24 34 L26 30 Z" fill="#4a8c3f"/>
+  <!-- Arrow connecting lines -->
+  <line x1="20" y1="22" x2="28" y2="22" stroke="#4a8c3f" stroke-width="1.5"/>
+  <line x1="26" y1="26" x2="26" y2="30" stroke="#4a8c3f" stroke-width="1.5"/>
+  <line x1="22" y1="26" x2="22" y2="30" stroke="#4a8c3f" stroke-width="1.5"/>
+  <!-- Crumple lines (paper in bin) -->
+  <line x1="18" y1="34" x2="28" y2="34" stroke="#808080" stroke-width="0.8" opacity="0.5"/>
+  <line x1="16" y1="37" x2="30" y2="37" stroke="#808080" stroke-width="0.8" opacity="0.5"/>
+</svg>
