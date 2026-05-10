@@ -25,15 +25,15 @@
 
 ### Task 2.1: Add Missing XP Gradient Tokens
 
-- [ ] Add `--xp-taskbar-bg: linear-gradient(180deg, #1f3f7d 0%, #3068b6 3%, #1b54a3 6%, #1b54a3 94%, #163d82 100%)` to `:root` in `xp-theme.css`
-- [ ] Add `--xp-start-btn-green: linear-gradient(180deg, #3b8f3f 0%, #47a84c 8%, #2d8e33 92%, #1e7a24 100%)` to `:root` in `xp-theme.css`
-- [ ] Verify: both tokens are accessible via `var(--xp-taskbar-bg)` and `var(--xp-start-btn-green)` in the browser
+- [x] Add `--xp-taskbar-bg: linear-gradient(180deg, #1f3f7d 0%, #3068b6 3%, #1b54a3 6%, #1b54a3 94%, #163d82 100%)` to `:root` in `xp-theme.css` `25e11fb`
+- [x] Add `--xp-start-btn-green: linear-gradient(180deg, #3b8f3f 0%, #47a84c 8%, #2d8e33 92%, #1e7a24 100%)` to `:root` in `xp-theme.css`
+- [x] Verify: both tokens are accessible via `var(--xp-taskbar-bg)` and `var(--xp-start-btn-green)` in the browser
 
 ### Task 2.2: Create Taskbar Border Utility
 
-- [ ] Add `.xp-taskbar-border` class to `xp-theme.css` — applies outset colors (white top/left, shadow bottom/right) only to `border-top`
-- [ ] Match border color values to the existing `.xp-outset` top/left/right/bottom values
-- [ ] Verify: `.xp-taskbar-border` is a distinct, reusable class that doesn't conflict with `.xp-outset`
+- [x] Add `.xp-taskbar-border` class to `xp-theme.css` — applies outset colors (white top/left, shadow bottom/right) only to `border-top`
+- [x] Match border color values to the existing `.xp-outset` top/left/right/bottom values
+- [x] Verify: `.xp-taskbar-border` is a distinct, reusable class that doesn't conflict with `.xp-outset`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: CSS Foundation Additions' (Protocol in workflow.md)
 
