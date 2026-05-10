@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.0 · **Updated:** 2026-05-10  
+**Version:** 1.1 · **Updated:** 2026-05-11  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -15,7 +15,7 @@ gantt
     axisFormat  %b %d
 
     section Phase 0
-    Foundation & Scaffold         :p0, 2026-05-12, 2d
+    Foundation & Scaffold         :done, p0, 2026-05-10, 2d
 
     section Phase 1
     Track 1A – Desktop Shell      :p1a, after p0, 4d
@@ -44,50 +44,65 @@ gantt
 
 ---
 
-## Phase 0 — Foundation & Scaffold
+## Phase 0 — Foundation & Scaffold ✅
 
-> Bootstrap the project, install dependencies, and establish the design system. No features yet — just a buildable, styled skeleton.
+> Bootstrap the project, install dependencies, and establish the design system. No features yet — just a buildable, styled skeleton. _(Completed 2026-05-11)_
 
 ### Tasks
 
-- [ ] Init Astro project with React, MDX, Tailwind integrations ([TDD §1](./TDD.md#1-project-structure))
-- [ ] Create directory structure: `components/`, `stores/`, `content/`, `lib/`, `styles/` ([TDD §1](./TDD.md#1-project-structure))
-- [ ] Install all dependencies with `pnpm` ([TDD §13](./TDD.md#13-dependencies))
-- [ ] Set up ESLint & Prettier for code formatting and linting
-- [ ] Set up TypeScript for strict typechecking
-- [ ] Set up Vitest for unit testing and coverage reporting
-- [ ] Create a custom file modularity script (e.g. `scripts/check-modularity.js`) to ensure files in `src/` do not exceed 500 lines
-- [ ] Configure Husky and lint-staged for git hooks:
-  - [ ] **pre-commit**: use `lint-staged` to run lint, vitest (related tests), and file modularity check on staged files
-  - [ ] **pre-push**: run typecheck and vitest coverage (enforcing 80% threshold)
-- [ ] Create `src/styles/xp-theme.css` with full design token set ([TDD §5](./TDD.md#5-design-tokens--style-specification))
-- [ ] Add Tahoma font files to `public/fonts/` ([TDD §5.2](./TDD.md#52-typography))
-- [ ] Configure `tailwind.config.mjs` to extend with XP theme tokens
-- [ ] Create `DesktopLayout.astro` skeleton ([TDD §6](./TDD.md#6-component-inventory))
-- [ ] Create `index.astro` mounting the layout ([TDD §1](./TDD.md#1-project-structure))
-- [ ] Verify: `pnpm dev` serves a blank page with correct fonts and XP blue background
+- [x] Init Astro project with React, MDX, Tailwind integrations ([TDD §1](./TDD.md#1-project-structure))
+- [x] Create directory structure: `components/`, `stores/`, `content/`, `lib/`, `styles/` ([TDD §1](./TDD.md#1-project-structure))
+- [x] Install all dependencies with `pnpm` ([TDD §13](./TDD.md#13-dependencies))
+- [x] Set up ESLint & Prettier for code formatting and linting
+- [x] Set up TypeScript for strict typechecking
+- [x] Set up Vitest for unit testing and coverage reporting
+- [x] Create a custom file modularity script (e.g. `scripts/check-modularity.js`) to ensure files in `src/` do not exceed 500 lines
+- [x] Configure Husky and lint-staged for git hooks:
+  - [x] **pre-commit**: use `lint-staged` to run lint and file modularity check on staged files
+  - [x] **pre-push**: run typecheck and vitest coverage (enforcing 80% threshold)
+- [x] Create `src/styles/xp-theme.css` with full design token set ([TDD §5](./TDD.md#5-design-tokens--style-specification))
+- [x] Add Tahoma font files to `public/fonts/` via `@font-face` system reference ([TDD §5.2](./TDD.md#52-typography))
+- [x] Configure Tailwind v4 `@theme` block in `global.css` with XP theme tokens
+- [x] Create `DesktopLayout.astro` skeleton ([TDD §6](./TDD.md#6-component-inventory))
+- [x] Create `index.astro` mounting the layout ([TDD §1](./TDD.md#1-project-structure))
+- [x] Verify: `pnpm dev` / `pnpm build` serves a blank page with correct fonts and XP blue background
 
 ### Acceptance Criteria
 
 ```
-✅ Project builds and serves locally without errors
+✅ Project builds and serves locally without errors (build: 2.4s)
 ✅ Code quality tools (ESLint, Prettier, TypeScript, Vitest) are fully configured
-✅ Git hooks enforce pre-commit (lint, test, modularity) and pre-push (typecheck, coverage >= 80%) rules
+✅ Git hooks enforce pre-commit (lint, modularity) and pre-push (typecheck, coverage >= 80%) rules
 ✅ Custom modularity script successfully fails if a file in `src/` exceeds 500 lines
-✅ XP design tokens are available in CSS (verified with a test element)
-✅ Tahoma font loads correctly
-✅ Directory structure matches TDD §1
+✅ XP design tokens are available in CSS (verified with 12 test assertions)
+✅ Tahoma font loads correctly (via `@font-face` system reference)
+✅ Directory structure matches TDD §1 (verified with 17 test assertions)
+✅ 36 unit/integration tests passing, 0 type errors
 ```
 
 ### Key Files Created
 
 ```
-src/styles/xp-theme.css
-src/layouts/DesktopLayout.astro
-src/pages/index.astro
-tailwind.config.mjs
-astro.config.mjs
+src/styles/xp-theme.css          — Full Luna design token system (colors, borders, typography, animations)
+src/styles/global.css             — Tailwind v4 @theme integration with XP tokens
+src/layouts/DesktopLayout.astro   — XP-themed layout shell
+src/pages/index.astro             — Entry point with placeholder mount points
+astro.config.mjs                  — Astro 6 config with React, MDX, Tailwind
+eslint.config.mjs                 — ESLint with TypeScript + React rules
+vitest.config.ts                  — Vitest with 80% coverage thresholds
+tsconfig.json                     — Strict TypeScript with @/ path aliases
+scripts/check-modularity.js       — 500-line file size limiter
+.husky/pre-commit                 — lint-staged + modularity check
+.husky/pre-push                   — typecheck + coverage
+tests/directory-structure.test.ts  — 17 directory existence tests
+tests/xp-theme.test.ts             — 12 CSS token verification tests
+tests/check-modularity.test.ts     — 2 modularity script tests
+tests/pages/index.test.ts          — 5 integration tests
 ```
+
+### Commits (shas tracked in plan.md)
+
+Phase 0 produced 15 commits across ~8,400 lines changed (42 files). Track archived at `conductor/archive/foundation_scaffold_20260510/`.
 
 ---
 
@@ -512,7 +527,7 @@ graph TD
     T4B --> T4C[Track 4C: SEO & Performance]
     T4C --> T5A[Track 5A: CI/CD & Launch]
 
-    style P0 fill:#4a9eff,color:#fff
+    style P0 fill:#27ae60,color:#fff,stroke:#1e8449
     style T1A fill:#3b8f3f,color:#fff
     style T1B fill:#3b8f3f,color:#fff
     style T1C fill:#3b8f3f,color:#fff
