@@ -19,7 +19,7 @@
 
 ---
 
-## Phase 2: CSS Foundation Additions
+## Phase 2: CSS Foundation Additions [checkpoint: 835d282]
 
 > **Rationale:** The `xp-theme.css` is missing two gradient tokens defined in TDD §5.1 (`--xp-taskbar-bg`, `--xp-start-btn-green`) needed by the Taskbar. A top-edge-only border utility must also be created since `.xp-outset` applies a full perimeter border.
 
@@ -35,7 +35,7 @@
 - [x] Match border color values to the existing `.xp-outset` top/left/right/bottom values
 - [x] Verify: `.xp-taskbar-border` is a distinct, reusable class that doesn't conflict with `.xp-outset`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: CSS Foundation Additions' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: CSS Foundation Additions' (Protocol in workflow.md) `835d282`
 
 ---
 
