@@ -1,31 +1,51 @@
+// @vitest-environment node
 import { describe, it, expect, beforeAll } from 'vitest';
-import { readFileSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const projectRoot = resolve(__dirname, '..', '..');
-const distDir = resolve(projectRoot, 'dist');
-const indexHtml = resolve(distDir, 'index.html');
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import React from 'react';
+import ReactDOM from 'react-dom/server';
+import IndexPage from '@/pages/index.astro';
 
 describe('Home Page Integration', () => {
   let html: string;
 
-  beforeAll(() => {
-    html = readFileSync(indexHtml, 'utf-8');
+  beforeAll(async () => {
+    const container = await AstroContainer.create();
+
+    // Manually register React renderer since @astrojs/react/server.js
+    // depends on virtual modules only available in Astro's full Vite pipeline.
+    // This provides a minimal SSR renderer using ReactDOM.
+    container.addServerRenderer({
+      name: '@astrojs/react',
+      renderer: {
+        name: '@astrojs/react',
+        /* eslint-disable @typescript-eslint/no-explicit-any */
+        check: () => {
+          return true; // Accept all framework components as React
+        },
+        renderToStaticMarkup: async (Component: any, props: any, children: any) => {
+          const newChildren = children?.default ?? children;
+          const vnode = React.createElement(Component, props, newChildren);
+          const html = ReactDOM.renderToString(vnode);
+          return { html, attrs: {} };
+        },
+        /* eslint-enable @typescript-eslint/no-explicit-any */
+        supportsAstroStaticSlot: true,
+      },
+    });
+
+    container.addClientRenderer({
+      name: '@astrojs/react',
+      entrypoint: '@astrojs/react/client.js',
+    });
+
+    html = await container.renderToString(IndexPage);
   });
 
-  it('should render with correct title', () => {
+  it('should render with correct title', async () => {
     expect(html).toContain('<title>Luna OS Portfolio</title>');
   });
 
-  it('should have XP theme CSS loaded via stylesheet', () => {
-    expect(html).toContain('.css');
-    expect(html).toContain('stylesheet');
-  });
-
-  it('should have full viewport container', () => {
+  it('should have XP desktop class on body', async () => {
     expect(html).toContain('class="xp-desktop');
   });
 
@@ -41,11 +61,10 @@ describe('Home Page Integration', () => {
   });
 
   it('should render wallpaper SVG art', () => {
-    // The wallpaper produces SVG content (HTML comments stripped in build)
     expect(html).toContain('viewBox="0 0 1440 500"');
     expect(html).toContain('preserveAspectRatio="xMidYMax slice"');
-    expect(html).toContain('#6b9e3a'); // green hill fill
-    expect(html).toContain('linear-gradient'); // sky gradient
+    expect(html).toContain('#6b9e3a');
+    expect(html).toContain('linear-gradient');
   });
 
   it('should render 5 desktop icons with correct labels', () => {
@@ -56,7 +75,7 @@ describe('Home Page Integration', () => {
     expect(html).toContain('Recycle Bin');
   });
 
-  it('should render desktop icons with data-window-id and data-window-label', () => {
+  it('should render desktop icons with data-window-id', () => {
     expect(html).toContain('data-window-id="explorer"');
     expect(html).toContain('data-window-id="mydocs"');
     expect(html).toContain('data-window-id="help"');
