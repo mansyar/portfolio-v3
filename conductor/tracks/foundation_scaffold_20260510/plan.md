@@ -9,7 +9,7 @@
 - [x] Verify: `pnpm astro --version` shows Astro 6.x (deviation: v6.3.1 installed) [5c9240f]
 
 ### Task 1.2: Install All Dependencies
-- [ ] Install runtime deps: `nanostores`, `@nanostores/react`
+- [~] Install runtime deps: `nanostores`, `@nanostores/react`
 - [ ] Install dev deps: `typescript`, `@types/react`, `vitest`, `eslint`, `prettier`, `husky`, `lint-staged`
 - [ ] Verify: `pnpm ls --depth=0` shows all expected packages
 
