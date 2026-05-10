@@ -147,3 +147,9 @@
 - [x] Verify: `pnpm dev` serves complete XP desktop shell ✓
 
 - [x] Task: Conductor - User Manual Verification 'Phase 6: Full Integration & Verification' (Protocol in workflow.md) `688d8cb`
+
+---
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions — named exports for Clock/Taskbar, CSS token for DesktopIcon width `8903d0a`
