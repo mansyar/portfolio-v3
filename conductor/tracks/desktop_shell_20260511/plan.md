@@ -8,12 +8,12 @@
 
 ### Task 1.1: Create Custom SVG Icon Assets
 
-- [ ] Create `public/icons/my-computer.svg` — 48×48 custom SVG inspired by XP
-- [ ] Create `public/icons/my-documents.svg` — 48×48 custom SVG
-- [ ] Create `public/icons/help-support.svg` — 48×48 custom SVG
-- [ ] Create `public/icons/command-prompt.svg` — 48×48 custom SVG
-- [ ] Create `public/icons/recycle-bin.svg` — 48×48 custom SVG
-- [ ] Verify: all 5 SVG files render with correct 48×48 viewport
+- [x] Create `public/icons/my-computer.svg` — 48×48 custom SVG inspired by XP
+- [x] Create `public/icons/my-documents.svg` — 48×48 custom SVG
+- [x] Create `public/icons/help-support.svg` — 48×48 custom SVG
+- [x] Create `public/icons/command-prompt.svg` — 48×48 custom SVG
+- [x] Create `public/icons/recycle-bin.svg` — 48×48 custom SVG
+- [x] Verify: all 5 SVG files render with correct 48×48 viewport `0a3bbf5`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Desktop Icon SVGs' (Protocol in workflow.md)
 
