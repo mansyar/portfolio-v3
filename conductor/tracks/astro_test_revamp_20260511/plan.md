@@ -11,7 +11,7 @@
   - [x] Run `CI=true pnpm test` — verify no regressions in unchanged tests (xp-theme, directory-structure, check-modularity, clock, taskbar)
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Configuration Migration' (Protocol in workflow.md) (45d5a37)
 
-## Phase 2: DesktopIcon Test — Container API Migration
+## Phase 2: DesktopIcon Test — Container API Migration [checkpoint: f5d47d3]
 
 - [x] Task 2.1: Rewrite `tests/desktop-icon.test.ts` using Container API (Red Phase) (18f1b07)
   - [x] Remove `fs.readFileSync` / `existsSync` imports and usage
@@ -21,7 +21,7 @@
 - [x] Task 2.2: Verify new tests pass (Green Phase) (18f1b07)
   - [x] Fix any import or rendering issues (added `@vitest-environment node`)
   - [x] Run `CI=true pnpm test -- tests/desktop-icon.test.ts` — verify all tests pass
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: DesktopIcon Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: DesktopIcon Migration' (Protocol in workflow.md) (f5d47d3)
 
 ## Phase 3: Wallpaper Test — Container API Migration
 
