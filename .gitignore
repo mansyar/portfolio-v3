@@ -24,3 +24,4 @@ pnpm-debug.log*
 .idea/
 
 coverage/
+__test_modularity__/

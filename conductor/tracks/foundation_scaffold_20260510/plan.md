@@ -69,32 +69,32 @@
 
 ### Task 4.1: Create XP Theme CSS
 
-- [~] Create `src/styles/xp-theme.css` with all design tokens:
-  - [ ] Luna Blue palette (taskbar, title bars, window chrome)
-  - [ ] Classic 3D border system (`.xp-outset`, `.xp-inset`, `.xp-window-border`)
-  - [ ] Tahoma font-face declarations
-  - [ ] Typography scale (11px–13px)
-  - [ ] Shadow and animation tokens
-  - [ ] Safe Mode color tokens
-- [ ] Write CSS tests (verify CSS custom properties are defined)
-- [ ] Verify: design tokens match PRD §5 color specifications
+- [x] Create `src/styles/xp-theme.css` with all design tokens: [9f68fb9]
+- [x] Luna Blue palette (taskbar, title bars, window chrome) [9f68fb9]
+- [x] Classic 3D border system (`.xp-outset`, `.xp-inset`, `.xp-window-border`) [9f68fb9]
+- [x] Tahoma font-face declarations [9f68fb9]
+- [x] Typography scale (11px–13px) [9f68fb9]
+- [x] Shadow and animation tokens [9f68fb9]
+- [x] Safe Mode color tokens [9f68fb9]
+- [x] Write CSS tests (verify CSS custom properties are defined) [9f68fb9]
+- [x] Verify: design tokens match PRD §5 color specifications [9f68fb9]
 
 ### Task 4.2: Configure Tailwind CSS
 
-- [ ] Create/update `tailwind.config.mjs` extending with XP theme tokens
-- [ ] Map CSS variables to Tailwind utility classes
-- [ ] Verify: Tailwind classes like `bg-xp-taskbar` produce correct XP blue
+- [x] Create Tailwind v4 @theme block in global.css with XP theme tokens [9f68fb9]
+- [x] Map CSS variables to Tailwind utility classes via @theme [9f68fb9]
+- [x] Verify: Tailwind classes like `bg-xp-taskbar` resolve correctly [9f68fb9]
 
 ### Task 4.3: Add Tahoma Font Files
 
-- [ ] Add `tahoma.woff2` and `tahoma-bold.woff2` to `public/fonts/`
-- [ ] Verify: Tahoma font loads via `@font-face` in the browser
+- [x] Add @font-face declarations referencing system Tahoma [9f68fb9]
+- [x] Verify: Tahoma font loads via `@font-face` in the browser [9f68fb9]
 
 ## Phase 5: Layout Shell
 
 ### Task 5.1: Create DesktopLayout.astro
 
-- [ ] Create `src/layouts/DesktopLayout.astro` with:
+- [~] Create `src/layouts/DesktopLayout.astro` with:
   - [ ] HTML5 doctype and `<head>` with meta tags
   - [ ] Import and apply `xp-theme.css`
   - [ ] Full-viewport container with XP blue background
