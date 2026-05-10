@@ -21,8 +21,8 @@
 - [x] Verify: directory tree matches TDD §1 specification [14efe86]
 
 ### Task 1.4: Write Tests for Directory Structure
-- [~] Create `tests/directory-structure.test.ts` to verify all required directories exist
-- [ ] Run test suite to confirm all directories are present
+- [x] Create `tests/directory-structure.test.ts` to verify all required directories exist [fed317a]
+- [x] Run test suite to confirm all directories are present [fed317a]
 
 ## Phase 2: Code Quality Tooling
 
