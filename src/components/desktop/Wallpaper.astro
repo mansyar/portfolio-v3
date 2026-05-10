@@ -1,0 +1,107 @@
+---
+export interface Props {
+  imageSrc?: string;
+}
+
+const { imageSrc } = Astro.props;
+const hasFallback = !!imageSrc;
+---
+
+{
+  hasFallback ? (
+    <img
+      src={imageSrc}
+      alt="Desktop wallpaper"
+      class="absolute inset-0 w-screen h-screen object-cover"
+      style="z-index: 0"
+    />
+  ) : (
+    <div
+      class="absolute inset-0 w-screen h-screen overflow-hidden"
+      style="z-index: 0"
+    >
+      <!-- Sky gradient -->
+      <div
+        class="absolute inset-0"
+        style="
+          background: linear-gradient(
+            180deg,
+            #4a90d9 0%,
+            #7ab8e8 30%,
+            #9acef0 55%,
+            #c3e5f8 75%,
+            #e8f4fd 100%
+          );
+        "
+      ></div>
+      <!-- Clouds -->
+      <svg
+        class="absolute inset-0 w-full h-full"
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="xMidYMax slice"
+        xmlns="http://www.w3.org/2000/svg"
+        style="z-index: 1"
+      >
+        <defs>
+          <filter id="cloud-blur">
+            <feGaussianBlur stdDeviation="12" />
+          </filter>
+          <filter id="cloud-blur-sm">
+            <feGaussianBlur stdDeviation="8" />
+          </filter>
+        </defs>
+        <!-- Large cloud 1 -->
+        <ellipse
+          cx="250" cy="180" rx="160" ry="50"
+          fill="rgba(255,255,255,0.7)" filter="url(#cloud-blur)"
+        />
+        <ellipse
+          cx="320" cy="160" rx="100" ry="40"
+          fill="rgba(255,255,255,0.6)" filter="url(#cloud-blur)"
+        />
+        <!-- Large cloud 2 -->
+        <ellipse
+          cx="900" cy="140" rx="180" ry="55"
+          fill="rgba(255,255,255,0.65)" filter="url(#cloud-blur)"
+        />
+        <ellipse
+          cx="1000" cy="120" rx="120" ry="40"
+          fill="rgba(255,255,255,0.55)" filter="url(#cloud-blur)"
+        />
+        <!-- Small cloud 1 -->
+        <ellipse
+          cx="600" cy="200" rx="100" ry="30"
+          fill="rgba(255,255,255,0.5)" filter="url(#cloud-blur-sm)"
+        />
+        <!-- Small cloud 2 -->
+        <ellipse
+          cx="1200" cy="220" rx="90" ry="25"
+          fill="rgba(255,255,255,0.45)" filter="url(#cloud-blur-sm)"
+        />
+      </svg>
+      <!-- Rolling hills background layer -->
+      <svg
+        class="absolute bottom-0 w-full"
+        viewBox="0 0 1440 500"
+        preserveAspectRatio="xMidYMax meet"
+        style="height: 60vh; z-index: 2"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 380 Q100 320 200 340 T400 310 T600 340 T800 290 T1000 320 T1200 280 T1440 310 L1440 500 L0 500 Z"
+          fill="#6b9e3a"
+          opacity="0.8"
+        />
+        <path
+          d="M0 400 Q150 360 300 380 T550 350 T800 370 T1050 340 T1440 370 L1440 500 L0 500 Z"
+          fill="#5a8e2a"
+          opacity="0.9"
+        />
+        <path
+          d="M0 430 Q200 400 400 420 T700 390 T1000 410 T1440 390 L1440 500 L0 500 Z"
+          fill="#4a7e1a"
+        />
+      </svg>
+    </div>
+  )
+}
