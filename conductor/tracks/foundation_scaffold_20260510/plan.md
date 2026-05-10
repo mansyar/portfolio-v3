@@ -27,26 +27,26 @@
 ## Phase 2: Code Quality Tooling
 
 ### Task 2.1: Configure TypeScript
-- [~] Create/update `tsconfig.json` with strict mode enabled
-- [ ] Configure path aliases (e.g., `@/` → `src/`)
-- [ ] Verify: `pnpm astro check` passes with no errors
+- [x] Create/update `tsconfig.json` with strict mode enabled [52d848e]
+- [x] Configure path aliases (e.g., `@/` → `src/`) [52d848e]
+- [x] Verify: `pnpm astro check` passes with no errors [52d848e]
 
 ### Task 2.2: Configure ESLint & Prettier
-- [ ] Create `eslint.config.mjs` with TypeScript and React rules
-- [ ] Create `.prettierrc` with consistent formatting rules
-- [ ] Add lint and format scripts to `package.json`
-- [ ] Verify: `pnpm lint` passes on a minimal test file
+- [x] Create `eslint.config.mjs` with TypeScript and React rules [52d848e]
+- [x] Create `.prettierrc` with consistent formatting rules [52d848e]
+- [x] Add lint and format scripts to `package.json` [52d848e]
+- [x] Verify: `pnpm lint` passes on a minimal test file [52d848e]
 
 ### Task 2.3: Configure Vitest
-- [ ] Create `vitest.config.ts` with coverage reporter setup
-- [ ] Configure 80% coverage threshold
-- [ ] Create a sample test to verify Vitest works
-- [ ] Verify: `pnpm test run --coverage` produces coverage report
+- [x] Create `vitest.config.ts` with coverage reporter setup [52d848e]
+- [x] Configure 80% coverage threshold [52d848e]
+- [x] Create a sample test to verify Vitest works [52d848e]
+- [x] Verify: `pnpm test run --coverage` produces coverage report [52d848e]
 
 ## Phase 3: Git Hooks & Modularity
 
 ### Task 3.1: Create File Modularity Script
-- [ ] Create `scripts/check-modularity.js` that fails if any file in `src/` exceeds 500 lines
+- [~] Create `scripts/check-modularity.js` that fails if any file in `src/` exceeds 500 lines
 - [ ] Write tests for the modularity script
 - [ ] Verify: script passes on current codebase, fails on an artificially large test file
 
