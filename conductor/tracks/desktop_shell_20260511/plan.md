@@ -39,7 +39,7 @@
 
 ---
 
-## Phase 3: Wallpaper Component
+## Phase 3: Wallpaper Component [checkpoint: 26268be]
 
 ### Task 3.1: Write Test for Wallpaper
 
@@ -57,7 +57,7 @@
 
 - [x] Import and render Wallpaper.astro into the `#wallpaper-area` mount point in `src/pages/index.astro`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Wallpaper Component' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Wallpaper Component' (Protocol in workflow.md) `26268be`
 
 ---
 
