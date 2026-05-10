@@ -25,14 +25,14 @@
 
 ## Phase 3: Wallpaper Test — Container API Migration
 
-- [ ] Task 3.1: Rewrite `tests/wallpaper.test.ts` using Container API (Red Phase)
-  - [ ] Remove `fs.readFileSync` / `existsSync` imports and usage
-  - [ ] Add `experimental_AstroContainer` from `astro/container`
-  - [ ] Write new tests: render `<Wallpaper />`, assert SVG art (`viewBox`, SVG elements), full-viewport classes, optional `imageSrc` prop
-  - [ ] Run in isolation to confirm initial state
-- [ ] Task 3.2: Verify new tests pass (Green Phase)
-  - [ ] Fix any import or rendering issues
-  - [ ] Run `CI=true pnpm test -- tests/wallpaper.test.ts` — verify all tests pass
+- [x] Task 3.1: Rewrite `tests/wallpaper.test.ts` using Container API (Red Phase) (c37c87e)
+  - [x] Remove `fs.readFileSync` / `existsSync` imports and usage
+  - [x] Add `experimental_AstroContainer` from `astro/container`
+  - [x] Write new tests: render `<Wallpaper />`, assert SVG art (`viewBox`, SVG elements), full-viewport classes, optional `imageSrc` prop
+  - [x] Run in isolation to confirm initial state
+- [x] Task 3.2: Verify new tests pass (Green Phase) (c37c87e)
+  - [x] Fix any import or rendering issues
+  - [x] Run `CI=true pnpm test -- tests/wallpaper.test.ts` — verify all tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Wallpaper Migration' (Protocol in workflow.md)
 
 ## Phase 4: Page Integration Test — Container API Migration
