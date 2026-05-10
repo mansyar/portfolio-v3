@@ -2,7 +2,7 @@
 
 ## Phase 1: Vitest Configuration Migration
 
-- [ ] Task 1.1: Update `vitest.config.ts` to use `getViteConfig()`
+- [x] Task 1.1: Update `vitest.config.ts` to use `getViteConfig()` (7363146)
   - [ ] Replace `import { defineConfig } from 'vitest/config'` with `import { getViteConfig } from 'astro/config'`
   - [ ] Add `/// <reference types="vitest/config" />` triple-slash directive
   - [ ] Replace `defineConfig({ test: {...} })` with `getViteConfig({ test: {...} })`
