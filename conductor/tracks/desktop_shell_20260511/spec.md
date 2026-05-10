@@ -11,6 +11,10 @@ The first visual track: transform the blank XP-blue page into a recognizable Win
 - **Rendering:** Wallpaper & DesktopIcon = Astro (zero JS); Taskbar & Clock = React (`client:load`)
 - **Icons:** Custom SVG files in `public/icons/`
 - **Wallpaper:** Custom SVG/CSS-generated art inspired by XP "Bliss" (not the copyrighted photo)
+- **CSS Additions Required:** The following tokens are defined in TDD §5.1 but are **not yet present** in the actual `xp-theme.css` — they must be added during this track:
+  - `--xp-taskbar-bg`: Linear gradient for the taskbar blue bar
+  - `--xp-start-btn-green`: Linear gradient for the green Start button
+- **CSS Utility Required:** A `.xp-taskbar-border` class must be created for the top-edge-only outset border (`.xp-outset` applies a full perimeter border, which is incorrect for the taskbar)
 
 ## Functional Requirements
 
@@ -20,6 +24,7 @@ The first visual track: transform the blank XP-blue page into a recognizable Win
 - Full-viewport coverage, responsive
 - Rendered below all other elements (z-index: 0)
 - Uses the existing `#wallpaper-area` mount point in `index.astro`
+- Accept an optional `imageSrc` prop for future fallback to a real bitmap wallpaper in `public/wallpapers/`
 
 ### 2. Desktop Icons (`DesktopIcon.astro`)
 
@@ -29,6 +34,8 @@ The first visual track: transform the blank XP-blue page into a recognizable Win
 - XP-style hover: blue selection highlight background
 - No click action yet (window manager comes in Track 1B)
 - Text color: white with dark shadow for readability on any wallpaper
+- Include `data-window-id` attribute on each icon container (e.g., `data-window-id="cmd"`) for future wiring to the window manager (Track 1B)
+- Include `data-window-label` attribute (e.g., `data-window-label="My Computer"`) for accessibility and future taskbar integration
 
 ### 3. Desktop Icon SVG Files (`public/icons/`)
 
@@ -43,9 +50,9 @@ The first visual track: transform the blank XP-blue page into a recognizable Win
 ### 4. Taskbar (`Taskbar.tsx`, React, `client:load`)
 
 - Blue gradient bar spanning full width at bottom (40px height)
-- Uses existing `--xp-taskbar-bg`, `--xp-blue-taskbar` CSS tokens
-- Green "Start" button on the left (non-functional for this track)
-- 3D outset border on top edge (`.xp-outset` class)
+- Taskbar gradient must be defined via `--xp-taskbar-bg` (add this token to `xp-theme.css`)
+- Green "Start" button on the left (non-functional for this track), styled via `--xp-start-btn-green` (add this token to `xp-theme.css`)
+- 3D outset border on **top edge only** (using `.xp-taskbar-border` utility — not `.xp-outset` which applies a full perimeter border)
 - System tray area on the right
 - Uses existing `#taskbar` mount point in `index.astro`
 
@@ -59,15 +66,19 @@ The first visual track: transform the blank XP-blue page into a recognizable Win
 
 ```
 ✅ Desktop shows custom Bliss-style wallpaper filling the full viewport
+✅ Wallpaper.astro accepts optional imageSrc prop for future real-image fallback
 ✅ 5 desktop icons render in a left-aligned vertical column (top-left)
+✅ Each DesktopIcon includes data-window-id and data-window-label attributes
 ✅ Icons show XP-style blue selection highlight on hover
 ✅ Taskbar spans full width at bottom with blue gradient and outset top border
+✅ Taskbar uses top-edge-only outset border (.xp-taskbar-border)
 ✅ Green Start button visible on taskbar left (non-functional)
 ✅ Live clock in system tray showing current time
 ✅ Clock updates every minute (no seconds)
 ✅ All icons are custom SVGs in public/icons/
 ✅ Zero-JS for wallpaper and icons (Astro static components)
 ✅ Taskbar and Clock are React islands with client:load
+✅ --xp-taskbar-bg and --xp-start-btn-green CSS tokens added to xp-theme.css
 ✅ Looks authentically XP at a glance
 ```
 
