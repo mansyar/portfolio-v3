@@ -61,7 +61,7 @@
 
 ---
 
-## Phase 4: Desktop Icons
+## Phase 4: Desktop Icons [checkpoint: 8193507]
 
 ### Task 4.1: Write Test for DesktopIcon
 
@@ -85,7 +85,7 @@
 - [x] Use consistent spacing (16px gap between icons)
 - [x] Verify: icons render in correct position with correct labels and data attributes
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Desktop Icons' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Desktop Icons' (Protocol in workflow.md) `8193507`
 
 ---
 
