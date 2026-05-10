@@ -13,14 +13,14 @@
 
 ## Phase 2: DesktopIcon Test — Container API Migration
 
-- [ ] Task 2.1: Rewrite `tests/desktop-icon.test.ts` using Container API (Red Phase)
-  - [ ] Remove `fs.readFileSync` / `existsSync` imports and usage
-  - [ ] Add `experimental_AstroContainer` from `astro/container`
-  - [ ] Write new tests: render `<DesktopIcon />`, assert `data-window-id`, `data-window-label`, icon markup, and prop reflection
-  - [ ] Run the file in isolation to confirm tests fail initially due to any import/resolution issues
-- [ ] Task 2.2: Verify new tests pass (Green Phase)
-  - [ ] Fix any import or rendering issues
-  - [ ] Run `CI=true pnpm test -- tests/desktop-icon.test.ts` — verify all tests pass
+- [x] Task 2.1: Rewrite `tests/desktop-icon.test.ts` using Container API (Red Phase) (18f1b07)
+  - [x] Remove `fs.readFileSync` / `existsSync` imports and usage
+  - [x] Add `experimental_AstroContainer` from `astro/container`
+  - [x] Write new tests: render `<DesktopIcon />`, assert `data-window-id`, `data-window-label`, icon markup, and prop reflection
+  - [x] Run the file in isolation to confirm tests fail initially due to any import/resolution issues
+- [x] Task 2.2: Verify new tests pass (Green Phase) (18f1b07)
+  - [x] Fix any import or rendering issues (added `@vitest-environment node`)
+  - [x] Run `CI=true pnpm test -- tests/desktop-icon.test.ts` — verify all tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: DesktopIcon Migration' (Protocol in workflow.md)
 
 ## Phase 3: Wallpaper Test — Container API Migration
