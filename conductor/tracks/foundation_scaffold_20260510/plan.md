@@ -14,7 +14,7 @@
 - [x] Verify: `pnpm ls --depth=0` shows all expected packages [de1b56a]
 
 ### Task 1.3: Create Directory Structure
-- [ ] Create `src/components/desktop/`, `src/components/taskbar/`, `src/components/window/`, `src/components/apps/`, `src/components/mobile/`
+- [~] Create `src/components/desktop/`, `src/components/taskbar/`, `src/components/window/`, `src/components/apps/`, `src/components/mobile/`
 - [ ] Create `src/content/projects/`, `src/content/devops-academy/`
 - [ ] Create `src/layouts/`, `src/pages/`, `src/stores/`, `src/lib/`, `src/styles/`
 - [ ] Create `public/fonts/`, `public/icons/`, `public/wallpapers/`, `public/sounds/`
