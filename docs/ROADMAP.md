@@ -531,19 +531,19 @@ graph TD
 
 ### Parallel Work Opportunities
 
-| Tracks that can run in parallel | After |
-|:---|:---|
-| Track 1A + Track 1B | Phase 0 |
-| Track 2A + Track 2B + Track 2C | Track 1B |
-| Track 3A + Track 3B + Track 3C | Their respective deps |
+| Tracks that can run in parallel | After                 |
+| :------------------------------ | :-------------------- |
+| Track 1A + Track 1B             | Phase 0               |
+| Track 2A + Track 2B + Track 2C  | Track 1B              |
+| Track 3A + Track 3B + Track 3C  | Their respective deps |
 
 ---
 
 ## Legend
 
-| Status | Meaning |
-|:---|:---|
+| Status  | Meaning     |
+| :------ | :---------- |
 | `- [ ]` | Not started |
-| `- [x]` | Complete |
-| `🚧` | In progress |
-| `🔴` | Blocked |
+| `- [x]` | Complete    |
+| `🚧`    | In progress |
+| `🔴`    | Blocked     |

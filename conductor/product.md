@@ -19,6 +19,7 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 ## Core Features
 
 ### Desktop Mode (≥ 768px viewport)
+
 - **Windows XP Luna Desktop:** Bliss wallpaper, desktop icons, taskbar with Start Menu
 - **Window Manager:** State-driven draggable, resizable, minimizable/maximizable windows powered by Nano Stores
 - **File Explorer:** Virtual filesystem with `C:\`, `D:\`, `E:\` drives, folder navigation, and MDX content rendering
@@ -28,12 +29,14 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 - **Start Menu:** Two-column layout with pinned apps, system folders, and Shut Down button
 
 ### Mobile Safe Mode (< 768px viewport)
+
 - **BIOS Boot Sequence:** Animated line-by-line text on boot
 - **Terminal Menu:** Numbered text-based navigation (`[1] Projects [2] Skills [3] About [4] Contact`)
 - **CRT Visual Effects:** Scanline overlay and screen curvature
 - **Full Content Access:** All portfolio content rendered as monospace text blocks
 
 ### Content & Data
+
 - **Project MDX Files:** Detailed project write-ups with frontmatter (repo URL, tech stack, status)
 - **DevOps Academy MDX:** Categorized educational articles from the `devops-from-scratch` repo
 - **GitHub API Sync:** Build-time data fetching for live star counts and commit dates
@@ -49,13 +52,13 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 
 ## Success Metrics
 
-| Metric | Target |
-|--------|--------|
-| Total Blocking Time (TBT) | < 100ms |
-| Lighthouse Performance | > 90 |
-| Design Authenticity | Pixel-accurate XP chrome |
-| Mobile Load Time | Fully navigable in < 1.5s |
-| Build Time | < 60 seconds |
+| Metric                    | Target                    |
+| ------------------------- | ------------------------- |
+| Total Blocking Time (TBT) | < 100ms                   |
+| Lighthouse Performance    | > 90                      |
+| Design Authenticity       | Pixel-accurate XP chrome  |
+| Mobile Load Time          | Fully navigable in < 1.5s |
+| Build Time                | < 60 seconds              |
 
 ## Constraints & Boundaries
 
