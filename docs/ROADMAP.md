@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.1 · **Updated:** 2026-05-11  
+**Version:** 1.2 · **Updated:** 2026-05-11  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -18,7 +18,7 @@ gantt
     Foundation & Scaffold         :done, p0, 2026-05-10, 2d
 
     section Phase 1
-    Track 1A – Desktop Shell      :p1a, after p0, 4d
+    Track 1A – Desktop Shell      :done, p1a, after p0, 4d
     Track 1B – Window Manager     :p1b, after p0, 5d
     Track 1C – Start Menu         :p1c, after p1b, 2d
 
@@ -108,30 +108,63 @@ Phase 0 produced 15 commits across ~8,400 lines changed (42 files). Track archiv
 
 ## Phase 1 — Core Shell
 
-### Track 1A — Desktop Shell
+### Track 1A — Desktop Shell ✅ _(Completed 2026-05-11)_
 
-> Wallpaper, desktop icons grid, and static taskbar. Clicking icons does nothing yet — the window manager doesn't exist.
+> Wallpaper, desktop icons grid, and static taskbar. Clicking icons does nothing yet — the window manager doesn't exist. Uses custom SVG/CSS generated art rather than real bitmap wallpaper.
 
 **Refs:** [PRD §3.1](./PRD.md#31-the-desktop-experience) · [TDD §5.3](./TDD.md#53-classic-3d-border-system) · [TDD §5.4](./TDD.md#54-icon-sources) · [TDD §6 Astro Components](./TDD.md#astro-components-static)
 
 #### Tasks
 
-- [ ] Add `bliss.webp` / `bliss.avif` to `public/wallpapers/`
-- [ ] Create `Wallpaper.astro` — responsive `<picture>` element ([TDD §6](./TDD.md#astro-components-static))
-- [ ] Create desktop icon SVGs (My Computer, My Documents, Help, CMD, Recycle Bin) ([TDD §5.4](./TDD.md#54-icon-sources))
-- [ ] Create `DesktopIcon.astro` — icon + label with hover highlight ([TDD §6](./TDD.md#astro-components-static), [TDD §9](./TDD.md#9-animations--transitions))
-- [ ] Layout icon grid on desktop (left-aligned vertical column, XP-style)
-- [ ] Create static `Taskbar` shell (blue gradient bar, Start button, clock) ([PRD §3.1](./PRD.md#31-the-desktop-experience), [TDD §5.1](./TDD.md#51-color-palette))
-- [ ] Create `Clock` component showing current time in system tray
+- [x] Add `--xp-taskbar-bg` and `--xp-start-btn-green` gradient tokens to `xp-theme.css` ([TDD §5.1](./TDD.md#51-color-palette))
+- [x] Create `.xp-taskbar-border` utility class (top-edge-only outset border)
+- [x] Create 5 custom desktop icon SVGs (My Computer, My Documents, Help & Support, Command Prompt, Recycle Bin) ([TDD §5.4](./TDD.md#54-icon-sources))
+- [x] Create `Wallpaper.astro` — custom inline SVG/CSS Bliss-style rolling hills art with optional `imageSrc` prop ([TDD §6](./TDD.md#astro-components-static))
+- [x] Create `DesktopIcon.astro` — icon + label with XP blue hover highlight, `data-window-id` and `data-window-label` attributes ([TDD §6](./TDD.md#astro-components-static), [TDD §9](./TDD.md#9-animations--transitions))
+- [x] Layout 5 icon instances in left-aligned vertical column in `index.astro` (Astro static, zero JS)
+- [x] Create `Taskbar.tsx` — React island with blue gradient bar, green Start button, and system tray using `var(--xp-taskbar-bg)` and `var(--xp-start-btn-green)` CSS tokens ([PRD §3.1](./PRD.md#31-the-desktop-experience))
+- [x] Create `Clock.tsx` — React component displaying current time in HH:MM format, updating every 60 seconds, mounted in taskbar system tray
 
 #### Acceptance Criteria
 
 ```
-✅ Desktop shows Bliss wallpaper, 5 icons, and a blue taskbar
-✅ Icons highlight on hover with XP-style blue selection
-✅ Taskbar has green Start button (non-functional) and live clock
+✅ Desktop shows custom CSS/SVG Bliss-style wallpaper filling the full viewport
+✅ Wallpaper.astro accepts optional imageSrc prop for future bitmap fallback
+✅ 5 desktop icons render in a left-aligned vertical column (top-left)
+✅ Each DesktopIcon includes data-window-id and data-window-label attributes
+✅ Icons show XP-style blue selection highlight on hover
+✅ Taskbar spans full width at bottom with blue gradient and outset top border
+✅ Taskbar uses top-edge-only outset border (.xp-taskbar-border)
+✅ Green Start button visible on taskbar left (non-functional, ARIA labeled)
+✅ Live clock in system tray showing user's local time (HH:MM, updates every minute)
+✅ All icons are custom SVGs in public/icons/ (48×48 viewport)
+✅ Zero-JS for wallpaper and icons (Astro static components; Taskbar & Clock = React client:load)
+✅ --xp-taskbar-bg and --xp-start-btn-green CSS tokens added to xp-theme.css
 ✅ Looks authentically XP at a glance
 ```
+
+#### Key Files Created
+
+```
+public/icons/*.svg                        — 5 custom 48×48 XP-inspired desktop icons
+src/components/desktop/Wallpaper.astro     — CSS/SVG Bliss-style rolling hills wallpaper
+src/components/desktop/DesktopIcon.astro   — Reusable icon component with XP hover highlight
+src/components/taskbar/Clock.tsx           — React clock (HH:MM, 60s update)
+src/components/taskbar/Taskbar.tsx         — React taskbar island with Start button + system tray
+src/styles/xp-theme.css (modified)         — Added --xp-taskbar-bg, --xp-start-btn-green, .xp-taskbar-border
+src/pages/index.astro (modified)           — Mounted Wallpaper, Icons, Taskbar
+vitest.config.ts (modified)               — jsdom env, @testing-library/react, @/ alias
+tests/setup.ts                            — jest-dom vitest matchers
+tests/wallpaper.test.ts                   — 5 unit tests (Pattern B: source file read)
+tests/desktop-icon.test.ts                — 7 unit tests (Pattern B: source file read)
+tests/clock.test.tsx                      — 3 React component tests (@testing-library/react)
+tests/taskbar.test.tsx                    — 4 React component tests (@testing-library/react)
+tests/pages/index.test.ts (modified)      — 4 new integration tests (9 total)
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 1A produced 11 feature/fix commits, 6 plan/checkpoint commits, 1 review fix commit across ~1,041 lines changed (18 files). Track archived at `conductor/archive/desktop_shell_20260511/`.
 
 ---
 
