@@ -89,7 +89,7 @@
 
 ---
 
-## Phase 5: Taskbar & Clock
+## Phase 5: Taskbar & Clock [checkpoint: 0355916]
 
 > **Note:** Task ordering follows TDD — Clock is implemented first so the Taskbar test can assert Clock renders inside the system tray.
 
@@ -124,7 +124,7 @@
 - [x] Import and mount Taskbar in the `#taskbar` mount point with `client:load` directive
 - [x] Verify: Taskbar appears at bottom of page with Start button and live clock
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 5: Taskbar & Clock' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 5: Taskbar & Clock' (Protocol in workflow.md) `0355916`
 
 ---
 
