@@ -1,1 +1,57 @@
+/* Import XP design tokens first */
+@import "./xp-theme.css";
+
+/* Tailwind CSS v4 */
 @import "tailwindcss";
+
+/* === Tailwind Theme Configuration === */
+@theme {
+  /* XP Blue Palette */
+  --color-xp-taskbar: #245edc;
+  --color-xp-taskbar-dark: #1a4fb5;
+  --color-xp-titlebar: #0a246a;
+  --color-xp-titlebar-active: #0055e5;
+  --color-xp-highlight: #316ac5;
+  --color-xp-button: #ece9d8;
+  --color-xp-desktop: #3a6ea5;
+  --color-xp-desktop-dark: #2a5e95;
+  --color-xp-button-shadow: #aca899;
+  --color-xp-button-dark-shadow: #716f64;
+  --color-xp-button-light: #ffffff;
+  --color-xp-disabled: #d4d0c8;
+  --color-xp-disabled-text: #aca899;
+
+  /* Safe Mode Colors */
+  --color-xp-safe-bg: #000000;
+  --color-xp-safe-text: #00ff00;
+  --color-xp-safe-text-dim: #008800;
+  --color-xp-safe-accent: #ffff00;
+
+  /* Border Colors */
+  --color-xp-border-outset-top: #ffffff;
+  --color-xp-border-outset-bottom: #808080;
+  --color-xp-border-inset-top: #808080;
+  --color-xp-border-inset-bottom: #ffffff;
+  --color-xp-border-window: #0055e5;
+
+  /* Typography */
+  --font-family-xp: 'Tahoma', 'Segoe UI', 'Arial', sans-serif;
+  --font-family-safe: 'Courier New', 'Consolas', monospace;
+
+  /* Font Sizes */
+  --font-size-xp-xs: 11px;
+  --font-size-xp-sm: 12px;
+  --font-size-xp-base: 13px;
+  --font-size-xp-lg: 14px;
+  --font-size-xp-xl: 18px;
+  --font-size-xp-2xl: 24px;
+
+  /* Shadows */
+  --shadow-xp-sm: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-xp-md: 2px 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-xp-lg: 4px 4px 12px rgba(0, 0, 0, 0.5);
+
+  /* Spacing */
+  --spacing-xp-titlebar: 30px;
+  --spacing-xp-taskbar: 40px;
+}

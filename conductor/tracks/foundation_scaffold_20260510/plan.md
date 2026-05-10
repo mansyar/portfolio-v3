@@ -60,16 +60,16 @@
 
 ### Task 3.2: Configure Husky & lint-staged
 
-- [~] Initialize Husky: `pnpm husky init`
-- [ ] Configure pre-commit hook: run `lint-staged` (lint → vitest related tests → modularity check)
-- [ ] Configure pre-push hook: run typecheck → vitest coverage (80% threshold)
-- [ ] Verify: `git commit` triggers pre-commit hooks, `git push` triggers pre-push hooks
+- [x] Initialize Husky: `pnpm husky init` [257d251]
+- [x] Configure pre-commit hook: run lint-staged → modularity check [257d251]
+- [x] Configure pre-push hook: run typecheck → vitest coverage (80% threshold) [257d251]
+- [x] Verify: `git commit` triggers pre-commit hooks [257d251]
 
 ## Phase 4: Design System Foundation
 
 ### Task 4.1: Create XP Theme CSS
 
-- [ ] Create `src/styles/xp-theme.css` with all design tokens:
+- [~] Create `src/styles/xp-theme.css` with all design tokens:
   - [ ] Luna Blue palette (taskbar, title bars, window chrome)
   - [ ] Classic 3D border system (`.xp-outset`, `.xp-inset`, `.xp-window-border`)
   - [ ] Tahoma font-face declarations

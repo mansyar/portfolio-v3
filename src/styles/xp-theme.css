@@ -1,0 +1,182 @@
+/* ========================================
+   Windows XP Luna Theme — Design Tokens
+   ======================================== */
+
+/* --- CSS Custom Properties (Design Tokens) --- */
+:root {
+  /* === Luna Blue Palette === */
+  --xp-blue-taskbar: #245edc;
+  --xp-blue-taskbar-dark: #1a4fb5;
+  --xp-blue-titlebar: #0a246a;
+  --xp-blue-titlebar-gradient-top: #0a246a;
+  --xp-blue-titlebar-gradient-bottom: #3a6ea5;
+  --xp-blue-titlebar-active: #0055e5;
+  --xp-blue-titlebar-active-gradient-top: #0055e5;
+  --xp-blue-titlebar-active-gradient-bottom: #4aa5ff;
+  --xp-blue-highlight: #316ac5;
+  --xp-blue-button: #ece9d8;
+  --xp-blue-desktop: #3a6ea5;
+  --xp-blue-desktop-dark: #2a5e95;
+
+  /* === Classic 3D Border System === */
+  --xp-border-outset-top: #ffffff;
+  --xp-border-outset-left: #ffffff;
+  --xp-border-outset-bottom: #808080;
+  --xp-border-outset-right: #808080;
+  --xp-border-inset-top: #808080;
+  --xp-border-inset-left: #808080;
+  --xp-border-inset-bottom: #ffffff;
+  --xp-border-inset-right: #ffffff;
+  --xp-border-window-top: #0055e5;
+  --xp-border-window-left: #0055e5;
+  --xp-border-window-bottom: #000000;
+  --xp-border-window-right: #000000;
+  --xp-border-3d-width: 2px;
+
+  /* === Button System === */
+  --xp-button-face: #ece9d8;
+  --xp-button-shadow: #aca899;
+  --xp-button-dark-shadow: #716f64;
+  --xp-button-light: #ffffff;
+  --xp-button-text: #000000;
+  --xp-button-disabled: #d4d0c8;
+  --xp-button-disabled-text: #aca899;
+  --xp-button-height: 23px;
+  --xp-button-min-width: 75px;
+
+  /* === Tahoma Typography === */
+  --xp-font-family: 'Tahoma', 'Segoe UI', 'Arial', sans-serif;
+  --xp-font-size-xs: 11px;
+  --xp-font-size-sm: 12px;
+  --xp-font-size-base: 13px;
+  --xp-font-size-lg: 14px;
+  --xp-font-size-xl: 18px;
+  --xp-font-size-2xl: 24px;
+  --xp-line-height: 1.2;
+
+  /* === Window Chrome === */
+  --xp-titlebar-height: 30px;
+  --xp-titlebar-font-size: 13px;
+  --xp-titlebar-font-weight: bold;
+  --xp-window-min-width: 300px;
+  --xp-window-min-height: 200px;
+  --xp-window-border-radius: 8px 8px 0 0;
+
+  /* === Shadow & Animation === */
+  --xp-shadow-sm: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  --xp-shadow-md: 2px 2px 6px rgba(0, 0, 0, 0.4);
+  --xp-shadow-lg: 4px 4px 12px rgba(0, 0, 0, 0.5);
+  --xp-duration-fast: 100ms;
+  --xp-duration-normal: 200ms;
+  --xp-duration-slow: 300ms;
+  --xp-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Taskbar === */
+  --xp-taskbar-height: 40px;
+  --xp-taskbar-font-size: 11px;
+  --xp-startmenu-width: 320px;
+
+  /* === Safe Mode / BIOS Colors === */
+  --xp-safe-bg: #000000;
+  --xp-safe-text: #00ff00;
+  --xp-safe-text-dim: #008800;
+  --xp-safe-text-bright: #00ff00;
+  --xp-safe-accent: #ffff00;
+  --xp-safe-font: 'Courier New', 'Consolas', monospace;
+  --xp-safe-font-size: 14px;
+  --xp-scanline-opacity: 0.03;
+
+  /* === Desktop Icons === */
+  --xp-icon-size: 48px;
+  --xp-icon-font-size: 11px;
+  --xp-icon-text-color: #ffffff;
+  --xp-icon-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* === 3D Border Utility Classes === */
+
+/* Outset border (raised button / panel) */
+.xp-outset {
+  border: var(--xp-border-3d-width) solid;
+  border-color: var(--xp-border-outset-top) var(--xp-border-outset-right) var(--xp-border-outset-bottom) var(--xp-border-outset-left);
+}
+
+/* Inset border (sunken input / pressed button) */
+.xp-inset {
+  border: var(--xp-border-3d-width) solid;
+  border-color: var(--xp-border-inset-top) var(--xp-border-inset-right) var(--xp-border-inset-bottom) var(--xp-border-inset-left);
+}
+
+/* Window chrome border */
+.xp-window-border {
+  border: 3px solid;
+  border-color: var(--xp-border-window-top) var(--xp-border-window-right) var(--xp-border-window-bottom) var(--xp-border-window-left);
+  border-radius: var(--xp-window-border-radius);
+}
+
+/* === Button Styles === */
+.xp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--xp-button-height);
+  min-width: var(--xp-button-min-width);
+  padding: 0 12px;
+  background: var(--xp-button-face);
+  font-family: var(--xp-font-family);
+  font-size: var(--xp-font-size-sm);
+  color: var(--xp-button-text);
+  cursor: pointer;
+  user-select: none;
+}
+.xp-button:active {
+  border-color: var(--xp-border-inset-top) var(--xp-border-inset-right) var(--xp-border-inset-bottom) var(--xp-border-inset-left);
+}
+.xp-button:disabled {
+  background: var(--xp-button-disabled);
+  color: var(--xp-button-disabled-text);
+  cursor: default;
+}
+
+/* === Scrollbar (XP Classic) === */
+.xp-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--xp-blue-highlight) var(--xp-button-face);
+}
+
+/* === Selection === */
+::selection {
+  background: var(--xp-blue-highlight);
+  color: #ffffff;
+}
+
+/* === Tahoma Font-Face Declarations === */
+/* Tahoma is a proprietary Microsoft font. These @font-face rules reference
+   the system-installed version (available on Windows). On non-Windows systems,
+   fallback to Segoe UI or Arial. For a production deployment, consider
+   self-hosting a compatible open-source font. */
+@font-face {
+  font-family: 'Tahoma';
+  src: local('Tahoma');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tahoma';
+  src: local('Tahoma Bold');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* === Desktop Background === */
+.xp-desktop {
+  background-color: var(--xp-blue-desktop);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: var(--xp-font-family);
+  font-size: var(--xp-font-size-sm);
+}
