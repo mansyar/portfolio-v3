@@ -17,7 +17,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "check": "astro check",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
