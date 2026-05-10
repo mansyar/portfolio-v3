@@ -29,7 +29,7 @@ const { icon, label, windowId } = Astro.props;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: var(--xp-icon-size, 48px);
+    width: 72px;
     cursor: pointer;
     padding: 4px;
     border-radius: 4px;
@@ -53,10 +53,9 @@ const { icon, label, windowId } = Astro.props;
     text-shadow: var(--xp-icon-text-shadow);
     text-align: center;
     margin-top: 2px;
-    line-height: 1.2;
-    max-width: 64px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    line-height: 1.15;
+    max-width: 72px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 </style>
