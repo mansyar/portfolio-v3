@@ -72,6 +72,8 @@
   --xp-easing: cubic-bezier(0.4, 0, 0.2, 1);
 
   /* === Taskbar === */
+  --xp-taskbar-bg: linear-gradient(180deg, #1f3f7d 0%, #3068b6 3%, #1b54a3 6%, #1b54a3 94%, #163d82 100%);
+  --xp-start-btn-green: linear-gradient(180deg, #3b8f3f 0%, #47a84c 8%, #2d8e33 92%, #1e7a24 100%);
   --xp-taskbar-height: 40px;
   --xp-taskbar-font-size: 11px;
   --xp-startmenu-width: 320px;
@@ -107,6 +109,13 @@
   border: var(--xp-border-3d-width) solid;
   border-color: var(--xp-border-inset-top) var(--xp-border-inset-right)
     var(--xp-border-inset-bottom) var(--xp-border-inset-left);
+}
+
+/* Top-edge-only outset border (taskbar) */
+.xp-taskbar-border {
+  border: 0;
+  border-top: var(--xp-border-3d-width) solid;
+  border-top-color: var(--xp-border-outset-top);
 }
 
 /* Window chrome border */
