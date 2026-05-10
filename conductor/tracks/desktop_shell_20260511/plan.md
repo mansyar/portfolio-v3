@@ -128,22 +128,22 @@
 
 ---
 
-## Phase 6: Full Integration & Verification
+## Phase 6: Full Integration & Verification [checkpoint: 688d8cb]
 
 ### Task 6.1: Write Integration Tests
 
-- [ ] Update `tests/pages/index.test.ts` to verify all 3 desktop elements render in built output
-- [ ] Assert: wallpaper area exists with SVG art
-- [ ] Assert: 5 desktop icons appear with correct labels and `data-window-id` attributes
-- [ ] Assert: taskbar with Start button and clock appears
+- [x] Update `tests/pages/index.test.ts` to verify all 3 desktop elements render in built output `66199a9`
+- [x] Assert: wallpaper area exists with SVG art
+- [x] Assert: 5 desktop icons appear with correct labels and `data-window-id` attributes
+- [x] Assert: taskbar with Start button and clock appears
 
 ### Task 6.2: Final Verification
 
-- [ ] Run full test suite: `CI=true pnpm test`
-- [ ] Run typecheck: `pnpm astro check`
-- [ ] Run modularity check: `node scripts/check-modularity.js`
-- [ ] Run build: `CI=true pnpm build`
-- [ ] Run coverage: `pnpm test:coverage` (ensure ≥80%)
-- [ ] Verify: `pnpm dev` serves complete XP desktop shell
+- [x] Run full test suite: 59/59 tests pass
+- [x] Run typecheck: 0 errors, `pnpm astro check` passed
+- [x] Run modularity check: all files under 500 lines ✓
+- [x] Run build: build succeeds in ~2.5s
+- [x] Run coverage: 100% on tracked source files ✓
+- [x] Verify: `pnpm dev` serves complete XP desktop shell ✓
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 6: Full Integration & Verification' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 6: Full Integration & Verification' (Protocol in workflow.md) `688d8cb`
