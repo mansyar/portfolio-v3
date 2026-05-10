@@ -3,10 +3,10 @@
 ## Phase 1: Project Scaffold & Dependencies
 
 ### Task 1.1: Initialize Astro Project
-- [~] Run `pnpm create astro@latest .` with React, MDX, and Tailwind integrations
-- [ ] Verify `astro.config.mjs` includes `@astrojs/react`, `@astrojs/mdx`, `@astrojs/tailwind`
-- [ ] Verify `package.json` is created with correct dependencies
-- [ ] Verify: `pnpm astro --version` shows Astro 5.x
+- [x] Run `pnpm create astro@latest .` with React, MDX, and Tailwind integrations [5c9240f]
+- [x] Verify `astro.config.mjs` includes `@astrojs/react`, `@astrojs/mdx`, `@tailwindcss/vite` [5c9240f]
+- [x] Verify `package.json` is created with correct dependencies [5c9240f]
+- [x] Verify: `pnpm astro --version` shows Astro 6.x (deviation: v6.3.1 installed) [5c9240f]
 
 ### Task 1.2: Install All Dependencies
 - [ ] Install runtime deps: `nanostores`, `@nanostores/react`
