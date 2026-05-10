@@ -7,7 +7,7 @@
  */
 
 import { readdirSync, statSync, readFileSync } from 'fs';
-import { join, resolve, extname } from 'path';
+import { join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
