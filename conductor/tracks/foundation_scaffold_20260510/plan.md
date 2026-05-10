@@ -3,7 +3,7 @@
 ## Phase 1: Project Scaffold & Dependencies
 
 ### Task 1.1: Initialize Astro Project
-- [ ] Run `pnpm create astro@latest .` with React, MDX, and Tailwind integrations
+- [~] Run `pnpm create astro@latest .` with React, MDX, and Tailwind integrations
 - [ ] Verify `astro.config.mjs` includes `@astrojs/react`, `@astrojs/mdx`, `@astrojs/tailwind`
 - [ ] Verify `package.json` is created with correct dependencies
 - [ ] Verify: `pnpm astro --version` shows Astro 5.x

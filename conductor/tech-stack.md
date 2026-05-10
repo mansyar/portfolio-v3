@@ -10,9 +10,9 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 
 | Layer | Technology | Version | Purpose |
 |-------|-----------|---------|---------|
-| **Framework** | Astro | ^5.x | Zero-JS by default; hybrid SSR/SSG; content collections |
+| **Framework** | Astro | ^6.x | Zero-JS by default; hybrid SSR/SSG; content collections |
 | **UI Library** | React | ^19.x | Interactive islands: windows, CLI, task manager |
-| **Styling** | Tailwind CSS | ^4.x | Custom Luna theme with XP gradients and 3D borders |
+| **Styling** | Tailwind CSS | ^4.x (v4.3.0) | Custom Luna theme with XP gradients and 3D borders; Vite plugin |
 | **State Management** | Nano Stores | ^0.11.x | Ultra-lightweight reactive state for window management |
 | **React Bridge** | @nanostores/react | ^0.8.x | React integration for Nano Stores |
 | **Content** | MDX + Astro Content | — | Project write-ups and DevOps Academy articles |
@@ -24,7 +24,7 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 |-------------|---------|---------|
 | React | `@astrojs/react` | Mount React islands in Astro |
 | MDX | `@astrojs/mdx` | Render MDX content collections |
-| Tailwind | `@astrojs/tailwind` | Utility-first CSS with XP theme |
+| Tailwind | `@tailwindcss/vite` | Utility-first CSS v4 with XP theme (Vite plugin) |
 
 ## Tooling & Quality
 
@@ -90,3 +90,17 @@ git push → GitHub Actions → pnpm install → Fetch GitHub API → astro buil
 - Custom window themes/skins
 - Real-time collaboration features
 - Backend server or database
+
+---
+
+## Change Log
+
+### 2026-05-11 — Astro v5.x → v6.x
+- **Reason:** `pnpm create astro@latest` installed the latest stable release (v6.3.1).
+- **Impact:** No breaking changes for this project's usage. Zero-JS-by-default architecture, content collections, and SSR/SSG modes remain unchanged.
+- **File affected:** Framework version in Core Stack table.
+
+### 2026-05-11 — Tailwind Integration: `@astrojs/tailwind` → `@tailwindcss/vite`
+- **Reason:** Astro 6 with Tailwind CSS v4 uses the Vite plugin directly instead of the legacy Astro integration.
+- **Impact:** Tailwind v4 uses CSS-first configuration (no `tailwind.config.*` file). Styling is done via `@import "tailwindcss"` in CSS files instead of Tailwind directives.
+- **File affected:** Styling entry in Core Stack table, Integration table.
