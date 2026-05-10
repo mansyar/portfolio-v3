@@ -1,0 +1,64 @@
+# Initial Concept
+
+A high-performance, retro-themed portfolio website for a Software Engineer specializing in DevOps and Data Engineering. The site features a Windows XP "Luna" aesthetic on desktop and transitions to a "Safe Mode/BIOS" terminal interface on mobile to ensure accessibility and performance. Built with Astro (Hybrid), React, Tailwind CSS, Nano Stores, and MDX, deployed on Cloudflare Pages.
+
+---
+
+# Product Definition
+
+## Product Vision
+
+A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engineer's skills through the lens of Windows XP's iconic "Luna" interface. The site immerses visitors in a fully functional desktop environment — complete with draggable windows, a Start Menu, file explorer, and command prompt — while ensuring full accessibility on mobile devices through a BIOS-style Safe Mode terminal.
+
+## Target Audience
+
+- **Primary:** Technical recruiters and hiring managers evaluating DevOps & Data Engineering candidates
+- **Secondary:** Developers and tech enthusiasts who appreciate retro computing aesthetics
+- **Tertiary:** Anyone looking for an unconventional, memorable portfolio experience
+
+## Core Features
+
+### Desktop Mode (≥ 768px viewport)
+- **Windows XP Luna Desktop:** Bliss wallpaper, desktop icons, taskbar with Start Menu
+- **Window Manager:** State-driven draggable, resizable, minimizable/maximizable windows powered by Nano Stores
+- **File Explorer:** Virtual filesystem with `C:\`, `D:\`, `E:\` drives, folder navigation, and MDX content rendering
+- **Command Prompt:** Functional terminal emulator with `ls`, `cd`, `cat`, `neofetch`, and other shell commands
+- **Task Manager:** Processes tab showing skill entries + Performance tab with live-animated skill graphs
+- **Help & Support Center:** MDX article browser styled as the classic XP Help pane
+- **Start Menu:** Two-column layout with pinned apps, system folders, and Shut Down button
+
+### Mobile Safe Mode (< 768px viewport)
+- **BIOS Boot Sequence:** Animated line-by-line text on boot
+- **Terminal Menu:** Numbered text-based navigation (`[1] Projects [2] Skills [3] About [4] Contact`)
+- **CRT Visual Effects:** Scanline overlay and screen curvature
+- **Full Content Access:** All portfolio content rendered as monospace text blocks
+
+### Content & Data
+- **Project MDX Files:** Detailed project write-ups with frontmatter (repo URL, tech stack, status)
+- **DevOps Academy MDX:** Categorized educational articles from the `devops-from-scratch` repo
+- **GitHub API Sync:** Build-time data fetching for live star counts and commit dates
+- **Resume:** Embedded PDF viewer in My Documents
+
+## User Experience Principles
+
+1. **Authenticity First:** Design mirrors 2001-era Windows XP pixel-for-pixel — 3D borders, blue gradients, Tahoma font
+2. **Performance is Non-Negotiable:** TBT < 100ms, zero-JS by default via Astro, interactive "Islands" only where needed
+3. **Mobile as First-Class Citizen:** The Safe Mode experience is not a downgrade — it's a deliberate, themed alternative
+4. **Deep-Linkable State:** Every open window and active application is reflected in the URL for sharing and bookmarking
+5. **Keyboard Accessible:** Full keyboard navigation, ARIA roles, and screen reader support
+
+## Success Metrics
+
+| Metric | Target |
+|--------|--------|
+| Total Blocking Time (TBT) | < 100ms |
+| Lighthouse Performance | > 90 |
+| Design Authenticity | Pixel-accurate XP chrome |
+| Mobile Load Time | Fully navigable in < 1.5s |
+| Build Time | < 60 seconds |
+
+## Constraints & Boundaries
+
+- **Out of Scope:** Tab-completion in CLI (v1), real-time collaboration, custom window themes
+- **Platform:** Cloudflare Pages (free tier) — no backend server, purely static + edge
+- **Performance Budget:** All JS bundles must be under 100KB total gzipped
