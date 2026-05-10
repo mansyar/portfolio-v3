@@ -4,7 +4,7 @@ function pad(n: number): string {
   return n.toString().padStart(2, '0');
 }
 
-export default function Clock() {
+export function Clock() {
   const [time, setTime] = useState(() => new Date());
 
   useEffect(() => {

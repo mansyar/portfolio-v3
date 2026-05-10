@@ -1,6 +1,6 @@
-import Clock from './Clock';
+import { Clock } from './Clock';
 
-export default function Taskbar() {
+export function Taskbar() {
   return (
     <div
       className="xp-taskbar-border"

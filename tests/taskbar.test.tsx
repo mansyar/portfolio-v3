@@ -7,7 +7,7 @@ let Taskbar: ComponentType;
 beforeEach(async () => {
   cleanup();
   const mod = await import('@/components/taskbar/Taskbar');
-  Taskbar = mod.default;
+  Taskbar = mod.Taskbar;
 });
 
 describe('Taskbar.tsx', () => {

@@ -16,7 +16,7 @@ describe('Clock.tsx', () => {
     const mockDate = new Date(2026, 4, 11, 14, 30, 0);
     vi.setSystemTime(mockDate);
 
-    const { default: Clock } = await import('@/components/taskbar/Clock');
+    const { Clock } = await import('@/components/taskbar/Clock');
     render(<Clock />);
 
     expect(screen.getByText('14:30')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('Clock.tsx', () => {
     const mockDate = new Date(2026, 4, 11, 9, 5, 0);
     vi.setSystemTime(mockDate);
 
-    const { default: Clock } = await import('@/components/taskbar/Clock');
+    const { Clock } = await import('@/components/taskbar/Clock');
     render(<Clock />);
 
     expect(screen.getByText('09:05')).toBeInTheDocument();
@@ -43,7 +43,7 @@ describe('Clock.tsx', () => {
     const mockDate = new Date(2026, 4, 11, 3, 7, 0);
     vi.setSystemTime(mockDate);
 
-    const { default: Clock } = await import('@/components/taskbar/Clock');
+    const { Clock } = await import('@/components/taskbar/Clock');
     render(<Clock />);
 
     expect(screen.getByText('03:07')).toBeInTheDocument();
