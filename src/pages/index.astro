@@ -1,14 +1,40 @@
 ---
 import DesktopLayout from '../layouts/DesktopLayout.astro';
 import Wallpaper from '../components/desktop/Wallpaper.astro';
+import DesktopIcon from '../components/desktop/DesktopIcon.astro';
 ---
 <DesktopLayout>
   <div id="wallpaper-area" class="absolute inset-0 z-0">
     <Wallpaper />
   </div>
 
-  <!-- Desktop icons area (placeholder for future Phase) -->  
-  <div id="desktop-icons" class="absolute left-4 top-4 z-10"></div>
+  <div id="desktop-icons" class="absolute left-4 top-4 z-10 flex flex-col gap-4">
+    <DesktopIcon
+      icon="/icons/my-computer.svg"
+      label="My Computer"
+      windowId="explorer"
+    />
+    <DesktopIcon
+      icon="/icons/my-documents.svg"
+      label="My Documents"
+      windowId="mydocs"
+    />
+    <DesktopIcon
+      icon="/icons/help-support.svg"
+      label="Help & Support"
+      windowId="help"
+    />
+    <DesktopIcon
+      icon="/icons/command-prompt.svg"
+      label="Command Prompt"
+      windowId="cmd"
+    />
+    <DesktopIcon
+      icon="/icons/recycle-bin.svg"
+      label="Recycle Bin"
+      windowId="recyclebin"
+    />
+  </div>
 
   <!-- Taskbar mount point (placeholder for future Phase) -->
   <div id="taskbar" class="absolute bottom-0 left-0 right-0 z-50"></div>
