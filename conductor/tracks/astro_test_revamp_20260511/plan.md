@@ -37,14 +37,14 @@
 
 ## Phase 4: Page Integration Test — Container API Migration
 
-- [ ] Task 4.1: Rewrite `tests/pages/index.test.ts` using Container API (Red Phase)
-  - [ ] Remove `fs.readFileSync`, `resolve`, `dirname` imports related to dist/ reading
-  - [ ] Add `experimental_AstroContainer` from `astro/container`
-  - [ ] Write new tests: render the home page (Content layer), assert `<title>`, mount point IDs, desktop icon labels, viewport meta, taskbar
-  - [ ] Run in isolation to confirm initial state
-- [ ] Task 4.2: Verify new tests pass (Green Phase)
-  - [ ] Fix any import or rendering issues (e.g., adjusting for `slot` requirements)
-  - [ ] Run `CI=true pnpm test -- tests/pages/index.test.ts` — verify all tests pass
+- [x] Task 4.1: Rewrite `tests/pages/index.test.ts` using Container API (Red Phase) (a79c738)
+  - [x] Remove `fs.readFileSync`, `resolve`, `dirname` imports related to dist/ reading
+  - [x] Add `experimental_AstroContainer` from `astro/container`
+  - [x] Write new tests: render the home page (Content layer), assert `<title>`, mount point IDs, desktop icon labels, viewport meta, taskbar
+  - [x] Run in isolation to confirm initial state (required @vitest-environment node)
+- [x] Task 4.2: Verify new tests pass (Green Phase) (a79c738)
+  - [x] Fix any import or rendering issues (added manual React SSR renderer for client:load components)
+  - [x] Run `CI=true pnpm test -- tests/pages/index.test.ts` — verify all tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Page Integration Migration' (Protocol in workflow.md)
 
 ## Phase 5: Final Verification & Checkpoint
