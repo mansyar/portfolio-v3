@@ -105,6 +105,13 @@ git push → GitHub Actions → pnpm install → Fetch GitHub API → astro buil
 - **Impact:** No breaking changes for this project's usage. Zero-JS-by-default architecture, content collections, and SSR/SSG modes remain unchanged.
 - **File affected:** Framework version in Core Stack table.
 
+### 2026-05-11 — Added jsdom + @testing-library/react for React component testing
+
+- **Reason:** Needed to write proper unit tests for React islands (Clock, Taskbar).
+- **Impact:** Vitest environment changed from Node to jsdom. New test file extension `.tsx` added to include pattern. React components can now be rendered and queried in tests.
+- **Files affected:** `vitest.config.ts`, `tests/setup.ts`
+- **Packages added:** `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/dom`
+
 ### 2026-05-11 — Tailwind Integration: `@astrojs/tailwind` → `@tailwindcss/vite`
 
 - **Reason:** Astro 6 with Tailwind CSS v4 uses the Vite plugin directly instead of the legacy Astro integration.
