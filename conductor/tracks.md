@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Phase 0 — Foundation & Scaffold**
-  *Link: [./tracks/foundation_scaffold_20260510/](./tracks/foundation_scaffold_20260510/)*
+- [x] **Track: Phase 0 — Foundation & Scaffold**
+      _Link: [./tracks/foundation_scaffold_20260510/](./tracks/foundation_scaffold_20260510/)_
