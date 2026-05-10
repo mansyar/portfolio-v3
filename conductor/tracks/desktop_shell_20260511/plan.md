@@ -65,25 +65,25 @@
 
 ### Task 4.1: Write Test for DesktopIcon
 
-- [ ] Write failing test (`tests/desktop-icon.test.ts`) verifying DesktopIcon renders an SVG icon + text label below it, shows blue hover highlight, and includes `data-window-id` + `data-window-label` attributes
+- [x] Write failing test (`tests/desktop-icon.test.ts`) — Red phase confirmed: 7/7 tests fail as expected
 
 ### Task 4.2: Implement DesktopIcon Component
 
-- [ ] Create `src/components/desktop/DesktopIcon.astro` — accepts `icon` (SVG path), `label` (text), and `windowId` (string) props
-- [ ] Render 48×48 SVG icon with 11px label centered below
-- [ ] Include `data-window-id={windowId}` attribute on the container (e.g., `"cmd"`, `"explorer"`, `"help"`, `"mydocs"`, `"recyclebin"`)
-- [ ] Include `data-window-label={label}` attribute (e.g., `"Command Prompt"`, `"My Computer"`)
-- [ ] Implement XP-style blue selection highlight on hover (using `--xp-blue-highlight` token)
-- [ ] Use `--xp-icon-text-color` and `--xp-icon-text-shadow` for readable labels
-- [ ] Run tests: confirm DesktopIcon test passes
+- [x] Create `src/components/desktop/DesktopIcon.astro` — accepts `icon` (SVG path), `label` (text), and `windowId` (string) props `6224a37`
+- [x] Render 48×48 SVG icon with 11px label centered below
+- [x] Include `data-window-id={windowId}` attribute on the container (e.g., `"cmd"`, `"explorer"`, `"help"`, `"mydocs"`, `"recyclebin"`)
+- [x] Include `data-window-label={label}` attribute (e.g., `"Command Prompt"`, `"My Computer"`)
+- [x] Implement XP-style blue selection highlight on hover (using `--xp-blue-highlight` token)
+- [x] Use `--xp-icon-text-color` and `--xp-icon-text-shadow` for readable labels
+- [x] Run tests: confirm DesktopIcon test passes — 48/48 tests pass
 
 ### Task 4.3: Layout Icon Grid on Desktop
 
-- [ ] Create icon grid in `src/pages/index.astro` (or a dedicated `DesktopIcons.astro` wrapper)
-- [ ] Place 5 `DesktopIcon` instances in a left-aligned vertical column at `top: 16px; left: 16px`
-- [ ] Icons: My Computer (`windowId="explorer"`), My Documents (`windowId="mydocs"`), Help & Support (`windowId="help"`), Command Prompt (`windowId="cmd"`), Recycle Bin (`windowId="recyclebin"`)
-- [ ] Use consistent spacing (16px gap between icons)
-- [ ] Verify: icons render in correct position with correct labels and data attributes
+- [x] Create icon grid in `src/pages/index.astro` (inline, within `#desktop-icons` container)
+- [x] Place 5 `DesktopIcon` instances in a left-aligned vertical column at `left: 16px; top: 16px`
+- [x] Icons: My Computer (`windowId="explorer"`), My Documents (`windowId="mydocs"`), Help & Support (`windowId="help"`), Command Prompt (`windowId="cmd"`), Recycle Bin (`windowId="recyclebin"`)
+- [x] Use consistent spacing (16px gap between icons)
+- [x] Verify: icons render in correct position with correct labels and data attributes
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Desktop Icons' (Protocol in workflow.md)
 
