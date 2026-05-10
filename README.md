@@ -1,43 +1,57 @@
-# Astro Starter Kit: Minimal
+# Luna OS Portfolio
 
-```sh
-pnpm create astro@latest -- --template minimal
+A high-performance, retro-themed portfolio website for a Software Engineer specializing in DevOps and Data Engineering.
+
+**Desktop:** Windows XP "Luna" interface with draggable windows, Start Menu, file explorer, and command prompt.
+
+**Mobile:** BIOS-style Safe Mode terminal — a deliberate themed experience, not a downgrade.
+
+Built with Astro, React, Tailwind CSS v4, Nano Stores, and MDX. Deployed on Cloudflare Pages.
+
+## Architecture
+
+Single-page Astro 6 app. Interactive elements are React "Islands" mounted via Astro; everything else is zero-JS HTML rendered at build time.
+
+| Viewport | Theme                     |
+| -------- | ------------------------- |
+| ≥768px   | Windows XP Luna desktop   |
+| <768px   | Safe Mode / BIOS terminal |
+
+State management via Nano Stores (windows, desktop, filesystem). Content is MDX in Astro content collections, enriched at build time from the GitHub API.
+
+## Commands
+
+| Command              | Action                                          |
+| -------------------- | ----------------------------------------------- |
+| `pnpm dev`           | Start dev server at `localhost:4321`            |
+| `pnpm build`         | Production build to `dist/`                     |
+| `pnpm preview`       | Preview production build locally                |
+| `pnpm test`          | Run Vitest tests                                |
+| `pnpm test:coverage` | Run tests with coverage report (≥80% threshold) |
+| `pnpm lint`          | ESLint check                                    |
+| `pnpm format:fix`    | Prettier format                                 |
+| `pnpm typecheck`     | Astro type checking                             |
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── desktop/     # Astro: Wallpaper, DesktopIcon
+│   ├── taskbar/     # React: Taskbar, StartMenu, Clock
+│   ├── window/      # React: WindowFrame, TitleBar
+│   ├── apps/        # React: CmdPrompt, Explorer, TaskManager, HelpCenter
+│   └── mobile/      # Astro/React: SafeModeShell, TerminalNav
+├── content/
+│   ├── projects/         # MDX project write-ups
+│   └── devops-academy/   # MDX educational articles
+├── layouts/         # DesktopLayout.astro (shell)
+├── pages/           # index.astro (single page entry)
+├── stores/          # Nano Stores (windows, desktop, filesystem)
+├── lib/             # GitHub API fetcher, CLI commands, constants
+└── styles/          # XP design tokens + Tailwind v4 config
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Agent Onboarding
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+For AI agents (OpenCode, Claude, etc.), see [AGENTS.md](./AGENTS.md) for the Conductor methodology workflow, TDD requirements, commit conventions, and project-specific rules.
