@@ -7,8 +7,8 @@
   - [ ] Add `/// <reference types="vitest/config" />` triple-slash directive
   - [ ] Replace `defineConfig({ test: {...} })` with `getViteConfig({ test: {...} })`
   - [ ] Verify all existing options (`include`, `environment`, `setupFiles`, `coverage`) are preserved
-- [ ] Task 1.2: Validate configuration works with existing test suite
-  - [ ] Run `CI=true pnpm test` — verify no regressions in unchanged tests (xp-theme, directory-structure, check-modularity, clock, taskbar)
+- [x] Task 1.2: Validate configuration works with existing test suite
+  - [x] Run `CI=true pnpm test` — verify no regressions in unchanged tests (xp-theme, directory-structure, check-modularity, clock, taskbar)
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Configuration Migration' (Protocol in workflow.md)
 
 ## Phase 2: DesktopIcon Test — Container API Migration
