@@ -14,11 +14,11 @@
 - [x] Verify: `pnpm ls --depth=0` shows all expected packages [de1b56a]
 
 ### Task 1.3: Create Directory Structure
-- [~] Create `src/components/desktop/`, `src/components/taskbar/`, `src/components/window/`, `src/components/apps/`, `src/components/mobile/`
-- [ ] Create `src/content/projects/`, `src/content/devops-academy/`
-- [ ] Create `src/layouts/`, `src/pages/`, `src/stores/`, `src/lib/`, `src/styles/`
-- [ ] Create `public/fonts/`, `public/icons/`, `public/wallpapers/`, `public/sounds/`
-- [ ] Verify: directory tree matches TDD §1 specification
+- [x] Create `src/components/desktop/`, `src/components/taskbar/`, `src/components/window/`, `src/components/apps/`, `src/components/mobile/` [14efe86]
+- [x] Create `src/content/projects/`, `src/content/devops-academy/` [14efe86]
+- [x] Create `src/layouts/`, `src/pages/`, `src/stores/`, `src/lib/`, `src/styles/` [14efe86]
+- [x] Create `public/fonts/`, `public/icons/`, `public/wallpapers/`, `public/sounds/` [14efe86]
+- [x] Verify: directory tree matches TDD §1 specification [14efe86]
 
 ### Task 1.4: Write Tests for Directory Structure
 - [ ] Create `tests/directory-structure.test.ts` to verify all required directories exist
