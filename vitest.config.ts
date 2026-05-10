@@ -1,12 +1,7 @@
-import { defineConfig } from 'vitest/config';
-import { resolve } from 'path';
+/// <reference types="vitest/config" />
+import { getViteConfig } from 'astro/config';
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src'),
-    },
-  },
+export default getViteConfig({
   test: {
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     environment: 'jsdom',
