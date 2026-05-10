@@ -1,35 +1,56 @@
+// @vitest-environment node
 import { describe, it, expect } from 'vitest';
-import { readFileSync, existsSync } from 'fs';
-import { resolve } from 'path';
-
-const wallpaperPath = resolve(__dirname, '..', 'src', 'components', 'desktop', 'Wallpaper.astro');
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import Wallpaper from '@/components/desktop/Wallpaper.astro';
 
 describe('Wallpaper.astro', () => {
-  it('should exist at the expected path', () => {
-    // This test is expected to fail initially (Red phase)
-    expect(existsSync(wallpaperPath)).toBe(true);
+  it('should render successfully without props', async () => {
+    const container = await AstroContainer.create();
+    const result = await container.renderToString(Wallpaper);
+
+    expect(result).not.toBeNull();
+    expect(result.length).toBeGreaterThan(0);
   });
 
-  it('should accept optional imageSrc prop', () => {
-    const source = readFileSync(wallpaperPath, 'utf-8');
-    expect(source).toContain('imageSrc');
+  it('should render SVG rolling hills art (viewBox present)', async () => {
+    const container = await AstroContainer.create();
+    const result = await container.renderToString(Wallpaper);
+
+    expect(result).toContain('viewBox="0 0 1440 500"');
+    expect(result).toContain('preserveAspectRatio="xMidYMax slice"');
   });
 
-  it('should render SVG/CSS rolling hills art', () => {
-    const source = readFileSync(wallpaperPath, 'utf-8');
-    // Should contain SVG-like art or CSS gradient art
-    expect(source).toMatch(/svg|linear-gradient|radial-gradient/i);
+  it('should render sky gradient', async () => {
+    const container = await AstroContainer.create();
+    const result = await container.renderToString(Wallpaper);
+
+    expect(result).toContain('linear-gradient');
   });
 
-  it('should use full viewport coverage (w-screen × h-screen)', () => {
-    const source = readFileSync(wallpaperPath, 'utf-8');
-    // Tailwind's w-screen = 100vw, h-screen = 100vh
-    expect(source).toMatch(/w-screen/);
-    expect(source).toMatch(/h-screen/);
+  it('should use full viewport coverage (w-screen × h-screen)', async () => {
+    const container = await AstroContainer.create();
+    const result = await container.renderToString(Wallpaper);
+
+    expect(result).toContain('w-screen');
+    expect(result).toContain('h-screen');
   });
 
-  it('should have z-index of 0', () => {
-    const source = readFileSync(wallpaperPath, 'utf-8');
-    expect(source).toMatch(/z-0|z-index:\s*0/);
+  it('should have z-index: 0 on the wrapping element', async () => {
+    const container = await AstroContainer.create();
+    const result = await container.renderToString(Wallpaper);
+
+    expect(result).toContain('z-index: 0');
+  });
+
+  it('should accept and render optional imageSrc prop', async () => {
+    const container = await AstroContainer.create();
+    const result = await container.renderToString(Wallpaper, {
+      props: {
+        imageSrc: '/custom-wallpaper.jpg',
+      },
+    });
+
+    expect(result).toContain('src="/custom-wallpaper.jpg"');
+    expect(result).toContain('<img');
   });
 });
