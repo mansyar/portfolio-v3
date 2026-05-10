@@ -7,7 +7,7 @@
  */
 
 import { readdirSync, statSync, readFileSync } from 'fs';
-import { join, resolve } from 'path';
+import { join, resolve, relative } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,7 +48,7 @@ function checkModularity() {
 
     if (lineCount > MAX_LINES) {
       violations.push({
-        file: file.replace(projectRoot + '\\', '').replace(projectRoot + '/', ''),
+        file: relative(projectRoot, file),
         lines: lineCount,
       });
     }
@@ -61,7 +61,9 @@ function checkModularity() {
 const violations = checkModularity();
 
 if (violations.length > 0) {
-  console.error(`\n❌ Modularity check FAILED: ${violations.length} file(s) exceed ${MAX_LINES} lines.\n`);
+  console.error(
+    `\n❌ Modularity check FAILED: ${violations.length} file(s) exceed ${MAX_LINES} lines.\n`,
+  );
   for (const v of violations) {
     console.error(`   ${v.file} (${v.lines} lines)`);
   }

@@ -98,39 +98,43 @@
 /* Outset border (raised button / panel) */
 .xp-outset {
   border: var(--xp-border-3d-width) solid;
-  border-color: var(--xp-border-outset-top) var(--xp-border-outset-right) var(--xp-border-outset-bottom) var(--xp-border-outset-left);
+  border-color: var(--xp-border-outset-top) var(--xp-border-outset-right)
+    var(--xp-border-outset-bottom) var(--xp-border-outset-left);
 }
 
 /* Inset border (sunken input / pressed button) */
 .xp-inset {
   border: var(--xp-border-3d-width) solid;
-  border-color: var(--xp-border-inset-top) var(--xp-border-inset-right) var(--xp-border-inset-bottom) var(--xp-border-inset-left);
+  border-color: var(--xp-border-inset-top) var(--xp-border-inset-right)
+    var(--xp-border-inset-bottom) var(--xp-border-inset-left);
 }
 
 /* Window chrome border */
 .xp-window-border {
   border: 3px solid;
-  border-color: var(--xp-border-window-top) var(--xp-border-window-right) var(--xp-border-window-bottom) var(--xp-border-window-left);
+  border-color: var(--xp-border-window-top) var(--xp-border-window-right)
+    var(--xp-border-window-bottom) var(--xp-border-window-left);
   border-radius: var(--xp-window-border-radius);
 }
 
 /* === Button Styles === */
 .xp-button {
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  height: var(--xp-button-height);
-  min-width: var(--xp-button-min-width);
-  padding: 0 12px;
   background: var(--xp-button-face);
-  font-family: var(--xp-font-family);
-  font-size: var(--xp-font-size-sm);
   color: var(--xp-button-text);
   cursor: pointer;
+  display: inline-flex;
+  font-family: var(--xp-font-family);
+  font-size: var(--xp-font-size-sm);
+  height: var(--xp-button-height);
+  justify-content: center;
+  min-width: var(--xp-button-min-width);
+  padding: 0 12px;
   user-select: none;
 }
 .xp-button:active {
-  border-color: var(--xp-border-inset-top) var(--xp-border-inset-right) var(--xp-border-inset-bottom) var(--xp-border-inset-left);
+  border-color: var(--xp-border-inset-top) var(--xp-border-inset-right)
+    var(--xp-border-inset-bottom) var(--xp-border-inset-left);
 }
 .xp-button:disabled {
   background: var(--xp-button-disabled);

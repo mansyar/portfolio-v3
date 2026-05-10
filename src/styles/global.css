@@ -1,8 +1,8 @@
 /* Import XP design tokens first */
-@import "./xp-theme.css";
+@import './xp-theme.css';
 
 /* Tailwind CSS v4 */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* === Tailwind Theme Configuration === */
 @theme {

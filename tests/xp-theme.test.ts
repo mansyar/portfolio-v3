@@ -58,11 +58,11 @@ describe('Global CSS (Tailwind v4 integration)', () => {
   const css = readFileSync(globalPath, 'utf-8');
 
   it('should import xp-theme.css', () => {
-    expect(css).toContain('@import "./xp-theme.css"');
+    expect(css).toContain("@import './xp-theme.css'");
   });
 
   it('should import Tailwind CSS', () => {
-    expect(css).toContain('@import "tailwindcss"');
+    expect(css).toContain("@import 'tailwindcss'");
   });
 
   it('should define @theme block with Tailwind tokens', () => {

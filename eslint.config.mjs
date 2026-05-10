@@ -23,12 +23,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: [
-      'dist/',
-      'coverage/',
-      '.astro/',
-      'node_modules/',
-      'public/',
-    ],
-  }
+    ignores: ['dist/', 'coverage/', '.astro/', 'node_modules/', 'public/'],
+  },
 );

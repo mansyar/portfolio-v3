@@ -37,9 +37,7 @@ describe('Project Directory Structure', () => {
   });
 
   it('should have all required directories', () => {
-    const missing = requiredDirectories.filter(
-      (dir) => !existsSync(resolve(projectRoot, dir))
-    );
+    const missing = requiredDirectories.filter((dir) => !existsSync(resolve(projectRoot, dir)));
     expect(missing).toEqual([]);
   });
 });
