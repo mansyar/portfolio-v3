@@ -1,6 +1,32 @@
+import { useStore } from '@nanostores/react';
+import {
+  $taskbarWindows,
+  $activeWindow,
+  focusWindow,
+  minimizeWindow,
+  restoreWindow,
+} from '@/stores/windows';
+import type { WindowId } from '@/stores/windows';
 import { Clock } from './Clock';
 
 export function Taskbar() {
+  const windows = useStore($taskbarWindows);
+  const activeWindow = useStore($activeWindow);
+
+  const handleClick = (id: WindowId) => {
+    const state = windows.find((w) => w.id === id);
+    if (!state) return;
+
+    if (activeWindow === id && state.status !== 'minimized') {
+      minimizeWindow(id);
+    } else if (state.status === 'minimized') {
+      restoreWindow(id);
+      focusWindow(id);
+    } else {
+      focusWindow(id);
+    }
+  };
+
   return (
     <div
       className="xp-taskbar-border"
@@ -37,8 +63,39 @@ export function Taskbar() {
         Start
       </button>
 
-      {/* Spacer */}
-      <div style={{ flex: 1 }} />
+      {/* Window Buttons */}
+      <div style={{ display: 'flex', flex: 1, gap: 2, padding: '0 4px', overflow: 'hidden' }}>
+        {windows.map((w) => (
+          <button
+            key={w.id}
+            onClick={() => handleClick(w.id as WindowId)}
+            className={activeWindow === w.id ? 'taskbar-btn active' : 'taskbar-btn'}
+            aria-label={w.title}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              height: '100%',
+              padding: '0 8px',
+              border: '1px solid rgba(255,255,255,0.3)',
+              borderRadius: 2,
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              fontSize: 'inherit',
+              color: '#ffffff',
+              background: activeWindow === w.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
+              minWidth: 0,
+              maxWidth: 180,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <img src={w.icon} alt="" width={16} height={16} style={{ flexShrink: 0 }} />
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{w.title}</span>
+          </button>
+        ))}
+      </div>
 
       {/* System Tray */}
       <div
