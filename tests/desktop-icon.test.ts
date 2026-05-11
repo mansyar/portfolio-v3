@@ -1,11 +1,16 @@
 // @vitest-environment node
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import DesktopIcon from '@/components/desktop/DesktopIcon.astro';
 
 describe('DesktopIcon.astro', () => {
+  let container: AstroContainer;
+
+  beforeAll(async () => {
+    container = await AstroContainer.create();
+  });
+
   it('should render successfully with required props', async () => {
-    const container = await AstroContainer.create();
     const result = await container.renderToString(DesktopIcon, {
       props: {
         icon: '/icons/test.svg',
@@ -19,7 +24,6 @@ describe('DesktopIcon.astro', () => {
   });
 
   it('should include data-window-id attribute', async () => {
-    const container = await AstroContainer.create();
     const result = await container.renderToString(DesktopIcon, {
       props: {
         icon: '/icons/test.svg',
@@ -32,7 +36,6 @@ describe('DesktopIcon.astro', () => {
   });
 
   it('should include data-window-label attribute', async () => {
-    const container = await AstroContainer.create();
     const result = await container.renderToString(DesktopIcon, {
       props: {
         icon: '/icons/test.svg',
@@ -45,7 +48,6 @@ describe('DesktopIcon.astro', () => {
   });
 
   it('should render an img tag with the correct icon src', async () => {
-    const container = await AstroContainer.create();
     const result = await container.renderToString(DesktopIcon, {
       props: {
         icon: '/icons/test.svg',
@@ -59,7 +61,6 @@ describe('DesktopIcon.astro', () => {
   });
 
   it('should render the label text in a span', async () => {
-    const container = await AstroContainer.create();
     const result = await container.renderToString(DesktopIcon, {
       props: {
         icon: '/icons/test.svg',
@@ -72,7 +73,6 @@ describe('DesktopIcon.astro', () => {
   });
 
   it('should reflect icon, label, and windowId props in rendered HTML', async () => {
-    const container = await AstroContainer.create();
     const result = await container.renderToString(DesktopIcon, {
       props: {
         icon: '/icons/custom.svg',

@@ -19,8 +19,18 @@ describe('Home Page Integration', () => {
       renderer: {
         name: '@astrojs/react',
         /* eslint-disable @typescript-eslint/no-explicit-any */
-        check: () => {
-          return true; // Accept all framework components as React
+        check: async (Component: unknown) => {
+          // Accept React components: functions, forwardRef objects, lazy wrappers
+          if (typeof Component === 'object' && Component !== null) {
+            const $$typeof = (Component as Record<string, unknown>).$$typeof;
+            if (
+              typeof $$typeof === 'symbol' &&
+              $$typeof.toString().toLowerCase().includes('react')
+            ) {
+              return true;
+            }
+          }
+          return typeof Component === 'function';
         },
         renderToStaticMarkup: async (Component: any, props: any, children: any) => {
           const newChildren = children?.default ?? children;
