@@ -32,7 +32,7 @@
 - [x] **Write Tests**: Create `tests/start-menu.test.tsx` (20 tests) following the same **dynamic-import + `cleanup()` + `beforeEach` pattern** as `tests/taskbar.test.tsx`:
   - Renders the Start Menu when `$startMenuOpen` is `true`
   - Does not render when `$startMenuOpen` is `false`
-  - Shows blue header with "MARP" initials avatar and "Ansyar Muh Amrulloh" name
+  - Shows blue header with "MARP" initials avatar and "Muhammad Ansyar Rafi Putra" name
   - Left column shows all 4 pinned app items with correct labels
   - Right column shows all 4 system folder items with correct labels
   - Shows "Shut Down..." button in bottom bar
@@ -46,7 +46,7 @@
 ### Task 5: Implement StartMenu Layout (Green Phase)
 
 - [x] **Implement**: Create `src/components/taskbar/StartMenu.tsx` with:
-  - Blue gradient header bar using `--xp-start-header-blue` CSS token, "MARP" initials avatar circle + "Ansyar Muh Amrulloh" name
+  - Blue gradient header bar using `--xp-start-header-blue` CSS token, "MARP" initials avatar circle + "Muhammad Ansyar Rafi Putra" name
   - Left column (`--xp-start-left-bg`): Resume, Explorer, Task Manager, Command Prompt (existing icon at 16×16 + label)
   - Right column (`--xp-start-right-bg`): My Documents, My Computer, Control Panel, Help & Support (existing icon at 16×16 + label)
   - Bottom divider using `--xp-start-separator` + "Shut Down..." button with power icon

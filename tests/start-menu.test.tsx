@@ -37,7 +37,7 @@ describe('StartMenu.tsx — Rendering', () => {
     desktop.$startMenuOpen.set(true);
     render(<StartMenu />);
     expect(screen.getByText('MARP')).toBeInTheDocument();
-    expect(screen.getByText('Ansyar Muh Amrulloh')).toBeInTheDocument();
+    expect(screen.getByText('Muhammad Ansyar Rafi Putra')).toBeInTheDocument();
   });
 
   it('should have role="menu" on the menu container', async () => {

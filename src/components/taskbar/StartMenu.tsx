@@ -163,7 +163,7 @@ export function StartMenu() {
           MARP
         </div>
         <span style={{ color: '#ffffff', fontWeight: 'bold', fontSize: 12 }}>
-          Ansyar Muh Amrulloh
+          Muhammad Ansyar Rafi Putra
         </span>
       </div>
 

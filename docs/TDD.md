@@ -491,7 +491,7 @@ export const FILE_SYSTEM: FSNode = {
 
 ```
 ┌──────────────────────────────────────┐
-│ 👤 Ansyar Muh Amrulloh              │ ← Blue header bar
+│ 👤 Muhammad Ansyar Rafi Putra       │ ← Blue header bar
 ├──────────────┬───────────────────────┤
 │              │                       │
 │ 📄 Resume    │ 📁 My Documents       │
@@ -590,14 +590,14 @@ C:\MANSYAR>_
 
 ```html
 <!-- Default meta (index.astro) -->
-<title>Ansyar Muh Amrulloh — Software Engineer | DevOps & Data</title>
+<title>Muhammad Ansyar Rafi Putra — Software Engineer | DevOps & Data</title>
 <meta
   name="description"
   content="Interactive Windows XP-themed portfolio for a Software Engineer specializing in DevOps and Data Engineering."
 />
 
 <!-- Open Graph -->
-<meta property="og:title" content="Luna OS — Ansyar's Portfolio" />
+<meta property="og:title" content="Luna OS — Muhammad Ansyar's Portfolio" />
 <meta
   property="og:description"
   content="Explore projects through a nostalgic Windows XP interface."
@@ -610,7 +610,7 @@ C:\MANSYAR>_
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Ansyar Muh Amrulloh",
+    "name": "Muhammad Ansyar Rafi Putra",
     "jobTitle": "Software Engineer",
     "url": "https://mansyar.dev"
   }

@@ -45,7 +45,7 @@ Implement a fully interactive Start Menu for the Luna OS Desktop — accessible 
 
 - **Header:** Blue gradient bar using `--xp-start-header-blue` CSS token displaying:
   - User initials avatar "MARP" in a circle (white text on dark blue)
-  - User name: "Ansyar Muh Amrulloh"
+  - User name: "Muhammad Ansyar Rafi Putra"
 - **Left Column (Pinned Apps):** background `--xp-start-left-bg`
   - Resume (opens My Documents window)
   - Explorer (opens My Computer window)
@@ -94,7 +94,7 @@ Implement a fully interactive Start Menu for the Luna OS Desktop — accessible 
 
 ```
 ✅ Clicking Start button opens the two-column menu with slide-up animation (150ms ease-out)
-✅ Menu shows blue header with "MARP" initials avatar and "Ansyar Muh Amrulloh" name
+✅ Menu shows blue header with "MARP" initials avatar and "Muhammad Ansyar Rafi Putra" name
 ✅ Left column: Resume, Explorer, Task Manager, Command Prompt
 ✅ Right column: My Documents, My Computer, Control Panel, Help & Support
 ✅ Each menu item opens the corresponding window and closes the menu
