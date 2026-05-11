@@ -60,12 +60,12 @@
 
 ### Task 6: Wire Menu Items to Window Actions + Keyboard Navigation
 
-- [ ] **Write Tests**:
+- [x] **Write Tests**:
   - Clicking each menu item dispatches `openWindow()` with correct WindowId and calls `closeStartMenu()`
   - Tab key moves focus to next menu item
   - Shift+Tab moves focus to previous menu item
   - Enter on focused item activates it (opens window + closes menu)
-- [ ] **Implement**:
+- [x] **Implement**:
   - Wire each menu item's `onClick` to call `openWindow(id)` then `closeStartMenu()`
     - Resume → `openWindow('mydocs')`
     - Explorer / My Computer → `openWindow('explorer')`
@@ -75,10 +75,10 @@
     - Help & Support → `openWindow('help')`
   - Implement Tab/Shift+Tab keyboard focus cycling via `onKeyDown` handler tracking `aria-activedescendant` index
   - Enter key on focused item triggers its action (same as click)
-- [ ] **Verify Tests**: Confirm all pass
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(taskbar): Wire Start Menu items to window actions and add keyboard nav` + git note
-- [ ] **Update Plan**: Mark task complete with commit SHA
+- [x] **Verify Tests**: Confirm all pass — 29/29 pass
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` — 95% overall
+- [x] **Commit**: Implemented in Task 5 (cbab1f2), tests committed in bb06957
+- [x] **Update Plan**: Mark task complete with commit SHA `bb06957`
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Wire Menu Items to Window Actions + Keyboard Nav' as complete`
 
 ### Task 7: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
