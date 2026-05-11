@@ -1,15 +1,23 @@
-import { useSyncExternalStore } from 'react';
+import { useState, useEffect } from 'react';
 import type { Store, StoreValue } from 'nanostores';
 
 /**
- * Custom useStore hook that directly uses React's useSyncExternalStore
- * to subscribe to Nano Stores. Avoids dependency on @nanostores/react
- * which can cause "Invalid hook call" errors due to React resolution issues.
+ * Subscribe to a Nano Store and get its value in a React component.
+ *
+ * Uses useState + useEffect instead of useSyncExternalStore to avoid
+ * "Invalid hook call" errors in Astro dev mode caused by React resolution issues.
  */
 export function useStore<SomeStore extends Store>(store: SomeStore): StoreValue<SomeStore> {
-  return useSyncExternalStore(
-    (onChange) => store.listen(onChange),
-    () => store.get(),
-    () => store.get(),
-  );
+  const [value, setValue] = useState<StoreValue<SomeStore>>(store.get());
+
+  useEffect(() => {
+    const unsubscribe = store.listen((currentValue) => {
+      setValue(currentValue);
+    });
+    // Ensure we have the latest value
+    setValue(store.get());
+    return unsubscribe;
+  }, [store]);
+
+  return value;
 }
