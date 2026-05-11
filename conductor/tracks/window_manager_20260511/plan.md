@@ -16,13 +16,13 @@ _Build the Nano Stores foundation with all window actions and default configurat
 
 > **Note:** Installed Nano Stores is v1.3.0 (not v0.11.x as in TDD §13). Verify v1.x `map` API — `setKey(key, value)` replaces nested values, but to remove a key create a new object: `const next = { ...$windows.get() }; delete next[id]; $windows.set(next)`. The `$taskbarWindows` filter `w.status !== undefined` is a defensive guard; all entries will always have a defined status since `closeWindow` removes entries entirely.
 
-- [ ] **Write Tests**: Unit tests for `openWindow`, `closeWindow`, `minimizeWindow`, `maximizeWindow`, `restoreWindow` — verify status transitions, z-index assignment, position caching
-- [ ] **Write Tests**: Unit tests for `focusWindow`, `moveWindow`, `resizeWindow` — verify z-counter increment, viewport constraints, min size enforcement
-- [ ] **Write Tests**: Edge cases — opening already-open window, closing nonexistent window, minimize from maximized state
-- [ ] **Write Tests**: Test `closeWindow` with 'closing' transitional status — verify animation delay before removal from store
-- [ ] **Implement**: All 8 window actions in `src/stores/windows.ts` with full logic. `closeWindow` sets status='closing', triggers 120ms animation delay, then removes entry via immutable pattern
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(stores): Implement all window actions (open/close/minimize/maximize/restore/focus/move/resize)`
+- [x] **Write Tests**: Unit tests for `openWindow`, `closeWindow`, `minimizeWindow`, `maximizeWindow`, `restoreWindow` — verify status transitions, z-index assignment, position caching `7ee30dd`
+- [x] **Write Tests**: Unit tests for `focusWindow`, `moveWindow`, `resizeWindow` — verify z-counter increment, viewport constraints, min size enforcement `7ee30dd`
+- [x] **Write Tests**: Edge cases — opening already-open window, closing nonexistent window, minimize from maximized state `7ee30dd`
+- [x] **Write Tests**: Test `closeWindow` with 'closing' transitional status — verify animation delay before removal from store `7ee30dd`
+- [x] **Implement**: All 8 window actions in `src/stores/windows.ts` with full logic. `closeWindow` sets status='closing', triggers 120ms animation delay, then removes entry via immutable pattern `7ee30dd`
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` `7ee30dd`
+- [x] **Commit**: `feat(stores): Implement all window actions (open/close/minimize/maximize/restore/focus/move/resize)` `7ee30dd`
 
 ## Phase 2: Window Chrome Components
 
