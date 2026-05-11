@@ -13,8 +13,8 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 | **Framework**        | Astro               | ^6.x          | Zero-JS by default; hybrid SSR/SSG; content collections         |
 | **UI Library**       | React               | ^19.x         | Interactive islands: windows, CLI, task manager                 |
 | **Styling**          | Tailwind CSS        | ^4.x (v4.3.0) | Custom Luna theme with XP gradients and 3D borders; Vite plugin |
-| **State Management** | Nano Stores         | ^0.11.x       | Ultra-lightweight reactive state for window management          |
-| **React Bridge**     | @nanostores/react   | ^0.8.x        | React integration for Nano Stores                               |
+| **State Management** | Nano Stores         | ^1.3.0        | Ultra-lightweight reactive state for window management          |
+| **React Bridge**     | @nanostores/react   | ^1.1.0        | React integration for Nano Stores                               |
 | **Content**          | MDX + Astro Content | —             | Project write-ups and DevOps Academy articles                   |
 | **Language**         | TypeScript          | ^5.x          | Strict type checking across all source files                    |
 
