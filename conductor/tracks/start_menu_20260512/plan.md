@@ -121,23 +121,13 @@
 
 ### Task 10: Implement Shutdown / Goodbye Overlay
 
-- [ ] **Write Tests**: Create `tests/shutdown-overlay.test.tsx` with:
-  - Renders dark shutdown overlay with "Windows is shutting down..." text when triggered
-  - Shows an indeterminate animated progress bar
-  - Auto-dismisses and restores desktop after full sequence (~6s total)
-  - Does not render when not triggered
-  - Cleanup: component unmount clears timeouts
-- [ ] **Implement**: Create Shutdown overlay component inline in `StartMenu.tsx`:
-  - **Phase 1 (0-3s):** Full-screen dark overlay fading in over 500ms, "Windows is shutting down..." centered text (Tahoma, white), indeterminate progress bar (XP blue gradient, smooth scroll)
-  - **Phase 2 (3-4s):** Fade to solid black over 1 second
-  - **Phase 3 (4-6s):** Hold black for 2 seconds, then remove overlay (simulates reboot back to desktop)
-  - **Note:** NOT a BSOD — BSOD visual is reserved for the 404 error page (TDD §11 / Track 4C). This is an authentic XP "Windows is shutting down" experience.
-  - Respects `prefers-reduced-motion` (skip animations, instant transitions)
-- [ ] **Wire**: "Shut Down..." button click triggers overlay state
-- [ ] **Verify Tests**: Confirm all pass
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(taskbar): Implement Shut Down XP-style shutdown overlay with auto-reboot` + git note
-- [ ] **Update Plan**: Mark task complete with commit SHA
+- [x] **Write Tests**: Create `tests/shutdown-overlay.test.tsx` (5 tests)
+- [x] **Implement**: Create `src/components/taskbar/ShutdownOverlay.tsx` with 3-phase sequence
+- [x] **Wire**: "Shut Down..." button click triggers overlay state
+- [x] **Verify Tests**: Confirm all pass — 198/198 pass across 15 files
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` — 95% overall
+- [x] **Commit**: `feat(taskbar): Implement Shut Down XP-style shutdown overlay with auto-reboot` + git note
+- [x] **Update Plan**: Mark task complete with commit SHA `07c5b76`
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Implement Shutdown / Goodbye Overlay' as complete`
 
 ### Task 11: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
