@@ -1,6 +1,6 @@
 # Implementation Plan: Window Manager
 
-## Phase 1: Window Store & Actions
+## Phase 1: Window Store & Actions [checkpoint: db1fec6]
 
 _Build the Nano Stores foundation with all window actions and default configurations._
 
