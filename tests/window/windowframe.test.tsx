@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
-import type { FC } from 'react';
+import type { FC, MouseEvent } from 'react';
 
 interface WindowState {
   id: string;
@@ -16,7 +16,18 @@ interface WindowState {
   status: string;
 }
 
-let WindowFrame: FC<{ state: WindowState; isActive: boolean }>;
+interface WindowFrameProps {
+  state: WindowState;
+  isActive: boolean;
+  onMinimize?: () => void;
+  onMaximize?: () => void;
+  onClose?: () => void;
+  onDragStart?: (e: MouseEvent) => void;
+  onResizeStart?: (e: MouseEvent, dir: string) => void;
+  children?: React.ReactNode;
+}
+
+let WindowFrame: FC<WindowFrameProps>;
 
 beforeEach(async () => {
   cleanup();
@@ -96,5 +107,60 @@ describe('WindowFrame.tsx', () => {
     const { container } = render(<WindowFrame state={state} isActive={true} />);
     const frame = container.firstChild as HTMLElement;
     expect(frame.style.zIndex).toBe('150');
+  });
+
+  it('should accept and wire callback props to TitleBar', () => {
+    const onMinimize = vi.fn();
+    const onMaximize = vi.fn();
+    const onClose = vi.fn();
+    render(
+      <WindowFrame
+        state={makeState()}
+        isActive={true}
+        onMinimize={onMinimize}
+        onMaximize={onMaximize}
+        onClose={onClose}
+      />,
+    );
+    expect(screen.getByLabelText('Minimize')).toBeInTheDocument();
+    expect(screen.getByLabelText('Maximize')).toBeInTheDocument();
+    expect(screen.getByLabelText('Close')).toBeInTheDocument();
+  });
+
+  describe('Edge/Corner Resize', () => {
+    it('should render 8 resize handle zones', () => {
+      const { container } = render(<WindowFrame state={makeState()} isActive={true} />);
+      const handles = container.querySelectorAll('[data-resize]');
+      expect(handles.length).toBe(8);
+    });
+
+    it('should have resize handles with correct direction attributes', () => {
+      const { container } = render(<WindowFrame state={makeState()} isActive={true} />);
+      const directions = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
+      directions.forEach((dir) => {
+        const handle = container.querySelector(`[data-resize="${dir}"]`);
+        expect(handle).toBeInTheDocument();
+      });
+    });
+
+    it('should apply correct cursor style for each resize direction', () => {
+      const { container } = render(<WindowFrame state={makeState()} isActive={true} />);
+      expect(container.querySelector('[data-resize="n"]')).toHaveStyle('cursor: n-resize');
+      expect(container.querySelector('[data-resize="s"]')).toHaveStyle('cursor: s-resize');
+      expect(container.querySelector('[data-resize="e"]')).toHaveStyle('cursor: e-resize');
+      expect(container.querySelector('[data-resize="w"]')).toHaveStyle('cursor: w-resize');
+      expect(container.querySelector('[data-resize="ne"]')).toHaveStyle('cursor: ne-resize');
+      expect(container.querySelector('[data-resize="nw"]')).toHaveStyle('cursor: nw-resize');
+      expect(container.querySelector('[data-resize="se"]')).toHaveStyle('cursor: se-resize');
+      expect(container.querySelector('[data-resize="sw"]')).toHaveStyle('cursor: sw-resize');
+    });
+
+    it('should have 8px hit area on resize handles', () => {
+      const { container } = render(<WindowFrame state={makeState()} isActive={true} />);
+      const handles = container.querySelectorAll('[data-resize]');
+      handles.forEach((handle) => {
+        expect(handle).toHaveStyle('position: absolute');
+      });
+    });
   });
 });

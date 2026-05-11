@@ -185,4 +185,145 @@ describe('WindowLayer.tsx', () => {
       expect(state.y).toBe(0);
     });
   });
+
+  describe('Resize Logic', () => {
+    it('should resize width from east handle', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="e"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 400, clientY: 200 });
+      fireEvent.mouseMove(document, { clientX: 500, clientY: 200 });
+
+      const state = stores.$windows.get().explorer;
+      expect(state.width).toBe(700 + 100);
+    });
+
+    it('should resize height from south handle', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="s"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 200, clientY: 300 });
+      fireEvent.mouseMove(document, { clientX: 200, clientY: 450 });
+
+      const state = stores.$windows.get().explorer;
+      expect(state.height).toBe(500 + 150);
+    });
+
+    it('should resize from southeast corner', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="se"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 400, clientY: 300 });
+      fireEvent.mouseMove(document, { clientX: 500, clientY: 400 });
+
+      const state = stores.$windows.get().explorer;
+      expect(state.width).toBe(800);
+      expect(state.height).toBe(600);
+    });
+
+    it('should resize from north edge', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="n"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 300, clientY: 60 });
+      // Drag upward by 20px
+      fireEvent.mouseMove(document, { clientX: 300, clientY: 40 });
+
+      const state = stores.$windows.get().explorer;
+      // y should decrease and height should increase
+      expect(state.y).toBe(40);
+      expect(state.height).toBe(520);
+    });
+
+    it('should resize from west edge', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="w"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 80, clientY: 200 });
+      // Drag left by 20px
+      fireEvent.mouseMove(document, { clientX: 60, clientY: 200 });
+
+      const state = stores.$windows.get().explorer;
+      // x should decrease and width should increase
+      expect(state.x).toBe(60);
+      expect(state.width).toBe(720);
+    });
+
+    it('should respect minWidth during resize', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="e"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 400, clientY: 200 });
+      // Try to shrink below minWidth (400)
+      fireEvent.mouseMove(document, { clientX: -1000, clientY: 200 });
+
+      const state = stores.$windows.get().explorer;
+      expect(state.width).toBe(400); // minWidth
+    });
+
+    it('should respect minHeight during resize', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="s"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 200, clientY: 300 });
+      fireEvent.mouseMove(document, { clientX: 200, clientY: -1000 });
+
+      const state = stores.$windows.get().explorer;
+      expect(state.height).toBe(300); // minHeight
+    });
+
+    it('should stop resize tracking after mouseup', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const handle = container.querySelector('[data-resize="se"]')!;
+
+      fireEvent.mouseDown(handle, { clientX: 400, clientY: 300 });
+      fireEvent.mouseUp(document);
+
+      const before = stores.$windows.get().explorer.width;
+
+      fireEvent.mouseMove(document, { clientX: 600, clientY: 500 });
+
+      const after = stores.$windows.get().explorer.width;
+      expect(after).toBe(before);
+    });
+  });
+
+  describe('Maximize/Restore Toggle', () => {
+    it('should maximize on first title bar double-click', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const titlebar = container.querySelector('[data-testid="window-titlebar"]')!;
+
+      fireEvent.doubleClick(titlebar);
+
+      const state = stores.$windows.get().explorer;
+      expect(state.status).toBe('maximized');
+    });
+  });
 });
