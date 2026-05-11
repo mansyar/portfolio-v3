@@ -110,6 +110,40 @@ describe('WindowFrame.tsx', () => {
     expect(frame.style.zIndex).toBe('150');
   });
 
+  describe('Window Transitions', () => {
+    it('should apply open animation class for status="open"', () => {
+      const { container } = render(
+        <WindowFrame state={makeState({ status: 'open' })} isActive={true} />,
+      );
+      const frame = container.firstChild as HTMLElement;
+      expect(frame.className).toContain('window-open');
+    });
+
+    it('should apply closing animation class for status="closing"', () => {
+      const { container } = render(
+        <WindowFrame state={makeState({ status: 'closing' })} isActive={true} />,
+      );
+      const frame = container.firstChild as HTMLElement;
+      expect(frame.className).toContain('window-closing');
+    });
+
+    it('should apply minimized class for status="minimized"', () => {
+      const { container } = render(
+        <WindowFrame state={makeState({ status: 'minimized' })} isActive={true} />,
+      );
+      const frame = container.firstChild as HTMLElement;
+      expect(frame.className).toContain('window-minimized');
+    });
+
+    it('should apply maximized class for status="maximized"', () => {
+      const { container } = render(
+        <WindowFrame state={makeState({ status: 'maximized' })} isActive={true} />,
+      );
+      const frame = container.firstChild as HTMLElement;
+      expect(frame.className).toContain('window-maximized');
+    });
+  });
+
   it('should call onFocusRequest when the frame is clicked', () => {
     const onFocusRequest = vi.fn();
     const { container } = render(

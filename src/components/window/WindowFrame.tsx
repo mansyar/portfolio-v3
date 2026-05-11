@@ -53,6 +53,17 @@ export function WindowFrame({
 }: WindowFrameProps) {
   const shadow = isActive ? '0 4px 16px rgba(0,0,0,0.35)' : '0 2px 8px rgba(0,0,0,0.2)';
 
+  const animClass =
+    state.status === 'open'
+      ? 'window-open'
+      : state.status === 'closing'
+        ? 'window-closing'
+        : state.status === 'minimized'
+          ? 'window-minimized'
+          : state.status === 'maximized'
+            ? 'window-maximized'
+            : '';
+
   return (
     <div
       style={{
@@ -71,8 +82,18 @@ export function WindowFrame({
         fontFamily: '"Tahoma", "Trebuchet MS", sans-serif',
         fontSize: 11,
         overflow: 'hidden',
+        transition: 'transform 150ms ease-out, opacity 150ms ease-out',
+        opacity: state.status === 'closing' || state.status === 'minimized' ? 0 : 1,
+        transform:
+          state.status === 'closing'
+            ? 'scale(0.95)'
+            : state.status === 'open'
+              ? 'scale(1)'
+              : state.status === 'minimized'
+                ? 'translateY(100vh) scale(0.5)'
+                : '',
       }}
-      className="xp-window-border"
+      className={`xp-window-border ${animClass}`.trim()}
       onClick={onFocusRequest}
     >
       <TitleBar

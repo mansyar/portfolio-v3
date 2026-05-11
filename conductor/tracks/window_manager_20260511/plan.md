@@ -85,12 +85,12 @@ _Implement drag, resize, z-index stacking, minimize/maximize/restore animations.
 
 ### Task 8: Implement Z-Index Stacking & Focus-on-Click
 
-- [ ] **Write Tests**: Test click anywhere in window calls `focusWindow()`
-- [ ] **Write Tests**: Test z-index values are unique and incrementing
-- [ ] **Write Tests**: Test `$activeWindow` updates correctly on focus
-- [ ] **Implement**: Click handler on WindowFrame → `focusWindow()`, dynamic zIndex style, active/inactive visual state
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Implement z-index stacking and focus-on-click`
+- [x] **Write Tests**: Test click anywhere in window calls `focusWindow()` `da6317c`
+- [x] **Write Tests**: Test z-index values are unique and incrementing `da6317c`
+- [x] **Write Tests**: Test `$activeWindow` updates correctly on focus `da6317c`
+- [x] **Implement**: Click handler on WindowFrame → `focusWindow()`, dynamic zIndex style, active/inactive visual state `da6317c`
+- [x] **Verify Coverage**: `pnpm test:coverage` `da6317c`
+- [x] **Commit**: `feat(window): Implement z-index stacking and focus-on-click` `da6317c`
 
 ### Task 9: Implement Open/Close/Minimize/Maximize/Restore with CSS Transitions
 
