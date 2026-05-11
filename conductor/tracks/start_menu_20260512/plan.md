@@ -21,10 +21,10 @@
 
 ### Task 3: Create 16×16 Start Menu Icon Assets
 
-- [ ] **Implement**: Add reusable CSS class (`.startmenu-icon`) that resizes existing 48×48 desktop icons from `public/icons/` to 16×16 for Start Menu items. No new SVG files needed — the existing icon set is reused at reduced scale.
-- [ ] **Verify**: Check that each Start Menu item renders its icon at 16×16 without distortion
-- [ ] **Commit**: `feat(taskbar): Add CSS utility for Start Menu 16×16 icon sizing` + git note
-- [ ] **Update Plan**: Mark task complete with commit SHA
+- [x] **Implement**: Add reusable CSS class (`.startmenu-icon`) that resizes existing 48×48 desktop icons from `public/icons/` to 16×16 for Start Menu items. No new SVG files needed — the existing icon set is reused at reduced scale.
+- [x] **Verify**: Check that each Start Menu item renders its icon at 16×16 without distortion
+- [x] **Commit**: `feat(taskbar): Add CSS utility for Start Menu 16×16 icon sizing` + git note
+- [x] **Update Plan**: Mark task complete with commit SHA `f9e1f54`
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Create 16×16 Start Menu Icon Assets' as complete`
 
 ### Task 4: Write StartMenu Component Tests (Red Phase)
