@@ -123,6 +123,8 @@ describe('StartMenu.tsx — Window Actions', () => {
     render(<StartMenu />);
     fireEvent.click(screen.getByText('Resume'));
     expect(windows.$windows.get().mydocs).toBeDefined();
+    // Wait for close animation to complete
+    await new Promise((resolve) => setTimeout(resolve, 150));
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 
@@ -175,9 +177,11 @@ describe('StartMenu.tsx — Window Actions', () => {
     expect(windows.$windows.get().help).toBeDefined();
   });
 
-  it('should close menu when clicking any menu item', () => {
+  it('should close menu when clicking any menu item', async () => {
     render(<StartMenu />);
     fireEvent.click(screen.getByText('Resume'));
+    // Wait for close animation to complete
+    await new Promise((resolve) => setTimeout(resolve, 150));
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 });
@@ -218,7 +222,7 @@ describe('StartMenu.tsx — Keyboard Navigation', () => {
     expect(afterShift).toBeDefined();
   });
 
-  it('should activate focused item with Enter and close menu', () => {
+  it('should activate focused item with Enter and close menu', async () => {
     render(<StartMenu />);
     const menu = screen.getByRole('menu');
 
@@ -226,17 +230,19 @@ describe('StartMenu.tsx — Keyboard Navigation', () => {
     fireEvent.keyDown(menu, { key: 'Tab' });
     fireEvent.keyDown(menu, { key: 'Enter' });
 
-    // Enter should activate the item and close the menu
+    // Wait for close animation to complete
+    await new Promise((resolve) => setTimeout(resolve, 150));
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 
-  it('should close menu with Escape key', () => {
+  it('should close menu with Escape key', async () => {
     render(<StartMenu />);
     const menu = screen.getByRole('menu');
 
     fireEvent.keyDown(menu, { key: 'Escape' });
 
-    // Menu should be closed after Escape
+    // Wait for close animation to complete
+    await new Promise((resolve) => setTimeout(resolve, 150));
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 });

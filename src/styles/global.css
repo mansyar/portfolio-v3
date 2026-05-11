@@ -99,11 +99,45 @@
   to { transform: scale(1); opacity: 1; }
 }
 
+/* === Start Menu Animation Classes === */
+
+.start-menu-open {
+  animation: startMenuOpen 150ms ease-out forwards;
+}
+
+.start-menu-closing {
+  animation: startMenuClose 100ms ease-in forwards;
+}
+
+@keyframes startMenuOpen {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes startMenuClose {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .window-open,
   .window-closing,
   .window-minimized,
-  .window-maximized {
+  .window-maximized,
+  .start-menu-open,
+  .start-menu-closing {
     animation: none !important;
   }
   .xp-window-border {

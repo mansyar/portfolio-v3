@@ -4,6 +4,8 @@ import { $startMenuOpen, closeStartMenu } from '@/stores/desktop';
 import { openWindow } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
 
+const CLOSE_ANIMATION_MS = 100;
+
 interface MenuItem {
   id: string;
   label: string;
@@ -40,12 +42,28 @@ const ALL_ITEMS = [...LEFT_ITEMS, ...RIGHT_ITEMS];
 export function StartMenu() {
   const isOpen = useStore($startMenuOpen);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isRendering, setIsRendering] = useState(false);
+  const [animClass, setAnimClass] = useState('');
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Reset active index when menu opens
+  // Track animation state based on isOpen transitions
   useEffect(() => {
     if (isOpen) {
+      setIsRendering(true);
+      // Use requestAnimationFrame to ensure the DOM is mounted before adding open animation
+      requestAnimationFrame(() => {
+        setAnimClass('start-menu-open');
+      });
       setActiveIndex(0);
+    } else if (isRendering) {
+      // Start closing animation
+      setAnimClass('start-menu-closing');
+      // After animation completes, remove from DOM
+      const timer = setTimeout(() => {
+        setIsRendering(false);
+        setAnimClass('');
+      }, CLOSE_ANIMATION_MS);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -111,7 +129,7 @@ export function StartMenu() {
     [activeIndex, handleItemClick],
   );
 
-  if (!isOpen) return null;
+  if (!isRendering) return null;
 
   return (
     <div
@@ -120,7 +138,7 @@ export function StartMenu() {
       aria-activedescendant={`start-menu-item-${ALL_ITEMS[activeIndex]?.id ?? ''}`}
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      className="start-menu"
+      className={`start-menu${animClass ? ' ' + animClass : ''}`}
       style={{
         position: 'fixed',
         bottom: 'var(--xp-taskbar-height, 40px)',
