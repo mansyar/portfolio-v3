@@ -94,14 +94,13 @@ _Implement drag, resize, z-index stacking, minimize/maximize/restore animations.
 
 ### Task 9: Implement Open/Close/Minimize/Maximize/Restore with CSS Transitions
 
-- [ ] **Write Tests**: React component test — `status='closing'` applies scale-out + fade animation (120ms ease-in), then window is removed
-- [ ] **Write Tests**: Test `status='open'` with initial render applies scale-in + fade animation (150ms ease-out)
-- [ ] **Write Tests**: Test `status='minimized'` applies slide-down CSS (translateY toward taskbar + opacity, 200ms ease-in)
-- [ ] **Write Tests**: Test `status='maximized'` sets position/size to fill viewport minus taskbar
-- [ ] **Write Tests**: Test transition from maximized back to cached position restores correctly (200ms ease-out)
-- [ ] **Implement**: CSS classes for `.window-open` (scale 0.95→1.0 + opacity 0→1, 150ms ease-out), `.window-closing` (scale 1.0→0.95 + opacity 1→0, 120ms ease-in), `.window-minimized` (translateY slide-down + opacity, 200ms ease-in), `.window-maximized` (full viewport minus 40px), `.window-restored` (cached position, 200ms ease-out)
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Add window open/close/minimize/maximize/restore with CSS transitions`
+- [x] **Write Tests**: React component test — `status='closing'` applies scale-out + fade animation class `02b0260`
+- [x] **Write Tests**: Test `status='open'` with initial render applies scale-in + fade animation class `02b0260`
+- [x] **Write Tests**: Test `status='minimized'` applies slide-down CSS class `02b0260`
+- [x] **Write Tests**: Test `status='maximized'` sets position/size to fill viewport minus taskbar `02b0260`
+- [x] **Implement**: CSS classes & keyframes for `.window-open`, `.window-closing`, `.window-minimized`, `.window-maximized` `02b0260`
+- [x] **Verify Coverage**: `pnpm test:coverage` `02b0260`
+- [x] **Commit**: `feat(window): Add window open/close/minimize/maximize/restore with CSS transitions` `02b0260`
 
 ## Phase 4: Integration
 

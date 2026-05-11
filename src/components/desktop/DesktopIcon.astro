@@ -6,12 +6,19 @@ export interface Props {
 }
 
 const { icon, label, windowId } = Astro.props;
+
+// Single click: open the window
+const onclick = `window.dispatchEvent(new CustomEvent('luna:open-window', { detail: '${windowId}' }))`;
+// Double-click: also open and invert briefly
+const ondblclick = `this.classList.add('desktop-icon--active'); setTimeout(() => this.classList.remove('desktop-icon--active'), 100)`;
 ---
 
 <div
   class="desktop-icon"
   data-window-id={windowId}
   data-window-label={label}
+  onclick={onclick}
+  ondblclick={ondblclick}
 >
   <img
     src={icon}
@@ -39,6 +46,10 @@ const { icon, label, windowId } = Astro.props;
   .desktop-icon:hover {
     background-color: var(--xp-blue-highlight);
     outline: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .desktop-icon--active {
+    filter: invert(1);
   }
 
   .desktop-icon__img {

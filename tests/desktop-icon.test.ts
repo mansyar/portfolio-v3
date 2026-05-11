@@ -85,4 +85,30 @@ describe('DesktopIcon.astro', () => {
     expect(result).toContain('data-window-id="custom"');
     expect(result).toContain('>Custom App<');
   });
+
+  it('should include onclick handler dispatching luna:open-window event', async () => {
+    const result = await container.renderToString(DesktopIcon, {
+      props: {
+        icon: '/icons/test.svg',
+        label: 'Test',
+        windowId: 'explorer',
+      },
+    });
+
+    expect(result).toContain('CustomEvent');
+    expect(result).toContain('luna:open-window');
+    expect(result).toContain('explorer');
+  });
+
+  it('should include double-click visual feedback class', async () => {
+    const result = await container.renderToString(DesktopIcon, {
+      props: {
+        icon: '/icons/test.svg',
+        label: 'Test',
+        windowId: 'test',
+      },
+    });
+
+    expect(result).toContain('ondblclick');
+  });
 });
