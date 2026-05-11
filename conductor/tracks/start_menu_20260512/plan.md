@@ -1,6 +1,6 @@
 # Implementation Plan: Start Menu (Track 1C)
 
-## Phase 1: Start Menu Store & Desktop Store
+## Phase 1: Start Menu Store & Desktop Store [checkpoint: 391c01b]
 
 ### Task 1: Create Desktop Store with Start Menu State
 
@@ -9,9 +9,11 @@
 - [x] **Verify Coverage**: `CI=true pnpm test:coverage`
 - [x] **Commit**: `feat(stores): Add desktop store with Start Menu open/close state` + git note
 - [x] **Update Plan**: Mark task complete with commit SHA `f22b27b`
-- [ ] **Commit Plan**: `conductor(plan): Mark task 'Create Desktop Store with Start Menu State' as complete`
+- [x] **Commit Plan**: `conductor(plan): Mark task 'Create Desktop Store with Start Menu State' as complete`
 
 ### Task 2: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+
+- [x] **Completed**: Phase 1 verified and checkpoint created
 
 ---
 
