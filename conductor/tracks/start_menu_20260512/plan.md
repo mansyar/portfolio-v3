@@ -87,7 +87,7 @@
 
 ---
 
-## Phase 3: Taskbar Integration, Animations & Shutdown Overlay
+## Phase 3: Taskbar Integration, Animations & Shutdown Overlay [checkpoint: 324a558]
 
 ### Task 8: Wire Start Button & Click-Outside/Escape Handling
 
@@ -131,3 +131,5 @@
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Implement Shutdown / Goodbye Overlay' as complete`
 
 ### Task 11: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
+
+- [x] **Completed**: Phase 3 verified and checkpoint created
