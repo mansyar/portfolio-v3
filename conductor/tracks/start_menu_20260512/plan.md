@@ -29,7 +29,7 @@
 
 ### Task 4: Write StartMenu Component Tests (Red Phase)
 
-- [ ] **Write Tests**: Create `tests/start-menu.test.tsx` following the same **dynamic-import + `cleanup()` + `beforeEach` pattern** as `tests/taskbar.test.tsx`:
+- [x] **Write Tests**: Create `tests/start-menu.test.tsx` (20 tests) following the same **dynamic-import + `cleanup()` + `beforeEach` pattern** as `tests/taskbar.test.tsx`:
   - Renders the Start Menu when `$startMenuOpen` is `true`
   - Does not render when `$startMenuOpen` is `false`
   - Shows blue header with "MARP" initials avatar and "Ansyar Muh Amrulloh" name
@@ -38,9 +38,9 @@
   - Shows "Shut Down..." button in bottom bar
   - Tab key cycles through menu items with visible focus indicator
   - Enter activates the focused menu item
-- [ ] **Run Tests**: Confirm tests fail (Red phase)
-- [ ] **Commit**: `test(taskbar): Add StartMenu component tests` + git note
-- [ ] **Update Plan**: Mark task complete with commit SHA
+- [x] **Run Tests**: Confirm tests fail (Red phase) — 14/20 fail as expected
+- [x] **Commit**: `test(taskbar): Add StartMenu component tests and task-manager icon` + git note
+- [x] **Update Plan**: Mark task complete with commit SHA `f21d972`
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Write StartMenu Component Tests' as complete`
 
 ### Task 5: Implement StartMenu Layout (Green Phase)
