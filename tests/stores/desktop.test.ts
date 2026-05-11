@@ -59,3 +59,34 @@ describe('Desktop Store — Start Menu State', () => {
     });
   });
 });
+
+describe('Desktop Store — Shutdown State', () => {
+  beforeEach(async () => {
+    const mod = await import('@/stores/desktop');
+    mod.$shuttingDown.set(false);
+  });
+
+  describe('$shuttingDown atom', () => {
+    it('should initialize to false', async () => {
+      const mod = await import('@/stores/desktop');
+      expect(mod.$shuttingDown.get()).toBe(false);
+    });
+  });
+
+  describe('triggerShutdown', () => {
+    it('should set $shuttingDown to true', async () => {
+      const mod = await import('@/stores/desktop');
+      mod.triggerShutdown();
+      expect(mod.$shuttingDown.get()).toBe(true);
+    });
+  });
+
+  describe('cancelShutdown', () => {
+    it('should set $shuttingDown to false', async () => {
+      const mod = await import('@/stores/desktop');
+      mod.$shuttingDown.set(true);
+      mod.cancelShutdown();
+      expect(mod.$shuttingDown.get()).toBe(false);
+    });
+  });
+});

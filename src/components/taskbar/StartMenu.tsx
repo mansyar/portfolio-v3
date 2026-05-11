@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useStore } from '@/lib/useStore';
-import { $startMenuOpen, closeStartMenu } from '@/stores/desktop';
+import { $startMenuOpen, closeStartMenu, triggerShutdown } from '@/stores/desktop';
 import { openWindow } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
-import { ShutdownOverlay } from './ShutdownOverlay';
 
 const CLOSE_ANIMATION_MS = 100;
 
@@ -45,7 +44,6 @@ export function StartMenu() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isRendering, setIsRendering] = useState(false);
   const [animClass, setAnimClass] = useState('');
-  const [showShutdown, setShowShutdown] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Track animation state based on isOpen transitions
@@ -274,7 +272,7 @@ export function StartMenu() {
           onClick={() => {
             closeStartMenu();
             // Small delay to allow menu close animation before overlay appears
-            setTimeout(() => setShowShutdown(true), 150);
+            setTimeout(() => triggerShutdown(), 150);
           }}
           onMouseEnter={() => setActiveIndex(ALL_ITEMS.length)}
           style={{
@@ -302,9 +300,6 @@ export function StartMenu() {
           <span>Shut Down...</span>
         </div>
       </div>
-
-      {/* Shutdown Overlay */}
-      {showShutdown && <ShutdownOverlay onClose={() => setShowShutdown(false)} />}
     </div>
   );
 }

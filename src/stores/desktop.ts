@@ -26,3 +26,23 @@ export function openStartMenu(): void {
 export function closeStartMenu(): void {
   $startMenuOpen.set(false);
 }
+
+/**
+ * Shutdown overlay state.
+ * Set to `true` to trigger the XP shutdown sequence.
+ */
+export const $shuttingDown = atom<boolean>(false);
+
+/**
+ * Trigger the shutdown sequence.
+ */
+export function triggerShutdown(): void {
+  $shuttingDown.set(true);
+}
+
+/**
+ * Cancel/reset the shutdown sequence (auto-reboot).
+ */
+export function cancelShutdown(): void {
+  $shuttingDown.set(false);
+}
