@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import type { FC } from 'react';
 
 let WindowLayer: FC<object>;
@@ -77,5 +77,112 @@ describe('WindowLayer.tsx', () => {
     // Focus cmd (the last opened, so it's active)
     stores.focusWindow('cmd');
     expect(stores.$activeWindow.get()).toBe('cmd');
+  });
+
+  describe('Title Bar Drag', () => {
+    it('should initiate drag on title bar mousedown and track mousemove delta', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const titlebar = container.querySelector('[data-testid="window-titlebar"]')!;
+
+      const startX = 100;
+      const startY = 100;
+
+      fireEvent.mouseDown(titlebar, { clientX: startX, clientY: startY });
+      fireEvent.mouseMove(document, { clientX: startX + 50, clientY: startY + 30 });
+
+      const state = stores.$windows.get().explorer;
+      expect(state.x).toBe(80 + 50);
+      expect(state.y).toBe(60 + 30);
+    });
+
+    it('should stop tracking position after mouseup', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const titlebar = container.querySelector('[data-testid="window-titlebar"]')!;
+
+      fireEvent.mouseDown(titlebar, { clientX: 100, clientY: 100 });
+      fireEvent.mouseUp(document);
+
+      const stateBefore = stores.$windows.get().explorer;
+      const xBefore = stateBefore.x;
+
+      fireEvent.mouseMove(document, { clientX: 200, clientY: 200 });
+
+      const stateAfter = stores.$windows.get().explorer;
+      expect(stateAfter.x).toBe(xBefore);
+    });
+
+    it('should enforce viewport constraint — left edge minimum 32px visible', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      window.innerWidth = 1024;
+      window.innerHeight = 768;
+
+      const { container } = render(<WindowLayer />);
+      const titlebar = container.querySelector('[data-testid="window-titlebar"]')!;
+
+      // Drag far left
+      fireEvent.mouseDown(titlebar, { clientX: 200, clientY: 100 });
+      fireEvent.mouseMove(document, { clientX: -1000, clientY: 100 });
+
+      const state = stores.$windows.get().explorer;
+      // Width is 700, so min x = -700 + 32 = -668
+      expect(state.x).toBe(-668);
+    });
+
+    it('should enforce viewport constraint — right edge minimum 32px visible', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      window.innerWidth = 1024;
+
+      const { container } = render(<WindowLayer />);
+      const titlebar = container.querySelector('[data-testid="window-titlebar"]')!;
+
+      // Drag far right
+      fireEvent.mouseDown(titlebar, { clientX: 200, clientY: 100 });
+      fireEvent.mouseMove(document, { clientX: 2000, clientY: 100 });
+
+      const state = stores.$windows.get().explorer;
+      // Max x = 1024 - 32 = 992
+      expect(state.x).toBe(992);
+    });
+
+    it('should enforce viewport constraint — bottom edge minimum 32px visible from taskbar', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      window.innerHeight = 768;
+
+      const { container } = render(<WindowLayer />);
+      const titlebar = container.querySelector('[data-testid="window-titlebar"]')!;
+
+      fireEvent.mouseDown(titlebar, { clientX: 100, clientY: 100 });
+      fireEvent.mouseMove(document, { clientX: 100, clientY: 2000 });
+
+      const state = stores.$windows.get().explorer;
+      // Max y = 768 - 32 - 40(taskbar) = 696
+      expect(state.y).toBe(696);
+    });
+
+    it('should enforce viewport constraint — top edge minimum 0', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      const { container } = render(<WindowLayer />);
+      const titlebar = container.querySelector('[data-testid="window-titlebar"]')!;
+
+      fireEvent.mouseDown(titlebar, { clientX: 100, clientY: 100 });
+      fireEvent.mouseMove(document, { clientX: 100, clientY: -500 });
+
+      const state = stores.$windows.get().explorer;
+      expect(state.y).toBe(0);
+    });
   });
 });
