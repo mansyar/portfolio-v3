@@ -49,12 +49,12 @@
 
 ## Phase 5: Final Verification & Checkpoint
 
-- [ ] Task 5.1: Run full test suite and verify coverage
-  - [ ] Run `CI=true pnpm test` — all tests must pass
-  - [ ] Run `CI=true pnpm test:coverage` — all thresholds ≥80%
-- [ ] Task 5.2: Verify all acceptance criteria from spec
-  - [ ] vitest.config.ts uses getViteConfig() ✔️
-  - [ ] No fs.readFileSync in desktop-icon, wallpaper, or page tests
-  - [ ] All React/CSS tests continue passing
-  - [ ] All tests pass cleanly
+- [x] Task 5.1: Run full test suite and verify coverage
+  - [x] Run `CI=true pnpm test` — all tests must pass (8/8 files, 58/58 tests)
+  - [x] Run `CI=true pnpm test:coverage` — all thresholds ≥80% (100% on all source files)
+- [x] Task 5.2: Verify all acceptance criteria from spec
+  - [x] vitest.config.ts uses getViteConfig() ✔️
+  - [x] No fs.readFileSync in desktop-icon, wallpaper, or page tests
+  - [x] All React/CSS tests continue passing
+  - [x] All tests pass cleanly
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Final Verification' (Protocol in workflow.md)
