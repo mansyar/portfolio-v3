@@ -17,7 +17,7 @@
 
 ---
 
-## Phase 2: StartMenu Component
+## Phase 2: StartMenu Component [checkpoint: 5bb36df]
 
 ### Task 3: Create 16×16 Start Menu Icon Assets
 
@@ -82,6 +82,8 @@
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Wire Menu Items to Window Actions + Keyboard Nav' as complete`
 
 ### Task 7: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
+
+- [x] **Completed**: Phase 2 verified and checkpoint created
 
 ---
 
