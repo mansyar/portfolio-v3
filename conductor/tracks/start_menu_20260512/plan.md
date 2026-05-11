@@ -4,11 +4,11 @@
 
 ### Task 1: Create Desktop Store with Start Menu State
 
-- [ ] **Write Tests**: Unit tests for `$startMenuOpen` atom — verify initial value is `false`, `toggleStartMenu()` flips state, `openStartMenu()` sets `true`, `closeStartMenu()` sets `false`
-- [ ] **Implement**: Create `src/stores/desktop.ts` with `$startMenuOpen` atom, `toggleStartMenu()`, `openStartMenu()`, `closeStartMenu()` actions
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(stores): Add desktop store with Start Menu open/close state` + git note
-- [ ] **Update Plan**: Mark task complete with commit SHA
+- [x] **Write Tests**: Unit tests for `$startMenuOpen` atom — verify initial value is `false`, `toggleStartMenu()` flips state, `openStartMenu()` sets `true`, `closeStartMenu()` sets `false`
+- [x] **Implement**: Create `src/stores/desktop.ts` with `$startMenuOpen` atom, `toggleStartMenu()`, `openStartMenu()`, `closeStartMenu()` actions
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage`
+- [x] **Commit**: `feat(stores): Add desktop store with Start Menu open/close state` + git note
+- [x] **Update Plan**: Mark task complete with commit SHA `f22b27b`
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Create Desktop Store with Start Menu State' as complete`
 
 ### Task 2: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
