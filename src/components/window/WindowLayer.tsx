@@ -34,9 +34,9 @@ export function WindowLayer() {
       const customEvent = e as CustomEvent;
       openWindow(customEvent.detail as WindowId);
     };
-    document.addEventListener('luna:open-window', handler);
+    window.addEventListener('luna:open-window', handler);
     return () => {
-      document.removeEventListener('luna:open-window', handler);
+      window.removeEventListener('luna:open-window', handler);
     };
   }, []);
 
