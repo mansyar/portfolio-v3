@@ -62,6 +62,7 @@ export function WindowFrame({
         width: state.width,
         height: state.height,
         zIndex: state.zIndex,
+        pointerEvents: 'auto',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 8,

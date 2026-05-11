@@ -38,11 +38,11 @@ import { WindowLayer } from '../components/window/WindowLayer';
     />
   </div>
 
-  <div id="window-layer" class="absolute inset-0 z-20">
-    <WindowLayer client:load />
+  <div id="window-layer" class="absolute inset-0 z-20" style="pointer-events: none">
+    <WindowLayer client:only="react" />
   </div>
 
   <div id="taskbar" class="absolute bottom-0 left-0 right-0 z-50">
-    <Taskbar client:load />
+    <Taskbar client:only="react" />
   </div>
 </DesktopLayout>

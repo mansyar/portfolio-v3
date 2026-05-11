@@ -37,7 +37,7 @@ describe('WindowLayer.tsx', () => {
   });
 
   it('should register CustomEvent listener for luna:open-window', () => {
-    const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
     render(<WindowLayer />);
     expect(addEventListenerSpy).toHaveBeenCalledWith('luna:open-window', expect.any(Function));
   });
@@ -46,7 +46,7 @@ describe('WindowLayer.tsx', () => {
     const stores = await import('@/stores/windows');
     render(<WindowLayer />);
 
-    document.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'explorer' }));
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'explorer' }));
 
     const windows = stores.$windows.get();
     expect(windows.explorer).toBeDefined();
@@ -57,9 +57,9 @@ describe('WindowLayer.tsx', () => {
     const stores = await import('@/stores/windows');
     render(<WindowLayer />);
 
-    document.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'explorer' }));
-    document.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'cmd' }));
-    document.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'mydocs' }));
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'explorer' }));
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'cmd' }));
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'mydocs' }));
 
     const windows = stores.$windows.get();
     expect(Object.keys(windows)).toHaveLength(3);

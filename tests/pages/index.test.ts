@@ -66,8 +66,8 @@ describe('Home Page Integration', () => {
     expect(html).toContain('id="taskbar"');
   });
 
-  it('should mount WindowLayer with client load directive', () => {
-    expect(html).toContain('client="load"');
+  it('should mount WindowLayer with client:only react directive', () => {
+    expect(html).toContain('client="only"');
     expect(html).toContain('WindowLayer');
     expect(html).toContain('window-layer');
   });
@@ -100,8 +100,8 @@ describe('Home Page Integration', () => {
     expect(html).toContain('data-window-id="recyclebin"');
   });
 
-  it('should render taskbar with Start button', () => {
-    expect(html).toContain('Start');
-    expect(html).toContain('xp-taskbar-border');
+  it('should mount Taskbar as client:only react island', () => {
+    expect(html).toContain('Taskbar');
+    expect(html).toContain('client="only"');
   });
 });
