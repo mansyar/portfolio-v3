@@ -14,10 +14,13 @@ _Build the Nano Stores foundation with all window actions and default configurat
 
 ### Task 2: Implement All Window Actions
 
+> **Note:** Installed Nano Stores is v1.3.0 (not v0.11.x as in TDD §13). Verify v1.x `map` API — `setKey(key, value)` replaces nested values, but to remove a key create a new object: `const next = { ...$windows.get() }; delete next[id]; $windows.set(next)`. The `$taskbarWindows` filter `w.status !== undefined` is a defensive guard; all entries will always have a defined status since `closeWindow` removes entries entirely.
+
 - [ ] **Write Tests**: Unit tests for `openWindow`, `closeWindow`, `minimizeWindow`, `maximizeWindow`, `restoreWindow` — verify status transitions, z-index assignment, position caching
 - [ ] **Write Tests**: Unit tests for `focusWindow`, `moveWindow`, `resizeWindow` — verify z-counter increment, viewport constraints, min size enforcement
 - [ ] **Write Tests**: Edge cases — opening already-open window, closing nonexistent window, minimize from maximized state
-- [ ] **Implement**: All 8 window actions in `src/stores/windows.ts` with full logic
+- [ ] **Write Tests**: Test `closeWindow` with 'closing' transitional status — verify animation delay before removal from store
+- [ ] **Implement**: All 8 window actions in `src/stores/windows.ts` with full logic. `closeWindow` sets status='closing', triggers 120ms animation delay, then removes entry via immutable pattern
 - [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
 - [ ] **Commit**: `feat(stores): Implement all window actions (open/close/minimize/maximize/restore/focus/move/resize)`
 
@@ -38,10 +41,12 @@ _Build the React UI components that render window chrome: TitleBar, WindowFrame,
 
 ### Task 4: Create WindowFrame Component
 
+> **Design note:** Accept the full `WindowState` object as a prop (passed from WindowLayer) rather than subscribing to `$windows` internally. This avoids redundant per-instance store subscriptions and ensures only WindowLayer is the single source of truth for iteration.
+
 - [ ] **Write Tests**: React component test — renders with 3D chrome border, rounded top corners
 - [ ] **Write Tests**: Test applies active/inactive title bar based on `isActive` prop
 - [ ] **Write Tests**: Test renders placeholder children content
-- [ ] **Implement**: Create `src/components/window/WindowFrame.tsx` — `xp-window-border` class, `--xp-shadow-lg`/`--xp-shadow-sm`, TitleBar mount, content slot
+- [ ] **Implement**: Create `src/components/window/WindowFrame.tsx` — `xp-window-border` class, `--xp-shadow-lg`/`--xp-shadow-sm`, TitleBar mount, content slot, accepts full `WindowState` as prop
 - [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
 - [ ] **Commit**: `feat(window): Add WindowFrame component with 3D chrome border`
 
@@ -87,47 +92,44 @@ _Implement drag, resize, z-index stacking, minimize/maximize/restore animations.
 - [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
 - [ ] **Commit**: `feat(window): Implement z-index stacking and focus-on-click`
 
-### Task 9: Implement Minimize/Maximize/Restore with CSS Transitions
+### Task 9: Implement Open/Close/Minimize/Maximize/Restore with CSS Transitions
 
-- [ ] **Write Tests**: React component test — `status='minimized'` applies CSS that hides window
+- [ ] **Write Tests**: React component test — `status='closing'` applies scale-out + fade animation (120ms ease-in), then window is removed
+- [ ] **Write Tests**: Test `status='open'` with initial render applies scale-in + fade animation (150ms ease-out)
+- [ ] **Write Tests**: Test `status='minimized'` applies slide-down CSS (translateY toward taskbar + opacity, 200ms ease-in)
 - [ ] **Write Tests**: Test `status='maximized'` sets position/size to fill viewport minus taskbar
-- [ ] **Write Tests**: Test transition from maximized back to cached position restores correctly
-- [ ] **Implement**: CSS classes for `.window-minimized` (translateY slide-down + opacity, 200ms ease-out), `.window-maximized` (full viewport minus 40px), `.window-restored` (cached position)
+- [ ] **Write Tests**: Test transition from maximized back to cached position restores correctly (200ms ease-out)
+- [ ] **Implement**: CSS classes for `.window-open` (scale 0.95→1.0 + opacity 0→1, 150ms ease-out), `.window-closing` (scale 1.0→0.95 + opacity 1→0, 120ms ease-in), `.window-minimized` (translateY slide-down + opacity, 200ms ease-in), `.window-maximized` (full viewport minus 40px), `.window-restored` (cached position, 200ms ease-out)
 - [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Add minimize/maximize/restore with CSS transitions`
+- [ ] **Commit**: `feat(window): Add window open/close/minimize/maximize/restore with CSS transitions`
 
 ## Phase 4: Integration
 
 _Wire the window manager into the existing desktop shell and taskbar._
 
-### Task 10: Wire Desktop Icon Double-Click → openWindow()
+### Task 10: Wire Desktop Icon Double-Click → openWindow() + Visual Feedback
 
 - [ ] **Write Tests**: Integration test — clicking DesktopIcon dispatches `luna:open-window` CustomEvent
 - [ ] **Write Tests**: Integration test — `WindowLayer` receives event and calls `openWindow()` with correct ID
-- [ ] **Implement**: Add `onclick` attribute to `DesktopIcon.astro` dispatching `new CustomEvent('luna:open-window', { detail: windowId })`
+- [ ] **Write Tests**: Test DesktopIcon applies brief color inversion on double-click (100ms CSS transition)
+- [ ] **Implement**: Add `onclick` attribute to `DesktopIcon.astro` dispatching `new CustomEvent('luna:open-window', { detail: windowId })`. Add CSS class toggle or `filter: invert()` for 100ms on double-click
 - [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(desktop): Wire desktop icon double-click to openWindow() via CustomEvent`
+- [ ] **Commit**: `feat(desktop): Wire desktop icon double-click to openWindow() with XP-style visual feedback`
 
-### Task 11: Update Taskbar to Show Open Window Buttons
+### Task 11: Update Taskbar with Window Buttons & Toggle Behavior
 
 - [ ] **Write Tests**: React component test — Taskbar renders buttons matching `$taskbarWindows`
 - [ ] **Write Tests**: Test each button shows correct app icon and title text
 - [ ] **Write Tests**: Test empty state (no open windows — no buttons rendered besides Start)
-- [ ] **Implement**: Update `Taskbar.tsx` — subscribe to `$taskbarWindows`, map to button elements in the center spacer area
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(taskbar): Show buttons for all open windows`
-
-### Task 12: Implement Taskbar Button Toggle Behavior
-
 - [ ] **Write Tests**: Test click on focused window's button → minimize
 - [ ] **Write Tests**: Test click on minimized window's button → restore + focus
 - [ ] **Write Tests**: Test click on unfocused window's button → focus
 - [ ] **Write Tests**: Test button visual state reflects window status (focused/minimized/normal)
-- [ ] **Implement**: Toggle logic in Taskbar button onClick — check `$activeWindow` and window status to determine action
+- [ ] **Implement**: Update `Taskbar.tsx` — subscribe to `$taskbarWindows`, map to button elements in the center spacer area with toggle onClick logic checking `$activeWindow` and window status
 - [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(taskbar): Implement window button toggle behavior`
+- [ ] **Commit**: `feat(taskbar): Add window buttons with toggle behavior (focus/minimize/restore)`
 
-### Task 13: Mount WindowLayer in DesktopLayout
+### Task 12: Mount WindowLayer in DesktopLayout
 
 - [ ] **Write Tests**: Integration test — `DesktopLayout` includes `WindowLayer` with `client:load` directive
 - [ ] **Write Tests**: Test z-index layering: wallpaper (z-0) < desktop icons (z-10) < window layer (z-20) < taskbar (z-50)
@@ -137,9 +139,9 @@ _Wire the window manager into the existing desktop shell and taskbar._
 
 ## Phase 5: Phase Completion Verification & Checkpointing
 
-### Task 14: Conductor - User Manual Verification 'Window Manager' (Protocol in workflow.md)
+### Task 13: Conductor - User Manual Verification 'Window Manager' (Protocol in workflow.md)
 
 - [ ] **Phase Checkpoint**: Run automated tests — `CI=true pnpm test:coverage` (verify ≥80% coverage)
-- [ ] **Phase Checkpoint**: Verify all 13 tasks marked [x] with commit SHAs recorded
+- [ ] **Phase Checkpoint**: Verify all 12 tasks marked [x] with commit SHAs recorded
 - [ ] **Phase Checkpoint**: Present manual verification plan for user sign-off
 - [ ] **Phase Checkpoint**: Create checkpoint commit with git notes

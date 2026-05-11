@@ -16,7 +16,8 @@ Implement the core Nano Stores-driven window management system for the Luna OS D
 
 - **6 window types** registered with store entries and placeholder "Coming Soon" content
 - **DesktopIcon → Window wiring**: Keep DesktopIcon as Astro static with `onclick` attribute + custom event bus (`window.dispatchEvent(new CustomEvent('luna:open-window', { detail: id }))`). WindowLayer React island listens via `useEffect`.
-- **Minimize animation**: CSS `translateY` slide-down toward taskbar + opacity fade, 200ms ease-out
+- **Minimize animation**: CSS `translateY` slide-down toward taskbar + opacity fade, 200ms ease-in (per TDD §9)
+- **Open/Close animations**: Window open — scale 0.95→1.0 + fade-in, 150ms ease-out. Window close — scale 1.0→0.95 + fade-out, 120ms ease-in (per TDD §9)
 - **State management**: Nano Stores (`$windows` map, `$zCounter` atom, `$activeWindow` atom)
 
 ## Functional Requirements
@@ -28,12 +29,12 @@ Implement the core Nano Stores-driven window management system for the Luna OS D
   - `$zCounter` — `atom<number>` starting at 100, increments on focus
   - `$activeWindow` — `atom<WindowId | null>`
   - `$taskbarWindows` — derived store: windows with status !== undefined
-- Interface `WindowState` includes: `id`, `title`, `icon`, `x`, `y`, `width`, `height`, `minWidth`, `minHeight`, `zIndex`, `status` (open/minimized/maximized)
+- Interface `WindowState` includes: `id`, `title`, `icon`, `x`, `y`, `width`, `height`, `minWidth`, `minHeight`, `zIndex`, `status` (open/minimized/maximized/closing)
 
 ### FR2 — Window Actions
 
 - `openWindow(id)` — set status='open', increment zCounter, assign zIndex
-- `closeWindow(id)` — remove from $windows
+- `closeWindow(id)` — set status='closing', play close animation (120ms), then remove from $windows
 - `minimizeWindow(id)` — set status='minimized', cache current position
 - `maximizeWindow(id)` — set status='maximized', cache prev position/size
 - `restoreWindow(id)` — restore from maximized/minimized to cached position
@@ -71,11 +72,13 @@ Implement the core Nano Stores-driven window management system for the Luna OS D
 - Focused title bar shows active gradient; others show inactive gradient
 - Visual shadow depth: focused window has `--xp-shadow-lg`, others `--xp-shadow-sm`
 
-### FR7 — Minimize/Maximize/Restore
+### FR7 — Window Open/Close/Minimize/Maximize/Restore Animation
 
-- **Minimize**: Slide-down CSS transition (translateY toward taskbar + opacity 0→1) over 200ms, then status='minimized' (hidden)
+- **Open**: Scale 0.95 → 1.0 + opacity 0 → 1, 150ms ease-out (CSS transform + transition)
+- **Close**: Scale 1.0 → 0.95 + opacity 1 → 0, 120ms ease-in — set status='closing', animate, then remove from $windows via setTimeout
+- **Minimize**: Slide-down CSS transition (translateY toward taskbar + opacity fade) over 200ms ease-in, then status='minimized' (hidden)
 - **Maximize**: Fills viewport minus taskbar height (40px), caches previous position/size
-- **Restore**: Returns to cached position/size with CSS transition
+- **Restore**: Returns to cached position/size with CSS transition, 200ms ease-out
 - Double-click title bar toggles maximize/restore
 
 ### FR8 — Desktop Icon Wiring
@@ -83,11 +86,13 @@ Implement the core Nano Stores-driven window management system for the Luna OS D
 - Add `onclick` attribute to `DesktopIcon.astro` that dispatches `CustomEvent('luna:open-window', { detail: windowId })`
 - `WindowLayer.tsx` registers document-level event listener in `useEffect` to receive events
 - Double-click opens the corresponding window via `openWindow()`
+- Visual feedback: Icon briefly inverts colors on double-click (filter: invert() or XP-style quick color swap via CSS transition, 100ms) per TDD §9
 
-### FR9 — Taskbar Window Buttons
+### FR9 — Taskbar Window Buttons & Toggle Behavior
 
 - Update `Taskbar.tsx` to subscribe to `$taskbarWindows` derived store
 - Render a button for each open window showing the app icon and title
+- Buttons and toggle logic are implemented together in one cohesive update
 - Taskbar toggle behavior:
   - Click focused window → minimize
   - Click minimized window → restore + focus
@@ -123,11 +128,15 @@ Implement the core Nano Stores-driven window management system for the Luna OS D
 ✅ Windows can be dragged by title bar (viewport-constrained, min 32px visible)
 ✅ Windows can be resized from edges/corners (8px hit area, respects minWidth/minHeight)
 ✅ Clicking a window brings it to front (z-index increments, active title bar gradient)
+✅ Windows open with scale-in animation (150ms ease-out)
+✅ Windows close with scale-out animation (120ms ease-in) before removal
 ✅ Min/max/close buttons work with correct XP-style transitions
-✅ Minimize slides window toward taskbar (CSS 200ms ease-out)
+✅ Minimize slides window toward taskbar (CSS 200ms ease-in)
+✅ Restore expands from taskbar to cached position (CSS 200ms ease-out)
 ✅ Maximize fills viewport minus 40px taskbar height
 ✅ Taskbar shows buttons for all open windows with icons
 ✅ Taskbar toggle: click focused → minimize, click minimized → restore, click unfocused → focus
+✅ Desktop icon briefly inverts colors on double-click (100ms)
 ✅ Multiple windows can be open simultaneously without state conflicts
 ✅ All 6 window types render with correct default sizes and positions
 ✅ All tests pass with >80% coverage for store and component logic
