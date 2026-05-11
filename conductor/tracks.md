@@ -6,5 +6,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Revamp Astro Testing**
-  _Link: [./tracks/astro_test_revamp_20260511/](./tracks/astro_test_revamp_20260511/)_
+- [x] **Track: Revamp Astro Testing**
+      _Link: [./tracks/astro_test_revamp_20260511/](./tracks/astro_test_revamp_20260511/)_
