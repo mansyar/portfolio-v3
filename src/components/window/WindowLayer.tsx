@@ -60,6 +60,7 @@ export function WindowLayer() {
             }
           }}
           onClose={() => closeWindow(state.id as WindowId)}
+          onFocusRequest={() => focusWindow(state.id as WindowId)}
           onDragStart={(e: MouseEvent) => {
             if (state.status !== 'maximized' && state.status !== 'minimized') {
               focusWindow(state.id as WindowId);

@@ -76,12 +76,12 @@ _Implement drag, resize, z-index stacking, minimize/maximize/restore animations.
 
 ### Task 7: Implement Edge/Corner Resize
 
-- [ ] **Write Tests**: DOM event tests — mousedown on 8px edge/corner hit area initiates resize
-- [ ] **Write Tests**: Test all 8 resize cursors render correctly
-- [ ] **Write Tests**: Test minWidth/minHeight constraints are enforced
-- [ ] **Implement**: Resize logic — hit area detection, cursor switching, drag-based dimension updates
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Implement edge/corner resize with min size constraints`
+- [x] **Write Tests**: DOM event tests — mousedown on 8px edge/corner hit area initiates resize `36eea35`
+- [x] **Write Tests**: Test all 8 resize cursors render correctly `36eea35`
+- [x] **Write Tests**: Test minWidth/minHeight constraints are enforced `36eea35`
+- [x] **Implement**: Resize logic — hit area detection, cursor switching, drag-based dimension updates `36eea35`
+- [x] **Verify Coverage**: `pnpm test:coverage` `36eea35`
+- [x] **Commit**: `feat(window): Implement edge/corner resize with min size constraints` `36eea35`
 
 ### Task 8: Implement Z-Index Stacking & Focus-on-Click
 

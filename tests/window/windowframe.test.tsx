@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import type { FC, MouseEvent } from 'react';
 
 interface WindowState {
@@ -24,6 +24,7 @@ interface WindowFrameProps {
   onClose?: () => void;
   onDragStart?: (e: MouseEvent) => void;
   onResizeStart?: (e: MouseEvent, dir: string) => void;
+  onFocusRequest?: () => void;
   children?: React.ReactNode;
 }
 
@@ -107,6 +108,16 @@ describe('WindowFrame.tsx', () => {
     const { container } = render(<WindowFrame state={state} isActive={true} />);
     const frame = container.firstChild as HTMLElement;
     expect(frame.style.zIndex).toBe('150');
+  });
+
+  it('should call onFocusRequest when the frame is clicked', () => {
+    const onFocusRequest = vi.fn();
+    const { container } = render(
+      <WindowFrame state={makeState()} isActive={true} onFocusRequest={onFocusRequest} />,
+    );
+    const frame = container.firstChild as HTMLElement;
+    fireEvent.click(frame);
+    expect(onFocusRequest).toHaveBeenCalledOnce();
   });
 
   it('should accept and wire callback props to TitleBar', () => {

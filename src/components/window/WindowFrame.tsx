@@ -36,6 +36,7 @@ interface WindowFrameProps {
   onClose?: () => void;
   onDragStart?: (e: MouseEvent) => void;
   onResizeStart?: (e: MouseEvent, dir: ResizeDir) => void;
+  onFocusRequest?: () => void;
   children?: React.ReactNode;
 }
 
@@ -47,6 +48,7 @@ export function WindowFrame({
   onClose,
   onDragStart,
   onResizeStart,
+  onFocusRequest,
   children,
 }: WindowFrameProps) {
   const shadow = isActive ? '0 4px 16px rgba(0,0,0,0.35)' : '0 2px 8px rgba(0,0,0,0.2)';
@@ -71,7 +73,7 @@ export function WindowFrame({
         overflow: 'hidden',
       }}
       className="xp-window-border"
-      onClick={() => {}}
+      onClick={onFocusRequest}
     >
       <TitleBar
         title={state.title}
