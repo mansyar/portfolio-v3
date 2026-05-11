@@ -148,7 +148,7 @@ describe('StartMenu.tsx — Keyboard Navigation', () => {
     expect(afterShift).toBeDefined();
   });
 
-  it('should activate focused item with Enter', () => {
+  it('should activate focused item with Enter and close menu', () => {
     render(<StartMenu />);
     const menu = screen.getByRole('menu');
 
@@ -156,9 +156,8 @@ describe('StartMenu.tsx — Keyboard Navigation', () => {
     fireEvent.keyDown(menu, { key: 'Tab' });
     fireEvent.keyDown(menu, { key: 'Enter' });
 
-    // Should close the menu
-    // Note: We just verify it doesn't throw
-    expect(menu).toBeInTheDocument();
+    // Enter should activate the item and close the menu
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 
   it('should close menu with Escape key', () => {
