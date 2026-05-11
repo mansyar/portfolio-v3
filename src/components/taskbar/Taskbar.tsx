@@ -7,11 +7,14 @@ import {
   restoreWindow,
 } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
+import { $startMenuOpen, toggleStartMenu } from '@/stores/desktop';
 import { Clock } from './Clock';
+import { StartMenu } from './StartMenu';
 
 export function Taskbar() {
   const windows = useStore($taskbarWindows);
   const activeWindow = useStore($activeWindow);
+  const startMenuOpen = useStore($startMenuOpen);
 
   const handleClick = (id: WindowId) => {
     const state = windows.find((w) => w.id === id);
@@ -45,8 +48,12 @@ export function Taskbar() {
       {/* Start Button */}
       <button
         aria-label="Start"
+        onClick={toggleStartMenu}
+        className={startMenuOpen ? 'start-btn active' : 'start-btn'}
         style={{
-          background: 'var(--xp-start-btn-green)',
+          background: startMenuOpen
+            ? 'linear-gradient(180deg, #2d8e33 0%, #47a84c 8%, #3b8f3f 92%, #1e7a24 100%)'
+            : 'var(--xp-start-btn-green)',
           border: 'none',
           color: '#ffffff',
           fontFamily: 'inherit',
@@ -110,6 +117,9 @@ export function Taskbar() {
       >
         <Clock />
       </div>
+
+      {/* Start Menu — mounted inside Taskbar, positioned above */}
+      <StartMenu />
     </div>
   );
 }

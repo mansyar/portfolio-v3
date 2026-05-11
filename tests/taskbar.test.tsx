@@ -12,6 +12,9 @@ beforeEach(async () => {
   stores.$windows.set({});
   stores.$zCounter.set(100);
   stores.$activeWindow.set(null);
+  // Reset desktop store
+  const desktop = await import('@/stores/desktop');
+  desktop.$startMenuOpen.set(false);
   const mod = await import('@/components/taskbar/Taskbar');
   Taskbar = mod.Taskbar;
 });
@@ -33,6 +36,41 @@ describe('Taskbar.tsx', () => {
     const startBtn = screen.getByRole('button', { name: 'Start' });
     expect(startBtn).toBeInTheDocument();
     expect(startBtn).toHaveTextContent('Start');
+  });
+
+  it('should toggle Start Menu when Start button is clicked', async () => {
+    render(<Taskbar />);
+    const startBtn = screen.getByRole('button', { name: 'Start' });
+
+    // Menu starts closed
+    const desktop = await import('@/stores/desktop');
+    expect(desktop.$startMenuOpen.get()).toBe(false);
+
+    // Click opens menu
+    fireEvent.click(startBtn);
+    expect(desktop.$startMenuOpen.get()).toBe(true);
+
+    // Click again closes menu
+    fireEvent.click(startBtn);
+    expect(desktop.$startMenuOpen.get()).toBe(false);
+  });
+
+  it('should show active style on Start button when menu is open', async () => {
+    render(<Taskbar />);
+    const startBtn = screen.getByRole('button', { name: 'Start' });
+
+    // Menu closed — no active class
+    expect(startBtn.className).not.toContain('active');
+
+    // Open menu — should have active class
+    const desktop = await import('@/stores/desktop');
+    desktop.$startMenuOpen.set(true);
+
+    // Re-render to reflect store change
+    cleanup();
+    render(<Taskbar />);
+    const updatedBtn = screen.getByRole('button', { name: 'Start' });
+    expect(updatedBtn.className).toContain('active');
   });
 
   it('should render a Clock component in the system tray', () => {
