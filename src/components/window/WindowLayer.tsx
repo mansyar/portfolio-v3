@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useStore } from '@nanostores/react';
+import { useStore } from '@/lib/useStore';
 import {
   $windows,
   $activeWindow,

@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@/lib/useStore';
 import {
   $taskbarWindows,
   $activeWindow,
