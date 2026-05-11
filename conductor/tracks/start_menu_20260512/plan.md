@@ -91,19 +91,19 @@
 
 ### Task 8: Wire Start Button & Click-Outside/Escape Handling
 
-- [ ] **Write Tests**:
+- [x] **Write Tests**:
   - Clicking Start button calls `toggleStartMenu()`
   - Start button shows pressed class when menu is open
-  - `mousedown` outside menu calls `closeStartMenu()`
-  - Escape keydown calls `closeStartMenu()`
-- [ ] **Implement**:
+  - `mousedown` outside menu calls `closeStartMenu()` (implemented in Task 5)
+  - Escape keydown calls `closeStartMenu()` (implemented in Task 5)
+- [x] **Implement**:
   - Modify `Taskbar.tsx` — Start button calls `toggleStartMenu()`, adds active class based on `$startMenuOpen`
-  - Add `useEffect` in `StartMenu.tsx` for click-outside detection and Escape key handler
+  - Add `useEffect` in `StartMenu.tsx` for click-outside detection and Escape key handler (done in Task 5)
   - Mount `StartMenu` inside `Taskbar.tsx` (rendered above the taskbar bar, positioned fixed at bottom-left)
-- [ ] **Verify Tests**: Confirm all pass
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(taskbar): Wire Start button toggle and add click-outside/Escape close` + git note
-- [ ] **Update Plan**: Mark task complete with commit SHA
+- [x] **Verify Tests**: Confirm all pass — 193/193 pass
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` — 95% overall
+- [x] **Commit**: `feat(taskbar): Wire Start button toggle and mount StartMenu in Taskbar` + git note
+- [x] **Update Plan**: Mark task complete with commit SHA `4ec6827`
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Wire Start Button & Click-Outside/Escape Handling' as complete`
 
 ### Task 9: Add Start Menu Animations
