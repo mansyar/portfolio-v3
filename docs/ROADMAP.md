@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.2 · **Updated:** 2026-05-11  
+**Version:** 1.3 · **Updated:** 2026-05-12  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -19,7 +19,7 @@ gantt
 
     section Phase 1
     Track 1A – Desktop Shell      :done, p1a, after p0, 4d
-    Track 1B – Window Manager     :p1b, after p0, 5d
+    Track 1B – Window Manager     :done, p1b, after p0, 5d
     Track 1C – Start Menu         :p1c, after p1b, 2d
 
     section Phase 2
@@ -168,7 +168,7 @@ Track 1A produced 11 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 
 ---
 
-### Track 1B — Window Manager
+### Track 1B — Window Manager ✅ _(Completed 2026-05-12)_
 
 > The core engineering challenge. Implement the Nano Stores-driven window system with open/close/drag/minimize/maximize/focus.
 
@@ -176,19 +176,19 @@ Track 1A produced 11 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 
 #### Tasks
 
-- [ ] Create `src/stores/windows.ts` with `$windows`, `$zCounter`, `$activeWindow` stores ([TDD §3.1](./TDD.md#31-window-state-schema))
-- [ ] Implement all window actions: `openWindow`, `closeWindow`, `minimizeWindow`, `maximizeWindow`, `restoreWindow`, `focusWindow`, `moveWindow`, `resizeWindow` ([TDD §3.3](./TDD.md#33-window-actions))
-- [ ] Create `WindowLayer.tsx` — iterates `$windows`, renders `WindowFrame` for each ([TDD §6](./TDD.md#react-islands-interactive))
-- [ ] Create `WindowFrame.tsx` — chrome, 3D borders, rounded top corners ([TDD §5.3](./TDD.md#53-classic-3d-border-system))
-- [ ] Create `TitleBar.tsx` — icon, title, min/max/close buttons ([TDD §6](./TDD.md#react-islands-interactive))
-- [ ] Implement drag logic (title bar only, viewport-constrained) ([TDD §3.4](./TDD.md#34-behavior-rules))
-- [ ] Implement edge/corner resize with min size constraints ([TDD §3.2](./TDD.md#32-default-window-configs), [TDD §3.4](./TDD.md#34-behavior-rules))
-- [ ] Implement z-index stacking and focus-on-click ([TDD §3.4](./TDD.md#34-behavior-rules))
-- [ ] Implement minimize/maximize/restore with CSS transitions ([TDD §9](./TDD.md#9-animations--transitions))
-- [ ] Wire desktop icon double-click → `openWindow()` ([TDD §3.3](./TDD.md#33-window-actions))
-- [ ] Update `Taskbar` to show buttons for open windows ([TDD §3.4 Taskbar toggle](./TDD.md#34-behavior-rules))
-- [ ] Implement taskbar button toggle behavior (focus/minimize/restore) ([TDD §3.4](./TDD.md#34-behavior-rules))
-- [ ] Mount `WindowLayer` as React island with `client:load` in `DesktopLayout.astro` ([TDD §1 Island Boundary Rules](./TDD.md#island-boundary-rules))
+- [x] Create `src/stores/windows.ts` with `$windows`, `$zCounter`, `$activeWindow` stores ([TDD §3.1](./TDD.md#31-window-state-schema))
+- [x] Implement all window actions: `openWindow`, `closeWindow`, `minimizeWindow`, `maximizeWindow`, `restoreWindow`, `focusWindow`, `moveWindow`, `resizeWindow` ([TDD §3.3](./TDD.md#33-window-actions))
+- [x] Create `WindowLayer.tsx` — iterates `$windows`, renders `WindowFrame` for each ([TDD §6](./TDD.md#react-islands-interactive))
+- [x] Create `WindowFrame.tsx` — chrome, 3D borders, rounded top corners ([TDD §5.3](./TDD.md#53-classic-3d-border-system))
+- [x] Create `TitleBar.tsx` — icon, title, min/max/close buttons ([TDD §6](./TDD.md#react-islands-interactive))
+- [x] Implement drag logic (title bar only, viewport-constrained) ([TDD §3.4](./TDD.md#34-behavior-rules))
+- [x] Implement edge/corner resize with min size constraints ([TDD §3.2](./TDD.md#32-default-window-configs), [TDD §3.4](./TDD.md#34-behavior-rules))
+- [x] Implement z-index stacking and focus-on-click ([TDD §3.4](./TDD.md#34-behavior-rules))
+- [x] Implement minimize/maximize/restore with CSS transitions ([TDD §9](./TDD.md#9-animations--transitions))
+- [x] Wire desktop icon double-click → `openWindow()` ([TDD §3.3](./TDD.md#33-window-actions))
+- [x] Update `Taskbar` to show buttons for open windows ([TDD §3.4 Taskbar toggle](./TDD.md#34-behavior-rules))
+- [x] Implement taskbar button toggle behavior (focus/minimize/restore) ([TDD §3.4](./TDD.md#34-behavior-rules))
+- [x] Mount `WindowLayer` as React island with `client:only` in `DesktopLayout.astro` ([TDD §1 Island Boundary Rules](./TDD.md#island-boundary-rules))
 
 #### Acceptance Criteria
 
@@ -201,7 +201,30 @@ Track 1A produced 11 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 ✅ Taskbar shows buttons for all open windows
 ✅ Taskbar toggle: click focused → minimize, click minimized → restore, click unfocused → focus
 ✅ Multiple windows can be open simultaneously without state conflicts
+✅ Windows open with scale-in animation (150ms), close with scale-out (120ms)
+✅ Minimize slides window toward taskbar (200ms), restore expands from cached position
+✅ Maximize fills viewport minus 40px taskbar height
+✅ All animations respect prefers-reduced-motion: reduce
+✅ Window system uses pointer-events layering for click-through when no windows open
 ```
+
+#### Key Files Created
+
+```
+src/stores/windows.ts                  — Nano Stores: $windows, $zCounter, $activeWindow, all 8 actions
+src/components/window/TitleBar.tsx     — XP-style title bar with active/inactive gradient
+src/components/window/WindowFrame.tsx  — 3D chrome border, 8 resize handles, CSS animations
+src/components/window/WindowLayer.tsx  — Store subscriber, drag/resize logic, event listener
+src/lib/useStore.ts                    — Custom React hook (useState/useEffect) to subscribe to Nano Stores
+src/components/desktop/DesktopIcon.astro (modified) — onclick/ondblclick handlers for window opening
+src/components/taskbar/Taskbar.tsx (modified)       — Window buttons with toggle behavior
+src/pages/index.astro (modified)                    — WindowLayer mount + pointer-events fix
+src/styles/global.css (modified)                    — Animation keyframes + prefers-reduced-motion
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 1B produced 17 feature/fix commits, 6 plan/checkpoint commits, 1 review fix commit, 1 docs sync commit across ~2,400 lines changed (29 files). Track archived at `conductor/archive/window_manager_20260511/`.
 
 ---
 
@@ -562,7 +585,7 @@ graph TD
 
     style P0 fill:#27ae60,color:#fff,stroke:#1e8449
     style T1A fill:#3b8f3f,color:#fff
-    style T1B fill:#3b8f3f,color:#fff
+    style T1B fill:#27ae60,color:#fff,stroke:#1e8449
     style T1C fill:#3b8f3f,color:#fff
     style T2A fill:#e67e22,color:#fff
     style T2B fill:#e67e22,color:#fff
