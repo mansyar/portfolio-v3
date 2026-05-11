@@ -3,6 +3,7 @@ import DesktopLayout from '../layouts/DesktopLayout.astro';
 import Wallpaper from '../components/desktop/Wallpaper.astro';
 import DesktopIcon from '../components/desktop/DesktopIcon.astro';
 import { Taskbar } from '../components/taskbar/Taskbar';
+import { WindowLayer } from '../components/window/WindowLayer';
 ---
 <DesktopLayout>
   <div id="wallpaper-area" class="absolute inset-0 z-0">
@@ -35,6 +36,10 @@ import { Taskbar } from '../components/taskbar/Taskbar';
       label="Recycle Bin"
       windowId="recyclebin"
     />
+  </div>
+
+  <div id="window-layer" class="absolute inset-0 z-20">
+    <WindowLayer client:load />
   </div>
 
   <div id="taskbar" class="absolute bottom-0 left-0 right-0 z-50">

@@ -62,7 +62,14 @@ describe('Home Page Integration', () => {
   it('should include all mount point IDs', () => {
     expect(html).toContain('id="wallpaper-area"');
     expect(html).toContain('id="desktop-icons"');
+    expect(html).toContain('id="window-layer"');
     expect(html).toContain('id="taskbar"');
+  });
+
+  it('should mount WindowLayer with client load directive', () => {
+    expect(html).toContain('client="load"');
+    expect(html).toContain('WindowLayer');
+    expect(html).toContain('window-layer');
   });
 
   it('should include viewport meta tag', () => {
