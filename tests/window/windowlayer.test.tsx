@@ -12,8 +12,6 @@ beforeEach(async () => {
   stores.$windows.set({});
   stores.$zCounter.set(100);
   stores.$activeWindow.set(null);
-  stores.$zCounter.set(100);
-  stores.$activeWindow.set(null);
   const mod = await import('@/components/window/WindowLayer');
   WindowLayer = mod.WindowLayer;
 });

@@ -98,3 +98,15 @@
   from { transform: scale(0.95); opacity: 0.8; }
   to { transform: scale(1); opacity: 1; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .window-open,
+  .window-closing,
+  .window-minimized,
+  .window-maximized {
+    animation: none !important;
+  }
+  .xp-window-border {
+    transition: none !important;
+  }
+}

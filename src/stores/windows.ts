@@ -92,6 +92,7 @@ export const DEFAULT_WINDOW_CONFIGS: Record<WindowId, WindowConfig> = {
   },
 };
 
+// Type assertion required: the store starts empty but accepts all WindowId keys at runtime
 export const $windows = map<Record<WindowId, WindowState>>({} as Record<WindowId, WindowState>);
 
 export const $zCounter = atom<number>(100);
@@ -102,9 +103,10 @@ export const $taskbarWindows = computed($windows, (windows) =>
   Object.values(windows).filter((w) => w.status !== undefined),
 );
 
-// --- Position Caches for Minimize/Maximize Restore ---
+// --- Position Caches and Timeout Tracking ---
 
 const prevPositions = new Map<WindowId, { x: number; y: number; width: number; height: number }>();
+const closeTimeouts = new Map<WindowId, ReturnType<typeof setTimeout>>();
 
 // --- Window Actions ---
 
@@ -143,22 +145,32 @@ export function closeWindow(id: WindowId): void {
   const windows = $windows.get();
   if (!windows[id]) return;
 
+  // Cancel any pending close timeout for this window
+  if (closeTimeouts.has(id)) {
+    clearTimeout(closeTimeouts.get(id)!);
+    closeTimeouts.delete(id);
+  }
+
   // Set transitional 'closing' status for animation
   const closingState = { ...windows[id], status: 'closing' as const };
   $windows.set({ ...windows, [id]: closingState });
 
   // Remove after animation completes (120ms)
-  setTimeout(() => {
-    const current = $windows.get();
-    if (current[id]?.status === 'closing') {
-      const next = { ...current };
-      delete next[id];
-      $windows.set(next);
-      if ($activeWindow.get() === id) {
-        $activeWindow.set(null);
+  closeTimeouts.set(
+    id,
+    setTimeout(() => {
+      closeTimeouts.delete(id);
+      const current = $windows.get();
+      if (current[id]?.status === 'closing') {
+        const next = { ...current };
+        delete next[id];
+        $windows.set(next);
+        if ($activeWindow.get() === id) {
+          $activeWindow.set(null);
+        }
       }
-    }
-  }, 120);
+    }, 120),
+  );
 }
 
 export function minimizeWindow(id: WindowId): void {

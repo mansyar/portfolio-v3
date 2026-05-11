@@ -1,19 +1,6 @@
 import { TitleBar } from './TitleBar';
+import type { WindowState } from '@/stores/windows';
 import type { MouseEvent } from 'react';
-
-interface WindowState {
-  id: string;
-  title: string;
-  icon: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  minWidth: number;
-  minHeight: number;
-  zIndex: number;
-  status: string;
-}
 
 type ResizeDir = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw';
 
@@ -66,6 +53,8 @@ export function WindowFrame({
 
   return (
     <div
+      role="dialog"
+      aria-label={state.title}
       style={{
         position: 'absolute',
         left: state.x,
