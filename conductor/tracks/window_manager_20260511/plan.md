@@ -30,35 +30,35 @@ _Build the React UI components that render window chrome: TitleBar, WindowFrame,
 
 ### Task 3: Create TitleBar Component
 
-- [ ] **Write Tests**: React component test — renders icon, title text, and 3 button controls
-- [ ] **Write Tests**: Test min/max/close buttons call correct store actions (`minimizeWindow`, `maximizeWindow`, `closeWindow`)
-- [ ] **Write Tests**: Test active vs inactive gradient based on `isActive` prop
-- [ ] **Write Tests**: Test double-click title bar calls `maximizeWindow`/`restoreWindow`
-- [ ] **Implement**: Create `src/components/window/TitleBar.tsx` with XP-style gradient, icon, title text, 16×16 min/max/close buttons
-- [ ] **Implement**: Wire button onClick handlers to store actions; active/inactive gradient switching
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Add TitleBar component with min/max/close controls`
+- [x] **Write Tests**: React component test — renders icon, title text, and 3 button controls `3a26310`
+- [x] **Write Tests**: Test min/max/close buttons call correct store actions (`minimizeWindow`, `maximizeWindow`, `closeWindow`) `3a26310`
+- [x] **Write Tests**: Test active vs inactive gradient based on `isActive` prop `3a26310`
+- [x] **Write Tests**: Test double-click title bar calls `maximizeWindow`/`restoreWindow` `3a26310`
+- [x] **Implement**: Create `src/components/window/TitleBar.tsx` with XP-style gradient, icon, title text, 16×16 min/max/close buttons `3a26310`
+- [x] **Implement**: Wire button onClick handlers to store actions; active/inactive gradient switching `3a26310`
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` `3a26310`
+- [x] **Commit**: `feat(window): Add TitleBar component with min/max/close controls` `3a26310`
 
 ### Task 4: Create WindowFrame Component
 
 > **Design note:** Accept the full `WindowState` object as a prop (passed from WindowLayer) rather than subscribing to `$windows` internally. This avoids redundant per-instance store subscriptions and ensures only WindowLayer is the single source of truth for iteration.
 
-- [ ] **Write Tests**: React component test — renders with 3D chrome border, rounded top corners
-- [ ] **Write Tests**: Test applies active/inactive title bar based on `isActive` prop
-- [ ] **Write Tests**: Test renders placeholder children content
-- [ ] **Implement**: Create `src/components/window/WindowFrame.tsx` — `xp-window-border` class, `--xp-shadow-lg`/`--xp-shadow-sm`, TitleBar mount, content slot, accepts full `WindowState` as prop
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Add WindowFrame component with 3D chrome border`
+- [x] **Write Tests**: React component test — renders with 3D chrome border, rounded top corners `8eaac00`
+- [x] **Write Tests**: Test applies active/inactive title bar based on `isActive` prop `8eaac00`
+- [x] **Write Tests**: Test renders placeholder children content `8eaac00`
+- [x] **Implement**: Create `src/components/window/WindowFrame.tsx` — `xp-window-border` class, `--xp-shadow-lg`/`--xp-shadow-sm`, TitleBar mount, content slot, accepts full `WindowState` as prop `8eaac00`
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` `8eaac00`
+- [x] **Commit**: `feat(window): Add WindowFrame component with 3D chrome border` `8eaac00`
 
 ### Task 5: Create WindowLayer Component
 
-- [ ] **Write Tests**: React component test — renders one `WindowFrame` per entry in `$windows`
-- [ ] **Write Tests**: Test registers CustomEvent listener for `luna:open-window` event
-- [ ] **Write Tests**: Test displays placeholder content for all 6 window types
-- [ ] **Implement**: Create `src/components/window/WindowLayer.tsx` — subscribes to `$windows`, iterates and renders `WindowFrame` for each
-- [ ] **Implement**: Add CustomEvent listener in `useEffect` for desktop icon click wiring
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Add WindowLayer component with store subscription and event listener`
+- [x] **Write Tests**: React component test — renders one `WindowFrame` per entry in `$windows` `6511f92`
+- [x] **Write Tests**: Test registers CustomEvent listener for `luna:open-window` event `6511f92`
+- [x] **Write Tests**: Test displays placeholder content for all 6 window types `6511f92`
+- [x] **Implement**: Create `src/components/window/WindowLayer.tsx` — subscribes to `$windows`, iterates and renders `WindowFrame` for each `6511f92`
+- [x] **Implement**: Add CustomEvent listener in `useEffect` for desktop icon click wiring `6511f92`
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` `6511f92`
+- [x] **Commit**: `feat(window): Add WindowLayer component with store subscription and event listener` `6511f92`
 
 ## Phase 3: Interaction Logic
 
@@ -66,13 +66,13 @@ _Implement drag, resize, z-index stacking, minimize/maximize/restore animations.
 
 ### Task 6: Implement Title Bar Drag Logic
 
-- [ ] **Write Tests**: DOM event tests — mousedown on title bar initiates drag
-- [ ] **Write Tests**: Test mousemove delta updates window position
-- [ ] **Write Tests**: Test viewport constraint (min 32px visible from any edge)
-- [ ] **Write Tests**: Test mouseup ends drag
-- [ ] **Implement**: Drag logic in `WindowFrame.tsx` — `onMouseDown` on TitleBar, `onMouseMove`/`onMouseUp` on document with cleanup in `useEffect` return
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(window): Implement viewport-constrained title bar drag`
+- [x] **Write Tests**: DOM event tests — mousedown on title bar initiates drag `02a5239`
+- [x] **Write Tests**: Test mousemove delta updates window position `02a5239`
+- [x] **Write Tests**: Test viewport constraint (min 32px visible from any edge) `02a5239`
+- [x] **Write Tests**: Test mouseup ends drag `02a5239`
+- [x] **Implement**: Drag logic in `WindowLayer.tsx` — `onDragStart` prop on TitleBar, `onMouseMove`/`onMouseUp` on document with cleanup `02a5239`
+- [x] **Verify Coverage**: `pnpm test:coverage` `02a5239`
+- [x] **Commit**: `feat(window): Implement viewport-constrained title bar drag` `02a5239`
 
 ### Task 7: Implement Edge/Corner Resize
 
