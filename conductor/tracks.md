@@ -9,5 +9,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Fully interactive Start Menu with two-column layout, user header, and program list that opens windows**
-  _Link: [./tracks/start_menu_20260512/](./tracks/start_menu_20260512/)_
+- [x] **Track: Fully interactive Start Menu with two-column layout, user header, and program list that opens windows**
+      _Link: [./tracks/start_menu_20260512/](./tracks/start_menu_20260512/)_
