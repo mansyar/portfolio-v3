@@ -7,5 +7,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Track 1B — Window Manager**
-      _Link: [./tracks/window_manager_20260511/](./tracks/window_manager_20260511/)_
+- [~] **Track: Track 1B — Window Manager**
+  _Link: [./tracks/window_manager_20260511/](./tracks/window_manager_20260511/)_
