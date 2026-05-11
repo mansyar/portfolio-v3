@@ -101,3 +101,139 @@ export const $activeWindow = atom<WindowId | null>(null);
 export const $taskbarWindows = computed($windows, (windows) =>
   Object.values(windows).filter((w) => w.status !== undefined),
 );
+
+// --- Position Caches for Minimize/Maximize Restore ---
+
+const prevPositions = new Map<WindowId, { x: number; y: number; width: number; height: number }>();
+
+// --- Window Actions ---
+
+function buildWindowState(id: WindowId, config: WindowConfig, zIndex: number): WindowState {
+  return {
+    id,
+    title: config.title,
+    icon: config.icon,
+    x: config.x,
+    y: config.y,
+    width: config.width,
+    height: config.height,
+    minWidth: config.minWidth,
+    minHeight: config.minHeight,
+    zIndex,
+    status: 'open',
+  };
+}
+
+export function openWindow(id: WindowId): void {
+  const windows = $windows.get();
+  if (windows[id]) return; // already open
+
+  const config = DEFAULT_WINDOW_CONFIGS[id];
+  const zIndex = $zCounter.get();
+  $zCounter.set(zIndex + 1);
+
+  const state = buildWindowState(id, config, zIndex);
+  const next = { ...windows, [id]: state };
+  $windows.set(next);
+
+  $activeWindow.set(id);
+}
+
+export function closeWindow(id: WindowId): void {
+  const windows = $windows.get();
+  if (!windows[id]) return;
+
+  // Set transitional 'closing' status for animation
+  const closingState = { ...windows[id], status: 'closing' as const };
+  $windows.set({ ...windows, [id]: closingState });
+
+  // Remove after animation completes (120ms)
+  setTimeout(() => {
+    const current = $windows.get();
+    if (current[id]?.status === 'closing') {
+      const next = { ...current };
+      delete next[id];
+      $windows.set(next);
+      if ($activeWindow.get() === id) {
+        $activeWindow.set(null);
+      }
+    }
+  }, 120);
+}
+
+export function minimizeWindow(id: WindowId): void {
+  const windows = $windows.get();
+  const state = windows[id];
+  if (!state) return;
+
+  // Cache current position for restore
+  prevPositions.set(id, { x: state.x, y: state.y, width: state.width, height: state.height });
+
+  const updated = { ...state, status: 'minimized' as const };
+  $windows.set({ ...windows, [id]: updated });
+}
+
+export function maximizeWindow(id: WindowId): void {
+  const windows = $windows.get();
+  const state = windows[id];
+  if (!state) return;
+
+  // Cache current position/size
+  prevPositions.set(id, { x: state.x, y: state.y, width: state.width, height: state.height });
+
+  const updated = { ...state, status: 'maximized' as const };
+  $windows.set({ ...windows, [id]: updated });
+}
+
+export function restoreWindow(id: WindowId): void {
+  const windows = $windows.get();
+  const state = windows[id];
+  if (!state) return;
+  if (state.status !== 'minimized' && state.status !== 'maximized') return;
+
+  const cached = prevPositions.get(id);
+  const restored = {
+    ...state,
+    status: 'open' as const,
+    ...(cached ? { x: cached.x, y: cached.y, width: cached.width, height: cached.height } : {}),
+  };
+  $windows.set({ ...windows, [id]: restored });
+}
+
+export function focusWindow(id: WindowId): void {
+  const windows = $windows.get();
+  const state = windows[id];
+  if (!state) return;
+
+  const zIndex = $zCounter.get();
+  const newZIndex = zIndex + 1;
+  $zCounter.set(newZIndex);
+
+  const updated = { ...state, zIndex: newZIndex };
+  $windows.set({ ...windows, [id]: updated });
+
+  $activeWindow.set(id);
+}
+
+export function moveWindow(id: WindowId, x: number, y: number): void {
+  const windows = $windows.get();
+  const state = windows[id];
+  if (!state) return;
+
+  // Viewport constraint: minimum 32px of any edge must remain visible
+  // We store the raw position; the component will clamp rendering
+  const updated = { ...state, x, y };
+  $windows.set({ ...windows, [id]: updated });
+}
+
+export function resizeWindow(id: WindowId, width: number, height: number): void {
+  const windows = $windows.get();
+  const state = windows[id];
+  if (!state) return;
+
+  const clampedWidth = Math.max(width, state.minWidth);
+  const clampedHeight = Math.max(height, state.minHeight);
+
+  const updated = { ...state, width: clampedWidth, height: clampedHeight };
+  $windows.set({ ...windows, [id]: updated });
+}

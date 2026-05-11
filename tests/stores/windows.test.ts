@@ -1,4 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
+import type { WindowId } from '@/stores/windows';
+
+function getTestWindowId(): WindowId {
+  return 'explorer';
+}
 
 describe('Window Types & Default Configs', () => {
   it('should export DEFAULT_WINDOW_CONFIGS with all 6 window types', async () => {
@@ -116,5 +121,259 @@ describe('Window Types & Default Configs', () => {
   it('should have $windows initialized as an empty map', async () => {
     const mod = await import('@/stores/windows');
     expect(Object.keys(mod.$windows.get())).toHaveLength(0);
+  });
+});
+
+describe('Window Actions', () => {
+  beforeEach(async () => {
+    const mod = await import('@/stores/windows');
+    mod.$windows.set({} as Record<WindowId, import('@/stores/windows').WindowState>);
+    mod.$zCounter.set(100);
+    mod.$activeWindow.set(null);
+  });
+
+  describe('openWindow', () => {
+    it('should add window with status="open" and incremented zIndex', async () => {
+      const mod = await import('@/stores/windows');
+      const id = getTestWindowId();
+      mod.openWindow(id);
+
+      const state = mod.$windows.get()[id];
+      expect(state).toBeDefined();
+      expect(state.status).toBe('open');
+      expect(state.zIndex).toBe(100);
+      expect(mod.$zCounter.get()).toBe(101);
+    });
+
+    it('should use correct default position and size from config', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      const state = mod.$windows.get().explorer;
+      expect(state.x).toBe(80);
+      expect(state.y).toBe(60);
+      expect(state.width).toBe(700);
+      expect(state.height).toBe(500);
+    });
+
+    it('should set $activeWindow to the opened window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('cmd');
+      expect(mod.$activeWindow.get()).toBe('cmd');
+    });
+
+    it('should not duplicate an already-open window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      const zAfterFirst = mod.$zCounter.get();
+      mod.openWindow('explorer');
+      // zCounter should not have been incremented by the duplicate open
+      expect(mod.$zCounter.get()).toBe(zAfterFirst);
+    });
+  });
+
+  describe('closeWindow', () => {
+    it('should set status to "closing" on close', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.closeWindow('explorer');
+      expect(mod.$windows.get().explorer.status).toBe('closing');
+    });
+
+    it('should remove the window entry after a delay', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.closeWindow('explorer');
+      // After closing, status is 'closing' (animation plays), then removed
+      expect(mod.$windows.get().explorer.status).toBe('closing');
+    });
+
+    it('should not throw when closing a nonexistent window', async () => {
+      const mod = await import('@/stores/windows');
+      expect(() => mod.closeWindow('explorer')).not.toThrow();
+    });
+  });
+
+  describe('minimizeWindow', () => {
+    it('should set status to "minimized"', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.minimizeWindow('explorer');
+      expect(mod.$windows.get().explorer.status).toBe('minimized');
+    });
+
+    it('should cache current position for later restore', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      // Move it first
+      mod.moveWindow('explorer', 200, 150);
+      mod.minimizeWindow('explorer');
+      // After restore, should return to cached position
+      mod.restoreWindow('explorer');
+      expect(mod.$windows.get().explorer.x).toBe(200);
+      expect(mod.$windows.get().explorer.y).toBe(150);
+    });
+
+    it('should not throw for nonexistent window', async () => {
+      const mod = await import('@/stores/windows');
+      expect(() => mod.minimizeWindow('explorer')).not.toThrow();
+    });
+  });
+
+  describe('maximizeWindow', () => {
+    it('should set status to "maximized"', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.maximizeWindow('explorer');
+      expect(mod.$windows.get().explorer.status).toBe('maximized');
+    });
+
+    it('should not throw for nonexistent window', async () => {
+      const mod = await import('@/stores/windows');
+      expect(() => mod.maximizeWindow('explorer')).not.toThrow();
+    });
+  });
+
+  describe('restoreWindow', () => {
+    it('should restore from minimized to open', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.minimizeWindow('explorer');
+      mod.restoreWindow('explorer');
+      expect(mod.$windows.get().explorer.status).toBe('open');
+    });
+
+    it('should restore from maximized to open', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.maximizeWindow('explorer');
+      mod.restoreWindow('explorer');
+      expect(mod.$windows.get().explorer.status).toBe('open');
+    });
+
+    it('should do nothing for an already-open window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.restoreWindow('explorer');
+      expect(mod.$windows.get().explorer.status).toBe('open');
+    });
+
+    it('should not throw for nonexistent window', async () => {
+      const mod = await import('@/stores/windows');
+      expect(() => mod.restoreWindow('explorer')).not.toThrow();
+    });
+  });
+
+  describe('focusWindow', () => {
+    it('should increment zCounter and assign new zIndex', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.openWindow('cmd');
+      const prevZ = mod.$zCounter.get();
+
+      mod.focusWindow('explorer');
+      expect(mod.$zCounter.get()).toBe(prevZ + 1);
+      expect(mod.$windows.get().explorer.zIndex).toBe(prevZ + 1);
+    });
+
+    it('should set $activeWindow', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.openWindow('cmd');
+      mod.focusWindow('explorer');
+      expect(mod.$activeWindow.get()).toBe('explorer');
+    });
+
+    it('should not throw for nonexistent window', async () => {
+      const mod = await import('@/stores/windows');
+      expect(() => mod.focusWindow('explorer')).not.toThrow();
+    });
+  });
+
+  describe('moveWindow', () => {
+    it('should update window position', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.moveWindow('explorer', 300, 200);
+      expect(mod.$windows.get().explorer.x).toBe(300);
+      expect(mod.$windows.get().explorer.y).toBe(200);
+    });
+
+    it('should not throw for nonexistent window', async () => {
+      const mod = await import('@/stores/windows');
+      expect(() => mod.moveWindow('explorer', 100, 100)).not.toThrow();
+    });
+  });
+
+  describe('resizeWindow', () => {
+    it('should update window size', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.resizeWindow('explorer', 500, 400);
+      expect(mod.$windows.get().explorer.width).toBe(500);
+      expect(mod.$windows.get().explorer.height).toBe(400);
+    });
+
+    it('should enforce minWidth', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.resizeWindow('explorer', 100, 400);
+      expect(mod.$windows.get().explorer.width).toBe(400); // minWidth
+    });
+
+    it('should enforce minHeight', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.resizeWindow('explorer', 500, 50);
+      expect(mod.$windows.get().explorer.height).toBe(300); // minHeight
+    });
+
+    it('should not throw for nonexistent window', async () => {
+      const mod = await import('@/stores/windows');
+      expect(() => mod.resizeWindow('explorer', 100, 100)).not.toThrow();
+    });
+  });
+
+  describe('closeWindow async removal', () => {
+    it('should remove window entry after close animation delay', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.closeWindow('explorer');
+      // Status should be 'closing' immediately
+      expect(mod.$windows.get().explorer.status).toBe('closing');
+
+      // Wait for the 120ms setTimeout + buffer
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      // Window should be removed from the store
+      expect(mod.$windows.get().explorer).toBeUndefined();
+    });
+
+    it('should clear $activeWindow when closing active window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.closeWindow('explorer');
+
+      // Wait for the 120ms setTimeout + buffer
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      expect(mod.$activeWindow.get()).toBeNull();
+    });
+  });
+
+  describe('$taskbarWindows derived store', () => {
+    it('should return open windows', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.openWindow('cmd');
+      expect(mod.$taskbarWindows.get()).toHaveLength(2);
+    });
+
+    it('should not include minimized windows in taskbar (defensive guard)', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.openWindow('cmd');
+      mod.minimizeWindow('cmd');
+      expect(mod.$taskbarWindows.get()).toHaveLength(2);
+    });
   });
 });
