@@ -35,7 +35,7 @@
   - [x] Run `CI=true pnpm test -- tests/wallpaper.test.ts` — verify all tests pass
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Wallpaper Migration' (Protocol in workflow.md) (940cfcc)
 
-## Phase 4: Page Integration Test — Container API Migration
+## Phase 4: Page Integration Test — Container API Migration [checkpoint: 62f7f2c]
 
 - [x] Task 4.1: Rewrite `tests/pages/index.test.ts` using Container API (Red Phase) (a79c738)
   - [x] Remove `fs.readFileSync`, `resolve`, `dirname` imports related to dist/ reading
@@ -45,7 +45,7 @@
 - [x] Task 4.2: Verify new tests pass (Green Phase) (a79c738)
   - [x] Fix any import or rendering issues (added manual React SSR renderer for client:load components)
   - [x] Run `CI=true pnpm test -- tests/pages/index.test.ts` — verify all tests pass
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Page Integration Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Page Integration Migration' (Protocol in workflow.md) (62f7f2c)
 
 ## Phase 5: Final Verification & Checkpoint
 
