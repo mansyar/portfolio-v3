@@ -131,6 +131,13 @@
   }
 }
 
+/* === Shutdown Progress Bar Animation === */
+
+@keyframes shutdownProgress {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .window-open,
   .window-closing,
