@@ -143,3 +143,7 @@ _Wire the window manager into the existing desktop shell and taskbar._
 - [x] **Phase Checkpoint**: Verify all 12 tasks marked [x] with commit SHAs recorded `[current]`
 - [x] **Phase Checkpoint**: Present manual verification plan for user sign-off `[current]`
 - [x] **Phase Checkpoint**: Create checkpoint commit with git notes `[current]`
+
+## Phase 6: Review Fixes
+
+- [x] **Task**: Apply review suggestions (prefers-reduced-motion, closeWindow race condition, type safety, accessibility, test cleanup) `fc6301c`
