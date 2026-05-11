@@ -112,6 +112,76 @@ describe('StartMenu.tsx — Shut Down Button', () => {
   });
 });
 
+describe('StartMenu.tsx — Window Actions', () => {
+  beforeEach(async () => {
+    const desktop = await import('@/stores/desktop');
+    desktop.$startMenuOpen.set(true);
+  });
+
+  it('should open My Documents and close menu when clicking Resume', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('Resume'));
+    expect(windows.$windows.get().mydocs).toBeDefined();
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  });
+
+  it('should open Explorer when clicking Explorer', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('Explorer'));
+    expect(windows.$windows.get().explorer).toBeDefined();
+  });
+
+  it('should open Task Manager when clicking Task Manager', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('Task Manager'));
+    expect(windows.$windows.get().taskmanager).toBeDefined();
+  });
+
+  it('should open Command Prompt when clicking Command Prompt', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('Command Prompt'));
+    expect(windows.$windows.get().cmd).toBeDefined();
+  });
+
+  it('should open My Documents when clicking My Documents', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('My Documents'));
+    expect(windows.$windows.get().mydocs).toBeDefined();
+  });
+
+  it('should open My Computer when clicking My Computer', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('My Computer'));
+    expect(windows.$windows.get().explorer).toBeDefined();
+  });
+
+  it('should open Task Manager when clicking Control Panel', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('Control Panel'));
+    expect(windows.$windows.get().taskmanager).toBeDefined();
+  });
+
+  it('should open Help & Support when clicking Help & Support', async () => {
+    const windows = await import('@/stores/windows');
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('Help & Support'));
+    expect(windows.$windows.get().help).toBeDefined();
+  });
+
+  it('should close menu when clicking any menu item', () => {
+    render(<StartMenu />);
+    fireEvent.click(screen.getByText('Resume'));
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  });
+});
+
 describe('StartMenu.tsx — Keyboard Navigation', () => {
   beforeEach(async () => {
     const desktop = await import('@/stores/desktop');
