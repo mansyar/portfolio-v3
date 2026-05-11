@@ -45,17 +45,17 @@
 
 ### Task 5: Implement StartMenu Layout (Green Phase)
 
-- [ ] **Implement**: Create `src/components/taskbar/StartMenu.tsx` with:
+- [x] **Implement**: Create `src/components/taskbar/StartMenu.tsx` with:
   - Blue gradient header bar using `--xp-start-header-blue` CSS token, "MARP" initials avatar circle + "Ansyar Muh Amrulloh" name
   - Left column (`--xp-start-left-bg`): Resume, Explorer, Task Manager, Command Prompt (existing icon at 16×16 + label)
   - Right column (`--xp-start-right-bg`): My Documents, My Computer, Control Panel, Help & Support (existing icon at 16×16 + label)
   - Bottom divider using `--xp-start-separator` + "Shut Down..." button with power icon
   - Width: `--xp-startmenu-width` (320px)
   - `role="menu"` ARIA role with `aria-activedescendant` and `tabindex="0"` on container
-- [ ] **Verify Tests**: Run tests, confirm all pass (Green phase)
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(taskbar): Implement StartMenu two-column layout component` + git note
-- [ ] **Update Plan**: Mark task complete with commit SHA
+- [x] **Verify Tests**: Run tests, confirm all pass (Green phase) — 20/20 pass
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` — 95% overall
+- [x] **Commit**: `feat(taskbar): Implement StartMenu two-column layout component` + git note
+- [x] **Update Plan**: Mark task complete with commit SHA `cbab1f2`
 - [ ] **Commit Plan**: `conductor(plan): Mark task 'Implement StartMenu Layout' as complete`
 
 ### Task 6: Wire Menu Items to Window Actions + Keyboard Navigation
