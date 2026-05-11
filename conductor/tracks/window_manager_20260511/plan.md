@@ -6,11 +6,11 @@ _Build the Nano Stores foundation with all window actions and default configurat
 
 ### Task 1: Create Window Types, Store Schemas & Default Configs
 
-- [ ] **Write Tests**: Unit tests for `WindowState` interface, `WindowId` type, `DEFAULT_WINDOW_CONFIGS` constant — validate all 6 window configs have correct defaults and min sizes
-- [ ] **Implement**: Create `src/stores/windows.ts` with `WindowState`, `WindowId` types, and `DEFAULT_WINDOW_CONFIGS` map (positions, sizes, min constraints)
-- [ ] **Implement**: Create `$windows` map, `$zCounter` atom, `$activeWindow` atom, `$taskbarWindows` derived store
-- [ ] **Verify Coverage**: `CI=true pnpm test:coverage`
-- [ ] **Commit**: `feat(stores): Add window state types, default configs, and Nano Store atoms`
+- [x] **Write Tests**: Unit tests for `WindowState` interface, `WindowId` type, `DEFAULT_WINDOW_CONFIGS` constant — validate all 6 window configs have correct defaults and min sizes `d363f76`
+- [x] **Implement**: Create `src/stores/windows.ts` with `WindowState`, `WindowId` types, and `DEFAULT_WINDOW_CONFIGS` map (positions, sizes, min constraints) `d363f76`
+- [x] **Implement**: Create `$windows` map, `$zCounter` atom, `$activeWindow` atom, `$taskbarWindows` derived store `d363f76`
+- [x] **Verify Coverage**: `CI=true pnpm test:coverage` `d363f76`
+- [x] **Commit**: `feat(stores): Add window state types, default configs, and Nano Store atoms` `d363f76`
 
 ### Task 2: Implement All Window Actions
 
