@@ -6,7 +6,7 @@
 
 ---
 
-## Phase 1: Command Registry & Parser
+## Phase 1: Command Registry & Parser [checkpoint: 8605e1e]
 
 - [x] Task 1.1: Add `cmdPath` to `WindowState` in `src/stores/windows.ts` `344638c`
   - [ ] Write tests: cmdPath is set to 'C:\' on openWindow('cmd'), undefined for other windows, updates on cd
@@ -32,7 +32,7 @@
 - [x] Task 1.8: Implement `open` command (navigate Explorer to project folder) `54fe628`
   - [x] Write tests: open with valid slug opens Explorer + navigates to parent folder, open with .pdf opens new tab, unknown slug errors
   - [x] Implement open: find slug in FILE_SYSTEM → resolve parent path → openWindow('explorer') → set explorerPath to parent; .pdf → window.open(); else XP error
-- [ ] Task: Conductor - User Manual Verification 'Phase 1 — Command Registry & Parser' (Protocol in workflow.md) `pending`
+- [x] Task: Conductor - User Manual Verification 'Phase 1 — Command Registry & Parser' (Protocol in workflow.md) `8605e1e`
 
 ---
 
