@@ -15,3 +15,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 - [x] **Track: Command Prompt (Track 2B)**
       _Link: [./tracks/command-prompt_20260512/](./tracks/command-prompt_20260512/)_
+
+---
+
+- [ ] **Track: Task Manager (Track 2C)**
+      _Link: [./tracks/task-manager_20260512/](./tracks/task-manager_20260512/)_
