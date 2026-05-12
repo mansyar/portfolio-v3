@@ -11,7 +11,7 @@
 - [x] Task 1.1: Add `cmdPath` to `WindowState` in `src/stores/windows.ts` `344638c`
   - [ ] Write tests: cmdPath is set to 'C:\' on openWindow('cmd'), undefined for other windows, updates on cd
   - [ ] Add `cmdPath?: string` to `WindowState` interface, initialize to `C:\` in `buildWindowState` for 'cmd' window
-- [ ] Task 1.2: Create `src/lib/commands.ts` — command type definitions, registry, and parser function
+- [~] Task 1.2: Create `src/lib/commands.ts` — command type definitions, registry, and parser function
   - [ ] Write tests for Command enum, CommandHandler type, registry map, and parseCommand() (parses 'cmd arg1 arg2')
   - [ ] Implement Command type (enum or string union), CommandHandler type signature, registry, and parseCommand()
 - [ ] Task 1.3: Implement `help`, `echo`, `whoami` commands
