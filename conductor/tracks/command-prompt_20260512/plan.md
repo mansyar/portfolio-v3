@@ -38,7 +38,7 @@
 
 ## Phase 2: Terminal UI Component & Integration
 
-- [ ] Task 2.1: Create `CmdPrompt.tsx` — terminal shell component
+- [~] Task 2.1: Create `CmdPrompt.tsx` — terminal shell component
   - [ ] Write tests: CmdPrompt renders with black background, green #00aa00 text, C:\MANSYAR> prompt visible
   - [ ] Implement CmdPrompt: black div, scrollable output area, input at bottom, XP-style console font styling
 - [ ] Task 2.2: Wire command execution + output rendering
