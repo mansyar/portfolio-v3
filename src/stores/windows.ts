@@ -16,6 +16,8 @@ export interface WindowState {
   minHeight: number;
   zIndex: number;
   status: WindowStatus;
+  /** Current directory path for the explorer window */
+  explorerPath?: string;
 }
 
 export interface WindowConfig {
@@ -123,6 +125,7 @@ function buildWindowState(id: WindowId, config: WindowConfig, zIndex: number): W
     minHeight: config.minHeight,
     zIndex,
     status: 'open',
+    explorerPath: id === 'explorer' ? 'C:\\' : undefined,
   };
 }
 

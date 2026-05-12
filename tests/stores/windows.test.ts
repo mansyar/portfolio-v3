@@ -376,4 +376,29 @@ describe('Window Actions', () => {
       expect(mod.$taskbarWindows.get()).toHaveLength(2);
     });
   });
+
+  describe('explorerPath', () => {
+    it('should set explorerPath to C:\\ when opening explorer window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      const state = mod.$windows.get().explorer;
+      expect(state.explorerPath).toBe('C:\\');
+    });
+
+    it('should not set explorerPath for non-explorer windows', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('cmd');
+      const state = mod.$windows.get().cmd;
+      expect(state.explorerPath).toBeUndefined();
+    });
+
+    it('should allow setting explorerPath after open', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      const windows = mod.$windows.get();
+      const updated = { ...windows.explorer, explorerPath: 'D:\\Systems_Data' };
+      mod.$windows.set({ ...windows, explorer: updated });
+      expect(mod.$windows.get().explorer.explorerPath).toBe('D:\\Systems_Data');
+    });
+  });
 });
