@@ -133,3 +133,13 @@
 ### Task 11: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
 - [x] **Completed**: Phase 3 verified and checkpoint created
+
+## Phase: Review Fixes
+
+### Task 12: Apply review suggestions
+
+- [x] **Apply Fixes**: Apply rAF cleanup, CSS/JS timing comment, opacity fade-in
+- [x] **Verify Tests**: Confirm all pass — 201/201 pass
+- [x] **Commit**: `fix(conductor): Apply review suggestions for track 'Start Menu'`
+- [x] **Update Plan**: Mark task complete with commit SHA `9c9a7f8`
+- [ ] **Commit Plan**: `conductor(plan): Mark task 'Apply review suggestions' as complete`
