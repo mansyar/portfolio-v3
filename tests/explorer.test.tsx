@@ -155,6 +155,52 @@ describe('ExplorerFileList', () => {
   });
 });
 
+import { ExplorerDetailPane } from '@/components/apps/ExplorerDetailPane';
+
+describe('ExplorerDetailPane', () => {
+  it('should render null when slug is null', () => {
+    const { container } = render(<ExplorerDetailPane slug={null} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('should render project details for a valid slug', () => {
+    render(<ExplorerDetailPane slug="icarus-server-manager" />);
+    expect(screen.getByText('Icarus Server Manager')).toBeInTheDocument();
+    expect(screen.getByText('TypeScript')).toBeInTheDocument();
+    expect(screen.getByText('Node.js')).toBeInTheDocument();
+    expect(screen.getByText('View on GitHub')).toBeInTheDocument();
+  });
+
+  it('should render academy details for a devops slug', () => {
+    render(<ExplorerDetailPane slug="docker-basics" />);
+    expect(screen.getByText('Docker Basics')).toBeInTheDocument();
+    expect(screen.getByText('Docker')).toBeInTheDocument();
+  });
+
+  it('should render null for an unknown slug', () => {
+    const { container } = render(<ExplorerDetailPane slug="nonexistent" />);
+    expect(container.firstChild).toBeNull();
+  });
+});
+
+describe('Projects Metadata', () => {
+  it('should have metadata for all 3 projects', async () => {
+    const { PROJECTS_METADATA } = await import('@/lib/projects-data');
+    expect(Object.keys(PROJECTS_METADATA)).toHaveLength(3);
+    expect(PROJECTS_METADATA['icarus-server-manager']).toBeDefined();
+    expect(PROJECTS_METADATA['chasing-chapters']).toBeDefined();
+    expect(PROJECTS_METADATA['tubular-bexus-osw']).toBeDefined();
+  });
+
+  it('should have metadata for all 3 devops articles', async () => {
+    const { DEVOPS_METADATA } = await import('@/lib/projects-data');
+    expect(Object.keys(DEVOPS_METADATA)).toHaveLength(3);
+    expect(DEVOPS_METADATA['docker-basics']).toBeDefined();
+    expect(DEVOPS_METADATA['linux-essentials']).toBeDefined();
+    expect(DEVOPS_METADATA['ci-cd-pipeline']).toBeDefined();
+  });
+});
+
 describe('Explorer (integration)', () => {
   it('should render when explorer window is open', async () => {
     const stores = await import('@/stores/windows');
@@ -171,5 +217,15 @@ describe('Explorer (integration)', () => {
     render(<Explorer windowId="explorer" />);
     // Default path is C:\ so we see Software_Engineering folder
     expect(screen.getByText('Software_Engineering')).toBeInTheDocument();
+  });
+
+  it('should navigate when clicking a folder in the file list', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('explorer');
+    render(<Explorer windowId="explorer" />);
+    // Click on Software_Engineering folder
+    fireEvent.click(screen.getByText('Software_Engineering'));
+    // Should now show files inside
+    expect(screen.getByText('icarus-server-manager.mdx')).toBeInTheDocument();
   });
 });

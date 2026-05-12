@@ -95,41 +95,41 @@
 
 ## Phase 4 — Explorer: Inline Content Display
 
-- [ ] Task 4.1: Create project metadata JSON data source
-  - [ ] Extract frontmatter from all project MDX files into a static JSON structure
-  - [ ] Create `src/content/projects-data.ts` exporting `PROJECTS_METADATA` record keyed by slug
-  - [ ] Write tests verifying metadata JSON matches expected shape for each project
-- [ ] Task 4.2: Write failing tests for detail pane
-  - [ ] Test clicking a project file opens detail pane
-  - [ ] Test detail pane shows project title, description, tech stack badges, repo link
-  - [ ] Test clicking a folder does NOT open detail pane (navigates instead)
-  - [ ] Test detail pane is empty/closed when no file is selected
-- [ ] Task 4.3: Implement inline detail pane
-  - [ ] Create `src/components/apps/ExplorerDetailPane.tsx` — split-pane layout (file list left, detail right)
-  - [ ] Wire click handler: project files → render detail pane with metadata; folders → navigate
-  - [ ] Render project title (heading), description (paragraph), tech stack badges, repo URL button ("View on GitHub")
-  - [ ] Style detail pane to match XP aesthetic (white background, 3D inset border, Tahoma font)
-  - [ ] Verify tests pass
+- [x] Task 4.1: Create project metadata JSON data source [2893248]
+  - [x] Extract frontmatter from all project MDX files into a static JSON structure
+  - [x] Create `src/lib/projects-data.ts` exporting `PROJECTS_METADATA` record keyed by slug
+  - [x] Write tests verifying metadata JSON matches expected shape for each project
+- [x] Task 4.2: Write failing tests for detail pane [2893248]
+  - [x] Test clicking a project file opens detail pane
+  - [x] Test detail pane shows project title, description, tech stack badges, repo link
+  - [x] Test clicking a folder does NOT open detail pane (navigates instead)
+  - [x] Test detail pane is empty/closed when no file is selected
+- [x] Task 4.3: Implement inline detail pane [2893248]
+  - [x] Create `src/components/apps/ExplorerDetailPane.tsx` — split-pane layout (file list left, detail right)
+  - [x] Wire click handler: project files → render detail pane with metadata; folders → navigate
+  - [x] Render project title (heading), description (paragraph), tech stack badges, repo URL button ("View on GitHub")
+  - [x] Style detail pane to match XP aesthetic (white background, 3D inset border, Tahoma font)
+  - [x] Verify tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Inline Content Display' (Protocol in workflow.md)
 
 ---
 
 ## Phase 5 — Integration & Wiring
 
-- [ ] Task 5.1: Update WindowLayer to mount Explorer
-  - [ ] Replace placeholder content in WindowLayer for 'explorer' window
-  - [ ] Mount `<Explorer windowId="explorer" />` inside WindowFrame
-  - [ ] Write tests verifying Explorer mounts inside window frame
-- [ ] Task 5.2: Wire desktop icons → Explorer
-  - [ ] Verify My Computer desktop icon (`windowId="explorer"`) opens Explorer at root
-  - [ ] Verify My Documents desktop icon opens Explorer at My Documents view
-- [ ] Task 5.3: Wire Start Menu → Explorer
-  - [ ] Verify Start Menu "Explorer" item opens Explorer at root
-  - [ ] Verify Start Menu "My Computer" item opens Explorer at root
-- [ ] Task 5.4: Final integration verification
-  - [ ] Run full test suite — all tests passing
-  - [ ] Run coverage report — ≥ 80% coverage
-  - [ ] Run `pnpm astro check` — no type errors
-  - [ ] Run `pnpm lint` — no lint errors
-  - [ ] Verify no `src/` file exceeds 500 lines (modularity check)
+- [x] Task 5.1: Update WindowLayer to mount Explorer [2893248]
+  - [x] Replace placeholder content in WindowLayer for 'explorer' window
+  - [x] Mount `<Explorer windowId="explorer" />` inside WindowFrame
+  - [x] Write tests verifying Explorer mounts inside window frame
+- [x] Task 5.2: Wire desktop icons → Explorer
+  - [x] Verify My Computer desktop icon (`windowId="explorer"`) opens Explorer at root
+  - [x] Verify My Documents desktop icon opens Explorer at My Documents view
+- [x] Task 5.3: Wire Start Menu → Explorer
+  - [x] Verify Start Menu "Explorer" item opens Explorer at root
+  - [x] Verify Start Menu "My Computer" item opens Explorer at root
+- [x] Task 5.4: Final integration verification [2893248]
+  - [x] Run full test suite — all tests passing
+  - [x] Run coverage report — ≥ 80% coverage (81.17% branches, 91.2% statements)
+  - [x] Run `pnpm astro check` — no type errors
+  - [x] Run `pnpm lint` — no lint errors
+  - [x] Verify no `src/` file exceeds 500 lines (modularity check)
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Integration & Wiring' (Protocol in workflow.md)
