@@ -65,11 +65,11 @@
 
 ## Phase 3 — Explorer Component: State, Navigation & List
 
-- [ ] Task 3.1: Add `explorerPath` to WindowState
-  - [ ] Write tests for `explorerPath` on WindowState
-  - [ ] Add optional `explorerPath?: string` to `WindowState` interface in `src/stores/windows.ts`
-  - [ ] Default to `C:\` path on `openWindow('explorer')` via `buildWindowState`
-  - [ ] Verify tests pass
+- [x] Task 3.1: Add `explorerPath` to WindowState [7995e6e]
+  - [x] Write tests for `explorerPath` on WindowState
+  - [x] Add optional `explorerPath?: string` to `WindowState` interface in `src/stores/windows.ts`
+  - [x] Default to `C:\` path on `openWindow('explorer')` via `buildWindowState`
+  - [x] Verify tests pass
 - [ ] Task 3.2: Write failing tests for Explorer sub-components
   - [ ] Test `ExplorerToolbar` renders back + up buttons with correct enabled/disabled state
   - [ ] Test `ExplorerBreadcrumb` renders path segments; clicking a segment navigates
