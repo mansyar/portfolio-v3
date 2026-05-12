@@ -8,3 +8,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Track 1B — Window Manager archived to conductor/archive/window_manager_20260511/ -->
 
 <!-- Start Menu track archived to conductor/archive/start_menu_20260512/ -->
+
+---
+
+- [ ] **Track: Explorer + Content — Virtual filesystem explorer with inline MDX content rendering**
+      _Link: [./tracks/explorer-content_20260512/](./tracks/explorer-content_20260512/)_
