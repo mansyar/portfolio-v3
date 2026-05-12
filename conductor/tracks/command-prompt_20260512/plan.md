@@ -36,29 +36,25 @@
 
 ---
 
-## Phase 2: Terminal UI Component & Integration
+## Phase 2: Terminal UI Component & Integration [checkpoint: f1378a5]
 
 - [x] Task 2.1: Create `CmdPrompt.tsx` — terminal shell component `055a914`
   - [x] Write tests: CmdPrompt renders with black background, green #00aa00 text, C:\MANSYAR> prompt visible
   - [x] Implement CmdPrompt: black div, scrollable output area, input at bottom, XP-style console font styling
-- [~] Task 2.2: Wire command execution + output rendering
-- [~] Task 2.3: Add MARP ASCII art welcome banner
-- [~] Task 2.4: Implement command history (↑/↓ arrow keys)
-- [~] Task 2.5: Implement blinking cursor and auto-scroll
-- [ ] Task 2.2: Wire command execution + output rendering
-  - [ ] Write tests: pressing Enter calls parseCommand, output lines rendered below prompt, chained commands work
-  - [ ] Wire onKeyDown handler → parseCommand → render output lines as styled div sequence
-- [ ] Task 2.3: Add MARP ASCII art welcome banner
-  - [ ] Write tests: MARP banner appears on initial render and after clear/cls
-  - [ ] Implement MARP ASCII art banner lines as initial output content, restore on clear
-- [ ] Task 2.4: Implement command history (↑/↓ arrow keys)
-  - [ ] Write tests: ↑ cycles backward through history, ↓ cycles forward, empty history works, boundaries handled
-  - [ ] Implement history state array with arrow key navigation using component state
-- [ ] Task 2.5: Implement blinking cursor and auto-scroll
-  - [ ] Write tests: cursor element renders with CSS blink animation class, auto-scroll triggers on new output
-  - [ ] Implement CSS @keyframes for cursor blink, useRef + scrollIntoView for auto-scroll bottom
-- [ ] Task 2.6: Wire CmdPrompt into WindowLayer + fix placeholder text
-  - [ ] Write tests: opening "cmd" window renders CmdPrompt component, other windows render their content
-  - [ ] Replace placeholder `'Command Prompt — Coming Soon in Track 2D'` with `<CmdPrompt windowId="cmd" />` for window ID 'cmd'
-  - [ ] Verify CMD opens from desktop icon "Command Prompt", Start Menu item, and taskbar button
-- [ ] Task: Conductor - User Manual Verification 'Phase 2 — Terminal UI Component & Integration' (Protocol in workflow.md)
+- [x] Task 2.2: Wire command execution + output rendering `f1378a5`
+  - [x] Write tests: pressing Enter calls parseCommand, output lines rendered below prompt, chained commands work
+  - [x] Wire onKeyDown handler → parseCommand → render output lines as styled div sequence
+- [x] Task 2.3: Add MARP ASCII art welcome banner `f1378a5`
+  - [x] Write tests: MARP banner appears on initial render and after clear/cls
+  - [x] Implement MARP ASCII art banner lines as initial output content, restore on clear
+- [x] Task 2.4: Implement command history (↑/↓ arrow keys) `f1378a5`
+  - [x] Write tests: ↑ cycles backward through history, ↓ cycles forward, empty history works, boundaries handled
+  - [x] Implement history state array with arrow key navigation using component state
+- [x] Task 2.5: Implement blinking cursor and auto-scroll `f1378a5`
+  - [x] Write tests: cursor element renders with CSS blink animation class, auto-scroll triggers on new output
+  - [x] Implement CSS @keyframes for cursor blink, useRef + scrollIntoView for auto-scroll bottom
+- [x] Task 2.6: Wire CmdPrompt into WindowLayer + fix placeholder text `f1378a5`
+  - [x] Write tests: opening "cmd" window renders CmdPrompt component, other windows render their content
+  - [x] Replace placeholder `'Command Prompt — Track 2B'` with `<CmdPrompt windowId="cmd" />` for window ID 'cmd'
+  - [x] Verify CMD opens from desktop icon "Command Prompt", Start Menu item, and taskbar button
+- [x] Task: Conductor - User Manual Verification 'Phase 2 — Terminal UI Component & Integration' (Protocol in workflow.md) `f1378a5`
