@@ -64,20 +64,30 @@ function getTabCompletions(prefix: string, cmdPath: string): string[] {
     return matches.slice(0, 9);
   }
 
-  // Completing an argument — check if first word is 'cd'
+  // Completing an argument
   const parts = trimmed.split(/\s+/);
   const command = parts[0]!.toLowerCase();
   const partial = parts.slice(1).join(' ') || '';
+  const children = getChildren(cmdPath);
 
   if (command === 'cd' || command === 'chdir') {
-    // Tab-complete folder names from the filesystem
-    const children = getChildren(cmdPath);
+    // Tab-complete folder/drive names from the filesystem
     const folderMatches = children
       .filter((n) => n.type === 'folder' || n.type === 'drive')
       .map((n) => n.name)
       .filter((name) => name.toLowerCase().startsWith(partial.toLowerCase()))
       .slice(0, 9);
     return folderMatches;
+  }
+
+  if (command === 'cat' || command === 'type' || command === 'open') {
+    // Tab-complete file slugs from the current directory
+    const fileMatches = children
+      .filter((n) => n.type === 'file')
+      .map((n) => n.slug)
+      .filter((slug) => slug.toLowerCase().startsWith(partial.toLowerCase()))
+      .slice(0, 9);
+    return fileMatches;
   }
 
   return [];
@@ -247,7 +257,7 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         style={{
           flex: 1,
           overflowY: 'auto',
-          overflowX: 'hidden',
+          overflowX: 'auto',
           scrollbarGutter: 'stable',
           whiteSpace: 'pre',
           lineHeight: '1.3',
