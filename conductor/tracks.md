@@ -13,5 +13,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Command Prompt (Track 2B)**
-      _Link: [./tracks/command-prompt_20260512/](./tracks/command-prompt_20260512/)_
+- [~] **Track: Command Prompt (Track 2B)**
+  _Link: [./tracks/command-prompt_20260512/](./tracks/command-prompt_20260512/)_

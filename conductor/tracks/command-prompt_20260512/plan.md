@@ -8,7 +8,7 @@
 
 ## Phase 1: Command Registry & Parser
 
-- [ ] Task 1.1: Add `cmdPath` to `WindowState` in `src/stores/windows.ts`
+- [~] Task 1.1: Add `cmdPath` to `WindowState` in `src/stores/windows.ts`
   - [ ] Write tests: cmdPath is set to 'C:\' on openWindow('cmd'), undefined for other windows, updates on cd
   - [ ] Add `cmdPath?: string` to `WindowState` interface, initialize to `C:\` in `buildWindowState` for 'cmd' window
 - [ ] Task 1.2: Create `src/lib/commands.ts` — command type definitions, registry, and parser function

@@ -401,4 +401,29 @@ describe('Window Actions', () => {
       expect(mod.$windows.get().explorer.explorerPath).toBe('D:\\Systems_Data');
     });
   });
+
+  describe('cmdPath', () => {
+    it('should set cmdPath to C:\\ when opening cmd window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('cmd');
+      const state = mod.$windows.get().cmd;
+      expect(state.cmdPath).toBe('C:\\');
+    });
+
+    it('should not set cmdPath for non-cmd windows', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      const state = mod.$windows.get().explorer;
+      expect(state.cmdPath).toBeUndefined();
+    });
+
+    it('should allow updating cmdPath after cd command', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('cmd');
+      const windows = mod.$windows.get();
+      const updated = { ...windows.cmd, cmdPath: 'D:\\Systems_Data' };
+      mod.$windows.set({ ...windows, cmd: updated });
+      expect(mod.$windows.get().cmd.cmdPath).toBe('D:\\Systems_Data');
+    });
+  });
 });
