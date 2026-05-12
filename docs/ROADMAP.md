@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.4 · **Updated:** 2026-05-12  
+**Version:** 1.5 · **Updated:** 2026-05-12  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -296,19 +296,31 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 
 ### Track 2A — Explorer + Content
 
-> File explorer with breadcrumb navigation through the virtual filesystem. Project MDX content renders inside the window.
+> File explorer with integrated address-bar/breadcrumb navigation through a static virtual filesystem (C:, D:, E: drives). Project metadata renders inline via a split-pane detail pane.
 
-**Refs:** [PRD §4](./PRD.md#4-file-system--content-mapping) · [TDD §4.1](./TDD.md#41-project-mdx-frontmatter) · [TDD §4.3](./TDD.md#43-virtual-filesystem-tree) · [TDD §6](./TDD.md#react-islands-interactive)
+**Refs:** [PRD §4](./PRD.md#4-file-system--content-mapping) · [TDD §4.1](./TDD.md#41-project-mdx-frontmatter) · [TDD §4.3](./TDD.md#43-virtual-filesystem-tree) · [TDD §6](./TDD.md#react-islands-interactive) · T2A [spec](conductor/tracks/explorer-content_20260512/spec.md) · T2A [plan](conductor/tracks/explorer-content_20260512/plan.md)
+
+#### Notes on Deferrals
+
+| Deferred Feature                                                        | Target Track                                               | Reason                                                                                                                                 |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Dynamic `FILE_SYSTEM` population from content collections at build-time | [Track 3A](#track-3a--github-data-sync) — GitHub Data Sync | Astro content collections are not importable synchronously in plain TS modules; requires a build-time pipeline                         |
+| Full MDX body rendering in the detail pane                              | [Track 3A](#track-3a--github-data-sync)                    | React client islands cannot import `.mdx` at runtime; v1 renders frontmatter metadata only (title, description, tech stack, repo link) |
+| Explorer path persistence across page reloads                           | [Track 3B](#track-3b--url-state-persistence) — URL State   | Requires Nano Store ↔ URL search param sync, which is the scope of Track 3B                                                            |
 
 #### Tasks
 
-- [ ] Create `src/content/config.ts` with `projects` collection schema ([TDD §4.1](./TDD.md#41-project-mdx-frontmatter))
-- [ ] Write MDX files for `icarus-server-manager`, `portable-mc-manager`, `tubular-bexus-osw`, and other featured projects ([PRD §4](./PRD.md#-directory-details))
-- [ ] Create `src/lib/constants.ts` with `FILE_SYSTEM` tree built from content collections ([TDD §4.3](./TDD.md#43-virtual-filesystem-tree))
-- [ ] Create `Explorer.tsx` — address bar, toolbar, breadcrumb, file list pane ([TDD §6](./TDD.md#react-islands-interactive))
-- [ ] Implement folder navigation (`cd` into directories, back button)
+- [ ] Create `src/content/config.ts` with `projects` + `devopsAcademy` collection schemas ([TDD §4.1](./TDD.md#41-project-mdx-frontmatter))
+- [ ] Write MDX files for `icarus-server-manager`, `chasing-chapters`, and `tubular-bexus-osw` ([PRD §4](./PRD.md#-directory-details))
+- [ ] Create 3 DevOps Academy stub MDX files (`docker-basics`, `linux-essentials`, `ci-cd-pipeline`)
+- [ ] Create drive + folder icon SVGs in `public/icons/` (32×32 drive icons, 16×16 list icons)
+- [ ] Create `src/lib/constants.ts` with static `FILE_SYSTEM` tree ([TDD §4.3](./TDD.md#43-virtual-filesystem-tree))
+- [ ] Create `src/lib/filesystem.ts` with navigation helpers (`getChildren`, `resolvePath`, `getParent`, `splitPath`)
+- [ ] Add `explorerPath` to `WindowState` in `src/stores/windows.ts`
+- [ ] Create Explorer sub-components: `ExplorerToolbar`, `ExplorerBreadcrumb`, `ExplorerFileList`, `ExplorerDetailPane`
+- [ ] Implement folder navigation (back button, up-level, breadcrumb click, history stack)
 - [ ] Render file list with 16×16 icons, name, size, type columns (XP detail view)
-- [ ] Clicking a project file opens its MDX content in the Explorer detail pane
+- [ ] Clicking a project file opens its frontmatter metadata (title, description, tech stack badges, repo link) in the detail pane
 - [ ] Wire "My Computer" icon → Explorer at root (`C:\`, `D:\`, `E:\`)
 - [ ] Wire drive icons to their respective folders ([PRD §4](./PRD.md#-desktop-icons))
 
@@ -316,11 +328,13 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 
 ```
 ✅ Double-click My Computer → Explorer opens showing C:, D:, E: drives
-✅ Navigate into C:\Software_Engineering → see project files listed
-✅ Click a project → MDX content renders in the Explorer window
-✅ Breadcrumb updates and is clickable for navigation
-✅ Back button works correctly
+✅ Navigate into C:\Software_Engineering → see project files listed (Icon, Name, Size, Type, Date)
+✅ Click a project → detail pane shows title, description, tech stack badges, repo link
+✅ Address bar with integrated breadcrumb: displays path, clicking segments navigates
+✅ Back button returns to previous directory; up-level goes to parent
+✅ Empty folders show "This folder is empty."
 ✅ File list matches XP Explorer detail view aesthetically
+✅ E:\DevOps_Academy shows 3 stub articles
 ```
 
 ---
