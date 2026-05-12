@@ -146,6 +146,11 @@
 }
 
 .cmd-cursor-blink {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  margin-left: 1px;
+  vertical-align: text-bottom;
   animation: cmdCursorBlink 1s step-end infinite;
 }
 

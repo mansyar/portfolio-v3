@@ -33,12 +33,12 @@ describe('CmdPrompt component', () => {
     expect(terminal.style.color).toBe('rgb(0, 170, 0)');
   });
 
-  it('should display C:\\MANSYAR> prompt', async () => {
+  it('should display C:\\ [MANSYAR]> prompt', async () => {
     const stores = await import('@/stores/windows');
     stores.openWindow('cmd');
 
     render(<CmdPrompt windowId="cmd" />);
-    expect(screen.getByText(/C:\\MANSYAR>/)).toBeDefined();
+    expect(screen.getByText(/\[MANSYAR\]>/)).toBeDefined();
   });
 
   it('should render an input element for typing commands', async () => {

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback, type KeyboardEvent } from 're
 import { useStore } from '@/lib/useStore';
 import { $windows, $activeWindow, focusWindow, openWindow } from '@/stores/windows';
 import { COMMAND_REGISTRY, parseCommand } from '@/lib/commands';
+import { getChildren } from '@/lib/filesystem';
 import type { WindowId } from '@/stores/windows';
 import type { CmdOutput } from '@/lib/commands';
 
@@ -33,7 +34,7 @@ function getPrompt(cmdPath: string): string {
   const drive = cmdPath.split('\\')[0] || 'C:';
   const rest = cmdPath.slice(drive.length);
   const dir = rest || '\\';
-  return `C:${dir}MANSYAR>`;
+  return `C:${dir} [MANSYAR]>`;
 }
 
 /** Format command output lines as JSX elements */
@@ -43,6 +44,43 @@ function formatOutput(lines: string[], keyPrefix: string) {
       {line}
     </div>
   ));
+}
+
+/**
+ * Find command completions for a given prefix.
+ * Returns up to the first 9 matches.
+ */
+function getTabCompletions(prefix: string, cmdPath: string): string[] {
+  const trimmed = prefix.trim();
+  if (!trimmed) return [];
+
+  // Check if completing a command name (no space in input yet)
+  if (!trimmed.includes(' ')) {
+    const canonicalNames = Object.keys(COMMAND_REGISTRY).filter(
+      (name) =>
+        name === name.toLowerCase() && !['dir', 'chdir', 'type', 'cls', '/?'].includes(name),
+    );
+    const matches = canonicalNames.filter((cmd) => cmd.startsWith(trimmed));
+    return matches.slice(0, 9);
+  }
+
+  // Completing an argument — check if first word is 'cd'
+  const parts = trimmed.split(/\s+/);
+  const command = parts[0]!.toLowerCase();
+  const partial = parts.slice(1).join(' ') || '';
+
+  if (command === 'cd' || command === 'chdir') {
+    // Tab-complete folder names from the filesystem
+    const children = getChildren(cmdPath);
+    const folderMatches = children
+      .filter((n) => n.type === 'folder' || n.type === 'drive')
+      .map((n) => n.name)
+      .filter((name) => name.toLowerCase().startsWith(partial.toLowerCase()))
+      .slice(0, 9);
+    return folderMatches;
+  }
+
+  return [];
 }
 
 export function CmdPrompt({ windowId }: CmdPromptProps) {
@@ -55,7 +93,7 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when output changes
@@ -67,8 +105,8 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
 
   // Focus input when window becomes active
   useEffect(() => {
-    if (activeWindow === windowId && inputRef.current) {
-      inputRef.current.focus();
+    if (activeWindow === windowId && hiddenInputRef.current) {
+      hiddenInputRef.current.focus();
     }
   }, [activeWindow, windowId]);
 
@@ -150,6 +188,20 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
       e.preventDefault();
       executeCommand(input);
       setInput('');
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      // Tab completion
+      const completions = getTabCompletions(input, cmdPath);
+      if (completions.length === 1) {
+        // Single match: auto-complete
+        const rest = input.trim().includes(' ')
+          ? input.replace(/\S+$/, completions[0]!)
+          : `${completions[0]} `;
+        setInput(rest);
+      } else if (completions.length > 1) {
+        // Multiple matches: show options
+        setOutputLines((prev) => [...prev, '', completions.join('    '), '']);
+      }
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (history.length === 0) return;
@@ -185,18 +237,21 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        padding: '4px 6px',
+        padding: '4px 0 4px 6px',
       }}
-      onClick={() => inputRef.current?.focus()}
+      onClick={() => hiddenInputRef.current?.focus()}
     >
-      {/* Output area */}
+      {/* Output area — scrollbar-gutter reserves space so scrollbar doesn't overlap */}
       <div
         ref={outputRef}
         style={{
           flex: 1,
           overflowY: 'auto',
+          overflowX: 'hidden',
+          scrollbarGutter: 'stable',
           whiteSpace: 'pre',
           lineHeight: '1.3',
+          paddingRight: 6,
         }}
       >
         {outputLines.map((item, i) => {
@@ -211,41 +266,64 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         })}
       </div>
 
-      {/* Input line with blinking block cursor */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ whiteSpace: 'pre' }}>{prompt}</span>
-        <span
-          className="cmd-cursor-blink"
-          style={{
-            display: 'inline-block',
-            width: 8,
-            height: 15,
-            backgroundColor: '#00aa00',
-            marginRight: 2,
-          }}
-        />
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onFocus={() => focusWindow(windowId as WindowId)}
-          role="textbox"
-          aria-label="Command input"
-          spellCheck={false}
-          autoComplete="off"
-          style={{
-            background: 'transparent',
-            border: 'none',
-            color: '#00aa00',
-            fontFamily: '"Courier New", Consolas, monospace',
-            fontSize: 13,
-            outline: 'none',
-            flex: 1,
-            caretColor: 'transparent',
-          }}
-        />
+      {/* Input line — uses a visually hidden input for keystrokes,
+          with a visible text + blinking cursor overlay */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          position: 'relative',
+          minHeight: 19,
+          paddingRight: 6,
+        }}
+      >
+        <span style={{ whiteSpace: 'pre', flexShrink: 0 }}>{prompt}</span>
+        <div style={{ position: 'relative', flex: 1, minHeight: 19 }}>
+          {/* Visible text + blinking cursor */}
+          <span
+            style={{
+              whiteSpace: 'pre',
+              color: '#00aa00',
+              pointerEvents: 'none',
+              lineHeight: '19px',
+            }}
+          >
+            {input}
+            <span className="cmd-cursor-blink" style={{ backgroundColor: '#00aa00' }}>
+              {' '}
+            </span>
+          </span>
+          {/* Hidden input captures keystrokes */}
+          <input
+            ref={hiddenInputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => focusWindow(windowId as WindowId)}
+            role="textbox"
+            aria-label="Command input"
+            spellCheck={false}
+            autoComplete="off"
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              width: '100%',
+              height: '100%',
+              opacity: 0,
+              caretColor: 'transparent',
+              fontSize: 13,
+              fontFamily: '"Courier New", Consolas, monospace',
+              border: 'none',
+              outline: 'none',
+              padding: 0,
+              margin: 0,
+              background: 'transparent',
+              color: 'transparent',
+            }}
+          />
+        </div>
       </div>
     </div>
   );
