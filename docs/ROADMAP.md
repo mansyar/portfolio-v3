@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.3 · **Updated:** 2026-05-12  
+**Version:** 1.4 · **Updated:** 2026-05-12  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -20,7 +20,7 @@ gantt
     section Phase 1
     Track 1A – Desktop Shell      :done, p1a, after p0, 4d
     Track 1B – Window Manager     :done, p1b, after p0, 5d
-    Track 1C – Start Menu         :p1c, after p1b, 2d
+    Track 1C – Start Menu         :done, p1c, after p1b, 2d
 
     section Phase 2
     Track 2A – Explorer + Content :p2a, after p1b, 4d
@@ -228,33 +228,67 @@ Track 1B produced 17 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 
 ---
 
-### Track 1C — Start Menu
+### Track 1C — Start Menu ✅ _(Completed 2026-05-12)_
 
-> Fully interactive Start Menu with two-column layout, user header, and program list that opens windows.
+> Fully interactive Start Menu with two-column layout, user header, and program list that opens windows. Includes XP-style shutdown overlay with auto-reboot.
 
 **Refs:** [PRD §3.1](./PRD.md#31-the-desktop-experience) · [TDD §7.3](./TDD.md#73-start-menu-layout) · [TDD §9](./TDD.md#9-animations--transitions)
 
 #### Tasks
 
-- [ ] Create `StartMenu.tsx` with two-column layout ([TDD §7.3](./TDD.md#73-start-menu-layout))
-- [ ] Add blue header bar with user avatar and name
-- [ ] Add left column: pinned apps (Resume, Explorer, Task Manager, CMD)
-- [ ] Add right column: system folders (My Documents, My Computer, Control Panel, Help)
-- [ ] Add bottom bar with "Shut Down..." button
-- [ ] Wire menu items to `openWindow()` + close Start Menu
-- [ ] Implement slide-up/slide-down animation ([TDD §9](./TDD.md#9-animations--transitions))
-- [ ] Close Start Menu on click-outside or Escape key
-- [ ] Implement "Shut Down" → BSOD/goodbye overlay ([PRD §3.1](./PRD.md#31-the-desktop-experience))
+- [x] Create `src/stores/desktop.ts` with `$startMenuOpen` atom and toggle/open/close actions
+- [x] Create `StartMenu.tsx` with two-column layout ([TDD §7.3](./TDD.md#73-start-menu-layout))
+- [x] Add blue header bar with "MARP" initials avatar and "Muhammad Ansyar Rafi Putra" name
+- [x] Add left column: pinned apps (Resume, Explorer, Task Manager, CMD)
+- [x] Add right column: system folders (My Documents, My Computer, Control Panel, Help)
+- [x] Add bottom bar with "Shut Down..." button and power icon
+- [x] Wire menu items to `openWindow()` + close Start Menu
+- [x] Implement keyboard navigation (Tab/Shift+Tab focus cycling, Enter activation, Escape close)
+- [x] Implement click-outside detection to close menu
+- [x] Wire Start button toggle in Taskbar with active pressed state
+- [x] Implement slide-up (150ms) / slide-down (100ms) animation ([TDD §9](./TDD.md#9-animations--transitions))
+- [x] Create `ShutdownOverlay.tsx` — 3-phase XP shutdown sequence with progress bar (~6s total, auto-reboot)
+- [x] Respect `prefers-reduced-motion: reduce` for all animations
+- [x] Use `--xp-start-*` CSS tokens from design system for styling
 
 #### Acceptance Criteria
 
 ```
-✅ Clicking Start button opens the two-column menu with slide-up animation
-✅ Menu items open corresponding windows and close the menu
-✅ Clicking outside or pressing Escape closes the menu
-✅ "Shut Down" shows a styled BSOD overlay
-✅ Menu matches XP Start Menu layout (blue header, white left, light blue right)
+✅ Clicking Start button opens the two-column menu with slide-up animation (150ms ease-out)
+✅ Menu shows blue header with "MARP" initials avatar and "Muhammad Ansyar Rafi Putra" name
+✅ Left column: Resume, Explorer, Task Manager, Command Prompt
+✅ Right column: My Documents, My Computer, Control Panel, Help & Support
+✅ Each menu item opens the corresponding window and closes the menu
+✅ Clicking outside or pressing Escape closes the menu (slide-down, 100ms ease-in)
+✅ Tab key cycles through menu items with visible ARIA focus tracking; Enter activates
+✅ "Shut Down..." shows an XP "Windows is shutting down" screen — NOT a BSOD (reserved for 404)
+✅ After shutdown sequence completes (~6s), desktop is restored (auto-reboot)
+✅ Start button shows pressed state when menu is open
+✅ All --xp-start-* CSS tokens from xp-theme.css are used for styling
+✅ All animations respect prefers-reduced-motion: reduce
+✅ 201 tests passing, 95%+ coverage
 ```
+
+#### Key Files Created
+
+```
+src/stores/desktop.ts                    — Nano Stores: $startMenuOpen, $shuttingDown, 5 action functions
+src/components/taskbar/StartMenu.tsx     — Two-column menu, keyboard nav, click-outside, animations
+src/components/taskbar/ShutdownOverlay.tsx — 3-phase shutdown sequence with progress bar
+src/components/taskbar/Taskbar.tsx (modified) — Start button wiring, StartMenu mount, Fragment wrapper
+src/styles/xp-theme.css (modified)       — Added --xp-start-* CSS tokens, .startmenu-icon class
+src/styles/global.css (modified)         — Added @keyframes for start-menu-open/close and shutdownProgress
+public/icons/task-manager.svg            — New icon asset (was missing from 5-icon set)
+tests/stores/desktop.test.ts             — 10 store tests (start menu + shutdown state)
+tests/start-menu.test.tsx                — 29 component tests (rendering, actions, keyboard, icons)
+tests/shutdown-overlay.test.tsx          — 5 shutdown overlay tests (render, timers, cleanup)
+tests/taskbar.test.tsx (modified)         — 2 new Start button wiring tests
+tests/setup.ts (modified)                — window.matchMedia mock for jsdom
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 review fix commit across ~1,100 lines changed (16 files). Track archived at `conductor/archive/start_menu_20260512/`.
 
 ---
 
@@ -586,7 +620,7 @@ graph TD
     style P0 fill:#27ae60,color:#fff,stroke:#1e8449
     style T1A fill:#3b8f3f,color:#fff
     style T1B fill:#27ae60,color:#fff,stroke:#1e8449
-    style T1C fill:#3b8f3f,color:#fff
+    style T1C fill:#27ae60,color:#fff,stroke:#1e8449
     style T2A fill:#e67e22,color:#fff
     style T2B fill:#e67e22,color:#fff
     style T2C fill:#e67e22,color:#fff
