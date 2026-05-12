@@ -248,6 +248,59 @@ describe('Cat command', () => {
   });
 });
 
+describe('Clear command', () => {
+  it('should return clear signal with empty lines', () => {
+    const output = COMMAND_REGISTRY['clear']([], { cmdPath: 'C:\\' });
+    expect(output.lines).toEqual([]);
+    expect(output.clear).toBe(true);
+  });
+
+  it('should work via cls alias', () => {
+    const clearOutput = COMMAND_REGISTRY['cls']([], { cmdPath: 'C:\\' });
+    expect(clearOutput.clear).toBe(true);
+  });
+});
+
+describe('Neofetch command', () => {
+  it('should display Tux ASCII art and system information', () => {
+    const output = COMMAND_REGISTRY['neofetch']([], { cmdPath: 'C:\\' });
+    // Should have Tux art lines (ASCII penguin)
+    expect(output.lines.length).toBeGreaterThan(5);
+    // Should contain MANSYAR@LUNA-OS
+    expect(output.lines.some((l) => l.includes('MANSYAR@LUNA-OS'))).toBe(true);
+    // Should contain OS info
+    expect(output.lines.some((l) => l.includes('Luna OS'))).toBe(true);
+    // Should contain Shell info
+    expect(output.lines.some((l) => l.includes('CMD.EXE'))).toBe(true);
+    // Should contain resolution info
+    expect(output.lines.some((l) => l.includes('1440x900'))).toBe(true);
+  });
+});
+
+describe('Open command', () => {
+  it('should open explorer for a valid project slug', () => {
+    const output = COMMAND_REGISTRY['open'](['icarus-server-manager'], { cmdPath: 'C:\\' });
+    expect(output.openExplorer).toBe('C:\\Software_Engineering');
+  });
+
+  it('should not have lines output for valid slug', () => {
+    const output = COMMAND_REGISTRY['open'](['icarus-server-manager'], { cmdPath: 'C:\\' });
+    expect(output.lines).toEqual([]);
+  });
+
+  it('should open URL for resume.pdf', () => {
+    const output = COMMAND_REGISTRY['open'](['resume.pdf'], { cmdPath: 'C:\\' });
+    expect(output.openUrl).toBe('/resume.pdf');
+  });
+
+  it('should show XP error for unknown slug', () => {
+    const output = COMMAND_REGISTRY['open'](['nonexistent'], { cmdPath: 'C:\\' });
+    expect(output.lines.some((l) => l.includes('The system cannot find the file specified'))).toBe(
+      true,
+    );
+  });
+});
+
 describe('CmdOutput type', () => {
   it('should allow creating an output with lines', () => {
     const output: CmdOutput = { lines: ['Hello', 'World'] };
@@ -267,5 +320,10 @@ describe('CmdOutput type', () => {
   it('should allow creating an open-url output', () => {
     const output: CmdOutput = { lines: [], openUrl: '/resume.pdf' };
     expect(output.openUrl).toBe('/resume.pdf');
+  });
+
+  it('should allow creating a newCmdPath output', () => {
+    const output: CmdOutput = { lines: [], newCmdPath: 'D:\\Systems_Data' };
+    expect(output.newCmdPath).toBe('D:\\Systems_Data');
   });
 });

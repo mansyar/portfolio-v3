@@ -7,6 +7,7 @@
 
 import { getChildren, resolvePath, getParent } from '@/lib/filesystem';
 import { PROJECTS_METADATA, DEVOPS_METADATA } from '@/lib/projects-data';
+import { FILE_SYSTEM, type FSNode } from '@/lib/constants';
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -216,11 +217,78 @@ const handlerClear: CommandHandler = () => {
 };
 
 const handlerNeofetch: CommandHandler = () => {
-  return { lines: ['(neofetch implementation — Task 1.7)'] };
+  const tux = [
+    '                   .--.',
+    '                  / _ `.',
+    '                 | / \\ |',
+    '                 |/   \\|',
+    '        _   __   /     \\',
+    '       (_) / /  /      }',
+    '       __ / /  /     _/',
+    '      / _ \\ \\_/     /',
+    '     / / \\_/      _/',
+    '    / /          /',
+    '   /_/    \\_____/',
+    '   \\_\\____/',
+    '',
+    '  MANSYAR@LUNA-OS',
+    '  ---------------',
+    '  OS:         Luna OS XP Professional v1.0',
+    '  Shell:      CMD.EXE v5.1',
+    '  Uptime:     0 days, 0 hours, 5 minutes',
+    '  Packages:   6 (npm), 3 (pnpm)',
+    '  Terminal:   Windows XP Console',
+    '  Resolution: 1440x900',
+    '  DE:         Luna Theme',
+    '  CPU:        Virtual x86',
+    '  Memory:     512MB / 1024MB',
+    '  Disk:       3 drives (C:, D:, E:)',
+    '',
+  ];
+  return { lines: tux };
 };
 
-const handlerOpen: CommandHandler = () => {
-  return { lines: ['(open implementation — Task 1.8)'] };
+/**
+ * Search the FILE_SYSTEM tree for a file by slug, returning its parent path.
+ */
+function findSlugParent(slug: string, nodes: FSNode[], parentPath: string): string | null {
+  for (const node of nodes) {
+    if (node.type === 'file' && node.slug === slug) {
+      return parentPath;
+    }
+    if (node.type === 'drive') {
+      const result = findSlugParent(slug, node.children, `${node.name}\\`);
+      if (result) return result;
+    }
+    if (node.type === 'folder') {
+      const result = findSlugParent(slug, node.children, `${parentPath}${node.name}\\`);
+      if (result) return result;
+    }
+  }
+  return null;
+}
+
+const handlerOpen: CommandHandler = (args) => {
+  if (args.length === 0) {
+    return { lines: ['The system cannot find the file specified.'] };
+  }
+
+  const target = args[0]!;
+
+  // Handle resume.pdf → open in new tab
+  if (target === 'resume.pdf') {
+    return { lines: [], openUrl: '/resume.pdf' };
+  }
+
+  // Search the filesystem for the slug
+  const parentPath = findSlugParent(target, FILE_SYSTEM, '');
+  if (parentPath) {
+    // Remove trailing backslash for consistency
+    const normalized = parentPath.endsWith('\\') ? parentPath.slice(0, -1) : parentPath;
+    return { lines: [], openExplorer: normalized };
+  }
+
+  return { lines: ['The system cannot find the file specified.'] };
 };
 
 // ── Registry ────────────────────────────────────────────────────────
