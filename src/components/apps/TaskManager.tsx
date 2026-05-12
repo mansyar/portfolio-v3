@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useStore } from '@/lib/useStore';
 import { $windows } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
+import { CanvasGraph } from './CanvasGraph';
 
 interface TaskManagerProps {
   windowId: string;
@@ -196,6 +197,8 @@ export function TaskManager({ windowId }: TaskManagerProps) {
   const windowState = windows[windowId as WindowId];
   if (!windowState) return null;
 
+  const width = windowState.width;
+
   return (
     <div
       style={{
@@ -338,7 +341,12 @@ export function TaskManager({ windowId }: TaskManagerProps) {
           aria-hidden={activeTab !== 'performance'}
           style={{ display: activeTab === 'performance' ? 'block' : 'none', height: '100%' }}
         >
-          {activeTab === 'performance' && <div>Performance tab content</div>}
+          {activeTab === 'performance' && (
+            <div style={{ padding: 4 }}>
+              <CanvasGraph label="Skills Utilization" width={width - 28} height={150} />
+              <CanvasGraph label="Knowledge Base" width={width - 28} height={150} />
+            </div>
+          )}
         </div>
 
         {/* Warning Dialog Overlay */}

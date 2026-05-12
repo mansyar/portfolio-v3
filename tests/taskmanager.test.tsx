@@ -244,6 +244,81 @@ describe('TaskManager component', () => {
     });
   });
 
+  describe('Performance Tab - Canvas Graphs', () => {
+    it('should render two canvas elements when Performance tab is active', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      // Switch to Performance tab
+      const perfTab = screen.getByRole('tab', { name: 'Performance' });
+      fireEvent.click(perfTab);
+
+      const canvases = container.querySelectorAll('canvas');
+      expect(canvases.length).toBe(2);
+    });
+
+    it('should render canvas with correct dimensions', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      const perfTab = screen.getByRole('tab', { name: 'Performance' });
+      fireEvent.click(perfTab);
+
+      const canvases = container.querySelectorAll('canvas');
+      canvases.forEach((canvas) => {
+        expect(canvas.width).toBeGreaterThan(0);
+        expect(canvas.height).toBeGreaterThan(0);
+      });
+    });
+
+    it('should show CPU graph label', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      const perfTab = screen.getByRole('tab', { name: 'Performance' });
+      fireEvent.click(perfTab);
+
+      expect(screen.getByText('Skills Utilization')).toBeDefined();
+    });
+
+    it('should show Memory graph label', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      const perfTab = screen.getByRole('tab', { name: 'Performance' });
+      fireEvent.click(perfTab);
+
+      expect(screen.getByText('Knowledge Base')).toBeDefined();
+    });
+
+    it('should render canvas with correct size attributes', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      const perfTab = screen.getByRole('tab', { name: 'Performance' });
+      fireEvent.click(perfTab);
+
+      const canvases = container.querySelectorAll('canvas');
+      expect(canvases.length).toBe(2);
+      canvases.forEach((canvas) => {
+        // Canvas element exists with size attributes set by React
+        expect(canvas.width).toBeGreaterThan(0);
+        expect(canvas.style.width).toBeTruthy();
+        expect(canvas.style.border).toBeTruthy();
+      });
+    });
+  });
+
   describe('Processes Tab - End Process and Row Selection', () => {
     it('should have an End Process button', async () => {
       const stores = await import('@/stores/windows');
