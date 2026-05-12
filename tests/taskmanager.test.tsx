@@ -123,4 +123,78 @@ describe('TaskManager component', () => {
       'true',
     );
   });
+
+  describe('Processes Tab - Process Table', () => {
+    it('should render 8 process entries in the table (9 rows total with header)', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      const rows = screen.getAllByRole('row');
+      // 1 header row + 8 data rows = 9
+      expect(rows.length).toBe(9);
+    });
+
+    it('should render all 5 column headers', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      expect(screen.getByText('Image Name')).toBeDefined();
+      expect(screen.getByText('PID')).toBeDefined();
+      expect(screen.getByText('CPU')).toBeDefined();
+      expect(screen.getByText('Mem Usage')).toBeDefined();
+      expect(screen.getByText('Description')).toBeDefined();
+    });
+
+    it('should render all 8 process names from the spec', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      expect(screen.getByText('python.exe')).toBeDefined();
+      expect(screen.getByText('terraform.svc')).toBeDefined();
+      expect(screen.getByText('docker.exe')).toBeDefined();
+      expect(screen.getByText('react.dll')).toBeDefined();
+      expect(screen.getByText('node.exe')).toBeDefined();
+      expect(screen.getByText('git.exe')).toBeDefined();
+      expect(screen.getByText('linux_kernel')).toBeDefined();
+      expect(screen.getByText('ansible.svc')).toBeDefined();
+    });
+
+    it('should render PID values as numbers', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      const rows = container.querySelectorAll('[role="row"]');
+      expect(rows[0].textContent).toContain('1204');
+      expect(rows[1].textContent).toContain('892');
+    });
+
+    it('should render memory usage with K suffix', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      expect(screen.getByText('45,320 K')).toBeDefined();
+      expect(screen.getByText('128,400 K')).toBeDefined();
+      expect(screen.getByText('256,000 K')).toBeDefined();
+    });
+
+    it('should render CPU values with percent sign', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      expect(screen.getByText('12%')).toBeDefined();
+      expect(screen.getByText('18%')).toBeDefined();
+    });
+  });
 });

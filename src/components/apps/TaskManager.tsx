@@ -50,6 +50,82 @@ const CONTENT_STYLE: React.CSSProperties = {
   padding: 4,
 };
 
+interface ProcessEntry {
+  imageName: string;
+  pid: number;
+  cpu: number;
+  memUsage: string;
+  description: string;
+}
+
+const PROCESS_DATA: ProcessEntry[] = [
+  {
+    imageName: 'python.exe',
+    pid: 1204,
+    cpu: 12,
+    memUsage: '45,320 K',
+    description: 'Python Runtime',
+  },
+  {
+    imageName: 'terraform.svc',
+    pid: 892,
+    cpu: 8,
+    memUsage: '32,100 K',
+    description: 'Infrastructure Manager',
+  },
+  {
+    imageName: 'docker.exe',
+    pid: 2048,
+    cpu: 15,
+    memUsage: '128,400 K',
+    description: 'Container Runtime',
+  },
+  { imageName: 'react.dll', pid: 1567, cpu: 6, memUsage: '22,800 K', description: 'UI Framework' },
+  {
+    imageName: 'node.exe',
+    pid: 3201,
+    cpu: 10,
+    memUsage: '67,500 K',
+    description: 'JavaScript Runtime',
+  },
+  { imageName: 'git.exe', pid: 445, cpu: 2, memUsage: '8,200 K', description: 'Version Control' },
+  {
+    imageName: 'linux_kernel',
+    pid: 1,
+    cpu: 18,
+    memUsage: '256,000 K',
+    description: 'Operating System',
+  },
+  {
+    imageName: 'ansible.svc',
+    pid: 780,
+    cpu: 5,
+    memUsage: '15,600 K',
+    description: 'Configuration Mgmt',
+  },
+];
+
+const COLUMN_HEADERS = ['Image Name', 'PID', 'CPU', 'Mem Usage', 'Description'];
+
+const CELL_STYLE: React.CSSProperties = {
+  fontFamily: '"Tahoma", sans-serif',
+  fontSize: 11,
+  padding: '2px 6px',
+  whiteSpace: 'nowrap',
+  borderBottom: '1px solid #D4D0C8',
+};
+
+const HEADER_CELL_STYLE: React.CSSProperties = {
+  fontFamily: '"Tahoma", sans-serif',
+  fontSize: 11,
+  fontWeight: 700,
+  padding: '3px 6px',
+  whiteSpace: 'nowrap',
+  borderRight: '1px solid #808080',
+  borderBottom: '1px solid #808080',
+  background: '#ECE9D8',
+};
+
 export function TaskManager({ windowId }: TaskManagerProps) {
   // Hooks must be called before any early return (rules-of-hooks)
   const [activeTab, setActiveTab] = useState<TabId>('processes');
@@ -130,8 +206,32 @@ export function TaskManager({ windowId }: TaskManagerProps) {
           aria-hidden={activeTab !== 'processes'}
           style={{ display: activeTab === 'processes' ? 'block' : 'none', height: '100%' }}
         >
-          {/* Processes content will be added in Phase 2 */}
-          {activeTab === 'processes' && <div>Processes tab content</div>}
+          {activeTab === 'processes' && (
+            <div style={{ height: '100%', overflow: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+                <thead>
+                  <tr>
+                    {COLUMN_HEADERS.map((header) => (
+                      <th key={header} style={HEADER_CELL_STYLE}>
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {PROCESS_DATA.map((proc) => (
+                    <tr key={proc.pid} role="row">
+                      <td style={CELL_STYLE}>{proc.imageName}</td>
+                      <td style={CELL_STYLE}>{proc.pid}</td>
+                      <td style={CELL_STYLE}>{proc.cpu}%</td>
+                      <td style={CELL_STYLE}>{proc.memUsage}</td>
+                      <td style={CELL_STYLE}>{proc.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         <div
