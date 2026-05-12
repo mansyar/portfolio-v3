@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.5 · **Updated:** 2026-05-12  
+**Version:** 1.6 · **Updated:** 2026-05-12  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -23,7 +23,7 @@ gantt
     Track 1C – Start Menu         :done, p1c, after p1b, 2d
 
     section Phase 2
-    Track 2A – Explorer + Content :p2a, after p1b, 4d
+    Track 2A – Explorer + Content :done, p2a, after p1b, 4d
     Track 2B – Command Prompt     :p2b, after p1b, 3d
     Track 2C – Task Manager       :p2c, after p1b, 3d
     Track 2D – Help Center        :p2d, after p2a, 3d
@@ -294,11 +294,11 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 
 ## Phase 2 — Applications
 
-### Track 2A — Explorer + Content
+### Track 2A — Explorer + Content ✅ _(Completed 2026-05-12)_
 
 > File explorer with integrated address-bar/breadcrumb navigation through a static virtual filesystem (C:, D:, E: drives). Project metadata renders inline via a split-pane detail pane.
 
-**Refs:** [PRD §4](./PRD.md#4-file-system--content-mapping) · [TDD §4.1](./TDD.md#41-project-mdx-frontmatter) · [TDD §4.3](./TDD.md#43-virtual-filesystem-tree) · [TDD §6](./TDD.md#react-islands-interactive) · T2A [spec](conductor/tracks/explorer-content_20260512/spec.md) · T2A [plan](conductor/tracks/explorer-content_20260512/plan.md)
+**Refs:** [PRD §4](./PRD.md#4-file-system--content-mapping) · [TDD §4.1](./TDD.md#41-project-mdx-frontmatter) · [TDD §4.3](./TDD.md#43-virtual-filesystem-tree) · [TDD §6](./TDD.md#react-islands-interactive) · T2A [spec](conductor/archive/explorer-content_20260512/spec.md) · T2A [plan](conductor/archive/explorer-content_20260512/plan.md)
 
 #### Notes on Deferrals
 
@@ -310,32 +310,74 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 
 #### Tasks
 
-- [ ] Create `src/content/config.ts` with `projects` + `devopsAcademy` collection schemas ([TDD §4.1](./TDD.md#41-project-mdx-frontmatter))
-- [ ] Write MDX files for `icarus-server-manager`, `chasing-chapters`, and `tubular-bexus-osw` ([PRD §4](./PRD.md#-directory-details))
-- [ ] Create 3 DevOps Academy stub MDX files (`docker-basics`, `linux-essentials`, `ci-cd-pipeline`)
-- [ ] Create drive + folder icon SVGs in `public/icons/` (32×32 drive icons, 16×16 list icons)
-- [ ] Create `src/lib/constants.ts` with static `FILE_SYSTEM` tree ([TDD §4.3](./TDD.md#43-virtual-filesystem-tree))
-- [ ] Create `src/lib/filesystem.ts` with navigation helpers (`getChildren`, `resolvePath`, `getParent`, `splitPath`)
-- [ ] Add `explorerPath` to `WindowState` in `src/stores/windows.ts`
-- [ ] Create Explorer sub-components: `ExplorerToolbar`, `ExplorerBreadcrumb`, `ExplorerFileList`, `ExplorerDetailPane`
-- [ ] Implement folder navigation (back button, up-level, breadcrumb click, history stack)
-- [ ] Render file list with 16×16 icons, name, size, type columns (XP detail view)
-- [ ] Clicking a project file opens its frontmatter metadata (title, description, tech stack badges, repo link) in the detail pane
-- [ ] Wire "My Computer" icon → Explorer at root (`C:\`, `D:\`, `E:\`)
-- [ ] Wire drive icons to their respective folders ([PRD §4](./PRD.md#-desktop-icons))
+- [x] Create `src/content.config.ts` (Astro 6 format) with `projects` + `devopsAcademy` collection schemas using Zod validation ([TDD §4.1](./TDD.md#41-project-mdx-frontmatter))
+- [x] Create `src/lib/content-schemas.ts` with testable Zod schemas (projectSchema, devopsAcademySchema)
+- [x] Write MDX files for `icarus-server-manager`, `chasing-chapters` (C: drive), and `tubular-bexus-osw` (D: drive) ([PRD §4](./PRD.md#-directory-details))
+- [x] Create 3 DevOps Academy stub MDX files (`docker-basics`, `linux-essentials`, `ci-cd-pipeline`) on E: drive
+- [x] Create 3 drive icon SVGs in `public/icons/` (32×32, C:, D:, E:) and 3 list icon SVGs (16×16 file, folder, folder-open)
+- [x] Create `src/lib/constants.ts` with `FSNode` discriminated union types + static `FILE_SYSTEM` tree ([TDD §4.3](./TDD.md#43-virtual-filesystem-tree))
+- [x] Create `src/lib/filesystem.ts` with navigation helpers (`getChildren`, `resolvePath`, `getParent`, `splitPath`)
+- [x] Add `explorerPath` to `WindowState` in `src/stores/windows.ts` (defaults to `C:\`)
+- [x] Create Explorer sub-components: `ExplorerToolbar`, `ExplorerBreadcrumb`, `ExplorerFileList`, `ExplorerDetailPane`
+- [x] Implement folder navigation (back button with history stack, up-level, breadcrumb click)
+- [x] Render file list with 16×16 icons, name, size, type, date columns (XP detail view)
+- [x] Clicking a project file opens its frontmatter metadata (title, description, tech stack badges, repo link) in the detail pane
+- [x] Create `src/lib/projects-data.ts` with static metadata for all projects and academy articles
+- [x] Wire "My Computer" icon → Explorer at root (`C:\`, `D:\`, `E:\`)
+- [x] Wire drive icons to their respective folders ([PRD §4](./PRD.md#-desktop-icons))
+- [x] Wire Explorer component into WindowLayer (replaces placeholder text)
 
 #### Acceptance Criteria
 
 ```
-✅ Double-click My Computer → Explorer opens showing C:, D:, E: drives
+✅ Double-click My Computer → Explorer opens showing C: drive contents (Software_Engineering folder)
 ✅ Navigate into C:\Software_Engineering → see project files listed (Icon, Name, Size, Type, Date)
 ✅ Click a project → detail pane shows title, description, tech stack badges, repo link
 ✅ Address bar with integrated breadcrumb: displays path, clicking segments navigates
 ✅ Back button returns to previous directory; up-level goes to parent
 ✅ Empty folders show "This folder is empty."
-✅ File list matches XP Explorer detail view aesthetically
-✅ E:\DevOps_Academy shows 3 stub articles
+✅ File list matches XP Explorer detail view aesthetically (table with grid role, header columns)
+✅ E:\DevOps_Academy shows 3 stub articles (Docker, Linux, CI/CD)
+✅ 281 tests passing, 81.17% branch coverage, 91.2% statement coverage
+✅ All src/ files under 500 lines (modularity check passes)
+✅ Type assertions cleaned up during review (filesystem.ts, useCallback simplification)
 ```
+
+#### Key Files Created
+
+```
+src/content.config.ts                 — Astro 6 content collections with glob loaders
+src/lib/content-schemas.ts            — Zod schemas for projects + devopsAcademy (testable without astro:content)
+src/lib/constants.ts                  — FSNode discriminated union types + static FILE_SYSTEM tree
+src/lib/filesystem.ts                 — Navigation helpers (getChildren, resolvePath, getParent, splitPath)
+src/lib/projects-data.ts              — Static metadata for all projects and academy articles
+src/content/projects/*.mdx            — 3 project MDX files (icarus-server-manager, chasing-chapters, tubular-bexus-osw)
+src/content/devops-academy/*.mdx      — 3 academy stub MDX files (docker-basics, linux-essentials, ci-cd-pipeline)
+src/stores/windows.ts (modified)      — Added explorerPath to WindowState, defaults to C:\
+src/components/apps/Explorer.tsx      — Parent shell: navigation state, history stack, store integration
+src/components/apps/ExplorerToolbar.tsx  — Back/Up buttons with disabled state
+src/components/apps/ExplorerBreadcrumb.tsx — Clickable path segments (address bar + breadcrumb)
+src/components/apps/ExplorerFileList.tsx  — XP Detail View columns + empty state + folder navigation
+src/components/apps/ExplorerDetailPane.tsx — Split-pane detail view (title, description, badges, GitHub link)
+src/components/window/WindowLayer.tsx (modified) — Mounts Explorer component
+public/icons/drive-{c,d,e}.svg        — 3 drive icons (32×32, hard disk with label)
+public/icons/{file,folder,folder-open}.svg — 3 list icons (16×16)
+```
+
+#### Test Files Created
+
+```
+tests/content-schemas.test.ts         — 12 Zod schema validation tests
+tests/content-files.test.ts           — 15 MDX frontmatter parsing tests
+tests/filesystem.test.ts              — 19 FSNode + navigation helper tests
+tests/icons.test.ts                   — 12 SVG icon existence tests
+tests/explorer.test.tsx               — 19 React component + detail pane + integration tests
+tests/stores/windows.test.ts (modified) — 3 explorerPath tests (43 total)
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 2A produced 12 feature/commits, 7 plan/checkpoint commits, 1 review fix commit across ~1,800+ lines changed (35 files). Track archived at `conductor/archive/explorer-content_20260512/`.
 
 ---
 
@@ -654,7 +696,7 @@ graph TD
     style T1A fill:#3b8f3f,color:#fff
     style T1B fill:#27ae60,color:#fff,stroke:#1e8449
     style T1C fill:#27ae60,color:#fff,stroke:#1e8449
-    style T2A fill:#e67e22,color:#fff
+    style T2A fill:#27ae60,color:#fff
     style T2B fill:#e67e22,color:#fff
     style T2C fill:#e67e22,color:#fff
     style T2D fill:#e67e22,color:#fff

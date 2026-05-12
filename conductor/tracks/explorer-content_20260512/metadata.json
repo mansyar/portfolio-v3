@@ -1,8 +1,0 @@
-{
-  "track_id": "explorer-content_20260512",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-05-12T14:20:00Z",
-  "updated_at": "2026-05-12T14:20:00Z",
-  "description": "File explorer with breadcrumb navigation through a virtual filesystem (C:, D:, E: drives). MDX project content renders inline via a split-pane detail view. Includes content collection schemas, project MDX files, and filesystem tree."
-}
