@@ -3,6 +3,14 @@ import { useStore } from '@/lib/useStore';
 import { $windows } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
 import { CanvasGraph } from './CanvasGraph';
+import {
+  PROCESS_DATA,
+  CPU_PERF_BASE,
+  MEM_PERF_BASE,
+  initCpuPerfData,
+  initMemPerfData,
+} from '@/lib/task-manager-data';
+import type { ProcessEntry } from '@/lib/task-manager-data';
 
 interface TaskManagerProps {
   windowId: string;
@@ -51,61 +59,6 @@ const CONTENT_STYLE: React.CSSProperties = {
   padding: 4,
 };
 
-interface ProcessEntry {
-  imageName: string;
-  pid: number;
-  cpu: number;
-  memUsage: string;
-  description: string;
-}
-
-const PROCESS_DATA: ProcessEntry[] = [
-  {
-    imageName: 'python.exe',
-    pid: 1204,
-    cpu: 12,
-    memUsage: '45,320 K',
-    description: 'Python Runtime',
-  },
-  {
-    imageName: 'terraform.svc',
-    pid: 892,
-    cpu: 8,
-    memUsage: '32,100 K',
-    description: 'Infrastructure Manager',
-  },
-  {
-    imageName: 'docker.exe',
-    pid: 2048,
-    cpu: 15,
-    memUsage: '128,400 K',
-    description: 'Container Runtime',
-  },
-  { imageName: 'react.dll', pid: 1567, cpu: 6, memUsage: '22,800 K', description: 'UI Framework' },
-  {
-    imageName: 'node.exe',
-    pid: 3201,
-    cpu: 10,
-    memUsage: '67,500 K',
-    description: 'JavaScript Runtime',
-  },
-  { imageName: 'git.exe', pid: 445, cpu: 2, memUsage: '8,200 K', description: 'Version Control' },
-  {
-    imageName: 'linux_kernel',
-    pid: 1,
-    cpu: 18,
-    memUsage: '256,000 K',
-    description: 'Operating System',
-  },
-  {
-    imageName: 'ansible.svc',
-    pid: 780,
-    cpu: 5,
-    memUsage: '15,600 K',
-    description: 'Configuration Mgmt',
-  },
-];
-
 const COLUMN_HEADERS = ['Image Name', 'PID', 'CPU', 'Mem Usage', 'Description'];
 
 const CELL_STYLE: React.CSSProperties = {
@@ -133,6 +86,8 @@ export function TaskManager({ windowId }: TaskManagerProps) {
   const [cpuValues, setCpuValues] = useState<number[]>(() => PROCESS_DATA.map((p) => p.cpu));
   const [selectedPid, setSelectedPid] = useState<number | null>(null);
   const [warningProcess, setWarningProcess] = useState<ProcessEntry | null>(null);
+  const [perfCpuData, setPerfCpuData] = useState<number[]>(() => initCpuPerfData());
+  const [perfMemData, setPerfMemData] = useState<number[]>(() => initMemPerfData());
   const cpuRefs = useRef<(HTMLTableCellElement | null)[]>([]);
 
   useEffect(() => {
@@ -144,6 +99,23 @@ export function TaskManager({ windowId }: TaskManagerProps) {
           return Math.round(Math.max(0, Math.min(100, newVal)));
         }),
       );
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Performance data update every 1s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPerfCpuData((prev) => {
+        const delta = (Math.random() - 0.5) * 4; // ±2%
+        const newVal = Math.max(0, Math.min(100, CPU_PERF_BASE + delta));
+        return [...prev.slice(1), newVal];
+      });
+      setPerfMemData((prev) => {
+        const delta = (Math.random() - 0.5) * 4; // ±2%
+        const newVal = Math.max(0, Math.min(100, MEM_PERF_BASE + delta));
+        return [...prev.slice(1), newVal];
+      });
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -343,8 +315,18 @@ export function TaskManager({ windowId }: TaskManagerProps) {
         >
           {activeTab === 'performance' && (
             <div style={{ padding: 4 }}>
-              <CanvasGraph label="Skills Utilization" width={width - 28} height={150} />
-              <CanvasGraph label="Knowledge Base" width={width - 28} height={150} />
+              <CanvasGraph
+                label="Skills Utilization"
+                width={width - 28}
+                height={150}
+                data={perfCpuData}
+              />
+              <CanvasGraph
+                label="Knowledge Base"
+                width={width - 28}
+                height={150}
+                data={perfMemData}
+              />
             </div>
           )}
         </div>

@@ -75,19 +75,14 @@ function drawYLabels(ctx: CanvasRenderingContext2D, width: number, height: numbe
 
 export function CanvasGraph({ label, width, height, data }: CanvasGraphProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const dataRef = useRef<number[]>(data ?? []);
 
-  // Initialize data buffer
-  useEffect(() => {
-    if (data && data.length > 0) {
-      dataRef.current = data.slice(-MAX_POINTS);
-    } else {
-      // Fill with 50% default
-      dataRef.current = Array.from({ length: MAX_POINTS }, () => 50);
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Store latest data in ref to avoid redraw dependency issues
+  const dataRef = useRef<number[]>([]);
 
-  // Draw on mount
+  // Update data buffer whenever new data arrives
+  dataRef.current = data ? data.slice(-MAX_POINTS) : Array.from({ length: MAX_POINTS }, () => 50);
+
+  // Draw whenever width, height, or data changes
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -111,7 +106,7 @@ export function CanvasGraph({ label, width, height, data }: CanvasGraphProps) {
 
     // Draw Y-axis labels
     drawYLabels(ctx, width, height);
-  }, [width, height]);
+  }, [width, height, data]);
 
   return (
     <div style={{ marginBottom: 8 }}>
