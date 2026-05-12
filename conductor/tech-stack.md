@@ -8,15 +8,16 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 
 ## Core Stack
 
-| Layer                | Technology          | Version       | Purpose                                                         |
-| -------------------- | ------------------- | ------------- | --------------------------------------------------------------- |
-| **Framework**        | Astro               | ^6.x          | Zero-JS by default; hybrid SSR/SSG; content collections         |
-| **UI Library**       | React               | ^19.x         | Interactive islands: windows, CLI, task manager                 |
-| **Styling**          | Tailwind CSS        | ^4.x (v4.3.0) | Custom Luna theme with XP gradients and 3D borders; Vite plugin |
-| **State Management** | Nano Stores         | ^1.3.0        | Ultra-lightweight reactive state for window management          |
-| **React Bridge**     | @nanostores/react   | ^1.1.0        | React integration for Nano Stores                               |
-| **Content**          | MDX + Astro Content | —             | Project write-ups and DevOps Academy articles                   |
-| **Language**         | TypeScript          | ^5.x          | Strict type checking across all source files                    |
+| Layer                 | Technology          | Version       | Purpose                                                         |
+| --------------------- | ------------------- | ------------- | --------------------------------------------------------------- |
+| **Framework**         | Astro               | ^6.x          | Zero-JS by default; hybrid SSR/SSG; content collections         |
+| **UI Library**        | React               | ^19.x         | Interactive islands: windows, CLI, task manager                 |
+| **Styling**           | Tailwind CSS        | ^4.x (v4.3.0) | Custom Luna theme with XP gradients and 3D borders; Vite plugin |
+| **State Management**  | Nano Stores         | ^1.3.0        | Ultra-lightweight reactive state for window management          |
+| **React Bridge**      | @nanostores/react   | ^1.1.0        | React integration for Nano Stores                               |
+| **Content**           | MDX + Astro Content | —             | Project write-ups and DevOps Academy articles                   |
+| **Language**          | TypeScript          | ^5.x          | Strict type checking across all source files                    |
+| **Schema Validation** | Zod                 | ^4.x          | Runtime validation for content collection frontmatter schemas   |
 
 ## Integrations
 
@@ -115,5 +116,12 @@ git push → GitHub Actions → pnpm install → Fetch GitHub API → astro buil
 ### 2026-05-11 — Tailwind Integration: `@astrojs/tailwind` → `@tailwindcss/vite`
 
 - **Reason:** Astro 6 with Tailwind CSS v4 uses the Vite plugin directly instead of the legacy Astro integration.
-- **Impact:** Tailwind v4 uses CSS-first configuration (no `tailwind.config.*` file). Styling is done via `@import "tailwindcss"` in CSS files instead of Tailwind directives.
+- **Impact:** Tailwind v4 uses CSS-first configuration (no `tailwind.config.*` file). Styling is done via `@import "tailwindcss" in CSS files instead of Tailwind directives.
 - **File affected:** Styling entry in Core Stack table, Integration table.
+
+### 2026-05-12 — Added Zod for content collection schema validation
+
+- **Reason:** Track 2A content collections require runtime schema validation for MDX frontmatter. Extracted schemas into `src/lib/content-schemas.ts` (testable without `astro:content`) and imported into `src/content.config.ts` for Astro's `defineCollection`.
+- **Impact:** New `zod` dependency. Content schemas are now independently testable via vitest. Astro 6 content config uses `glob` loader in `src/content.config.ts`.
+- **Files affected:** `package.json`, `src/content.config.ts`, `src/lib/content-schemas.ts`
+- **Packages added:** `zod`
