@@ -1,7 +1,7 @@
 # Technical Design Document: Luna OS Portfolio
 
 **Parent:** [PRD.md](./PRD.md)  
-**Version:** 1.0  
+**Version:** 1.1  
 **Last Updated:** 2026-05-12
 
 ---
@@ -37,6 +37,7 @@ portfolio-v3/
 │   ├── lib/
 │   │   ├── github.ts             # GitHub API fetcher (build-time)
 │   │   ├── commands.ts           # CLI command registry
+│   │   ├── task-manager-data.ts  # Process data + performance constants (Track 2C)
 │   │   └── constants.ts          # App IDs, default positions, filesystem tree
 │   └── styles/
 │       └── xp-theme.css          # XP design tokens (see §5)
@@ -413,17 +414,18 @@ export const FILE_SYSTEM: FSNode = {
 
 ### React Islands (Interactive)
 
-| Component     | Props      | Responsibility                                          |
-| :------------ | :--------- | :------------------------------------------------------ |
-| `WindowLayer` | —          | Renders all open windows from `$windows` store          |
-| `WindowFrame` | `windowId` | Chrome (title bar, borders, resize handles), drag logic |
-| `TitleBar`    | `windowId` | Title text, icon, min/max/close buttons                 |
-| `Taskbar`     | —          | Start button, open window buttons, system tray, clock   |
-| `StartMenu`   | —          | Two-column menu, user avatar, program list              |
-| `Explorer`    | `windowId` | File/folder list, breadcrumb nav, address bar           |
-| `CmdPrompt`   | `windowId` | Terminal emulator with command parsing                  |
-| `TaskManager` | `windowId` | Tabs: Processes, Performance                            |
-| `HelpCenter`  | `windowId` | Search bar, sidebar categories, article renderer        |
+| Component     | Props                        | Responsibility                                                                   |
+| :------------ | :--------------------------- | :------------------------------------------------------------------------------- |
+| `WindowLayer` | —                            | Renders all open windows from `$windows` store                                   |
+| `WindowFrame` | `windowId`                   | Chrome (title bar, borders, resize handles), drag logic                          |
+| `TitleBar`    | `windowId`                   | Title text, icon, min/max/close buttons                                          |
+| `Taskbar`     | —                            | Start button, open window buttons, system tray, clock                            |
+| `StartMenu`   | —                            | Two-column menu, user avatar, program list                                       |
+| `Explorer`    | `windowId`                   | File/folder list, breadcrumb nav, address bar                                    |
+| `CmdPrompt`   | `windowId`                   | Terminal emulator with command parsing                                           |
+| `TaskManager` | `windowId`                   | Tabs: Processes (table, CPU animation, End Process), Performance (Canvas graphs) |
+| `CanvasGraph` | `label, width, height, data` | Reusable green-on-black line graph with grid, 60-point buffer                    |
+| `HelpCenter`  | `windowId`                   | Search bar, sidebar categories, article renderer                                 |
 
 ### Astro Components (Static)
 
@@ -488,18 +490,31 @@ export const FILE_SYSTEM: FSNode = {
 
 ### 7.2 Task Manager
 
-**Processes Tab:**
+**Architecture:**
 
-| Image Name      | PID  | CPU | Mem Usage | Description            |
+- **`src/components/apps/TaskManager.tsx`:** Main React island (438 lines). Manages tab state, CPU animation (setInterval 1s with ref-based DOM updates), row selection, End Process dialog, and Performance data generation.
+- **`src/components/apps/CanvasGraph.tsx`:** Reusable canvas line graph (135 lines). Pure Canvas API — green line (`#00ff00`) on black (`#000000`) grid with Y-axis percentage labels. Accepts dynamic data via `data` prop.
+- **`src/lib/task-manager-data.ts`:** Extracted constants — `PROCESS_DATA` (8 entries), `CPU_PERF_BASE` (~9.5%), `MEM_PERF_BASE` (~28.12%), `initCpuPerfData()`/`initMemPerfData()` generators.
+
+**Implementation Notes:**
+
+- CPU animation uses two separate `setInterval` effects (process CPU every 1s, performance data every 1s)
+- Process CPU fluctuation is ±3% accumulated from previous value; performance data is `base + random(±2%)` each tick
+- CPU cell textContent updated directly via `useRef` array to avoid full table re-render on every tick
+- Warning dialog uses position:absolute overlay with SVG warning triangle icon (review fix)
+- CanvasGraph uses a `dataRef.current = data.slice(...)` pattern outside effects, re-draws via useEffect dependency on `[width, height, data]`
+- JSDom does not implement `getContext('2d')` without the `canvas` npm package — Canvas tests verify element presence and attributes only
+
+**Processes Tab:**
 | :-------------- | :--- | :-- | :-------- | :--------------------- |
-| `python.exe`    | 1204 | 12% | 45,320 K  | Python Runtime         |
-| `terraform.svc` | 892  | 8%  | 32,100 K  | Infrastructure Manager |
-| `docker.exe`    | 2048 | 15% | 128,400 K | Container Runtime      |
-| `react.dll`     | 1567 | 6%  | 22,800 K  | UI Framework           |
-| `node.exe`      | 3201 | 10% | 67,500 K  | JavaScript Runtime     |
-| `git.exe`       | 445  | 2%  | 8,200 K   | Version Control        |
-| `linux_kernel`  | 1    | 18% | 256,000 K | Operating System       |
-| `ansible.svc`   | 780  | 5%  | 15,600 K  | Configuration Mgmt     |
+| `python.exe` | 1204 | 12% | 45,320 K | Python Runtime |
+| `terraform.svc` | 892 | 8% | 32,100 K | Infrastructure Manager |
+| `docker.exe` | 2048 | 15% | 128,400 K | Container Runtime |
+| `react.dll` | 1567 | 6% | 22,800 K | UI Framework |
+| `node.exe` | 3201 | 10% | 67,500 K | JavaScript Runtime |
+| `git.exe` | 445 | 2% | 8,200 K | Version Control |
+| `linux_kernel` | 1 | 18% | 256,000 K | Operating System |
+| `ansible.svc` | 780 | 5% | 15,600 K | Configuration Mgmt |
 
 > **CPU %** = relative skill level (animated, fluctuates ±3% randomly).
 

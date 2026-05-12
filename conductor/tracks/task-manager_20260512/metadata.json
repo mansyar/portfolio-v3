@@ -1,8 +1,0 @@
-{
-  "track_id": "task-manager_20260512",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-05-12T13:58:00Z",
-  "updated_at": "2026-05-12T13:58:00Z",
-  "description": "Windows XP-style Task Manager with Processes tab (8 skill entries with live CPU fluctuation) and Performance tab (Canvas-based line graphs for CPU/Memory)"
-}

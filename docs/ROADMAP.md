@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.7 · **Updated:** 2026-05-12  
+**Version:** 1.8 · **Updated:** 2026-05-12  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -25,7 +25,7 @@ gantt
     section Phase 2
     Track 2A – Explorer + Content :done, p2a, after p1b, 4d
     Track 2B – Command Prompt     :done, p2b, after p1b, 3d
-    Track 2C – Task Manager       :p2c, after p1b, 3d
+    Track 2C – Task Manager       :done, p2c, after p1b, 3d
     Track 2D – Help Center        :p2d, after p2a, 3d
 
     section Phase 3
@@ -451,30 +451,62 @@ Track 2B produced 11 feature/fix commits, 7 plan/checkpoint/review commits, plus
 
 ---
 
-### Track 2C — Task Manager
+### Track 2C — Task Manager ✅ _(Completed 2026-05-12)_
 
-> Processes list and animated performance graphs representing skills.
+> Full Windows XP-style Task Manager with Processes tab (8 skill-themed entries with live CPU fluctuation, row selection, End Process with XP warning dialog) and Performance tab (Canvas-based line graphs for CPU/Memory with 60-point rolling buffer). Built with pure React + Canvas API, no external charting libraries.
 
-**Refs:** [PRD §5.2](./PRD.md#52-task-manager-control-panel) · [TDD §7.2](./TDD.md#72-task-manager)
+**Refs:** [PRD §5.2](./PRD.md#52-task-manager-control-panel) · [TDD §7.2](./TDD.md#72-task-manager) · T2C [spec](conductor/archive/task-manager_20260512/spec.md) · T2C [plan](conductor/archive/task-manager_20260512/plan.md)
 
 #### Tasks
 
-- [ ] Create `TaskManager.tsx` with tab switching (Processes / Performance) ([TDD §7.2](./TDD.md#72-task-manager))
-- [ ] Implement Processes tab with table: Image Name, PID, CPU, Mem, Description ([TDD §7.2](./TDD.md#72-task-manager))
-- [ ] Animate CPU % with ±3% random fluctuation every 1s ([TDD §7.2](./TDD.md#72-task-manager))
-- [ ] Implement Performance tab with `<canvas>` or SVG line graphs ([TDD §7.2](./TDD.md#72-task-manager))
-- [ ] Green line on black grid, scrolling left, updating every 1s
-- [ ] Style tabs and chrome to match XP Task Manager
+- [x] Create `CanvasGraph.tsx` — reusable canvas line graph with green-on-black grid, 60-point buffer, Y-axis labels
+- [x] Create `TaskManager.tsx` with XP-style tab switching (Processes / Performance) ([TDD §7.2](./TDD.md#72-task-manager))
+- [x] Implement Processes tab with table: 8 entries, 5 columns (Image Name, PID, CPU, Mem, Description) ([TDD §7.2](./TDD.md#72-task-manager))
+- [x] Animate CPU % with ±3% random fluctuation every 1s (ref-based DOM updates, no full table re-renders) ([TDD §7.2](./TDD.md#72-task-manager))
+- [x] Implement row selection (XP blue highlight) + End Process button (disabled when no selection)
+- [x] Create XP-style warning dialog: blue gradient title bar, process-specific warning text, OK/Cancel
+- [x] Implement Performance tab with `<canvas>` line graphs (green `#00ff00` on black `#000000`) ([TDD §7.2](./TDD.md#72-task-manager))
+- [x] 60-point rolling buffer, scrolling left, updating every 1s with ±2% random fluctuation
+- [x] CPU graph label: "Skills Utilization" / Memory graph label: "Knowledge Base"
+- [x] Wire TaskManager into WindowLayer, remove placeholder text
+- [x] Extract process data and performance constants to `src/lib/task-manager-data.ts` (modularity)
+- [x] Style tabs and chrome to match XP Task Manager (Tahoma font, 3D borders, XP colors)
+- [x] Keyboard navigation: Left/Right arrows for tab switching with full ARIA roles
+- [x] Replace text `!` warning icon with SVG warning triangle icon (review fix)
 
 #### Acceptance Criteria
 
 ```
-✅ Task Manager opens with Processes tab showing 8+ skill entries
-✅ CPU percentages animate with subtle fluctuation
-✅ Performance tab shows two live-updating line graphs
-✅ Tab switching works correctly
+✅ Task Manager opens at 500×550, position (200, 60), min size 400×450
+✅ Two tabs visible: "Processes" and "Performance" with XP-style raised/pressed appearance
+✅ Processes tab shows 8 entries with all 5 columns (Image Name, PID, CPU, Mem, Description)
+✅ CPU % values fluctuate ±3% randomly every 1 second (clamped 0–100%)
+✅ Clicking a row selects it (XP blue highlight); End Process is disabled when no row selected
+✅ End Process shows XP warning dialog naming the selected process; OK/Cancel dismiss it
+✅ Performance tab shows two Canvas graphs (CPU + Memory) with green lines on black grid
+✅ Graphs display 60 data points, updating every 1s, scrolling left
+✅ Tab switching works and retains state; keyboard arrow keys navigate tabs
+✅ Taskbar button appears when Task Manager is open
+✅ Coexists with other open windows (Explorer, CMD)
 ✅ Visually matches XP Task Manager aesthetic
+✅ 382 tests passing, all pre-commit hooks clean
 ```
+
+#### Key Files Created
+
+```
+src/components/apps/TaskManager.tsx     — 438-line XP Task Manager with tabs, processes, dialog, canvas
+src/components/apps/CanvasGraph.tsx     — Reusable canvas graph component (green-on-black, grid, Y-labels)
+src/lib/task-manager-data.ts           — Process data constants, CPU/MEM performance base values
+src/components/window/WindowLayer.tsx (modified) — Wired TaskManager component for 'taskmanager' window ID
+tests/taskmanager.test.tsx             — 26 tests (tabs, process table, CPU animation, End Process, Canvas)
+tests/window/windowlayer.test.tsx (modified) — 1 new TaskManager integration test
+tests/canvas-graph.test.tsx            — 5 CanvasGraph unit tests
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fix commit across ~1,097 lines changed (12 files). Track archived at `conductor/archive/task-manager_20260512/`.
 
 ---
 
@@ -737,7 +769,7 @@ graph TD
     style T1C fill:#27ae60,color:#fff,stroke:#1e8449
     style T2A fill:#27ae60,color:#fff
     style T2B fill:#e67e22,color:#fff
-    style T2C fill:#e67e22,color:#fff
+    style T2C fill:#27ae60,color:#fff
     style T2D fill:#e67e22,color:#fff
     style T3A fill:#9b59b6,color:#fff
     style T3B fill:#9b59b6,color:#fff

@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.3  
+**Version:** 1.4  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -92,8 +92,18 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ### 5.2 Task Manager (Control Panel)
 
-- **Performance Tab:** Real-time (simulated) CPU/RAM graphs representing Skill Levels.
-- **Processes Tab:** Lists technical stack (e.g., `python.exe`, `terraform.svc`, `react.dll`).
+- **Tab System:** Two XP-style tabs: **Processes** (inset/outset chrome, Tahoma font, keyboard arrow key navigation)
+- **Processes Tab:** Lists 8 DevOps-themed process entries with 5 columns (Image Name, PID, CPU, Mem Usage, Description):
+  - CPU % fluctuates ±3% randomly every 1s (clamped 0–100%), updated via ref-based DOM manipulation
+  - Row selection with XP blue highlight (`#0A246A`); End Process button disabled when no row selected
+  - "End Process" shows XP warning dialog: blue gradient title bar, process-specific warning text, SVG warning icon, OK/Cancel
+- **Performance Tab:** Two Canvas-based line graphs (pure Canvas API, no charting libraries):
+  - **Skills Utilization** (CPU): green `#00ff00` line on black `#000000` grid, 60-point rolling buffer
+  - **Knowledge Base** (Memory): same visual treatment
+  - Both update every 1s with ±2% random fluctuation, data scrolls left
+  - Y-axis percentage labels, XP-style grid lines
+- **Visual Style:** Tahoma 11px, 3D borders, `#ECE9D8` dialog chrome, exact XP color matching
+- **Accessibility:** `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-hidden`, keyboard navigation
 
 ### 5.3 Help & Support Center
 
