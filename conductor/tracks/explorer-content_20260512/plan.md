@@ -2,7 +2,7 @@
 
 ---
 
-## Phase 0 — Assets: Drive & Folder Icons
+## Phase 0 — Assets: Drive & Folder Icons [checkpoint: f66040b]
 
 - [x] Task 0.1: Create drive icon SVGs [8399710]
   - [x] Create `public/icons/drive-c.svg` (32×32, hard disk icon for C: drive)
@@ -12,7 +12,7 @@
   - [x] Create `public/icons/file.svg` (16×16, generic file icon)
   - [x] Create `public/icons/folder.svg` (16×16, folder icon)
   - [x] Create `public/icons/folder-open.svg` (16×16, open folder icon)
-- [ ] Task: Conductor - User Manual Verification 'Phase 0: Assets' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 0: Assets' (Protocol in workflow.md) [f66040b]
 
 ---
 
