@@ -58,3 +58,9 @@
   - [x] Replace placeholder `'Command Prompt — Track 2B'` with `<CmdPrompt windowId="cmd" />` for window ID 'cmd'
   - [x] Verify CMD opens from desktop icon "Command Prompt", Start Menu item, and taskbar button
 - [x] Task: Conductor - User Manual Verification 'Phase 2 — Terminal UI Component & Integration' (Protocol in workflow.md) `f1378a5`
+
+---
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions `87a8cd8`
