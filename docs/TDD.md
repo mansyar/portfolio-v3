@@ -2,7 +2,7 @@
 
 **Parent:** [PRD.md](./PRD.md)  
 **Version:** 1.0  
-**Last Updated:** 2026-05-10
+**Last Updated:** 2026-05-12
 
 ---
 
@@ -441,27 +441,50 @@ export const FILE_SYSTEM: FSNode = {
 
 ### 7.1 Command Prompt
 
+**Architecture:**
+
+- **`src/lib/commands.ts`:** Centralized command registry and parser. Exports `CmdOutput` (lines, clear, openExplorer, openUrl, newCmdPath), `CmdContext` (cmdPath), `CommandHandler` type, `COMMAND_REGISTRY` map, and `parseCommand()` function.
+- **`src/components/apps/CmdPrompt.tsx`:** React island terminal shell. Uses a hidden input for keystroke capture with a visible `<span>` overlay showing typed text + blinking block cursor. Reads `cmdPath` from Nano Store `$windows`, updates on `cd`.
+- **State Management:** Command history stored in local component state (per-session, not persisted). `cmdPath` tracked in Nano Store `WindowState` for cross-component consistency with Explorer.
+
+**Input Layout:**
+
+- Hidden `<input>` (opacity 0) captures all keystrokes
+- Visible `<span>` renders the prompt + typed text + blinking cursor
+- Cursor implemented as `.cmd-cursor-blink` CSS class with `@keyframes` opacity blink (1s step-end)
+- `prefers-reduced-motion: reduce` disables cursor blink
+
+**Scrollbar Behavior:**
+
+- Outer terminal wrapper handles both axes (`overflow: auto`)
+- Input line uses `position: sticky; bottom: 0` to stay visible during vertical scrolling
+- Vertical scrollbar on right edge; horizontal scrollbar below input line at terminal bottom
+
 **Supported Commands:**
 
-| Command         | Behavior                                                        |
-| :-------------- | :-------------------------------------------------------------- |
-| `help`          | Lists all available commands                                    |
-| `ls` / `dir`    | Lists files in current directory                                |
-| `cd <path>`     | Navigate directories (`cd ..` supported)                        |
-| `cat <file>`    | Print project description as plain text                         |
-| `clear` / `cls` | Clear terminal output                                           |
-| `neofetch`      | ASCII art + system info card for @mansyar                       |
-| `open <file>`   | Opens corresponding window (e.g., `open resume.pdf`)            |
-| `whoami`        | Prints `mansyar\administrator`                                  |
-| `echo <text>`   | Prints text back                                                |
-| _unknown_       | `'<cmd>' is not recognized as an internal or external command.` |
+| Command       | Aliases | Behavior                                                                                        |
+| :------------ | :------ | :---------------------------------------------------------------------------------------------- |
+| `help`        | `/?`    | Lists all 9 commands with descriptions (filters out alias entries)                              |
+| `ls`          | `dir`   | Lists drives/folders/files with `[DRIVE]`, `[DIR]`, `[FILE]` type indicators                    |
+| `cd <path>`   | `chdir` | Change directory (supports `.`, `..`, `\`, `C:\`, absolute paths)                               |
+| `cat <file>`  | `type`  | Shows project/DevOps metadata from `PROJECTS_METADATA`/`DEVOPS_METADATA`                        |
+| `clear`       | `cls`   | Clears output buffer, re-shows MARP welcome banner                                              |
+| `neofetch`    | —       | Tux ASCII art (12-line penguin) + system info (OS, Shell, Resolution, etc.)                     |
+| `open <slug>` | —       | Opens Explorer at file's parent folder; `open resume.pdf` opens new tab                         |
+| `whoami`      | —       | Prints `mansyar\administrator`                                                                  |
+| `echo <text>` | —       | Prints text back verbatim                                                                       |
+| _unknown_     | —       | `'<cmd>' is not recognized as an internal or external command, operable program or batch file.` |
 
 **Features:**
 
-- Command history via ↑/↓ arrow keys (stored in window state)
-- Blinking cursor animation
+- Command history via ↑/↓ arrow keys (local component state, per-session, deduplicates consecutive entries)
+- Blinking block cursor animation (CSS `@keyframes` + `step-end`)
 - Auto-scroll to bottom on new output
-- No tab-complete (v1 scope)
+- **Tab completion** — auto-completes command names, folder names for `cd`, file slugs for `cat`/`type`/`open`; shows options inline for multiple matches
+- MARP ASCII art welcome banner on initial render and after `clear`/`cls`
+- Both scrollbars at terminal window edge; horizontal below input line
+- `open` command calls `openWindow('explorer')` and updates `explorerPath` in store
+- No external terminal emulation libraries — pure React + Nano Stores
 
 ### 7.2 Task Manager
 

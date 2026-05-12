@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.6 · **Updated:** 2026-05-12  
+**Version:** 1.7 · **Updated:** 2026-05-12  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -24,7 +24,7 @@ gantt
 
     section Phase 2
     Track 2A – Explorer + Content :done, p2a, after p1b, 4d
-    Track 2B – Command Prompt     :p2b, after p1b, 3d
+    Track 2B – Command Prompt     :done, p2b, after p1b, 3d
     Track 2C – Task Manager       :p2c, after p1b, 3d
     Track 2D – Help Center        :p2d, after p2a, 3d
 
@@ -296,6 +296,8 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 
 ### Track 2A — Explorer + Content ✅ _(Completed 2026-05-12)_
 
+---
+
 > File explorer with integrated address-bar/breadcrumb navigation through a static virtual filesystem (C:, D:, E: drives). Project metadata renders inline via a split-pane detail pane.
 
 **Refs:** [PRD §4](./PRD.md#4-file-system--content-mapping) · [TDD §4.1](./TDD.md#41-project-mdx-frontmatter) · [TDD §4.3](./TDD.md#43-virtual-filesystem-tree) · [TDD §6](./TDD.md#react-islands-interactive) · T2A [spec](conductor/archive/explorer-content_20260512/spec.md) · T2A [plan](conductor/archive/explorer-content_20260512/plan.md)
@@ -381,34 +383,71 @@ Track 2A produced 12 feature/commits, 7 plan/checkpoint commits, 1 review fix co
 
 ---
 
-### Track 2B — Command Prompt
+### Track 2B — Command Prompt ✅ _(Completed 2026-05-12)_
 
-> Functional terminal emulator with command parsing, history, and filesystem navigation.
+> Functional terminal emulator with command parsing, history, tab completion, and filesystem navigation. Built as a React island with Nano Stores integration.
 
-**Refs:** [PRD §5.1](./PRD.md#51-command-prompt-cmdexe) · [TDD §7.1](./TDD.md#71-command-prompt) · [TDD §4.3](./TDD.md#43-virtual-filesystem-tree)
+**Refs:** [PRD §5.1](./PRD.md#51-command-prompt-cmdexe) · [TDD §7.1](./TDD.md#71-command-prompt) · T2B [spec](conductor/tracks/command-prompt_20260512/spec.md) · T2B [plan](conductor/tracks/command-prompt_20260512/plan.md)
 
 #### Tasks
 
-- [ ] Create `CmdPrompt.tsx` — black terminal with blinking cursor ([TDD §7.1](./TDD.md#71-command-prompt))
-- [ ] Create `src/lib/commands.ts` — command registry and parser ([TDD §1](./TDD.md#1-project-structure))
-- [ ] Implement all commands: `help`, `ls`/`dir`, `cd`, `cat`, `clear`/`cls`, `neofetch`, `open`, `whoami`, `echo` ([TDD §7.1](./TDD.md#71-command-prompt))
-- [ ] Implement command history via ↑/↓ arrow keys (stored in window state) ([TDD §7.1](./TDD.md#71-command-prompt))
-- [ ] Navigate the same `FILE_SYSTEM` tree used by Explorer ([TDD §4.3](./TDD.md#43-virtual-filesystem-tree))
-- [ ] `open` command triggers `openWindow()` for the target ([TDD §7.1](./TDD.md#71-command-prompt))
-- [ ] Unknown commands show XP-style error message ([TDD §7.1](./TDD.md#71-command-prompt))
-- [ ] Auto-scroll to bottom on new output
-- [ ] Create `neofetch` ASCII art + system info layout
+- [x] Add `cmdPath` to `WindowState` (initialized to `C:\` on window open) ([TDD §3.1](./TDD.md#31-window-state-schema))
+- [x] Create `src/lib/commands.ts` — command type definitions (`CmdOutput`, `CmdContext`, `CommandHandler`), `COMMAND_REGISTRY` map, and `parseCommand()` parser ([TDD §1](./TDD.md#1-project-structure))
+- [x] Implement all 9 commands with aliases: `help`/`/?`, `ls`/`dir`, `cd`/`chdir`, `cat`/`type`, `clear`/`cls`, `neofetch`, `open`, `whoami`, `echo` ([TDD §7.1](./TDD.md#71-command-prompt))
+- [x] Command history via ↑/↓ arrow keys (stored in component state, per-session) ([TDD §7.1](./TDD.md#71-command-prompt))
+- [x] Tab completion: command names on empty prefix, folder names for `cd`, file slugs for `cat`/`type`/`open`
+- [x] Navigate the same `FILE_SYSTEM` tree used by Explorer via `getChildren`, `resolvePath`, `getParent` ([TDD §4.3](./TDD.md#43-virtual-filesystem-tree))
+- [x] `open <slug>` opens Explorer window navigated to the file's parent folder via `openWindow('explorer')` + `explorerPath` update
+- [x] `open resume.pdf` opens `/resume.pdf` in a new browser tab
+- [x] XP-style error messages for unknown commands, invalid paths, and missing files
+- [x] Auto-scroll to bottom on new output via `scrollTop = scrollHeight`
+- [x] `neofetch` with Tux ASCII art (12-line penguin) + formatted system info block (OS, Shell, Uptime, Packages, Terminal, Resolution, DE, CPU, Memory, Disk)
+- [x] MARP ASCII art welcome banner on initial render and after `clear`/`cls`
+- [x] `CmdPrompt.tsx` — React island with hidden input for keystroke capture, visible text + blinking block cursor overlay
+- [x] Wire into `WindowLayer.tsx` replacing placeholder text for `'cmd'` window ID
+- [x] Both scrollbars (vertical + horizontal) positioned at terminal window edge; horizontal below input line; input line sticky at bottom
+- [x] Blinking cursor respects `prefers-reduced-motion: reduce`
+- [x] Prompt format: `C:\ [MANSYAR]>` with bracket-separated username
 
 #### Acceptance Criteria
 
 ```
-✅ CMD opens with "C:\MANSYAR>" prompt and blinking cursor
-✅ All 9 commands produce correct output
-✅ `cd` + `ls` navigate the virtual filesystem consistently with Explorer
-✅ `open resume.pdf` opens the PDF in a new tab
-✅ Arrow keys cycle through command history
-✅ Unknown command shows: "'xyz' is not recognized as an internal or external command."
+✅ CMD opens with "C:\ [MANSYAR]>" prompt and blinking block cursor on black background
+✅ `help` lists all 9 commands with descriptions
+✅ `ls`/`dir` lists drives/folders/files with [DRIVE], [DIR], [FILE] type indicators
+✅ `cd` navigates through C:, D:, E: drives (supports ., .., \, absolute paths)
+✅ `cat <slug>` shows project/DevOps metadata (title, description, tech stack, repo)
+✅ `clear`/`cls` clears output and re-shows welcome banner
+✅ `neofetch` shows Tux ASCII art + system info block
+✅ `open icarus-server-manager` opens Explorer at C:\Software_Engineering
+✅ `open resume.pdf` opens PDF in new tab
+✅ `whoami` displays "mansyar\administrator"
+✅ `echo Hello World` outputs "Hello World"
+✅ Unknown command shows XP-style error: "'xyz' is not recognized..."
+✅ ↑/↓ arrow keys cycle through command history
+✅ Tab auto-completes commands, cd folders, cat slugs
+✅ Both scrollbars at terminal window edge; horizontal below input
+✅ Output auto-scrolls to bottom
+✅ Coexists with Explorer and other windows in multi-window context
+✅ 342 tests passing, all pre-commit hooks clean
 ```
+
+#### Key Files Created
+
+```
+src/lib/commands.ts                  — Command registry, parser, all 9 command handlers, CmdOutput/CmdContext types
+src/components/apps/CmdPrompt.tsx     — Terminal shell: hidden input, visible text+cursor overlay, history, tab completion
+src/styles/global.css (modified)      — cmd-cursor-blink animation keyframes + prefers-reduced-motion support
+src/components/window/WindowLayer.tsx (modified) — Wired CmdPrompt component for 'cmd' window ID
+src/stores/windows.ts (modified)      — Added cmdPath to WindowState
+tests/lib/commands.test.ts           — 49 command unit tests (all 9 commands + aliases + parsing + edge cases)
+tests/CmdPrompt.test.tsx             — 9 React component tests (rendering, accessibility, command execution, cursor, clear)
+tests/stores/windows.test.ts (modified) — 3 cmdPath store tests
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 2B produced 11 feature/fix commits, 7 plan/checkpoint/review commits, plus 6 post-review fixes (cursor, tab completion, scrollbar, prompt format) — across ~1,600+ lines changed (9 files). Track folder at `conductor/tracks/command-prompt_20260512/`.
 
 ---
 

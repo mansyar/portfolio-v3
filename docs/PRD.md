@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.2  
+**Version:** 1.3  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -70,11 +70,25 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ### 5.1 Command Prompt (cmd.exe)
 
-- **Functional CLI:** A React island implementing basic shell commands:
-  - `ls`: List current "directory" files (projects).
-  - `cd [folder]`: Navigate the project structure.
-  - `cat [file]`: Preview project descriptions in text format.
-  - `neofetch`: Display a stylized "system info" summary of @mansyar.
+- **Functional CLI:** A React island implementing a full terminal emulator with 9 commands, command history, and tab completion.
+- **Prompt Format:** `C:\ [MANSYAR]>` with current directory tracking and bracket-separated username.
+- **Visual Style:** Black background (`#000000`), green text (`#00aa00`), Courier New / Consolas monospace font, blinking block cursor.
+- **Commands:**
+  | Command | Aliases | Description |
+  |---------|---------|-------------|
+  | `help` | `/?` | Lists all available commands with descriptions |
+  | `ls` | `dir` | Lists files/folders in current directory with type indicators |
+  | `cd` | `chdir` | Change directory (supports `.`, `..`, `\`, absolute paths) |
+  | `cat` | `type` | Displays project/article frontmatter metadata by slug |
+  | `clear` | `cls` | Clears terminal output, re-shows welcome banner |
+  | `neofetch` | — | Tux ASCII art + comprehensive system information card |
+  | `open` | — | Opens Explorer to project folder or PDF in new tab |
+  | `whoami` | — | Displays current username (`mansyar\administrator`) |
+  | `echo` | — | Outputs provided text verbatim |
+- **Tab Completion:** Auto-completes command names, folder paths for `cd`, and file slugs for `cat`/`type`/`open`.
+- **History:** Arrow key (↑/↓) command history, per-session, deduplicates consecutive identical commands.
+- **Error Handling:** XP-style error messages for unknown commands, invalid paths, and missing files.
+- **Integration:** Coexists with Explorer, navigates the same `FILE_SYSTEM` tree, `open` command triggers Explorer navigation.
 
 ### 5.2 Task Manager (Control Panel)
 
