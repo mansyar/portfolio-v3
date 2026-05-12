@@ -133,3 +133,9 @@
   - [x] Run `pnpm lint` — no lint errors
   - [x] Verify no `src/` file exceeds 500 lines (modularity check)
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Integration & Wiring' (Protocol in workflow.md)
+
+---
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions [2165970]
