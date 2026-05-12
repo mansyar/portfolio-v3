@@ -429,9 +429,16 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 
 ### Track 3A — GitHub Data Sync
 
-> Build-time GitHub API fetching to populate project metadata (stars, commits, last push).
+> Build-time GitHub API fetching to populate project metadata (stars, commits, last push). Also inherits deferred Explorer enhancements from [Track 2A](#track-2a--explorer-content).
 
 **Refs:** [PRD §6](./PRD.md#6-devops--deployment-strategy) · [TDD §4.2](./TDD.md#42-github-api-data-shape) · [TDD §14](./TDD.md#14-build--deploy-pipeline)
+
+#### Notes on Inherited Scope (from Track 2A)
+
+| Inherited Feature                                                       | Original Track | Why Here                                                                                                                                            |
+| ----------------------------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dynamic `FILE_SYSTEM` population from content collections at build-time | Track 2A       | Astro content collections require a build-time pipeline (not available in plain TS modules); this track provides the fetch infrastructure           |
+| Full MDX body rendering in Explorer detail pane                         | Track 2A       | React client islands cannot import `.mdx` at runtime; this track can pre-render MDX to HTML strings at build time and inject them into the Explorer |
 
 #### Tasks
 
@@ -439,35 +446,47 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 - [ ] Integrate into Astro build pipeline — fetch data, merge into content collection entries
 - [ ] Cache last-good API response in `src/content/_cache/github.json` ([TDD §11](./TDD.md#11-error-states))
 - [ ] Fallback to cache on API failure with console warning ([TDD §11](./TDD.md#11-error-states))
+- [ ] Build dynamic `FILE_SYSTEM` at build time from `getCollection('projects')` + `getCollection('devopsAcademy')` (replaces static T2A tree)
+- [ ] Pre-render MDX project bodies to HTML strings at build time and make them available to Explorer's detail pane
 - [ ] Verify fetched data appears in Explorer project listings and CMD `cat` output
 
 #### Acceptance Criteria
 
 ```
 ✅ `pnpm build` fetches live GitHub data and injects into project content
-✅ Explorer shows real star counts and last commit dates
+✅ FILE_SYSTEM is dynamically built from content collections (no longer a static mirror)
+✅ Explorer detail pane renders full project MDX body content (upgraded from T2A metadata-only)
 ✅ If GitHub API is unreachable, build succeeds using cached data
+✅ Explorer shows real star counts and last commit dates
 ```
 
 ---
 
 ### Track 3B — URL State Persistence
 
-> Sync window state to URL search params for deep-linking and share-ability.
+> Sync window state to URL search params for deep-linking and share-ability. Also inherits Explorer path persistence deferred from [Track 2A](#track-2a--explorer-content).
 
 **Refs:** [TDD §2](./TDD.md#2-routing--url-strategy)
+
+#### Notes on Inherited Scope (from Track 2A)
+
+| Inherited Feature                     | Original Track | Why Here                                                                                                                                |
+| ------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Explorer `path` parameter persistence | Track 2A       | The `?path=` URL param (defined in TDD §2) is the natural mechanism for persisting the Explorer's current directory across page reloads |
 
 #### Tasks
 
 - [ ] Create URL ↔ store sync logic in `src/stores/windows.ts` ([TDD §2](./TDD.md#2-routing--url-strategy))
-- [ ] On page load: parse `?w=`, `?focus=`, `?start=`, `?path=` → hydrate stores
+- [ ] On page load: parse `?w=`, `?focus=`, `?start=`, `?path=` → hydrate stores ([TDD §2](./TDD.md#2-routing--url-strategy))
 - [ ] On store change: debounced `replaceState()` to update URL (no reload) ([TDD §2](./TDD.md#2-routing--url-strategy))
+- [ ] Sync Explorer `explorerPath` to/from `?path=` URL param
 - [ ] Test all deep-link examples from TDD §2
 
 #### Acceptance Criteria
 
 ```
 ✅ Opening windows updates the URL with correct params
+✅ Pasting a URL with `?w=explorer&path=C:/Software_Engineering` opens Explorer to that path
 ✅ Pasting a URL with `?w=cmd,taskmanager&focus=cmd` opens both windows with CMD focused
 ✅ Closing all windows returns URL to clean `/`
 ✅ Browser back/forward navigates window state history
