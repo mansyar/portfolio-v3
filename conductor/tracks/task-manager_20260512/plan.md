@@ -32,7 +32,7 @@
 - [x] Task 2.3: Implement End Process button with row selection and XP warning dialog (`5f717d9`)
   - [x] Write tests: clicking a row selects it; End Process is disabled when no row selected; clicking End Process on selected row shows dialog naming the process; OK and Cancel both dismiss it
   - [x] Implement selectedRow state (tracked by row index or PID), XP-style selection highlight, End Process button disabled state, and XPMessageBox dialog: raised border, centered overlay, Tahoma font, Warning icon, OK/Cancel, dialog text includes selected process name
-- [ ] Task: Conductor - User Manual Verification 'Phase 2 — Processes Tab' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 2 — Processes Tab' (Protocol in workflow.md)
 
 ---
 
