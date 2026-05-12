@@ -26,12 +26,12 @@
 - [x] Task 2.1: Implement process data and table rendering (`de213bb`)
   - [x] Write tests: process table renders 8 entries with all 5 columns (Image Name, PID, CPU, Mem, Description)
   - [x] Create process data constant and table component with XP detail-view styling
-- [ ] Task 2.2: Animate CPU percentages with random fluctuation
-  - [ ] Write tests: CPU values fluctuate within ±3% range every 1s, never go below 0% or above 100%
-  - [ ] Implement setInterval-based CPU update: store a ref array of CPU cell DOM elements, update their textContent directly in the interval callback to avoid full table re-renders; clean up interval on unmount
-- [ ] Task 2.3: Implement End Process button with row selection and XP warning dialog
-  - [ ] Write tests: clicking a row selects it; End Process is disabled when no row selected; clicking End Process on selected row shows dialog naming the process; OK and Cancel both dismiss it
-  - [ ] Implement selectedRow state (tracked by row index or PID), XP-style selection highlight, End Process button disabled state, and XPMessageBox dialog: raised border, centered overlay, Tahoma font, Warning icon, OK/Cancel, dialog text includes selected process name
+- [x] Task 2.2: Animate CPU percentages with random fluctuation (`5f717d9`)
+  - [x] Write tests: CPU values fluctuate within ±3% range every 1s, never go below 0% or above 100%
+  - [x] Implement setInterval-based CPU update: store a ref array of CPU cell DOM elements, update their textContent directly in the interval callback to avoid full table re-renders; clean up interval on unmount
+- [x] Task 2.3: Implement End Process button with row selection and XP warning dialog (`5f717d9`)
+  - [x] Write tests: clicking a row selects it; End Process is disabled when no row selected; clicking End Process on selected row shows dialog naming the process; OK and Cancel both dismiss it
+  - [x] Implement selectedRow state (tracked by row index or PID), XP-style selection highlight, End Process button disabled state, and XPMessageBox dialog: raised border, centered overlay, Tahoma font, Warning icon, OK/Cancel, dialog text includes selected process name
 - [ ] Task: Conductor - User Manual Verification 'Phase 2 — Processes Tab' (Protocol in workflow.md)
 
 ---
