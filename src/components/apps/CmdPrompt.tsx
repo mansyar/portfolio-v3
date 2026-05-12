@@ -246,21 +246,21 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        overflowY: 'hidden',
-        overflowX: 'auto',
+        overflow: 'auto',
         padding: '4px 0 4px 6px',
       }}
       onClick={() => hiddenInputRef.current?.focus()}
     >
-      {/* Output area — vertical scroll only; horizontal handled by the terminal wrapper */}
+      {/* Output area */}
       <div
         ref={outputRef}
         style={{
           flex: 1,
           overflowY: 'auto',
-          overflowX: 'hidden',
+          overflowX: 'clip',
           whiteSpace: 'pre',
           lineHeight: '1.3',
+          minWidth: 'max-content',
         }}
       >
         {outputLines.map((item, i) => {
