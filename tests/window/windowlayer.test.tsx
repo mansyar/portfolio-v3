@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import type { FC } from 'react';
 
 let WindowLayer: FC<object>;
@@ -34,6 +34,17 @@ describe('WindowLayer.tsx', () => {
     const { container } = render(<WindowLayer />);
     const frames = container.querySelectorAll('[class*="xp-window-border"]');
     expect(frames.length).toBe(2);
+  });
+
+  it('should render TaskManager component when taskmanager window is opened', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('taskmanager');
+
+    render(<WindowLayer />);
+
+    // The TaskManager tabs should be rendered
+    expect(screen.getByRole('tab', { name: 'Processes' })).toBeDefined();
+    expect(screen.getByRole('tab', { name: 'Performance' })).toBeDefined();
   });
 
   it('should register CustomEvent listener for luna:open-window', () => {
