@@ -69,7 +69,7 @@ export function resolvePath(path: string): FSNode | null {
 export function getChildren(path: string): FSNode[] {
   const normalized = normalize(path);
   if (normalized === '\\') {
-    return FILE_SYSTEM as unknown[] as FSNode[];
+    return [...FILE_SYSTEM];
   }
 
   const node = resolvePath(normalized);

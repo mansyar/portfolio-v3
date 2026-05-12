@@ -58,10 +58,10 @@ export function Explorer({ windowId }: ExplorerProps) {
     setSelectedSlug(null);
   }, [windowId, history, historyIndex]);
 
-  const handleUp = useCallback(() => {
+  function handleUp() {
     const parent = getParent(currentPath);
     if (parent) navigateTo(parent);
-  }, [currentPath, navigateTo]);
+  }
 
   const handleBreadcrumb = useCallback(
     (index: number) => {
@@ -77,12 +77,9 @@ export function Explorer({ windowId }: ExplorerProps) {
     setSelectedSlug(slug);
   }, []);
 
-  const handleFolderNavigate = useCallback(
-    (folderPath: string) => {
-      navigateTo(folderPath);
-    },
-    [navigateTo],
-  );
+  function handleFolderNavigate(folderPath: string) {
+    navigateTo(folderPath);
+  }
 
   return (
     <div className="xp-explorer">
