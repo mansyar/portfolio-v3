@@ -31,6 +31,7 @@ A fully interactive Windows XP Task Manager clone as a React island within the L
 - Active tab appears "pressed" (inset border), inactive tab "raised" (outset border)
 - Clicking a tab switches the content view below
 - Tab switching is instant (no animation)
+- Keyboard navigation: Left/Right arrow keys switch between tabs when focus is on the tab bar; Tab key moves focus into the active tab panel
 
 ### FR3 — Processes Tab
 
@@ -38,10 +39,12 @@ A fully interactive Windows XP Task Manager clone as a React island within the L
 - 8 entries sourced from TDD §7.2 (see table below)
 - **CPU %** column: each entry's value fluctuates ±3% randomly every 1 second (min 0%, max 100%)
 - Values update in-place (no row re-rendering, just the CPU text)
-- "End Process" button at the bottom of the tab
-- Clicking "End Process" shows an XP-style warning dialog:
+- A row must be selected (highlighted) before "End Process" can be clicked
+- Clicking a row selects it (highlighted with XP blue selection color); clicking another row switches selection
+- "End Process" button is **disabled** (greyed out) when no row is selected
+- Clicking "End Process" on a selected row shows an XP-style warning dialog:
   - Title: "Task Manager Warning"
-  - Message: "WARNING: Terminating a process can cause unwanted behavior including loss of data and system instability. The process will not be given a chance to save its data. Are you sure you want to terminate this process?"
+  - Message: "WARNING: Terminating the process '<Image Name>' can cause unwanted behavior including loss of data and system instability. The process will not be given a chance to save its data. Are you sure you want to terminate this process?" (where <Image Name> is the selected process name)
   - Buttons: OK (dismisses dialog), Cancel (dismisses dialog)
   - Dialog is centered over the Task Manager window, has classic XP raised border
   - No actual process termination occurs
@@ -68,8 +71,10 @@ A fully interactive Windows XP Task Manager clone as a React island within the L
   - 60 data points (1-minute rolling window, 1 update/second)
   - Y-axis labels on the left (percentage values)
   - Line scrolls left as new data points are added
-- Data: initial values are the base CPU/Memory percentages from the processes table, then fluctuates ±2% randomly every 1s
-- Canvas dimensions: fills the available content width, height ~150px per graph
+- Data: initial values are the base percentages from the processes table:
+  - **CPU Graph**: starts at overall average CPU (9.5%) — the mean of all 8 process CPU values
+  - **Memory Graph**: starts at overall Memory utilization percentage — computed as `(sum of all Mem Usage values / (max_mem * number_of_processes)) * 100` where max_mem = 256,000 K (linux_kernel's value as 100% reference), then fluctuates ±2% randomly every 1s
+- Canvas dimensions: fills the content area width (window width minus 16px for WindowFrame left/right padding), height ~150px per graph
 - No axis labels on the bottom (matches XP Task Manager behavior)
 
 ### FR5 — Integration
@@ -101,7 +106,8 @@ A fully interactive Windows XP Task Manager clone as a React island within the L
 ✅ Two tabs visible: "Processes" and "Performance" with XP-style appearance
 ✅ Processes tab shows 8 entries with all 5 columns (Image Name, PID, CPU, Mem, Description)
 ✅ CPU % values fluctuate ±3% randomly every 1 second
-✅ "End Process" button shows XP warning dialog on click; OK/Cancel dismiss it
+✅ Clicking a row selects it; "End Process" is disabled when no row is selected
+✅ "End Process" shows XP warning dialog naming the selected process; OK/Cancel dismiss it
 ✅ Performance tab shows two Canvas graphs (CPU + Memory) with green lines on black
 ✅ Graphs display 60 data points, updating every 1s, scrolling left
 ✅ Tab switching works and retains state

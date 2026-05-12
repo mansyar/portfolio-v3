@@ -8,9 +8,9 @@
 
 ## Phase 1: Task Manager Shell & Tab System
 
-- [ ] Task 1.1: Add taskmanager config to DEFAULT_WINDOW_CONFIGS
-  - [ ] Write tests: taskmanager config exists at 500×550, position (200, 60), min size 400×450
-  - [ ] Add taskmanager entry to DEFAULT_WINDOW_CONFIGS in `src/stores/windows.ts`
+- [x] Task 1.1: Add taskmanager config to DEFAULT_WINDOW_CONFIGS
+  - [x] Write tests: taskmanager config exists at 500×550, position (200, 60), min size 400×450
+  - [x] Add taskmanager entry to DEFAULT_WINDOW_CONFIGS in `src/stores/windows.ts`
 - [ ] Task 1.2: Create `TaskManager.tsx` with tab switching UI
   - [ ] Write tests: component renders two tabs (Processes / Performance), clicking switches visible content
   - [ ] Implement TaskManager with useState tab tracking and XP-style raised/pressed tab chrome
@@ -28,10 +28,10 @@
   - [ ] Create process data constant and table component with XP detail-view styling
 - [ ] Task 2.2: Animate CPU percentages with random fluctuation
   - [ ] Write tests: CPU values fluctuate within ±3% range every 1s, never go below 0% or above 100%
-  - [ ] Implement setInterval-based CPU update using useRef for performant in-place updates
-- [ ] Task 2.3: Implement End Process button with XP warning dialog
-  - [ ] Write tests: clicking End Process button shows XP warning dialog; OK and Cancel both dismiss it
-  - [ ] Implement XPMessageBox dialog: raised border, centered overlay, Tahoma font, Warning icon, OK/Cancel
+  - [ ] Implement setInterval-based CPU update: store a ref array of CPU cell DOM elements, update their textContent directly in the interval callback to avoid full table re-renders; clean up interval on unmount
+- [ ] Task 2.3: Implement End Process button with row selection and XP warning dialog
+  - [ ] Write tests: clicking a row selects it; End Process is disabled when no row selected; clicking End Process on selected row shows dialog naming the process; OK and Cancel both dismiss it
+  - [ ] Implement selectedRow state (tracked by row index or PID), XP-style selection highlight, End Process button disabled state, and XPMessageBox dialog: raised border, centered overlay, Tahoma font, Warning icon, OK/Cancel, dialog text includes selected process name
 - [ ] Task: Conductor - User Manual Verification 'Phase 2 — Processes Tab' (Protocol in workflow.md)
 
 ---
@@ -43,7 +43,7 @@
   - [ ] Implement CanvasGraph: 60-point rolling buffer, green polyline, XP-style grid, Y-axis labels
 - [ ] Task 3.2: Wire Performance tab with 1s data updates
   - [ ] Write tests: graphs receive data at 1s interval, maintain 60-point buffer, scroll left on new point
-  - [ ] Implement data generator (base values from process table ±2%), animation loop with requestAnimationFrame + 1s throttle
+  - [ ] Implement data generator: CPU graph base = average of all 8 process CPU values (9.5%); Memory graph base = overall memory percentage (computed as sum(mem_values) / (256000 _ 8) _ 100); both fluctuate ±2% every 1s; animation loop uses requestAnimationFrame + 1s throttle for efficient canvas redraw
 - [ ] Task: Conductor - User Manual Verification 'Phase 3 — Performance Tab' (Protocol in workflow.md)
 
 ---

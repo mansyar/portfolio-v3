@@ -21,7 +21,7 @@ import { CmdPrompt } from '@/components/apps/CmdPrompt';
 const PLACEHOLDER_CONTENT: Record<string, string> = {
   mydocs: 'My Documents — Coming Soon in Track 2B',
   help: 'Help & Support — Coming Soon in Track 2C',
-  taskmanager: 'Task Manager — Coming Soon in Track 2E',
+  taskmanager: 'Task Manager — Coming Soon in Track 2C',
   recyclebin: 'Recycle Bin — Coming Soon in Track 2F',
 };
 
