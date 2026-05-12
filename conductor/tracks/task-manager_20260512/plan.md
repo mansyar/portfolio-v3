@@ -14,9 +14,9 @@
 - [x] Task 1.2: Create `TaskManager.tsx` with tab switching UI (`4122024`)
   - [x] Write tests: component renders two tabs (Processes / Performance), clicking switches visible content
   - [x] Implement TaskManager with useState tab tracking and XP-style raised/pressed tab chrome
-- [ ] Task 1.3: Wire TaskManager into WindowLayer
-  - [ ] Write tests: opening `taskmanager` window renders TaskManager component in WindowLayer
-  - [ ] Replace placeholder text for 'taskmanager' window ID in `WindowLayer.tsx`
+- [x] Task 1.3: Wire TaskManager into WindowLayer (`5fb9ee8`)
+  - [x] Write tests: opening `taskmanager` window renders TaskManager component in WindowLayer
+  - [x] Replace placeholder text for 'taskmanager' window ID in `WindowLayer.tsx`
 - [ ] Task: Conductor - User Manual Verification 'Phase 1 — Task Manager Shell & Tab System' (Protocol in workflow.md)
 
 ---
