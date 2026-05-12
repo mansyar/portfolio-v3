@@ -23,19 +23,19 @@
   - [x] Write failing tests validating the `devopsAcademy` collection schema (title, slug, category, order, description, lastUpdated)
   - [x] Implement `config.ts` with both collections using `z` schemas per TDD §4.1
   - [x] Verify tests pass
-- [ ] Task 1.2: Write project MDX files for 3 featured projects
-  - [ ] Create `src/content/projects/icarus-server-manager.mdx` (drive=C) with full frontmatter + project description
-  - [ ] Create `src/content/projects/chasing-chapters.mdx` (drive=C) with full frontmatter + project description
-  - [ ] Create `src/content/projects/tubular-bexus-osw.mdx` (drive=D) with full frontmatter + project description
-  - [ ] Write tests verifying frontmatter is parseable and schema-valid
-- [ ] Task 1.3: Write 3 stub DevOps Academy MDX articles
-  - [ ] Create `src/content/devops-academy/docker-basics.mdx` (category=Docker) with frontmatter
-  - [ ] Create `src/content/devops-academy/linux-essentials.mdx` (category=Linux) with frontmatter
-  - [ ] Create `src/content/devops-academy/ci-cd-pipeline.mdx` (category=CI/CD) with frontmatter
-  - [ ] Write tests verifying schema compliance
-- [ ] Task 1.4: Verify content compiles end-to-end
-  - [ ] Run `pnpm astro check` to verify no type errors
-  - [ ] Run `pnpm build` to verify content collections compile
+- [x] Task 1.2: Write project MDX files for 3 featured projects [5c2587a]
+  - [x] Create `src/content/projects/icarus-server-manager.mdx` (drive=C) with full frontmatter + project description
+  - [x] Create `src/content/projects/chasing-chapters.mdx` (drive=C) with full frontmatter + project description
+  - [x] Create `src/content/projects/tubular-bexus-osw.mdx` (drive=D) with full frontmatter + project description
+  - [x] Write tests verifying frontmatter is parseable and schema-valid
+- [x] Task 1.3: Write 3 stub DevOps Academy MDX articles [5c2587a]
+  - [x] Create `src/content/devops-academy/docker-basics.mdx` (category=Docker) with frontmatter
+  - [x] Create `src/content/devops-academy/linux-essentials.mdx` (category=Linux) with frontmatter
+  - [x] Create `src/content/devops-academy/ci-cd-pipeline.mdx` (category=CI/CD) with frontmatter
+  - [x] Write tests verifying schema compliance
+- [x] Task 1.4: Verify content compiles end-to-end [5c2587a]
+  - [x] Run `pnpm astro check` to verify no type errors
+  - [x] Run `pnpm build` to verify content collections compile
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Content Layer' (Protocol in workflow.md)
 
 ---
