@@ -18,11 +18,11 @@
 
 ## Phase 1 — Content Layer: MDX Collections & Files
 
-- [ ] Task 1.1: Create `src/content/config.ts`
-  - [ ] Write failing tests validating the `projects` collection schema (title, slug, drive, description, repoUrl, language, techStack, stars, lastCommit, commits, status, icon)
-  - [ ] Write failing tests validating the `devopsAcademy` collection schema (title, slug, category, order, description, lastUpdated)
-  - [ ] Implement `config.ts` with both collections using `z` schemas per TDD §4.1
-  - [ ] Verify tests pass
+- [x] Task 1.1: Create `src/content/config.ts` [2a16fe5]
+  - [x] Write failing tests validating the `projects` collection schema (title, slug, drive, description, repoUrl, language, techStack, stars, lastCommit, commits, status, icon)
+  - [x] Write failing tests validating the `devopsAcademy` collection schema (title, slug, category, order, description, lastUpdated)
+  - [x] Implement `config.ts` with both collections using `z` schemas per TDD §4.1
+  - [x] Verify tests pass
 - [ ] Task 1.2: Write project MDX files for 3 featured projects
   - [ ] Create `src/content/projects/icarus-server-manager.mdx` (drive=C) with full frontmatter + project description
   - [ ] Create `src/content/projects/chasing-chapters.mdx` (drive=C) with full frontmatter + project description
