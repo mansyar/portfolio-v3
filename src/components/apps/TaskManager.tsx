@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useStore } from '@/lib/useStore';
 import { $windows } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
@@ -129,6 +129,32 @@ const HEADER_CELL_STYLE: React.CSSProperties = {
 export function TaskManager({ windowId }: TaskManagerProps) {
   // Hooks must be called before any early return (rules-of-hooks)
   const [activeTab, setActiveTab] = useState<TabId>('processes');
+  const [cpuValues, setCpuValues] = useState<number[]>(() => PROCESS_DATA.map((p) => p.cpu));
+  const [selectedPid, setSelectedPid] = useState<number | null>(null);
+  const [warningProcess, setWarningProcess] = useState<ProcessEntry | null>(null);
+  const cpuRefs = useRef<(HTMLTableCellElement | null)[]>([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCpuValues((prev) =>
+        prev.map((val) => {
+          const delta = (Math.random() - 0.5) * 6; // ±3%
+          const newVal = val + delta;
+          return Math.round(Math.max(0, Math.min(100, newVal)));
+        }),
+      );
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Update DOM directly for CPU cells to avoid full re-renders
+  useEffect(() => {
+    cpuRefs.current.forEach((cell, i) => {
+      if (cell) {
+        cell.textContent = cpuValues[i] + '%';
+      }
+    });
+  }, [cpuValues]);
 
   const handleTabClick = useCallback((tabId: TabId) => {
     setActiveTab(tabId);
@@ -149,6 +175,22 @@ export function TaskManager({ windowId }: TaskManagerProps) {
     },
     [activeTab],
   );
+
+  const handleRowClick = useCallback((pid: number) => {
+    setSelectedPid(pid);
+  }, []);
+
+  const handleEndProcess = useCallback(() => {
+    if (selectedPid === null) return;
+    const proc = PROCESS_DATA.find((p) => p.pid === selectedPid);
+    if (proc) {
+      setWarningProcess(proc);
+    }
+  }, [selectedPid]);
+
+  const handleDismissWarning = useCallback(() => {
+    setWarningProcess(null);
+  }, []);
 
   const windows = useStore($windows);
   const windowState = windows[windowId as WindowId];
@@ -198,39 +240,94 @@ export function TaskManager({ windowId }: TaskManagerProps) {
       </div>
 
       {/* Tab content */}
-      <div style={CONTENT_STYLE}>
+      <div style={{ ...CONTENT_STYLE, position: 'relative' }}>
         <div
           role="tabpanel"
           id="panel-processes"
           aria-labelledby="tab-processes"
           aria-hidden={activeTab !== 'processes'}
-          style={{ display: activeTab === 'processes' ? 'block' : 'none', height: '100%' }}
+          style={{
+            display: activeTab === 'processes' ? 'flex' : 'none',
+            height: '100%',
+            flexDirection: 'column',
+          }}
         >
           {activeTab === 'processes' && (
-            <div style={{ height: '100%', overflow: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
-                <thead>
-                  <tr>
-                    {COLUMN_HEADERS.map((header) => (
-                      <th key={header} style={HEADER_CELL_STYLE}>
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {PROCESS_DATA.map((proc) => (
-                    <tr key={proc.pid} role="row">
-                      <td style={CELL_STYLE}>{proc.imageName}</td>
-                      <td style={CELL_STYLE}>{proc.pid}</td>
-                      <td style={CELL_STYLE}>{proc.cpu}%</td>
-                      <td style={CELL_STYLE}>{proc.memUsage}</td>
-                      <td style={CELL_STYLE}>{proc.description}</td>
+            <>
+              <div style={{ flex: 1, overflow: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+                  <thead>
+                    <tr>
+                      {COLUMN_HEADERS.map((header) => (
+                        <th key={header} style={HEADER_CELL_STYLE}>
+                          {header}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {PROCESS_DATA.map((proc, i) => {
+                      const isSelected = selectedPid === proc.pid;
+                      return (
+                        <tr
+                          key={proc.pid}
+                          role="row"
+                          data-selected={isSelected ? 'true' : 'false'}
+                          onClick={() => handleRowClick(proc.pid)}
+                          style={{
+                            background: isSelected ? '#0A246A' : 'transparent',
+                            color: isSelected ? '#FFFFFF' : '#000000',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <td style={CELL_STYLE}>{proc.imageName}</td>
+                          <td style={CELL_STYLE}>{proc.pid}</td>
+                          <td
+                            style={CELL_STYLE}
+                            ref={(el) => {
+                              cpuRefs.current[i] = el;
+                            }}
+                          >
+                            {cpuValues[i]}%
+                          </td>
+                          <td style={CELL_STYLE}>{proc.memUsage}</td>
+                          <td style={CELL_STYLE}>{proc.description}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Bottom bar with End Process button */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  padding: '4px 4px 0 4px',
+                  borderTop: '1px solid #D4D0C8',
+                  background: '#ECE9D8',
+                }}
+              >
+                <button
+                  type="button"
+                  disabled={selectedPid === null}
+                  onClick={handleEndProcess}
+                  style={{
+                    fontFamily: '"Tahoma", sans-serif',
+                    fontSize: 11,
+                    padding: '2px 16px',
+                    cursor: selectedPid === null ? 'default' : 'pointer',
+                    border: '1px solid #808080',
+                    background: selectedPid === null ? '#D4D0C8' : '#ECE9D8',
+                    color: selectedPid === null ? '#808080' : '#000000',
+                    outline: 'none',
+                  }}
+                >
+                  End Process
+                </button>
+              </div>
+            </>
           )}
         </div>
 
@@ -241,9 +338,110 @@ export function TaskManager({ windowId }: TaskManagerProps) {
           aria-hidden={activeTab !== 'performance'}
           style={{ display: activeTab === 'performance' ? 'block' : 'none', height: '100%' }}
         >
-          {/* Performance content will be added in Phase 3 */}
           {activeTab === 'performance' && <div>Performance tab content</div>}
         </div>
+
+        {/* Warning Dialog Overlay */}
+        {warningProcess && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(0, 0, 0, 0.3)',
+              zIndex: 10,
+            }}
+          >
+            <div
+              style={{
+                background: '#ECE9D8',
+                border: '2px solid #0A246A',
+                borderTop: '2px solid #0A84FF',
+                padding: 0,
+                width: 350,
+                fontFamily: '"Tahoma", sans-serif',
+                fontSize: 11,
+                boxShadow: '2px 2px 8px rgba(0,0,0,0.4)',
+              }}
+            >
+              {/* Dialog Title Bar */}
+              <div
+                style={{
+                  background:
+                    'linear-gradient(180deg, #0A246A 0%, #3A6EA5 8%, #5A8EC5 40%, #3A6EA5 88%, #0A246A 100%)',
+                  color: '#FFFFFF',
+                  fontWeight: 700,
+                  padding: '3px 6px',
+                  fontSize: 12,
+                }}
+              >
+                Task Manager Warning
+              </div>
+
+              {/* Dialog Body */}
+              <div style={{ padding: 12, display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                <div
+                  style={{
+                    fontSize: 24,
+                    color: '#FF8800',
+                    flexShrink: 0,
+                    width: 24,
+                    textAlign: 'center',
+                  }}
+                >
+                  !
+                </div>
+                <div>
+                  WARNING: Terminating the process &apos;{warningProcess.imageName}&apos; can cause
+                  unwanted behavior including loss of data and system instability. The process will
+                  not be given a chance to save its data. Are you sure you want to terminate this
+                  process?
+                </div>
+              </div>
+
+              {/* Dialog Buttons */}
+              <div
+                style={{ display: 'flex', justifyContent: 'center', gap: 8, padding: '0 0 8px 0' }}
+              >
+                <button
+                  type="button"
+                  onClick={handleDismissWarning}
+                  style={{
+                    fontFamily: '"Tahoma", sans-serif',
+                    fontSize: 11,
+                    padding: '2px 20px',
+                    border: '1px solid #808080',
+                    background: '#ECE9D8',
+                    cursor: 'pointer',
+                    outline: 'none',
+                  }}
+                >
+                  OK
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDismissWarning}
+                  style={{
+                    fontFamily: '"Tahoma", sans-serif',
+                    fontSize: 11,
+                    padding: '2px 20px',
+                    border: '1px solid #808080',
+                    background: '#ECE9D8',
+                    cursor: 'pointer',
+                    outline: 'none',
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

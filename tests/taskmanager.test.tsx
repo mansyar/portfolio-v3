@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import type { FC } from 'react';
 
@@ -195,6 +195,161 @@ describe('TaskManager component', () => {
 
       expect(screen.getByText('12%')).toBeDefined();
       expect(screen.getByText('18%')).toBeDefined();
+    });
+  });
+
+  describe('Processes Tab - CPU Animation', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('should update CPU values after 1 second', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      // Wait 1 second
+      vi.advanceTimersByTime(1000);
+
+      // CPU values should still be visible (just updated) — multiple cells exist
+      const cpuCells = screen.getAllByText(/\d+%/);
+      expect(cpuCells.length).toBe(8);
+    });
+
+    it('should keep CPU values within 0-100% range even after multiple updates', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      // Simulate many updates
+      for (let i = 0; i < 100; i++) {
+        vi.advanceTimersByTime(1000);
+      }
+
+      // All CPU cells should have valid percentage values
+      const cpuCells = container.querySelectorAll('td:nth-child(3)');
+      cpuCells.forEach((cell) => {
+        const text = cell.textContent || '';
+        const value = parseInt(text, 10);
+        expect(value).toBeGreaterThanOrEqual(0);
+        expect(value).toBeLessThanOrEqual(100);
+        expect(text).toMatch(/\d+%/);
+      });
+    });
+  });
+
+  describe('Processes Tab - End Process and Row Selection', () => {
+    it('should have an End Process button', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      expect(screen.getByText('End Process')).toBeDefined();
+    });
+
+    it('should start with End Process button disabled (no row selected)', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      render(<TaskManager windowId="taskmanager" />);
+
+      const endBtn =
+        screen.getByText('End Process').closest('button') || screen.getByText('End Process');
+      expect(endBtn).toBeDefined();
+      expect((endBtn as HTMLButtonElement).disabled).toBe(true);
+    });
+
+    it('should select a row when clicked', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      // Click the first data row
+      const rows = container.querySelectorAll('tbody tr');
+      expect(rows.length).toBeGreaterThan(0);
+      fireEvent.click(rows[0]);
+
+      // Row should have selection styling
+      expect(rows[0].getAttribute('data-selected')).toBe('true');
+    });
+
+    it('should enable End Process when a row is selected', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      const rows = container.querySelectorAll('tbody tr');
+      fireEvent.click(rows[0]);
+
+      const endBtn = screen.getByText('End Process').closest('button');
+      expect(endBtn).toBeDefined();
+      expect((endBtn as HTMLButtonElement).disabled).toBe(false);
+    });
+
+    it('should show XP warning dialog when End Process is clicked on selected row', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      // Select a row
+      const rows = container.querySelectorAll('tbody tr');
+      fireEvent.click(rows[0]);
+
+      // Click End Process
+      const endBtn = screen.getByText('End Process');
+      fireEvent.click(endBtn);
+
+      // Warning dialog should appear with process name
+      expect(screen.getByText('Task Manager Warning')).toBeDefined();
+      // python.exe appears both in the table and in the dialog text
+      const processMatches = screen.getAllByText(/python.exe/);
+      expect(processMatches.length).toBe(2); // table cell + dialog message
+    });
+
+    it('should dismiss warning dialog on OK click', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      const rows = container.querySelectorAll('tbody tr');
+      fireEvent.click(rows[0]);
+
+      fireEvent.click(screen.getByText('End Process'));
+
+      // Click OK to dismiss
+      const okBtn = screen.getByText('OK');
+      fireEvent.click(okBtn);
+
+      // Dialog should be gone
+      expect(screen.queryByText('Task Manager Warning')).toBeNull();
+    });
+
+    it('should dismiss warning dialog on Cancel click', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('taskmanager');
+
+      const { container } = render(<TaskManager windowId="taskmanager" />);
+
+      const rows = container.querySelectorAll('tbody tr');
+      fireEvent.click(rows[0]);
+
+      fireEvent.click(screen.getByText('End Process'));
+
+      const cancelBtn = screen.getByText('Cancel');
+      fireEvent.click(cancelBtn);
+
+      expect(screen.queryByText('Task Manager Warning')).toBeNull();
     });
   });
 });
