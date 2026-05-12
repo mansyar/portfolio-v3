@@ -36,15 +36,15 @@
 
 ---
 
-## Phase 3: Performance Tab with Canvas Graphs
+## Phase 3: Performance Tab with Canvas Graphs [checkpoint: 510e12a]
 
 - [x] Task 3.1: Create Canvas line graph component (`636f7e6`)
   - [x] Write tests: Canvas renders green line (#00ff00) on black background, shows grid lines, has correct dimensions
   - [x] Implement CanvasGraph: 60-point rolling buffer, green polyline, XP-style grid, Y-axis labels
 - [x] Task 3.2: Wire Performance tab with 1s data updates (`2682a59`)
   - [x] Write tests: graphs receive data at 1s interval, maintain 60-point buffer, scroll left on new point
-  - [x] Implement data generator: CPU graph base = average of all 8 process CPU values (9.5%); Memory graph base = overall memory percentage (computed as sum(mem_values) / (256000 _ 8) _ 100); both fluctuate ±2% every 1s; animation loop uses requestAnimationFrame + 1s throttle for efficient canvas redraw
-- [~] Task: Conductor - User Manual Verification 'Phase 3 — Performance Tab' (Protocol in workflow.md)
+  - [x] Implement data generator: CPU graph base = average of all 8 process CPU values (9.5%); Memory graph base = overall memory percentage (computed as sum(mem*values) / (256000 * 8) \_ 100); both fluctuate ±2% every 1s; animation loop uses requestAnimationFrame + 1s throttle for efficient canvas redraw
+- [x] Task: Conductor - User Manual Verification 'Phase 3 — Performance Tab' (Protocol in workflow.md)
 
 ---
 
