@@ -15,9 +15,9 @@ import {
 import { WindowFrame } from './WindowFrame';
 import type { WindowId } from '@/stores/windows';
 import type { MouseEvent } from 'react';
+import { Explorer } from '@/components/apps/Explorer';
 
 const PLACEHOLDER_CONTENT: Record<string, string> = {
-  explorer: 'My Computer — Coming Soon in Track 2A',
   mydocs: 'My Documents — Coming Soon in Track 2B',
   help: 'Help & Support — Coming Soon in Track 2C',
   cmd: 'Command Prompt — Coming Soon in Track 2D',
@@ -74,24 +74,39 @@ export function WindowLayer() {
             }
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '100%',
-              color: '#666',
-              fontFamily: '"Tahoma", sans-serif',
-              fontSize: 12,
-              userSelect: 'none',
-            }}
-          >
-            {PLACEHOLDER_CONTENT[state.id] || `Window — ${state.title}`}
-          </div>
+          {renderContent(state.id as WindowId)}
         </WindowFrame>
       ))}
     </>
   );
+}
+
+function renderContent(id: WindowId) {
+  if (id === 'explorer') {
+    return <Explorer windowId={id} />;
+  }
+
+  const placeholder = PLACEHOLDER_CONTENT[id];
+  if (placeholder) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+          color: '#666',
+          fontFamily: '"Tahoma", sans-serif',
+          fontSize: 12,
+          userSelect: 'none',
+        }}
+      >
+        {placeholder}
+      </div>
+    );
+  }
+
+  return null;
 }
 
 function startDrag(e: MouseEvent, id: WindowId) {

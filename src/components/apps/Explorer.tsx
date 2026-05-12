@@ -6,6 +6,7 @@ import { getParent, splitPath } from '@/lib/filesystem';
 import { ExplorerToolbar } from './ExplorerToolbar';
 import { ExplorerBreadcrumb } from './ExplorerBreadcrumb';
 import { ExplorerFileList } from './ExplorerFileList';
+import { ExplorerDetailPane } from './ExplorerDetailPane';
 
 interface ExplorerProps {
   windowId: WindowId;
@@ -16,7 +17,6 @@ export function Explorer({ windowId }: ExplorerProps) {
   const windowState = windows[windowId];
   const currentPath = windowState?.explorerPath ?? '\\';
 
-  // History stack for the Back button
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
@@ -27,18 +27,17 @@ export function Explorer({ windowId }: ExplorerProps) {
 
   const navigateTo = useCallback(
     (path: string) => {
-      const windows = $windows.get();
-      const state = windows[windowId];
+      const windowsSnapshot = $windows.get();
+      const state = windowsSnapshot[windowId];
       if (!state) return;
 
-      // Add current path to history before navigating
       const newHistory = history.slice(0, historyIndex + 1);
       newHistory.push(currentPath);
       setHistory(newHistory);
       setHistoryIndex(newHistory.length - 1);
 
       const updated = { ...state, explorerPath: path };
-      $windows.set({ ...windows, [windowId]: updated });
+      $windows.set({ ...windowsSnapshot, [windowId]: updated });
       setSelectedSlug(null);
     },
     [windowId, currentPath, history, historyIndex],
@@ -50,12 +49,12 @@ export function Explorer({ windowId }: ExplorerProps) {
     const targetPath = history[newIndex];
     setHistoryIndex(newIndex);
 
-    const windows = $windows.get();
-    const state = windows[windowId];
+    const windowsSnapshot = $windows.get();
+    const state = windowsSnapshot[windowId];
     if (!state) return;
 
     const updated = { ...state, explorerPath: targetPath };
-    $windows.set({ ...windows, [windowId]: updated });
+    $windows.set({ ...windowsSnapshot, [windowId]: updated });
     setSelectedSlug(null);
   }, [windowId, history, historyIndex]);
 
@@ -66,7 +65,7 @@ export function Explorer({ windowId }: ExplorerProps) {
 
   const handleBreadcrumb = useCallback(
     (index: number) => {
-      if (index === segments.length - 1) return; // already at this level
+      if (index === segments.length - 1) return;
       const targetSegments = segments.slice(0, index + 1);
       const targetPath = targetSegments.join('\\') + '\\';
       navigateTo(targetPath);
@@ -77,6 +76,13 @@ export function Explorer({ windowId }: ExplorerProps) {
   const handleFileClick = useCallback((slug: string) => {
     setSelectedSlug(slug);
   }, []);
+
+  const handleFolderNavigate = useCallback(
+    (folderPath: string) => {
+      navigateTo(folderPath);
+    },
+    [navigateTo],
+  );
 
   return (
     <div className="xp-explorer">
@@ -90,11 +96,19 @@ export function Explorer({ windowId }: ExplorerProps) {
         <ExplorerBreadcrumb segments={segments} onNavigate={handleBreadcrumb} />
       </div>
       <div className="xp-explorer-content">
-        <ExplorerFileList
-          path={currentPath}
-          onFileClick={handleFileClick}
-          selectedSlug={selectedSlug}
-        />
+        <div className="xp-explorer-list-pane">
+          <ExplorerFileList
+            path={currentPath}
+            onFileClick={handleFileClick}
+            onFolderNavigate={handleFolderNavigate}
+            selectedSlug={selectedSlug}
+          />
+        </div>
+        {selectedSlug && (
+          <div className="xp-explorer-detail-pane">
+            <ExplorerDetailPane slug={selectedSlug} />
+          </div>
+        )}
       </div>
     </div>
   );

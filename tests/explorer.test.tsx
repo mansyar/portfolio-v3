@@ -16,6 +16,7 @@ let ExplorerBreadcrumb: ComponentType<{
 let ExplorerFileList: ComponentType<{
   path: string;
   onFileClick: (slug: string) => void;
+  onFolderNavigate: (path: string) => void;
   selectedSlug: string | null;
 }>;
 
@@ -112,7 +113,14 @@ describe('ExplorerBreadcrumb', () => {
 
 describe('ExplorerFileList', () => {
   it('should show drive icons at root path', () => {
-    render(<ExplorerFileList path="\\" onFileClick={() => {}} selectedSlug={null} />);
+    render(
+      <ExplorerFileList
+        path="\\"
+        onFileClick={() => {}}
+        onFolderNavigate={() => {}}
+        selectedSlug={null}
+      />,
+    );
     // At root, we expect drive names
     expect(screen.getByText('C:')).toBeInTheDocument();
     expect(screen.getByText('D:')).toBeInTheDocument();
@@ -126,6 +134,7 @@ describe('ExplorerFileList', () => {
       <ExplorerFileList
         path="C:\\Software_Engineering"
         onFileClick={() => {}}
+        onFolderNavigate={() => {}}
         selectedSlug={null}
       />,
     );
@@ -134,7 +143,14 @@ describe('ExplorerFileList', () => {
   });
 
   it('should show empty state for empty directory', () => {
-    render(<ExplorerFileList path="Z:\\" onFileClick={() => {}} selectedSlug={null} />);
+    render(
+      <ExplorerFileList
+        path="Z:\\"
+        onFileClick={() => {}}
+        onFolderNavigate={() => {}}
+        selectedSlug={null}
+      />,
+    );
     expect(screen.getByText('This folder is empty.')).toBeInTheDocument();
   });
 });

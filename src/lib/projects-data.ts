@@ -1,0 +1,86 @@
+/**
+ * Static project metadata extracted from MDX frontmatter.
+ * Used by the Explorer detail pane at runtime — avoids importing MDX.
+ */
+
+export interface ProjectMetadata {
+  title: string;
+  description: string;
+  repoUrl: string;
+  language: string;
+  techStack: string[];
+  stars: number;
+  lastCommit: string;
+  status: string;
+}
+
+export interface DevopsAcademyMetadata {
+  title: string;
+  description: string;
+  category: string;
+  order: number;
+  lastUpdated: string;
+}
+
+export const PROJECTS_METADATA: Record<string, ProjectMetadata> = {
+  'icarus-server-manager': {
+    title: 'Icarus Server Manager',
+    description:
+      'A lightweight, self-hosted server management dashboard for monitoring system metrics, managing Docker containers, and orchestrating deployments via a clean web UI.',
+    repoUrl: 'https://github.com/ansyarr/icarus-server-manager',
+    language: 'TypeScript',
+    techStack: ['Node.js', 'Express', 'PostgreSQL', 'Docker', 'Redis'],
+    stars: 142,
+    lastCommit: '2026-04-15',
+    status: 'active',
+  },
+  'chasing-chapters': {
+    title: 'Chasing Chapters',
+    description:
+      'A community-driven book discovery and reading tracker app with personalized recommendations, reading streaks, and social features for book enthusiasts.',
+    repoUrl: 'https://github.com/ansyarr/chasing-chapters',
+    language: 'Python',
+    techStack: ['Python', 'Django', 'PostgreSQL', 'Elasticsearch', 'Redis', 'Celery'],
+    stars: 89,
+    lastCommit: '2026-03-28',
+    status: 'active',
+  },
+  'tubular-bexus-osw': {
+    title: 'Tubular Bexus OSW',
+    description:
+      'An experimental real-time data pipeline framework for streaming ETL transformations, built with a custom actor model for fault-tolerant, low-latency data processing.',
+    repoUrl: 'https://github.com/ansyarr/tubular-bexus-osw',
+    language: 'Rust',
+    techStack: ['Rust', 'Apache Kafka', 'Arrow', 'Tokio', 'gRPC'],
+    stars: 67,
+    lastCommit: '2026-04-10',
+    status: 'active',
+  },
+};
+
+export const DEVOPS_METADATA: Record<string, DevopsAcademyMetadata> = {
+  'docker-basics': {
+    title: 'Docker Basics',
+    description:
+      'Learn the fundamentals of Docker — containers, images, Dockerfiles, and basic CLI commands.',
+    category: 'Docker',
+    order: 1,
+    lastUpdated: '2026-04-01',
+  },
+  'linux-essentials': {
+    title: 'Linux Essentials',
+    description:
+      'Essential Linux commands and system administration concepts for DevOps engineers.',
+    category: 'Linux',
+    order: 1,
+    lastUpdated: '2026-03-15',
+  },
+  'ci-cd-pipeline': {
+    title: 'CI/CD Pipeline',
+    description:
+      'A practical guide to setting up continuous integration and deployment pipelines using GitHub Actions.',
+    category: 'CI/CD',
+    order: 1,
+    lastUpdated: '2026-04-05',
+  },
+};

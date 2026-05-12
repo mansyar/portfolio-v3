@@ -4,10 +4,16 @@ import type { FSNode } from '@/lib/constants';
 interface ExplorerFileListProps {
   path: string;
   onFileClick: (slug: string) => void;
+  onFolderNavigate: (path: string) => void;
   selectedSlug: string | null;
 }
 
-export function ExplorerFileList({ path, onFileClick, selectedSlug }: ExplorerFileListProps) {
+export function ExplorerFileList({
+  path,
+  onFileClick,
+  onFolderNavigate,
+  selectedSlug,
+}: ExplorerFileListProps) {
   const children = getChildren(path);
 
   if (children.length === 0) {
@@ -18,6 +24,8 @@ export function ExplorerFileList({ path, onFileClick, selectedSlug }: ExplorerFi
       </div>
     );
   }
+
+  const normalizedPath = path.endsWith('\\') ? path : path + '\\';
 
   return (
     <div className="xp-file-list" role="list" aria-label="File list">
@@ -46,8 +54,10 @@ export function ExplorerFileList({ path, onFileClick, selectedSlug }: ExplorerFi
             <FileListItem
               key={node.name}
               node={node}
-              isSelected={node.type === 'file' && (node as { slug: string }).slug === selectedSlug}
+              parentPath={normalizedPath}
+              isSelected={node.type === 'file' && (node as { slug?: string }).slug === selectedSlug}
               onFileClick={onFileClick}
+              onFolderNavigate={onFolderNavigate}
             />
           ))}
         </tbody>
@@ -58,18 +68,25 @@ export function ExplorerFileList({ path, onFileClick, selectedSlug }: ExplorerFi
 
 function FileListItem({
   node,
+  parentPath,
   isSelected,
   onFileClick,
+  onFolderNavigate,
 }: {
   node: FSNode;
+  parentPath: string;
   isSelected: boolean;
   onFileClick: (slug: string) => void;
+  onFolderNavigate: (path: string) => void;
 }) {
   const isFile = node.type === 'file';
+  const icon = isFile ? '/icons/file.svg' : '/icons/folder.svg';
 
   const handleClick = () => {
     if (isFile) {
       onFileClick((node as { slug: string }).slug);
+    } else {
+      onFolderNavigate(parentPath + node.name);
     }
   };
 
@@ -81,20 +98,12 @@ function FileListItem({
       aria-selected={isSelected}
     >
       <td className="xp-col-icon">
-        <img
-          src={isFile && node.type === 'file' ? '/icons/file.svg' : '/icons/folder.svg'}
-          alt=""
-          width={16}
-          height={16}
-          className="xp-file-icon"
-        />
+        <img src={icon} alt="" width={16} height={16} className="xp-file-icon" />
       </td>
       <td className="xp-col-name">
         <span className="xp-file-name">{node.name}</span>
       </td>
-      <td className="xp-col-size">
-        {isFile && node.type === 'file' ? ((node as { size?: string }).size ?? '—') : ''}
-      </td>
+      <td className="xp-col-size">{isFile ? ((node as { size?: string }).size ?? '—') : ''}</td>
       <td className="xp-col-type">
         {node.type === 'drive' ? 'Local Disk' : node.type === 'folder' ? 'File Folder' : 'MDX File'}
       </td>
