@@ -1,0 +1,40 @@
+---
+title: Chasing Chapters
+slug: chasing-chapters
+drive: C
+description: A community-driven book discovery and reading tracker app with personalized recommendations, reading streaks, and social features for book enthusiasts.
+repoUrl: https://github.com/ansyarr/chasing-chapters
+language: Python
+techStack:
+  - Python
+  - Django
+  - PostgreSQL
+  - Elasticsearch
+  - Redis
+  - Celery
+stars: 89
+lastCommit: '2026-03-28'
+commits: 256
+status: active
+icon: book
+---
+
+## Chasing Chapters
+
+A community-driven book discovery platform that combines personal reading tracking with social discovery features. Users can log books, track reading progress, join book clubs, and receive personalized recommendations.
+
+### Key Features
+
+- **Reading Tracker**: Log books, track pages/chapters, maintain reading streaks
+- **Smart Recommendations**: ML-powered suggestions based on reading history and preferences
+- **Book Clubs**: Create or join reading groups with shared bookshelves and discussion forums
+- **Social Feed**: Share reviews, ratings, and reading milestones with followers
+- **Advanced Search**: Elasticsearch-powered full-text search across millions of books
+
+### Tech Stack
+
+Python/Django backend with PostgreSQL as the primary database and Elasticsearch for full-text search capabilities. Redis serves as both a cache and message broker for Celery task queues.
+
+### Architecture
+
+The application uses a service-oriented architecture within Django, with separate apps for books, users, social features, and recommendations. Celery handles async tasks like recommendation generation and email notifications.

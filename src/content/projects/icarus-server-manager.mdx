@@ -1,0 +1,39 @@
+---
+title: Icarus Server Manager
+slug: icarus-server-manager
+drive: C
+description: A lightweight, self-hosted server management dashboard for monitoring system metrics, managing Docker containers, and orchestrating deployments via a clean web UI.
+repoUrl: https://github.com/ansyarr/icarus-server-manager
+language: TypeScript
+techStack:
+  - Node.js
+  - Express
+  - PostgreSQL
+  - Docker
+  - Redis
+stars: 142
+lastCommit: '2026-04-15'
+commits: 384
+status: active
+icon: server
+---
+
+## Icarus Server Manager
+
+A lightweight, self-hosted server management dashboard that brings together system monitoring, Docker container management, and deployment orchestration in a clean, accessible web interface.
+
+### Key Features
+
+- **Real-time Monitoring**: Live system metrics (CPU, memory, disk, network) with historical graphing
+- **Docker Management**: Start, stop, restart, and view logs for containers directly from the dashboard
+- **Deployment Orchestration**: One-click deployment from GitHub webhooks with rollback support
+- **User Management**: Role-based access control for team environments
+- **Alert System**: Configurable thresholds with email and webhook notifications
+
+### Tech Stack
+
+Built with TypeScript across the stack — Node.js/Express backend, PostgreSQL for metrics storage, Redis for caching and real-time pub/sub, and Docker for containerized deployment.
+
+### Architecture
+
+The application follows a modular monolith pattern, with clear separation between the API layer, service layer, and data access layer. WebSocket connections provide real-time metric streaming to the dashboard frontend.

@@ -1,0 +1,56 @@
+---
+title: CI/CD Pipeline
+slug: ci-cd-pipeline
+category: CI/CD
+order: 1
+description: A practical guide to setting up continuous integration and deployment pipelines using GitHub Actions, with testing, building, and deployment stages.
+lastUpdated: '2026-04-05'
+---
+
+## CI/CD Pipeline
+
+Continuous Integration and Continuous Deployment (CI/CD) automates the process of testing, building, and deploying applications. This guide walks through setting up a robust pipeline using GitHub Actions.
+
+### Pipeline Stages
+
+A typical CI/CD pipeline consists of:
+
+1. **Source**: Triggered by code push or pull request
+2. **Build**: Compile code and create artifacts
+3. **Test**: Run unit, integration, and linting checks
+4. **Deploy**: Push artifacts to staging/production
+
+### GitHub Actions Example
+
+```yaml
+name: CI/CD Pipeline
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: npm test
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        run: echo "Deploying..."
+```
+
+### Best Practices
+
+- **Fast Feedback**: Keep build times under 10 minutes
+- **Idempotent Builds**: Same commit → same artifact every time
+- **Secret Management**: Use repository secrets, never hardcode credentials
+- **Environment Parity**: Dev, staging, and production environments should match
+- **Rollback Strategy**: Always have a plan to revert a deployment

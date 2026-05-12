@@ -1,0 +1,39 @@
+---
+title: Tubular Bexus OSW
+slug: tubular-bexus-osw
+drive: D
+description: An experimental real-time data pipeline framework for streaming ETL transformations, built with a custom actor model for fault-tolerant, low-latency data processing.
+repoUrl: https://github.com/ansyarr/tubular-bexus-osw
+language: Rust
+techStack:
+  - Rust
+  - Apache Kafka
+  - Arrow
+  - Tokio
+  - gRPC
+stars: 67
+lastCommit: '2026-04-10'
+commits: 192
+status: active
+icon: pipeline
+---
+
+## Tubular Bexus OSW
+
+An experimental real-time data pipeline framework that implements a custom actor model for streaming ETL transformations. Built for fault-tolerant, low-latency data processing at scale.
+
+### Key Features
+
+- **Actor Model**: Lightweight actors with message-passing for parallel data processing
+- **Streaming ETL**: Real-time transformation pipelines with exactly-once semantics
+- **Schema Evolution**: Arrow-based schema management with automatic migration
+- **Fault Tolerance**: Supervised actor trees with automatic recovery
+- **gRPC API**: High-performance bidirectional streaming for data ingestion and retrieval
+
+### Tech Stack
+
+Written entirely in Rust, leveraging Tokio for async runtime, Apache Kafka for stream ingestion, Arrow for columnar data processing, and gRPC for inter-service communication.
+
+### Architecture
+
+Each pipeline stage runs as a supervised actor within a Tokio task. Data flows through a directed acyclic graph of transformation stages, with backpressure handling at every level. Checkpointing to Kafka ensures exactly-once processing guarantees.

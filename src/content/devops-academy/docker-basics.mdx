@@ -1,0 +1,35 @@
+---
+title: Docker Basics
+slug: docker-basics
+category: Docker
+order: 1
+description: Learn the fundamentals of Docker — containers, images, Dockerfiles, and basic CLI commands to get started with containerization.
+lastUpdated: '2026-04-01'
+---
+
+## Docker Basics
+
+Docker is a platform for developing, shipping, and running applications inside lightweight, portable containers. This article covers the basics you need to get started.
+
+### What are Containers?
+
+Containers are lightweight, standalone packages that include everything needed to run a piece of software — code, runtime, system tools, libraries, and settings. Unlike virtual machines, containers share the host operating system kernel.
+
+### Key Concepts
+
+- **Images**: Read-only templates used to create containers
+- **Containers**: Runnable instances of images
+- **Dockerfile**: A text file with instructions to build an image
+- **Registry**: A repository for storing and sharing images (e.g., Docker Hub)
+- **Volumes**: Persistent storage for container data
+
+### Basic Commands
+
+```
+docker pull nginx          # Download an image
+docker build -t my-app .   # Build an image from a Dockerfile
+docker run -d -p 80:80 nginx  # Run a container
+docker ps                   # List running containers
+docker stop <container_id>  # Stop a container
+docker logs <container_id>  # View container logs
+```

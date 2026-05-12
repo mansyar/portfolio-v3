@@ -1,0 +1,49 @@
+---
+title: Linux Essentials
+slug: linux-essentials
+category: Linux
+order: 1
+description: Essential Linux commands and system administration concepts for DevOps engineers — file management, processes, permissions, and networking.
+lastUpdated: '2026-03-15'
+---
+
+## Linux Essentials
+
+Linux proficiency is a core skill for any DevOps engineer. This guide covers the essential commands and concepts you need to navigate and manage Linux systems effectively.
+
+### File System Navigation
+
+```
+ls -la           # List files with details
+cd /path/to/dir  # Change directory
+pwd              # Print working directory
+find / -name "*.log"  # Search for files
+du -sh *         # Check directory sizes
+```
+
+### Process Management
+
+```
+ps aux           # List all running processes
+top              # Real-time process monitoring
+kill -9 <PID>    # Force kill a process
+systemctl start <service>  # Manage systemd services
+journalctl -u <service>    # View service logs
+```
+
+### Permissions
+
+```
+chmod 755 file   # Set file permissions
+chown user:group file  # Change file owner
+umask            # View/set default permissions
+```
+
+### Networking
+
+```
+ss -tulpn        # List listening ports
+curl -v http://example.com  # HTTP requests
+ping <host>      # Test connectivity
+traceroute <host>  # Trace network path
+```
