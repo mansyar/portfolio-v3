@@ -18,5 +18,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Task Manager (Track 2C)**
-  _Link: [./tracks/task-manager_20260512/](./tracks/task-manager_20260512/)_
+- [x] **Track: Task Manager (Track 2C)**
+      _Link: [./tracks/task-manager_20260512/](./tracks/task-manager_20260512/)_
