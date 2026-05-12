@@ -70,8 +70,7 @@ export function parseCommand(input: string): { command: string; args: string[] }
   return { command, args };
 }
 
-// ── Placeholder Handlers ────────────────────────────────────────────
-// Full implementations are added in Tasks 1.3–1.8.
+// ── Command Handlers ────────────────────────────────────────────────
 
 const handlerHelp: CommandHandler = () => {
   const lines = Object.entries(COMMANDS)

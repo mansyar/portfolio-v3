@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, type KeyboardEvent } from 'react';
 import { useStore } from '@/lib/useStore';
-import { $windows, $activeWindow, focusWindow } from '@/stores/windows';
+import { $windows, $activeWindow, focusWindow, openWindow } from '@/stores/windows';
 import { COMMAND_REGISTRY, parseCommand } from '@/lib/commands';
 import type { WindowId } from '@/stores/windows';
 import type { CmdOutput } from '@/lib/commands';
@@ -124,13 +124,15 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         }
       }
 
-      // Handle openExplorer - navigate Explorer to path
+      // Handle openExplorer - open Explorer and navigate to the path
       if (result.openExplorer) {
-        window.dispatchEvent(
-          new CustomEvent('luna:navigate-command', {
-            detail: { path: result.openExplorer },
-          }),
-        );
+        openWindow('explorer');
+        const current = $windows.get();
+        const explorer = current.explorer;
+        if (explorer) {
+          const updated = { ...explorer, explorerPath: result.openExplorer };
+          $windows.set({ ...current, explorer: updated });
+        }
       }
 
       // Handle openUrl - open in new tab
