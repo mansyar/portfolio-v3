@@ -238,31 +238,20 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
     <div
       role="terminal"
       aria-label="Command Prompt"
+      ref={outputRef}
       style={{
         backgroundColor: '#000000',
         color: '#00aa00',
         fontFamily: '"Courier New", Consolas, monospace',
         fontSize: 13,
         height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
         overflow: 'auto',
         padding: '4px 0 4px 6px',
       }}
       onClick={() => hiddenInputRef.current?.focus()}
     >
-      {/* Output area */}
-      <div
-        ref={outputRef}
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          overflowX: 'clip',
-          whiteSpace: 'pre',
-          lineHeight: '1.3',
-          minWidth: 'max-content',
-        }}
-      >
+      {/* Output content — flows naturally, outer wrapper handles scrollbars */}
+      <div style={{ minWidth: 'max-content', whiteSpace: 'pre', lineHeight: '1.3' }}>
         {outputLines.map((item, i) => {
           if (Array.isArray(item)) {
             return formatOutput(item, `block-${i}`);
@@ -275,15 +264,16 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         })}
       </div>
 
-      {/* Input line — uses a visually hidden input for keystrokes,
-          with a visible text + blinking cursor overlay */}
+      {/* Input line — sticky at bottom, always visible when scrolling vertically */}
       <div
         style={{
+          position: 'sticky',
+          bottom: 0,
           display: 'flex',
           alignItems: 'center',
-          position: 'relative',
           minHeight: 19,
           paddingRight: 6,
+          backgroundColor: '#000000',
         }}
       >
         <span style={{ whiteSpace: 'pre', flexShrink: 0 }}>{prompt}</span>
