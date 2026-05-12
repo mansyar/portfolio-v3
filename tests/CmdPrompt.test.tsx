@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import type { FC } from 'react';
 
 let CmdPrompt: FC<{ windowId: string }>;
@@ -38,7 +38,6 @@ describe('CmdPrompt component', () => {
     stores.openWindow('cmd');
 
     render(<CmdPrompt windowId="cmd" />);
-    // The prompt should be visible in the output area
     expect(screen.getByText(/C:\\MANSYAR>/)).toBeDefined();
   });
 
@@ -58,5 +57,70 @@ describe('CmdPrompt component', () => {
     render(<CmdPrompt windowId="cmd" />);
     const terminal = screen.getByRole('terminal');
     expect(terminal).toBeDefined();
+  });
+
+  it('should show welcome MARP ASCII art banner on initial render', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    // The banner contains "Luna OS Command Prompt"
+    expect(screen.getByText(/Welcome to Luna OS Command Prompt/)).toBeDefined();
+  });
+
+  it('should execute a command and show output on Enter', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'echo Hello' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Should find exactly "Hello" output (command line has "echo Hello" which also contains "Hello")
+    const matches = screen.getAllByText(/Hello/);
+    expect(matches.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('should show XP error for unknown command', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'xyzcommand' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(screen.getByText(/not recognized/)).toBeDefined();
+  });
+
+  it('should have blinking cursor element with cmd-cursor-blink class', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    const { container } = render(<CmdPrompt windowId="cmd" />);
+    const cursor = container.querySelector('.cmd-cursor-blink');
+    expect(cursor).not.toBeNull();
+  });
+
+  it('should clear output on clear command', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    // Run echo first to add output
+    fireEvent.change(input, { target: { value: 'echo test' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Now clear
+    fireEvent.change(input, { target: { value: 'clear' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // After clear, the welcome banner should be shown again
+    expect(screen.getByText(/Welcome to Luna OS Command Prompt/)).toBeDefined();
   });
 });

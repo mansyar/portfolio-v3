@@ -138,6 +138,17 @@
   100% { background-position: -200% 0; }
 }
 
+/* === CMD Prompt Cursor Blink === */
+
+@keyframes cmdCursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cmd-cursor-blink {
+  animation: cmdCursorBlink 1s step-end infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .window-open,
   .window-closing,
@@ -149,5 +160,9 @@
   }
   .xp-window-border {
     transition: none !important;
+  }
+  .cmd-cursor-blink {
+    animation: none !important;
+    opacity: 1;
   }
 }

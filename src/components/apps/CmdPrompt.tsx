@@ -209,9 +209,19 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         })}
       </div>
 
-      {/* Input line */}
+      {/* Input line with blinking block cursor */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <span style={{ whiteSpace: 'pre' }}>{prompt}</span>
+        <span
+          className="cmd-cursor-blink"
+          style={{
+            display: 'inline-block',
+            width: 8,
+            height: 15,
+            backgroundColor: '#00aa00',
+            marginRight: 2,
+          }}
+        />
         <input
           ref={inputRef}
           type="text"
@@ -231,7 +241,7 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
             fontSize: 13,
             outline: 'none',
             flex: 1,
-            caretColor: '#00aa00',
+            caretColor: 'transparent',
           }}
         />
       </div>

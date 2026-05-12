@@ -38,9 +38,13 @@
 
 ## Phase 2: Terminal UI Component & Integration
 
-- [~] Task 2.1: Create `CmdPrompt.tsx` — terminal shell component
-  - [ ] Write tests: CmdPrompt renders with black background, green #00aa00 text, C:\MANSYAR> prompt visible
-  - [ ] Implement CmdPrompt: black div, scrollable output area, input at bottom, XP-style console font styling
+- [x] Task 2.1: Create `CmdPrompt.tsx` — terminal shell component `055a914`
+  - [x] Write tests: CmdPrompt renders with black background, green #00aa00 text, C:\MANSYAR> prompt visible
+  - [x] Implement CmdPrompt: black div, scrollable output area, input at bottom, XP-style console font styling
+- [~] Task 2.2: Wire command execution + output rendering
+- [~] Task 2.3: Add MARP ASCII art welcome banner
+- [~] Task 2.4: Implement command history (↑/↓ arrow keys)
+- [~] Task 2.5: Implement blinking cursor and auto-scroll
 - [ ] Task 2.2: Wire command execution + output rendering
   - [ ] Write tests: pressing Enter calls parseCommand, output lines rendered below prompt, chained commands work
   - [ ] Wire onKeyDown handler → parseCommand → render output lines as styled div sequence

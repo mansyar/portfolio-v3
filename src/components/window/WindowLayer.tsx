@@ -16,11 +16,11 @@ import { WindowFrame } from './WindowFrame';
 import type { WindowId } from '@/stores/windows';
 import type { MouseEvent } from 'react';
 import { Explorer } from '@/components/apps/Explorer';
+import { CmdPrompt } from '@/components/apps/CmdPrompt';
 
 const PLACEHOLDER_CONTENT: Record<string, string> = {
   mydocs: 'My Documents — Coming Soon in Track 2B',
   help: 'Help & Support — Coming Soon in Track 2C',
-  cmd: 'Command Prompt — Track 2B',
   taskmanager: 'Task Manager — Coming Soon in Track 2E',
   recyclebin: 'Recycle Bin — Coming Soon in Track 2F',
 };
@@ -84,6 +84,10 @@ export function WindowLayer() {
 function renderContent(id: WindowId) {
   if (id === 'explorer') {
     return <Explorer windowId={id} />;
+  }
+
+  if (id === 'cmd') {
+    return <CmdPrompt windowId={id} />;
   }
 
   const placeholder = PLACEHOLDER_CONTENT[id];
