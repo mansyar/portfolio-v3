@@ -375,16 +375,24 @@ export function TaskManager({ windowId }: TaskManagerProps) {
 
               {/* Dialog Body */}
               <div style={{ padding: 12, display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                <div
-                  style={{
-                    fontSize: 24,
-                    color: '#FF8800',
-                    flexShrink: 0,
-                    width: 24,
-                    textAlign: 'center',
-                  }}
-                >
-                  !
+                <div style={{ flexShrink: 0, width: 32, height: 32 }}>
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="15"
+                      fill="#FFE000"
+                      stroke="#C8A000"
+                      strokeWidth="1.5"
+                    />
+                    <rect x="14.5" y="8" width="3" height="12" rx="1" fill="#000000" />
+                    <circle cx="16" cy="23" r="1.5" fill="#000000" />
+                  </svg>
                 </div>
                 <div>
                   WARNING: Terminating the process &apos;{warningProcess.imageName}&apos; can cause
