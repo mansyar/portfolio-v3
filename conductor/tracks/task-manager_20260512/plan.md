@@ -23,9 +23,9 @@
 
 ## Phase 2: Processes Tab with CPU Animation
 
-- [ ] Task 2.1: Implement process data and table rendering
-  - [ ] Write tests: process table renders 8 entries with all 5 columns (Image Name, PID, CPU, Mem, Description)
-  - [ ] Create process data constant and table component with XP detail-view styling
+- [x] Task 2.1: Implement process data and table rendering (`de213bb`)
+  - [x] Write tests: process table renders 8 entries with all 5 columns (Image Name, PID, CPU, Mem, Description)
+  - [x] Create process data constant and table component with XP detail-view styling
 - [ ] Task 2.2: Animate CPU percentages with random fluctuation
   - [ ] Write tests: CPU values fluctuate within ±3% range every 1s, never go below 0% or above 100%
   - [ ] Implement setInterval-based CPU update: store a ref array of CPU cell DOM elements, update their textContent directly in the interval callback to avoid full table re-renders; clean up interval on unmount
