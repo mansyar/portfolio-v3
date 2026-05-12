@@ -10,3 +10,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Start Menu track archived to conductor/archive/start_menu_20260512/ -->
 
 <!-- Explorer + Content track archived to conductor/archive/explorer-content_20260512/ -->
+
+---
+
+- [ ] **Track: Command Prompt (Track 2B)**
+      _Link: [./tracks/command-prompt_20260512/](./tracks/command-prompt_20260512/)_
