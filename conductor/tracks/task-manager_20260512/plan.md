@@ -17,7 +17,7 @@
 - [x] Task 1.3: Wire TaskManager into WindowLayer (`5fb9ee8`)
   - [x] Write tests: opening `taskmanager` window renders TaskManager component in WindowLayer
   - [x] Replace placeholder text for 'taskmanager' window ID in `WindowLayer.tsx`
-- [ ] Task: Conductor - User Manual Verification 'Phase 1 — Task Manager Shell & Tab System' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 1 — Task Manager Shell & Tab System' (Protocol in workflow.md)
 
 ---
 
