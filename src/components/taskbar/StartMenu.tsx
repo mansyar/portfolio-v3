@@ -4,6 +4,7 @@ import { $startMenuOpen, closeStartMenu, triggerShutdown } from '@/stores/deskto
 import { openWindow } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
 
+// Must match @keyframes startMenuClose duration in global.css (100ms)
 const CLOSE_ANIMATION_MS = 100;
 
 interface MenuItem {
@@ -51,10 +52,11 @@ export function StartMenu() {
     if (isOpen) {
       setIsRendering(true);
       // Use requestAnimationFrame to ensure the DOM is mounted before adding open animation
-      requestAnimationFrame(() => {
+      const rAF = requestAnimationFrame(() => {
         setAnimClass('start-menu-open');
       });
       setActiveIndex(0);
+      return () => cancelAnimationFrame(rAF);
     } else if (isRendering) {
       // Start closing animation
       setAnimClass('start-menu-closing');

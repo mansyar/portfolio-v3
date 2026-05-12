@@ -67,8 +67,9 @@ export function ShutdownOverlay({ onClose }: ShutdownOverlayProps) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: phase === 'shutting-down' ? `rgba(0, 0, 0, ${opacity})` : 'rgb(0, 0, 0)',
-        transition: 'background 0.5s ease',
+        background: '#000000',
+        opacity: phase === 'shutting-down' ? opacity : 1,
+        transition: 'opacity 0.5s ease',
         fontFamily: 'Tahoma, Segoe UI, Arial, sans-serif',
       }}
     >
