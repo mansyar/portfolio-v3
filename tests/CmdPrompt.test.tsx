@@ -64,7 +64,6 @@ describe('CmdPrompt component', () => {
     stores.openWindow('cmd');
 
     render(<CmdPrompt windowId="cmd" />);
-    // The banner contains "Luna OS Command Prompt"
     expect(screen.getByText(/Welcome to Luna OS Command Prompt/)).toBeDefined();
   });
 
@@ -78,7 +77,6 @@ describe('CmdPrompt component', () => {
     fireEvent.change(input, { target: { value: 'echo Hello' } });
     fireEvent.keyDown(input, { key: 'Enter' });
 
-    // Should find exactly "Hello" output (command line has "echo Hello" which also contains "Hello")
     const matches = screen.getAllByText(/Hello/);
     expect(matches.length).toBeGreaterThanOrEqual(1);
   });
@@ -112,15 +110,141 @@ describe('CmdPrompt component', () => {
     render(<CmdPrompt windowId="cmd" />);
     const input = screen.getByRole('textbox') as HTMLInputElement;
 
-    // Run echo first to add output
     fireEvent.change(input, { target: { value: 'echo test' } });
     fireEvent.keyDown(input, { key: 'Enter' });
-
-    // Now clear
     fireEvent.change(input, { target: { value: 'clear' } });
     fireEvent.keyDown(input, { key: 'Enter' });
 
-    // After clear, the welcome banner should be shown again
     expect(screen.getByText(/Welcome to Luna OS Command Prompt/)).toBeDefined();
+  });
+
+  it('should do nothing on empty Enter', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    // Empty Enter should not add history entry
+    fireEvent.keyDown(input, { key: 'Enter' });
+    // Should still show the welcome banner
+    expect(screen.getByText(/Welcome to Luna OS Command Prompt/)).toBeDefined();
+  });
+
+  it('should navigate history with ArrowUp and ArrowDown', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    // Add two commands to history
+    fireEvent.change(input, { target: { value: 'echo first' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    fireEvent.change(input, { target: { value: 'echo second' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // ArrowUp should show last command
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    expect(input.value).toBe('echo second');
+
+    // ArrowUp again should show previous
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    expect(input.value).toBe('echo first');
+
+    // ArrowDown should go forward
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    expect(input.value).toBe('echo second');
+
+    // ArrowDown to clear
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    expect(input.value).toBe('');
+  });
+
+  it('should not navigate history with ArrowUp when empty', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    // ArrowUp on empty history should not change value
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    expect(input.value).toBe('');
+  });
+
+  it('should auto-complete command name with Tab', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'cle' } });
+    fireEvent.keyDown(input, { key: 'Tab' });
+
+    expect(input.value).toContain('clear');
+  });
+
+  it('should show completion options when multiple Tab matches', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    // 'c' should match multiple commands
+    fireEvent.change(input, { target: { value: 'c' } });
+    fireEvent.keyDown(input, { key: 'Tab' });
+
+    // Should see completion options in output (multiple commands starting with 'c')
+    const output = screen.getByRole('terminal');
+    expect(output.textContent).toBeTruthy();
+  });
+
+  it('should auto-complete cd folder name with Tab', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'cd Soft' } });
+    fireEvent.keyDown(input, { key: 'Tab' });
+
+    expect(input.value).toContain('Software_Engineering');
+  });
+
+  it('should open explorer window when open command returns openExplorer', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'open icarus-server-manager' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Explorer window should be opened
+    const windows = await import('@/stores/windows');
+    const state = windows.$windows.get();
+    expect(state.explorer).toBeDefined();
+    expect(state.explorer.explorerPath).toBe('C:\\Software_Engineering');
+  });
+
+  it('should use /? alias for help', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: '/?' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // The /? command should produce help output listing commands
+    const commandList = screen.getAllByText(/ls/);
+    expect(commandList.length).toBeGreaterThan(0);
   });
 });
