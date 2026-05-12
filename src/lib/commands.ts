@@ -6,6 +6,7 @@
  */
 
 import { getChildren, resolvePath, getParent } from '@/lib/filesystem';
+import { PROJECTS_METADATA, DEVOPS_METADATA } from '@/lib/projects-data';
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -172,8 +173,42 @@ const handlerCd: CommandHandler = (args, context) => {
   return { lines: [], newCmdPath: resolvedPath };
 };
 
-const handlerCat: CommandHandler = () => {
-  return { lines: ['(metadata implementation — Task 1.5)'] };
+const handlerCat: CommandHandler = (args) => {
+  if (args.length === 0) {
+    return { lines: ['The system cannot find the file specified.'] };
+  }
+
+  const slug = args[0]!;
+
+  // Check projects metadata first
+  const project = PROJECTS_METADATA[slug];
+  if (project) {
+    const lines = [
+      `Title:       ${project.title}`,
+      `Description: ${project.description}`,
+      `Language:    ${project.language}`,
+      `Tech Stack:  ${project.techStack.join(', ')}`,
+      `Stars:       ${project.stars}`,
+      `Status:      ${project.status}`,
+      `Last Commit: ${project.lastCommit}`,
+      `Repository:  ${project.repoUrl}`,
+    ];
+    return { lines };
+  }
+
+  // Check DevOps academy metadata
+  const devops = DEVOPS_METADATA[slug];
+  if (devops) {
+    const lines = [
+      `Title:       ${devops.title}`,
+      `Description: ${devops.description}`,
+      `Category:    ${devops.category}`,
+      `Last Updated: ${devops.lastUpdated}`,
+    ];
+    return { lines };
+  }
+
+  return { lines: ['The system cannot find the file specified.'] };
 };
 
 const handlerClear: CommandHandler = () => {

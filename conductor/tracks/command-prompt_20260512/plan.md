@@ -20,7 +20,7 @@
 - [x] Task 1.4: Implement `ls`/`dir` and `cd` commands (filesystem navigation) `92cfec8`
   - [x] Write tests: ls lists children, cd navigates (supports .., \, absolute paths), invalid path throws XP error
   - [x] Implement ls/dir (calls getChildren, formats output) and cd (calls resolvePath, reads/updates cmdPath in WindowState)
-- [ ] Task 1.5: Implement `cat`/`type` command (file content display)
+- [~] Task 1.5: Implement `cat`/`type` command (file content display)
   - [ ] Write tests: cat on valid MDX slug shows metadata, cat on missing file shows XP error
   - [ ] Implement cat using PROJECTS_METADATA / DEVOPS_METADATA from src/lib/projects-data.ts
 - [ ] Task 1.6: Implement `clear`/`cls` command

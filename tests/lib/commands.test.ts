@@ -220,6 +220,34 @@ describe('Cd command', () => {
   });
 });
 
+describe('Cat command', () => {
+  it('should show project metadata for valid slug', () => {
+    const output = COMMAND_REGISTRY['cat'](['icarus-server-manager'], { cmdPath: 'C:\\' });
+    expect(output.lines.some((l) => l.includes('Icarus Server Manager'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('TypeScript'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('Node.js'))).toBe(true);
+  });
+
+  it('should show DevOps academy metadata for devops slug', () => {
+    const output = COMMAND_REGISTRY['cat'](['docker-basics'], { cmdPath: 'C:\\' });
+    expect(output.lines.some((l) => l.includes('Docker Basics'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('Docker'))).toBe(true);
+  });
+
+  it('should show XP error for non-existent slug', () => {
+    const output = COMMAND_REGISTRY['cat'](['nonexistent'], { cmdPath: 'C:\\' });
+    expect(output.lines.some((l) => l.includes('The system cannot find the file specified'))).toBe(
+      true,
+    );
+  });
+
+  it('should work via type alias', () => {
+    const catOutput = COMMAND_REGISTRY['type'](['icarus-server-manager'], { cmdPath: 'C:\\' });
+    const typeOutput = COMMAND_REGISTRY['cat'](['icarus-server-manager'], { cmdPath: 'C:\\' });
+    expect(catOutput.lines).toEqual(typeOutput.lines);
+  });
+});
+
 describe('CmdOutput type', () => {
   it('should allow creating an output with lines', () => {
     const output: CmdOutput = { lines: ['Hello', 'World'] };
