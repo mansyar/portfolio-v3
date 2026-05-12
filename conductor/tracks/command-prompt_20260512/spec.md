@@ -38,7 +38,7 @@ A centralized command parser and registry in `src/lib/commands.ts`:
 | `clear`    | `cls`   | Clears the terminal output (re-shows welcome banner)             |
 | `neofetch` | —       | Displays Tux ASCII art + comprehensive system information        |
 | `open`     | —       | Opens a file/app: project slugs → `openWindow()`, .pdf → new tab |
-| `whoami`   | —       | Displays current username (`mansyar`)                            |
+| `whoami`   | —       | Displays current username (`mansyar\administrator`)              |
 | `echo`     | —       | Outputs the provided text (no variable expansion in v1)          |
 
 ### FR3 — Filesystem Navigation (`cd`, `ls`, `cat`)
@@ -79,7 +79,7 @@ Disk:       3 drives (C:, D:, E:)
 
 ### FR6 — `open` Command
 
-- `open icarus-server-manager` → dispatches `new CustomEvent('luna:open-window', { detail: 'explorer' })` to open the Explorer window
+- `open icarus-server-manager` → opens Explorer window AND navigates it to the file's parent folder. Implementation: (1) find the file's slug in `FILE_SYSTEM` tree, (2) resolve its parent directory path (e.g., `C:\Software_Engineering\`), (3) open Explorer via `openWindow('explorer')`, (4) update `explorerPath` in the store to the parent directory
 - `open resume.pdf` → `window.open('/resume.pdf', '_blank')`
 - Unknown slug/file → XP error: `The system cannot find the file specified.`
 
@@ -96,6 +96,8 @@ Disk:       3 drives (C:, D:, E:)
 - `WindowLayer` renders `CmdPrompt` component instead of placeholder text for "cmd" window ID
 - CMD button appears in taskbar when open (inherits existing taskbar behavior from Track 1B)
 - Coexists with other windows (Explorer, Task Manager, etc.)
+- CMD tracks its current working directory via `cmdPath` field in `WindowState` (analogous to Explorer's `explorerPath`)
+- `cmdPath` is initialized to `C:\` when `openWindow('cmd')` is called and updated on every `cd` command
 
 ### FR9 — Welcome Banner
 
@@ -143,9 +145,9 @@ C:\MANSYAR>
 ✅ `cat icarus-server-manager` shows project metadata (title, description, tech stack, repo)
 ✅ `clear`/`cls` clears all output, returns to fresh prompt with welcome banner
 ✅ `neofetch` shows Tux ASCII art + complete system info
-✅ `open icarus-server-manager` opens Explorer window
+✅ `open icarus-server-manager` opens Explorer window navigated to `C:\Software_Engineering\`
 ✅ `open resume.pdf` opens PDF in new tab
-✅ `whoami` displays "mansyar"
+✅ `whoami` displays "mansyar\administrator"
 ✅ `echo Hello World` outputs "Hello World"
 ✅ Unknown command shows XP-style error message
 ✅ ↑/↓ arrow keys cycle through command history

@@ -18,6 +18,8 @@ export interface WindowState {
   status: WindowStatus;
   /** Current directory path for the explorer window */
   explorerPath?: string;
+  /** Current working directory for the command prompt window */
+  cmdPath?: string;
 }
 
 export interface WindowConfig {
@@ -126,6 +128,7 @@ function buildWindowState(id: WindowId, config: WindowConfig, zIndex: number): W
     zIndex,
     status: 'open',
     explorerPath: id === 'explorer' ? 'C:\\' : undefined,
+    cmdPath: id === 'cmd' ? 'C:\\' : undefined,
   };
 }
 

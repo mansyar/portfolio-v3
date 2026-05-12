@@ -8,32 +8,35 @@
 
 ## Phase 1: Command Registry & Parser
 
-- [ ] Task 1.1: Create `src/lib/commands.ts` — command type definitions, registry, and parser function
+- [ ] Task 1.1: Add `cmdPath` to `WindowState` in `src/stores/windows.ts`
+  - [ ] Write tests: cmdPath is set to 'C:\' on openWindow('cmd'), undefined for other windows, updates on cd
+  - [ ] Add `cmdPath?: string` to `WindowState` interface, initialize to `C:\` in `buildWindowState` for 'cmd' window
+- [ ] Task 1.2: Create `src/lib/commands.ts` — command type definitions, registry, and parser function
   - [ ] Write tests for Command enum, CommandHandler type, registry map, and parseCommand() (parses 'cmd arg1 arg2')
   - [ ] Implement Command type (enum or string union), CommandHandler type signature, registry, and parseCommand()
-- [ ] Task 1.2: Implement `help`, `echo`, `whoami` commands
-  - [ ] Write tests: help lists all commands with descriptions, echo outputs text verbatim, whoami shows 'mansyar'
-  - [ ] Implement help (formatted multi-line list), echo (pass-through), whoami (static username)
-- [ ] Task 1.3: Implement `ls`/`dir` and `cd` commands (filesystem navigation)
+- [ ] Task 1.3: Implement `help`, `echo`, `whoami` commands
+  - [ ] Write tests: help lists all commands with descriptions, echo outputs text verbatim, whoami shows 'mansyar\administrator'
+  - [ ] Implement help (formatted multi-line list), echo (pass-through), whoami ('mansyar\administrator')
+- [ ] Task 1.4: Implement `ls`/`dir` and `cd` commands (filesystem navigation)
   - [ ] Write tests: ls lists children, cd navigates (supports .., \, absolute paths), invalid path throws XP error
-  - [ ] Implement ls/dir (calls getChildren, formats output) and cd (calls resolvePath, updates cwd)
-- [ ] Task 1.4: Implement `cat`/`type` command (file content display)
+  - [ ] Implement ls/dir (calls getChildren, formats output) and cd (calls resolvePath, reads/updates cmdPath in WindowState)
+- [ ] Task 1.5: Implement `cat`/`type` command (file content display)
   - [ ] Write tests: cat on valid MDX slug shows metadata, cat on missing file shows XP error
   - [ ] Implement cat using PROJECTS_METADATA / DEVOPS_METADATA from src/lib/projects-data.ts
-- [ ] Task 1.5: Implement `clear`/`cls` command
+- [ ] Task 1.6: Implement `clear`/`cls` command
   - [ ] Write tests: clear/cls handler returns signal to clear output buffer
   - [ ] Implement clear/cls handler (returns special CLEAR signal)
-- [ ] Task 1.6: Implement `neofetch` command (ASCII art + system info)
+- [ ] Task 1.7: Implement `neofetch` command (ASCII art + system info)
   - [ ] Write tests: neofetch returns Tux ASCII art lines + system info fields
   - [ ] Implement neofetch with Tux ASCII art and formatted system info block
-- [ ] Task 1.7: Implement `open` command
-  - [ ] Write tests: open with valid slug dispatches CustomEvent, open with .pdf calls window.open, unknown slug errors
-  - [ ] Implement open handler (CustomEvent dispatch for project slugs, window.open for PDFs, error for unknown)
+- [ ] Task 1.8: Implement `open` command (navigate Explorer to project folder)
+  - [ ] Write tests: open with valid slug opens Explorer + navigates to parent folder, open with .pdf opens new tab, unknown slug errors
+  - [ ] Implement open: find slug in FILE_SYSTEM → resolve parent path → openWindow('explorer') → set explorerPath to parent; .pdf → window.open(); else XP error
 - [ ] Task: Conductor - User Manual Verification 'Phase 1 — Command Registry & Parser' (Protocol in workflow.md)
 
 ---
 
-## Phase 2: Terminal UI Component
+## Phase 2: Terminal UI Component & Integration
 
 - [ ] Task 2.1: Create `CmdPrompt.tsx` — terminal shell component
   - [ ] Write tests: CmdPrompt renders with black background, green #00aa00 text, C:\MANSYAR> prompt visible
@@ -50,14 +53,8 @@
 - [ ] Task 2.5: Implement blinking cursor and auto-scroll
   - [ ] Write tests: cursor element renders with CSS blink animation class, auto-scroll triggers on new output
   - [ ] Implement CSS @keyframes for cursor blink, useRef + scrollIntoView for auto-scroll bottom
-- [ ] Task: Conductor - User Manual Verification 'Phase 2 — Terminal UI Component' (Protocol in workflow.md)
-
----
-
-## Phase 3: Integration & Track Completion
-
-- [ ] Task 3.1: Wire CmdPrompt into WindowLayer
+- [ ] Task 2.6: Wire CmdPrompt into WindowLayer + fix placeholder text
   - [ ] Write tests: opening "cmd" window renders CmdPrompt component, other windows render their content
-  - [ ] Replace placeholder text in WindowLayer.tsx with `<CmdPrompt windowId="cmd" />` for window ID 'cmd'
+  - [ ] Replace placeholder `'Command Prompt — Coming Soon in Track 2D'` with `<CmdPrompt windowId="cmd" />` for window ID 'cmd'
   - [ ] Verify CMD opens from desktop icon "Command Prompt", Start Menu item, and taskbar button
-- [ ] Task: Conductor - User Manual Verification 'Phase 3 — Integration' (Protocol in workflow.md)
+- [ ] Task: Conductor - User Manual Verification 'Phase 2 — Terminal UI Component & Integration' (Protocol in workflow.md)
