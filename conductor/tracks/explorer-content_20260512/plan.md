@@ -70,25 +70,25 @@
   - [x] Add optional `explorerPath?: string` to `WindowState` interface in `src/stores/windows.ts`
   - [x] Default to `C:\` path on `openWindow('explorer')` via `buildWindowState`
   - [x] Verify tests pass
-- [ ] Task 3.2: Write failing tests for Explorer sub-components
-  - [ ] Test `ExplorerToolbar` renders back + up buttons with correct enabled/disabled state
-  - [ ] Test `ExplorerBreadcrumb` renders path segments; clicking a segment navigates
-  - [ ] Test `ExplorerFileList` shows drive icons at root, XP detail columns in folders
-  - [ ] Test `ExplorerFileList` shows "This folder is empty." for empty directories
-  - [ ] Test Explorer shell composes all sub-components correctly
-- [ ] Task 3.3: Create Explorer sub-components
-  - [ ] Create `src/components/apps/ExplorerToolbar.tsx` — back button, up-level button, XP-style divider
-  - [ ] Create `src/components/apps/ExplorerBreadcrumb.tsx` — clickable path segments (merged address bar + breadcrumb)
-  - [ ] Create `src/components/apps/ExplorerFileList.tsx` — drive root view + XP Detail View columns + empty state
-  - [ ] Create `src/components/apps/Explorer.tsx` — parent shell that composes sub-components, manages navigation state, and reads/writes `explorerPath` from store
-  - [ ] Wire tests to pass
-- [ ] Task 3.4: Implement folder navigation
-  - [ ] Write tests for navigation flow (root → Software_Engineering → back to root)
-  - [ ] Implement `navigateTo(path)` — updates `explorerPath` in store, refreshes file list
-  - [ ] Implement back button (history stack of visited paths)
-  - [ ] Implement up-level button (navigates to parent directory)
-  - [ ] Implement breadcrumb click navigation
-  - [ ] Verify tests pass
+- [x] Task 3.2: Write failing tests for Explorer sub-components [c1e0c21]
+  - [x] Test `ExplorerToolbar` renders back + up buttons with correct enabled/disabled state
+  - [x] Test `ExplorerBreadcrumb` renders path segments; clicking a segment navigates
+  - [x] Test `ExplorerFileList` shows drive icons at root, XP detail columns in folders
+  - [x] Test `ExplorerFileList` shows "This folder is empty." for empty directories
+  - [x] Test Explorer shell composes all sub-components correctly
+- [x] Task 3.3: Create Explorer sub-components [c1e0c21]
+  - [x] Create `src/components/apps/ExplorerToolbar.tsx` — back button, up-level button, XP-style divider
+  - [x] Create `src/components/apps/ExplorerBreadcrumb.tsx` — clickable path segments (merged address bar + breadcrumb)
+  - [x] Create `src/components/apps/ExplorerFileList.tsx` — drive root view + XP Detail View columns + empty state
+  - [x] Create `src/components/apps/Explorer.tsx` — parent shell that composes sub-components, manages navigation state, and reads/writes `explorerPath` from store
+  - [x] Wire tests to pass
+- [x] Task 3.4: Implement folder navigation [c1e0c21]
+  - [x] Write tests for navigation flow (root → Software_Engineering → back to root)
+  - [x] Implement `navigateTo(path)` — updates `explorerPath` in store, refreshes file list
+  - [x] Implement back button (history stack of visited paths)
+  - [x] Implement up-level button (navigates to parent directory)
+  - [x] Implement breadcrumb click navigation
+  - [x] Verify tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Explorer Navigation & List' (Protocol in workflow.md)
 
 ---
