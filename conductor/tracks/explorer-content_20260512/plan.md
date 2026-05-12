@@ -42,23 +42,23 @@
 
 ## Phase 2 — Virtual Filesystem Tree
 
-- [ ] Task 2.1: Write filesystem type definitions & tests
-  - [ ] Write tests for `FSNode` discriminated union types (`FSDrive`, `FSFolder`, `FSFile`)
-  - [ ] Write tests for `FILE_SYSTEM` constant shape (3 drives, correct hierarchy, valid children)
-  - [ ] Write tests for navigation helpers (`getChildren(path)`, `resolvePath(path)`, `getParent(path)`, `splitPath(path)`)
-- [ ] Task 2.2: Create `src/lib/constants.ts`
-  - [ ] Implement `FSNode` discriminated union types
-  - [ ] Implement `FILE_SYSTEM` as a static typed constant with the 3-drive tree
-  - [ ] C:\Software_Engineering contains icarus-server-manager + chasing-chapters (drive=C projects)
-  - [ ] D:\Systems_Data contains tubular-bexus-osw (drive=D projects)
-  - [ ] E:\DevOps_Academy contains 3 stub articles (devopsAcademy grouped by category)
-  - [ ] Verify all tests pass
-- [ ] Task 2.3: Create `src/lib/filesystem.ts` with navigation helpers
-  - [ ] Implement `getChildren(path: string): FSNode[]` — returns contents of a folder
-  - [ ] Implement `resolvePath(path: string): FSNode | null` — resolves a path to a node
-  - [ ] Implement `getParent(path: string): string` — returns parent path
-  - [ ] Implement `splitPath(path: string): string[]` — returns breadcrumb segments
-  - [ ] Verify all tests pass
+- [x] Task 2.1: Write filesystem type definitions & tests [2a2c522]
+  - [x] Write tests for `FSNode` discriminated union types (`FSDrive`, `FSFolder`, `FSFile`)
+  - [x] Write tests for `FILE_SYSTEM` constant shape (3 drives, correct hierarchy, valid children)
+  - [x] Write tests for navigation helpers (`getChildren(path)`, `resolvePath(path)`, `getParent(path)`, `splitPath(path)`)
+- [x] Task 2.2: Create `src/lib/constants.ts` [2a2c522]
+  - [x] Implement `FSNode` discriminated union types
+  - [x] Implement `FILE_SYSTEM` as a static typed constant with the 3-drive tree
+  - [x] C:\Software_Engineering contains icarus-server-manager + chasing-chapters (drive=C projects)
+  - [x] D:\Systems_Data contains tubular-bexus-osw (drive=D projects)
+  - [x] E:\DevOps_Academy contains 3 stub articles (devopsAcademy grouped by category)
+  - [x] Verify all tests pass
+- [x] Task 2.3: Create `src/lib/filesystem.ts` with navigation helpers [2a2c522]
+  - [x] Implement `getChildren(path: string): FSNode[]` — returns contents of a folder
+  - [x] Implement `resolvePath(path: string): FSNode | null` — resolves a path to a node
+  - [x] Implement `getParent(path: string): string` — returns parent path
+  - [x] Implement `splitPath(path: string): string[]` — returns breadcrumb segments
+  - [x] Verify all tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Virtual Filesystem' (Protocol in workflow.md)
 
 ---
