@@ -7,7 +7,4 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 <!-- Track 1B — Window Manager archived to conductor/archive/window_manager_20260511/ -->
 
----
-
-- [x] **Track: Fully interactive Start Menu with two-column layout, user header, and program list that opens windows**
-      _Link: [./tracks/start_menu_20260512/](./tracks/start_menu_20260512/)_
+<!-- Start Menu track archived to conductor/archive/start_menu_20260512/ -->
