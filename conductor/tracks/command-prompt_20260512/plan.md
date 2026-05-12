@@ -20,19 +20,19 @@
 - [x] Task 1.4: Implement `ls`/`dir` and `cd` commands (filesystem navigation) `92cfec8`
   - [x] Write tests: ls lists children, cd navigates (supports .., \, absolute paths), invalid path throws XP error
   - [x] Implement ls/dir (calls getChildren, formats output) and cd (calls resolvePath, reads/updates cmdPath in WindowState)
-- [~] Task 1.5: Implement `cat`/`type` command (file content display)
-  - [ ] Write tests: cat on valid MDX slug shows metadata, cat on missing file shows XP error
-  - [ ] Implement cat using PROJECTS_METADATA / DEVOPS_METADATA from src/lib/projects-data.ts
-- [ ] Task 1.6: Implement `clear`/`cls` command
-  - [ ] Write tests: clear/cls handler returns signal to clear output buffer
-  - [ ] Implement clear/cls handler (returns special CLEAR signal)
-- [ ] Task 1.7: Implement `neofetch` command (ASCII art + system info)
-  - [ ] Write tests: neofetch returns Tux ASCII art lines + system info fields
-  - [ ] Implement neofetch with Tux ASCII art and formatted system info block
-- [ ] Task 1.8: Implement `open` command (navigate Explorer to project folder)
-  - [ ] Write tests: open with valid slug opens Explorer + navigates to parent folder, open with .pdf opens new tab, unknown slug errors
-  - [ ] Implement open: find slug in FILE_SYSTEM → resolve parent path → openWindow('explorer') → set explorerPath to parent; .pdf → window.open(); else XP error
-- [ ] Task: Conductor - User Manual Verification 'Phase 1 — Command Registry & Parser' (Protocol in workflow.md)
+- [x] Task 1.5: Implement `cat`/`type` command (file content display) `54fe628`
+  - [x] Write tests: cat on valid MDX slug shows metadata, cat on missing file shows XP error
+  - [x] Implement cat using PROJECTS_METADATA / DEVOPS_METADATA from src/lib/projects-data.ts
+- [x] Task 1.6: Implement `clear`/`cls` command `54fe628`
+  - [x] Write tests: clear/cls handler returns signal to clear output buffer
+  - [x] Implement clear/cls handler (returns special CLEAR signal)
+- [x] Task 1.7: Implement `neofetch` command (ASCII art + system info) `54fe628`
+  - [x] Write tests: neofetch returns Tux ASCII art lines + system info fields
+  - [x] Implement neofetch with Tux ASCII art and formatted system info block
+- [x] Task 1.8: Implement `open` command (navigate Explorer to project folder) `54fe628`
+  - [x] Write tests: open with valid slug opens Explorer + navigates to parent folder, open with .pdf opens new tab, unknown slug errors
+  - [x] Implement open: find slug in FILE_SYSTEM → resolve parent path → openWindow('explorer') → set explorerPath to parent; .pdf → window.open(); else XP error
+- [ ] Task: Conductor - User Manual Verification 'Phase 1 — Command Registry & Parser' (Protocol in workflow.md) `pending`
 
 ---
 
