@@ -6,7 +6,7 @@
 
 ---
 
-## Phase 1: Task Manager Shell & Tab System
+## Phase 1: Task Manager Shell & Tab System [checkpoint: 6f4e6c0]
 
 - [x] Task 1.1: Add taskmanager config to DEFAULT_WINDOW_CONFIGS
   - [x] Write tests: taskmanager config exists at 500×550, position (200, 60), min size 400×450
@@ -17,7 +17,7 @@
 - [x] Task 1.3: Wire TaskManager into WindowLayer (`5fb9ee8`)
   - [x] Write tests: opening `taskmanager` window renders TaskManager component in WindowLayer
   - [x] Replace placeholder text for 'taskmanager' window ID in `WindowLayer.tsx`
-- [~] Task: Conductor - User Manual Verification 'Phase 1 — Task Manager Shell & Tab System' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1 — Task Manager Shell & Tab System' (Protocol in workflow.md)
 
 ---
 
