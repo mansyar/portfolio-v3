@@ -17,7 +17,7 @@
 - [x] Task 1.3: Implement `help`, `echo`, `whoami` commands `fda502d`
   - [x] Write tests: help lists all commands with descriptions, echo outputs text verbatim, whoami shows 'mansyar\administrator'
   - [x] Implement help (formatted multi-line list), echo (pass-through), whoami ('mansyar\administrator')
-- [ ] Task 1.4: Implement `ls`/`dir` and `cd` commands (filesystem navigation)
+- [~] Task 1.4: Implement `ls`/`dir` and `cd` commands (filesystem navigation)
   - [ ] Write tests: ls lists children, cd navigates (supports .., \, absolute paths), invalid path throws XP error
   - [ ] Implement ls/dir (calls getChildren, formats output) and cd (calls resolvePath, reads/updates cmdPath in WindowState)
 - [ ] Task 1.5: Implement `cat`/`type` command (file content display)

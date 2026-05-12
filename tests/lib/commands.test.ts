@@ -138,6 +138,88 @@ describe('Whoami command', () => {
   });
 });
 
+describe('Ls command', () => {
+  it('should list drives at root path (C:, D:, E:)', () => {
+    const output = COMMAND_REGISTRY['ls']([], { cmdPath: '\\' });
+    expect(output.lines.some((l) => l.includes('C:'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('D:'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('E:'))).toBe(true);
+  });
+
+  it('should list folders inside C:\\Software_Engineering', () => {
+    const output = COMMAND_REGISTRY['ls']([], { cmdPath: 'C:\\' });
+    expect(output.lines.some((l) => l.includes('Software_Engineering'))).toBe(true);
+  });
+
+  it('should list files with slug metadata in a folder', () => {
+    const output = COMMAND_REGISTRY['ls']([], { cmdPath: 'C:\\Software_Engineering' });
+    expect(output.lines.some((l) => l.includes('icarus-server-manager'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('chasing-chapters'))).toBe(true);
+  });
+
+  it('should list directory when path argument is provided', () => {
+    const output = COMMAND_REGISTRY['ls'](['D:\\Systems_Data'], { cmdPath: 'C:\\' });
+    expect(output.lines.some((l) => l.includes('tubular-bexus-osw'))).toBe(true);
+  });
+
+  it('should work via dir alias', () => {
+    const lsOutput = COMMAND_REGISTRY['dir']([], { cmdPath: 'C:\\' });
+    const dirOutput = COMMAND_REGISTRY['ls']([], { cmdPath: 'C:\\' });
+    expect(lsOutput.lines).toEqual(dirOutput.lines);
+  });
+});
+
+describe('Cd command', () => {
+  it('should navigate to a subfolder', () => {
+    const output = COMMAND_REGISTRY['cd'](['Software_Engineering'], { cmdPath: 'C:\\' });
+    expect(output.newCmdPath).toBe('C:\\Software_Engineering');
+  });
+
+  it('should navigate up with ..', () => {
+    const output = COMMAND_REGISTRY['cd'](['..'], { cmdPath: 'C:\\Software_Engineering' });
+    expect(output.newCmdPath).toBe('C:\\');
+  });
+
+  it('should navigate to root with \\', () => {
+    const output = COMMAND_REGISTRY['cd'](['\\'], { cmdPath: 'C:\\Software_Engineering' });
+    expect(output.newCmdPath).toBe('C:\\');
+  });
+
+  it('should navigate to another drive with absolute path', () => {
+    const output = COMMAND_REGISTRY['cd'](['D:\\'], { cmdPath: 'C:\\' });
+    expect(output.newCmdPath).toBe('D:\\');
+  });
+
+  it('should navigate to a nested absolute path', () => {
+    const output = COMMAND_REGISTRY['cd'](['D:\\Systems_Data'], { cmdPath: 'C:\\' });
+    expect(output.newCmdPath).toBe('D:\\Systems_Data');
+  });
+
+  it('should stay in same directory with .', () => {
+    const output = COMMAND_REGISTRY['cd'](['.'], { cmdPath: 'C:\\Software_Engineering' });
+    expect(output.newCmdPath).toBe('C:\\Software_Engineering');
+  });
+
+  it('should show XP error for invalid path', () => {
+    const output = COMMAND_REGISTRY['cd'](['NonExistent'], { cmdPath: 'C:\\' });
+    expect(output.lines.some((l) => l.includes('The system cannot find the path specified'))).toBe(
+      true,
+    );
+    expect(output.newCmdPath).toBeUndefined();
+  });
+
+  it('should work via chdir alias', () => {
+    const cdOutput = COMMAND_REGISTRY['chdir'](['Software_Engineering'], { cmdPath: 'C:\\' });
+    const expected = COMMAND_REGISTRY['cd'](['Software_Engineering'], { cmdPath: 'C:\\' });
+    expect(cdOutput.newCmdPath).toBe(expected.newCmdPath);
+  });
+
+  it('should show error when no path provided', () => {
+    const output = COMMAND_REGISTRY['cd']([], { cmdPath: 'C:\\' });
+    expect(output.newCmdPath).toBe('C:\\');
+  });
+});
+
 describe('CmdOutput type', () => {
   it('should allow creating an output with lines', () => {
     const output: CmdOutput = { lines: ['Hello', 'World'] };

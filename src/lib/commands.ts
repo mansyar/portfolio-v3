@@ -5,6 +5,8 @@
  * Aliases (e.g., `dir` → `ls`, `cls` → `clear`) share the same handler reference.
  */
 
+import { getChildren, resolvePath, getParent } from '@/lib/filesystem';
+
 // ── Types ──────────────────────────────────────────────────────────
 
 export interface CmdOutput {
@@ -16,6 +18,8 @@ export interface CmdOutput {
   openExplorer?: string;
   /** If set, open a URL in a new browser tab */
   openUrl?: string;
+  /** If set, update the cmdPath for this window (used by cd) */
+  newCmdPath?: string;
 }
 
 export interface CmdContext {
@@ -87,12 +91,85 @@ const handlerWhoami: CommandHandler = () => {
   return { lines: ['mansyar\\administrator'] };
 };
 
-const handlerLs: CommandHandler = () => {
-  return { lines: ['(filesystem implementation — Task 1.4)'] };
+const handlerLs: CommandHandler = (args, context) => {
+  const targetPath = args.length > 0 ? args[0]! : context.cmdPath;
+  const children = getChildren(targetPath);
+
+  if (children.length === 0) {
+    return { lines: ['(empty)'] };
+  }
+
+  // Format each child node with type indicators
+  const lines = children.map((node) => {
+    if (node.type === 'drive') return `  [DRIVE]  ${node.name}\\`;
+    if (node.type === 'folder') return `  [DIR]    ${node.name}\\`;
+    // Files: use slug for cleaner display
+    return `  [FILE]   ${node.slug}`;
+  });
+
+  return { lines };
 };
 
-const handlerCd: CommandHandler = () => {
-  return { lines: ['(filesystem implementation — Task 1.4)'] };
+const handlerCd: CommandHandler = (args, context) => {
+  if (args.length === 0) {
+    return { lines: [], newCmdPath: context.cmdPath };
+  }
+
+  const target = args[0]!;
+
+  // Handle special paths
+  if (target === '\\' || target === '/') {
+    // Go to current drive root
+    const drive = context.cmdPath.split('\\')[0]!;
+    return { lines: [], newCmdPath: `${drive}\\` };
+  }
+
+  if (target === '..') {
+    const parent = getParent(context.cmdPath);
+    if (parent === '\\') {
+      // At root, go to drives listing (keep current drive)
+      const drive = context.cmdPath.split('\\')[0]!;
+      return { lines: [], newCmdPath: `${drive}\\` };
+    }
+    return { lines: [], newCmdPath: parent };
+  }
+
+  if (target === '.') {
+    return { lines: [], newCmdPath: context.cmdPath };
+  }
+
+  // Check if it's an absolute path (starts with a drive letter or \)
+  let resolvedPath: string;
+  if (/^[a-zA-Z]:\\/.test(target)) {
+    // Absolute path like C:\ or D:\Systems_Data
+    resolvedPath = target;
+  } else if (target.startsWith('\\')) {
+    // Absolute path starting with backslash — prepend current drive
+    const drive = context.cmdPath.split('\\')[0]!;
+    resolvedPath = `${drive}${target}`;
+  } else {
+    // Relative path — append to current directory
+    const current = context.cmdPath.endsWith('\\') ? context.cmdPath : `${context.cmdPath}\\`;
+    resolvedPath = `${current}${target}`;
+  }
+
+  // Remove trailing backslash if present and not just a drive root
+  if (resolvedPath.length > 3 && resolvedPath.endsWith('\\')) {
+    resolvedPath = resolvedPath.slice(0, -1);
+  }
+
+  // Ensure drive paths end with backslash
+  if (/^[a-zA-Z]:$/.test(resolvedPath)) {
+    resolvedPath = `${resolvedPath}\\`;
+  }
+
+  // Verify the path exists
+  const node = resolvePath(resolvedPath);
+  if (!node) {
+    return { lines: ['The system cannot find the path specified.'] };
+  }
+
+  return { lines: [], newCmdPath: resolvedPath };
 };
 
 const handlerCat: CommandHandler = () => {
