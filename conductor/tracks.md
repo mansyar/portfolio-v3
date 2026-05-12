@@ -11,5 +11,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Explorer + Content — Virtual filesystem explorer with inline MDX content rendering**
-  _Link: [./tracks/explorer-content_20260512/](./tracks/explorer-content_20260512/)_
+- [x] **Track: Explorer + Content — Virtual filesystem explorer with inline MDX content rendering**
+      _Link: [./tracks/explorer-content_20260512/](./tracks/explorer-content_20260512/)_
