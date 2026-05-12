@@ -11,9 +11,9 @@
 - [x] Task 1.1: Add taskmanager config to DEFAULT_WINDOW_CONFIGS
   - [x] Write tests: taskmanager config exists at 500×550, position (200, 60), min size 400×450
   - [x] Add taskmanager entry to DEFAULT_WINDOW_CONFIGS in `src/stores/windows.ts`
-- [ ] Task 1.2: Create `TaskManager.tsx` with tab switching UI
-  - [ ] Write tests: component renders two tabs (Processes / Performance), clicking switches visible content
-  - [ ] Implement TaskManager with useState tab tracking and XP-style raised/pressed tab chrome
+- [x] Task 1.2: Create `TaskManager.tsx` with tab switching UI (`4122024`)
+  - [x] Write tests: component renders two tabs (Processes / Performance), clicking switches visible content
+  - [x] Implement TaskManager with useState tab tracking and XP-style raised/pressed tab chrome
 - [ ] Task 1.3: Wire TaskManager into WindowLayer
   - [ ] Write tests: opening `taskmanager` window renders TaskManager component in WindowLayer
   - [ ] Replace placeholder text for 'taskmanager' window ID in `WindowLayer.tsx`
@@ -43,7 +43,7 @@
   - [ ] Implement CanvasGraph: 60-point rolling buffer, green polyline, XP-style grid, Y-axis labels
 - [ ] Task 3.2: Wire Performance tab with 1s data updates
   - [ ] Write tests: graphs receive data at 1s interval, maintain 60-point buffer, scroll left on new point
-  - [ ] Implement data generator: CPU graph base = average of all 8 process CPU values (9.5%); Memory graph base = overall memory percentage (computed as sum(mem_values) / (256000 _ 8) _ 100); both fluctuate ±2% every 1s; animation loop uses requestAnimationFrame + 1s throttle for efficient canvas redraw
+  - [ ] Implement data generator: CPU graph base = average of all 8 process CPU values (9.5%); Memory graph base = overall memory percentage (computed as sum(mem*values) / (256000 * 8) \_ 100); both fluctuate ±2% every 1s; animation loop uses requestAnimationFrame + 1s throttle for efficient canvas redraw
 - [ ] Task: Conductor - User Manual Verification 'Phase 3 — Performance Tab' (Protocol in workflow.md)
 
 ---
