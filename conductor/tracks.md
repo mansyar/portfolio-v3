@@ -13,7 +13,4 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 <!-- Command Prompt track archived to conductor/archive/command-prompt_20260512/ -->
 
----
-
-- [x] **Track: Task Manager (Track 2C)**
-      _Link: [./tracks/task-manager_20260512/](./tracks/task-manager_20260512/)_
+<!-- Task Manager track archived to conductor/archive/task-manager_20260512/ -->
