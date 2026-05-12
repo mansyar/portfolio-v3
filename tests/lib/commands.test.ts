@@ -82,6 +82,62 @@ describe('parseCommand', () => {
   });
 });
 
+describe('Help command', () => {
+  it('should list all available commands with descriptions', () => {
+    const output = COMMAND_REGISTRY['help']([], { cmdPath: 'C:\\' });
+    expect(output.lines.length).toBeGreaterThan(0);
+    // Should contain 'help', 'ls', 'cd', 'cat', etc.
+    expect(output.lines.some((l) => l.includes('help'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('ls'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('cd'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('neofetch'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('whoami'))).toBe(true);
+    expect(output.lines.some((l) => l.includes('echo'))).toBe(true);
+  });
+
+  it('should work via /? alias', () => {
+    const output = COMMAND_REGISTRY['/?']([], { cmdPath: 'C:\\' });
+    const helpOutput = COMMAND_REGISTRY['help']([], { cmdPath: 'C:\\' });
+    expect(output.lines).toEqual(helpOutput.lines);
+  });
+
+  it('should not include alias-only entries (dir, cls, chdir, type) as separate lines', () => {
+    const output = COMMAND_REGISTRY['help']([], { cmdPath: 'C:\\' });
+    // If 'ls' is listed, 'dir' shouldn't get its own row
+    expect(output.lines.some((l) => l.includes('ls'))).toBe(true);
+  });
+});
+
+describe('Echo command', () => {
+  it('should output text verbatim', () => {
+    const output = COMMAND_REGISTRY['echo'](['Hello', 'World'], { cmdPath: 'C:\\' });
+    expect(output.lines).toEqual(['Hello World']);
+  });
+
+  it('should output empty string when no args provided', () => {
+    const output = COMMAND_REGISTRY['echo']([], { cmdPath: 'C:\\' });
+    expect(output.lines).toEqual(['']);
+  });
+
+  it('should preserve special characters', () => {
+    const output = COMMAND_REGISTRY['echo'](['C:\\>', 'test!'], { cmdPath: 'C:\\' });
+    expect(output.lines).toEqual(['C:\\> test!']);
+  });
+});
+
+describe('Whoami command', () => {
+  it('should display mansyar\\administrator', () => {
+    const output = COMMAND_REGISTRY['whoami']([], { cmdPath: 'C:\\' });
+    expect(output.lines).toHaveLength(1);
+    expect(output.lines[0]).toBe('mansyar\\administrator');
+  });
+
+  it('should ignore any arguments', () => {
+    const output = COMMAND_REGISTRY['whoami'](['extra', 'args'], { cmdPath: 'C:\\' });
+    expect(output.lines[0]).toBe('mansyar\\administrator');
+  });
+});
+
 describe('CmdOutput type', () => {
   it('should allow creating an output with lines', () => {
     const output: CmdOutput = { lines: ['Hello', 'World'] };

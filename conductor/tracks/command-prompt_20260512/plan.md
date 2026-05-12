@@ -14,7 +14,7 @@
 - [x] Task 1.2: Create `src/lib/commands.ts` — command type definitions, registry, and parser function `9b64a84`
   - [x] Write tests for Command enum, CommandHandler type, registry map, and parseCommand() (parses 'cmd arg1 arg2')
   - [x] Implement Command type (enum or string union), CommandHandler type signature, registry, and parseCommand()
-- [ ] Task 1.3: Implement `help`, `echo`, `whoami` commands
+- [~] Task 1.3: Implement `help`, `echo`, `whoami` commands
   - [ ] Write tests: help lists all commands with descriptions, echo outputs text verbatim, whoami shows 'mansyar\administrator'
   - [ ] Implement help (formatted multi-line list), echo (pass-through), whoami ('mansyar\administrator')
 - [ ] Task 1.4: Implement `ls`/`dir` and `cd` commands (filesystem navigation)
