@@ -25,20 +25,20 @@
 
 ### Task 1.3: Write tests for GitHub stats fetch script
 
-- [ ] Write tests verifying `fetch-github-stats.mjs` reads repo URLs from projects
-- [ ] Write tests verifying cache write on success
-- [ ] Write tests verifying cache read + console warning on failure
-- [ ] Write tests verifying exit with non-zero when no cache and API fails
+- [x] Write tests verifying `fetch-github-stats.mjs` reads repo URLs from projects
+- [x] Write tests verifying cache write on success
+- [x] Write tests verifying cache read + console warning on failure
+- [x] Write tests verifying exit with non-zero when no cache and API fails
 
-### Task 1.4: Create `scripts/fetch-github-stats.mjs`
+### Task 1.4: Create `scripts/fetch-github-stats.mjs` `[97ccdd2]`
 
-- [ ] Read project repo URLs from MDX files or projects-data
-- [ ] Call `fetchRepoStats()` and `fetchRepoCommitCount()` for each unique `owner/repo`
-- [ ] On success: write combined data (stats + commit count) to `src/lib/generated/github-cache.json`
-- [ ] On failure: read cache file; if exists, log warning and continue; if not, log error and exit with non-zero
-- [ ] Log each repo's result (stars, last commit, commits) to console
-- [ ] Verify tests pass
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: GitHub API Fetch Layer' (Protocol in workflow.md)
+- [x] Read project repo URLs from MDX files or projects-data
+- [x] Call `fetchRepoStats()` and `fetchRepoCommitCount()` for each unique `owner/repo`
+- [x] On success: write combined data (stats + commit count) to `src/lib/generated/github-cache.json`
+- [x] On failure: read cache file; if exists, log warning and continue; if not, log error and exit with non-zero
+- [x] Log each repo's result (stars, last commit, commits) to console
+- [x] Verify tests pass
+- [~] Task: Conductor - User Manual Verification 'Phase 1: GitHub API Fetch Layer' (Protocol in workflow.md)
 
 ---
 
