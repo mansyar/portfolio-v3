@@ -40,11 +40,11 @@ src/
 │   ├── desktop/     # Astro: Wallpaper, DesktopIcon
 │   ├── taskbar/     # React: Taskbar, StartMenu, Clock
 │   ├── window/      # React: WindowFrame, TitleBar
-│   ├── apps/        # React: CmdPrompt, Explorer, TaskManager, HelpCenter
+│   ├── apps/        # React: CmdPrompt, Explorer, TaskManager, KnowledgeBase
 │   └── mobile/      # Astro/React: SafeModeShell, TerminalNav
 ├── content/
 │   ├── projects/         # MDX project write-ups
-│   └── devops-academy/   # MDX educational articles
+│   └── articles/         # MDX Knowledge Base articles (SE, AI, DevOps)
 ├── layouts/         # DesktopLayout.astro (shell)
 ├── pages/           # index.astro (single page entry)
 ├── stores/          # Nano Stores (windows, desktop, filesystem)

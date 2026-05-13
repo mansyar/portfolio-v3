@@ -25,7 +25,7 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 - **File Explorer:** Virtual filesystem with `C:\`, `D:\`, `E:\` drives, folder navigation, and MDX content rendering
 - **Command Prompt:** Functional terminal emulator with `ls`, `cd`, `cat`, `neofetch`, and other shell commands
 - **Task Manager:** Processes tab showing skill entries + Performance tab with live-animated skill graphs
-- **Help & Support Center:** MDX article browser styled as the classic XP Help pane
+- **Knowledge Base:** MDX article browser styled as the classic XP Knowledge Base pane
 - **Start Menu:** Two-column layout with pinned apps, system folders, and Shut Down button
 
 ### Mobile Safe Mode (< 768px viewport)
@@ -38,7 +38,7 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 ### Content & Data
 
 - **Project MDX Files:** Detailed project write-ups with frontmatter (repo URL, tech stack, status)
-- **DevOps Academy MDX:** Categorized educational articles from the `devops-from-scratch` repo
+- **Articles MDX:** Variative articles spanning Software Engineering, AI, DevOps, and more
 - **GitHub API Sync:** Build-time data fetching for live star counts and commit dates
 - **Resume:** Embedded PDF viewer in My Documents
 

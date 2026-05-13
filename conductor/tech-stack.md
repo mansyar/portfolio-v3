@@ -63,7 +63,7 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 
 ### Content Pipeline
 
-- MDX files in `src/content/projects/` and `src/content/devops-academy/`
+- MDX files in `src/content/projects/` and `src/content/articles/`
 - GitHub API data fetched at build time, merged into content collections
 - Cache fallback on API failure for offline resilience
 

@@ -21,11 +21,11 @@ portfolio-v3/
 │   │   ├── desktop/              # Astro: Desktop, DesktopIcon, Wallpaper
 │   │   ├── taskbar/              # React: Taskbar, StartMenu, SystemTray, Clock
 │   │   ├── window/               # React: WindowFrame, TitleBar, WindowContent
-│   │   ├── apps/                 # React: CmdPrompt, TaskManager, HelpCenter, Explorer
+│   │   ├── apps/                 # React: CmdPrompt, TaskManager, KnowledgeBase, Explorer
 │   │   └── mobile/               # Astro: SafeModeShell, BiosScreen, TerminalNav
 │   ├── content/
 │   │   ├── projects/             # MDX: one file per project
-│   │   └── devops-academy/       # MDX: help articles from devops-from-scratch
+│   │   └── articles/             # MDX: Knowledge Base articles (SE, AI, DevOps, etc.)
 │   ├── layouts/
 │   │   └── DesktopLayout.astro   # Main shell: wallpaper + taskbar + window layer
 │   ├── pages/
@@ -137,7 +137,7 @@ export const $taskbarWindows = computed($windows, (wins) =>
 | :------------- | :----------- | :--------------- | :------- |
 | Explorer       | 700×500      | 80, 60           | 400×300  |
 | My Documents   | 600×450      | 120, 80          | 350×250  |
-| Help & Support | 750×550      | 60, 40           | 500×400  |
+| Knowledge Base | 750×550      | 60, 40           | 500×400  |
 | Command Prompt | 680×420      | 100, 100         | 450×250  |
 | Task Manager   | 500×550      | 200, 60          | 400×450  |
 | Recycle Bin    | 550×400      | 150, 90          | 350×250  |
@@ -174,7 +174,7 @@ function resizeWindow(id: WindowId, w: number, h: number): void;
 
 ## 4. Data Models & Content Schema
 
-### 4.1 Project (MDX Frontmatter)
+### 4.1 Content Collection Schemas
 
 ```typescript
 // src/content/config.ts
@@ -200,19 +200,19 @@ const projects = defineCollection({
   }),
 });
 
-const devopsAcademy = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/devops-academy' }),
+const articles = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/articles' }),
   schema: z.object({
     title: z.string(),
     slug: z.string(),
-    category: z.string(), // e.g., "Linux", "Docker", "CI/CD"
+    category: z.string(), // e.g., "Software Engineering", "AI", "DevOps"
     order: z.number(), // Sort within category
     description: z.string(),
     lastUpdated: z.coerce.date(),
   }),
 });
 
-export const collections = { projects, devopsAcademy };
+export const collections = { projects, articles };
 ```
 
 ### 4.2 GitHub API Data Shape
@@ -261,10 +261,10 @@ export const FILE_SYSTEM: FSNode = {
   'E:': {
     type: 'drive',
     children: {
-      DevOps_Academy: {
+      Knowledge_Base: {
         type: 'folder',
         children: {
-          // Populated from `devopsAcademy` collection, grouped by category
+          // Populated from `articles` collection, grouped by category (DevOps, Software_Engineering, AI, etc.)
         },
       },
     },
@@ -414,18 +414,18 @@ export const FILE_SYSTEM: FSNode = {
 
 ### React Islands (Interactive)
 
-| Component     | Props                        | Responsibility                                                                   |
-| :------------ | :--------------------------- | :------------------------------------------------------------------------------- |
-| `WindowLayer` | —                            | Renders all open windows from `$windows` store                                   |
-| `WindowFrame` | `windowId`                   | Chrome (title bar, borders, resize handles), drag logic                          |
-| `TitleBar`    | `windowId`                   | Title text, icon, min/max/close buttons                                          |
-| `Taskbar`     | —                            | Start button, open window buttons, system tray, clock                            |
-| `StartMenu`   | —                            | Two-column menu, user avatar, program list                                       |
-| `Explorer`    | `windowId`                   | File/folder list, breadcrumb nav, address bar                                    |
-| `CmdPrompt`   | `windowId`                   | Terminal emulator with command parsing                                           |
-| `TaskManager` | `windowId`                   | Tabs: Processes (table, CPU animation, End Process), Performance (Canvas graphs) |
-| `CanvasGraph` | `label, width, height, data` | Reusable green-on-black line graph with grid, 60-point buffer                    |
-| `HelpCenter`  | `windowId`                   | Search bar, sidebar categories, article renderer                                 |
+| Component       | Props                        | Responsibility                                                                   |
+| :-------------- | :--------------------------- | :------------------------------------------------------------------------------- |
+| `WindowLayer`   | —                            | Renders all open windows from `$windows` store                                   |
+| `WindowFrame`   | `windowId`                   | Chrome (title bar, borders, resize handles), drag logic                          |
+| `TitleBar`      | `windowId`                   | Title text, icon, min/max/close buttons                                          |
+| `Taskbar`       | —                            | Start button, open window buttons, system tray, clock                            |
+| `StartMenu`     | —                            | Two-column menu, user avatar, program list                                       |
+| `Explorer`      | `windowId`                   | File/folder list, breadcrumb nav, address bar                                    |
+| `CmdPrompt`     | `windowId`                   | Terminal emulator with command parsing                                           |
+| `TaskManager`   | `windowId`                   | Tabs: Processes (table, CPU animation, End Process), Performance (Canvas graphs) |
+| `CanvasGraph`   | `label, width, height, data` | Reusable green-on-black line graph with grid, 60-point buffer                    |
+| `KnowledgeBase` | `windowId`                   | Search bar, sidebar categories, article renderer                                 |
 
 ### Astro Components (Static)
 
@@ -535,7 +535,7 @@ export const FILE_SYSTEM: FSNode = {
 │ 📄 Resume    │ 📁 My Documents       │
 │ 🖥️ Explorer  │ 📁 My Computer        │
 │ ⚙️ Task Mgr  │ 🖥️ Control Panel      │
-│ 💻 CMD       │ ❓ Help & Support      │
+│ 💻 CMD       │ ❓ Knowledge Base       │
 │              │                       │
 │ ─────────── │ ───────────────────── │
 │              │ 🔍 Search             │

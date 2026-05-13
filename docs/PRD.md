@@ -15,14 +15,14 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ## 2. Technical Stack & Infrastructure
 
-| Layer                | Technology                   | Reason                                                        |
-| :------------------- | :--------------------------- | :------------------------------------------------------------ |
-| **Framework**        | **Astro (Hybrid)**           | Zero-JS by default; SSR capability for functional CLI/Search. |
-| **Interactivity**    | **React**                    | Handles draggable windows and complex state as "Islands."     |
-| **State Management** | **Nano Stores + URL Params** | Ultra-lightweight state for window Z-index and deep-linking.  |
-| **Styling**          | **Tailwind CSS**             | Custom Luna theme gradients and classic 3D borders.           |
-| **Content**          | **MDX**                      | Project and DevOps notes rendered as interactive articles.    |
-| **Automation**       | **GitHub Actions**           | CRON-scheduled builds (every 24h) to sync GitHub API data.    |
+| Layer                | Technology                   | Reason                                                                    |
+| :------------------- | :--------------------------- | :------------------------------------------------------------------------ |
+| **Framework**        | **Astro (Hybrid)**           | Zero-JS by default; SSR capability for functional CLI/Search.             |
+| **Interactivity**    | **React**                    | Handles draggable windows and complex state as "Islands."                 |
+| **State Management** | **Nano Stores + URL Params** | Ultra-lightweight state for window Z-index and deep-linking.              |
+| **Styling**          | **Tailwind CSS**             | Custom Luna theme gradients and classic 3D borders.                       |
+| **Content**          | **MDX**                      | Project write-ups and variative Knowledge Base articles (SE, AI, DevOps). |
+| **Automation**       | **GitHub Actions**           | CRON-scheduled builds (every 24h) to sync GitHub API data.                |
 
 ---
 
@@ -54,7 +54,7 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 | :----------------- | :------ | :------------------------------------------------------------------ |
 | **My Computer**    | Folder  | Opens Explorer for `C:\Software_Engineering` and `D:\Systems_Data`. |
 | **My Documents**   | Folder  | Contains `Resume.pdf`, `Certs/` folder, and contact info.           |
-| **Help & Support** | App     | `E:\DevOps_Academy` (Notes from `devops-from-scratch` repo).        |
+| **Knowledge Base** | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).     |
 | **Command Prompt** | App     | Functional React terminal for CLI navigation.                       |
 | **Recycle Bin**    | Archive | Links to `mansyar.github.io` (Legacy) and old repositories.         |
 
@@ -62,7 +62,7 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 - **C:\Software_Engineering:** Features `icarus-server-manager` and `portable-mc-manager`.
 - **D:\Systems_Data:** Features `tubular-bexus-osw` and data-heavy system logs.
-- **E:\DevOps_Academy:** MDX files styled as the "Windows Help and Support Center" pane.
+- **E:\Knowledge_Base:** MDX articles spanning Software Engineering, AI, DevOps, and more, browsed through the Knowledge Base application.
 
 ---
 
@@ -105,10 +105,10 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Visual Style:** Tahoma 11px, 3D borders, `#ECE9D8` dialog chrome, exact XP color matching
 - **Accessibility:** `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-hidden`, keyboard navigation
 
-### 5.3 Help & Support Center
+### 5.3 Knowledge Base
 
-- **UI:** Classic blue/white pane with a search bar and sidebar.
-- **Content:** Renders MDX files from the `devops-from-scratch` repository into readable "Help Articles."
+- **UI:** Classic blue/white pane with a search bar and sidebar with category tree navigation.
+- **Content:** Renders MDX articles spanning Software Engineering, AI, DevOps, and more, styled as classic Windows XP Knowledge Base articles.
 
 ---
 

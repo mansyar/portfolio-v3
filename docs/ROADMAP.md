@@ -26,7 +26,7 @@ gantt
     Track 2A – Explorer + Content :done, p2a, after p1b, 4d
     Track 2B – Command Prompt     :done, p2b, after p1b, 3d
     Track 2C – Task Manager       :done, p2c, after p1b, 3d
-    Track 2D – Help Center        :p2d, after p2a, 3d
+    Track 2D – Knowledge Base     :p2d, after p2a, 3d
 
     section Phase 3
     Track 3A – GitHub Data Sync   :p3a, after p2a, 2d
@@ -118,7 +118,7 @@ Phase 0 produced 15 commits across ~8,400 lines changed (42 files). Track archiv
 
 - [x] Add `--xp-taskbar-bg` and `--xp-start-btn-green` gradient tokens to `xp-theme.css` ([TDD §5.1](./TDD.md#51-color-palette))
 - [x] Create `.xp-taskbar-border` utility class (top-edge-only outset border)
-- [x] Create 5 custom desktop icon SVGs (My Computer, My Documents, Help & Support, Command Prompt, Recycle Bin) ([TDD §5.4](./TDD.md#54-icon-sources))
+- [x] Create 5 custom desktop icon SVGs (My Computer, My Documents, Knowledge Base, Command Prompt, Recycle Bin) ([TDD §5.4](./TDD.md#54-icon-sources))
 - [x] Create `Wallpaper.astro` — custom inline SVG/CSS Bliss-style rolling hills art with optional `imageSrc` prop ([TDD §6](./TDD.md#astro-components-static))
 - [x] Create `DesktopIcon.astro` — icon + label with XP blue hover highlight, `data-window-id` and `data-window-label` attributes ([TDD §6](./TDD.md#astro-components-static), [TDD §9](./TDD.md#9-animations--transitions))
 - [x] Layout 5 icon instances in left-aligned vertical column in `index.astro` (Astro static, zero JS)
@@ -257,7 +257,7 @@ Track 1B produced 17 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 ✅ Clicking Start button opens the two-column menu with slide-up animation (150ms ease-out)
 ✅ Menu shows blue header with "MARP" initials avatar and "Muhammad Ansyar Rafi Putra" name
 ✅ Left column: Resume, Explorer, Task Manager, Command Prompt
-✅ Right column: My Documents, My Computer, Control Panel, Help & Support
+✅ Right column: My Documents, My Computer, Control Panel, Knowledge Base
 ✅ Each menu item opens the corresponding window and closes the menu
 ✅ Clicking outside or pressing Escape closes the menu (slide-down, 100ms ease-in)
 ✅ Tab key cycles through menu items with visible ARIA focus tracking; Enter activates
@@ -339,7 +339,7 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 ✅ Back button returns to previous directory; up-level goes to parent
 ✅ Empty folders show "This folder is empty."
 ✅ File list matches XP Explorer detail view aesthetically (table with grid role, header columns)
-✅ E:\DevOps_Academy shows 3 stub articles (Docker, Linux, CI/CD)
+✅ E:\Knowledge_Base shows 3 stub articles (Docker, Linux, CI/CD) — to be expanded with SE and AI articles in Track 2D
 ✅ 281 tests passing, 81.17% branch coverage, 91.2% statement coverage
 ✅ All src/ files under 500 lines (modularity check passes)
 ✅ Type assertions cleaned up during review (filesystem.ts, useCallback simplification)
@@ -349,7 +349,7 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 
 ```
 src/content.config.ts                 — Astro 6 content collections with glob loaders
-src/lib/content-schemas.ts            — Zod schemas for projects + devopsAcademy (testable without astro:content)
+src/lib/content-schemas.ts            — Zod schemas for projects + devopsAcademy (testable without astro:content; to be broadened in Track 2D)
 src/lib/constants.ts                  — FSNode discriminated union types + static FILE_SYSTEM tree
 src/lib/filesystem.ts                 — Navigation helpers (getChildren, resolvePath, getParent, splitPath)
 src/lib/projects-data.ts              — Static metadata for all projects and academy articles
@@ -510,30 +510,35 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 
 ---
 
-### Track 2D — Help & Support Center
+### Track 2D — Knowledge Base
 
-> MDX article browser styled as the XP Help and Support Center pane.
+> MDX article browser styled as the classic XP Knowledge Base pane. Hosts variative articles spanning Software Engineering, AI, DevOps, and more.
 
-**Refs:** [PRD §5.3](./PRD.md#53-help--support-center) · [TDD §4.1](./TDD.md#41-project-mdx-frontmatter) (devopsAcademy schema) · [TDD §6](./TDD.md#react-islands-interactive)
+**Refs:** [PRD §5.3](./PRD.md#53-knowledge-base) · [TDD §4.1](./TDD.md#41-content-collection-schemas) (article schema) · [TDD §6](./TDD.md#6-component-inventory)
 
 #### Tasks
 
-- [ ] Create `src/content/config.ts` `devopsAcademy` collection schema ([TDD §4.1](./TDD.md#41-project-mdx-frontmatter))
-- [ ] Write initial MDX articles from `devops-from-scratch` repo ([PRD §5.3](./PRD.md#53-help--support-center))
-- [ ] Create `HelpCenter.tsx` — blue/white pane with search bar and sidebar ([PRD §5.3](./PRD.md#53-help--support-center))
+- [ ] Rename content collection from `devopsAcademy` to `articles` with broadened `category` field (Software Engineering, AI, DevOps, etc.)
+- [ ] Rename content source directory from `src/content/devops-academy/` to `src/content/articles/`
+- [ ] Rename virtual filesystem folder from `E:\DevOps_Academy` to `E:\Knowledge_Base` with subfolders per category
+- [ ] Write initial MDX articles covering multiple categories (SE, AI, DevOps)
+- [ ] Create `KnowledgeBase.tsx` — blue/white pane with search bar and sidebar ([PRD §5.3](./PRD.md#53-knowledge-base))
 - [ ] Implement sidebar category tree navigation
 - [ ] Implement basic text search filtering over articles
 - [ ] Render selected MDX article in the main content pane
-- [ ] Style to match XP "Help and Support Center" window
+- [ ] Style to match classic XP Knowledge Base window aesthetic
 
 #### Acceptance Criteria
 
 ```
-✅ Help & Support opens showing categories in sidebar
+✅ Knowledge Base opens showing categories in sidebar
 ✅ Clicking a category shows its articles
 ✅ Clicking an article renders MDX content
 ✅ Search bar filters articles by title/description
-✅ Layout matches the classic XP Help pane aesthetic
+✅ Layout matches the classic XP Knowledge Base pane aesthetic
+✅ E:\Knowledge_Base shows subfolders per category (DevOps, Software_Engineering, AI, etc.)
+```
+
 ```
 
 ---
@@ -559,18 +564,20 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 - [ ] Integrate into Astro build pipeline — fetch data, merge into content collection entries
 - [ ] Cache last-good API response in `src/content/_cache/github.json` ([TDD §11](./TDD.md#11-error-states))
 - [ ] Fallback to cache on API failure with console warning ([TDD §11](./TDD.md#11-error-states))
-- [ ] Build dynamic `FILE_SYSTEM` at build time from `getCollection('projects')` + `getCollection('devopsAcademy')` (replaces static T2A tree)
+- [ ] Build dynamic `FILE_SYSTEM` at build time from `getCollection('projects')` + `getCollection('articles')` (replaces static T2A tree)
 - [ ] Pre-render MDX project bodies to HTML strings at build time and make them available to Explorer's detail pane
 - [ ] Verify fetched data appears in Explorer project listings and CMD `cat` output
 
 #### Acceptance Criteria
 
 ```
+
 ✅ `pnpm build` fetches live GitHub data and injects into project content
 ✅ FILE_SYSTEM is dynamically built from content collections (no longer a static mirror)
 ✅ Explorer detail pane renders full project MDX body content (upgraded from T2A metadata-only)
 ✅ If GitHub API is unreachable, build succeeds using cached data
 ✅ Explorer shows real star counts and last commit dates
+
 ```
 
 ---
@@ -598,11 +605,13 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Opening windows updates the URL with correct params
 ✅ Pasting a URL with `?w=explorer&path=C:/Software_Engineering` opens Explorer to that path
 ✅ Pasting a URL with `?w=cmd,taskmanager&focus=cmd` opens both windows with CMD focused
 ✅ Closing all windows returns URL to clean `/`
 ✅ Browser back/forward navigates window state history
+
 ```
 
 ---
@@ -623,9 +632,11 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ My Documents opens showing Resume.pdf, Certs folder, Contact.txt
 ✅ Clicking Resume.pdf opens the PDF in a new browser tab
 ✅ Recycle Bin shows legacy project links (styled as "deleted" files)
+
 ```
 
 ---
@@ -651,12 +662,14 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Resizing browser below 768px shows the Safe Mode boot sequence
 ✅ Boot text appears line-by-line, then shows numbered menu
 ✅ All 4 menu options render their content correctly
 ✅ [0] Back returns to previous menu
 ✅ CRT visual effects are visible and subtle
 ✅ All portfolio content is accessible on mobile
+
 ```
 
 ---
@@ -680,10 +693,12 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Entire site navigable with keyboard only (no mouse required)
 ✅ Screen reader announces windows, menus, and content correctly
 ✅ Focus is visible and moves logically
 ✅ Animations disabled with prefers-reduced-motion
+
 ```
 
 ---
@@ -707,11 +722,13 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Lighthouse Performance score > 90
 ✅ TBT < 100ms
 ✅ OG preview renders correctly when shared on social media
 ✅ 404 page shows a styled BSOD
 ✅ Content accessible with JavaScript disabled via <noscript>
+
 ```
 
 ---
@@ -736,11 +753,13 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Push to main triggers automatic build and deploy
 ✅ Site is live on mansyar.dev with SSL
 ✅ CRON job triggers daily build to refresh GitHub data
 ✅ Build completes in under 60 seconds
-```
+
+````
 
 ---
 
@@ -754,7 +773,7 @@ graph TD
     T1B --> T2A[Track 2A: Explorer + Content]
     T1B --> T2B[Track 2B: Command Prompt]
     T1B --> T2C[Track 2C: Task Manager]
-    T2A --> T2D[Track 2D: Help Center]
+    T2A --> T2D[Track 2D: Knowledge Base]
     T2A --> T3A[Track 3A: GitHub Data Sync]
     T1C --> T3B[Track 3B: URL State Persist]
     T2A --> T3C[Track 3C: My Docs & Bin]
@@ -778,7 +797,7 @@ graph TD
     style T4B fill:#e74c3c,color:#fff
     style T4C fill:#e74c3c,color:#fff
     style T5A fill:#1abc9c,color:#fff
-```
+````
 
 ### Parallel Work Opportunities
 

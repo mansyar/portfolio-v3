@@ -76,7 +76,7 @@ Nano Stores will manage all reactive state:
 - `src/stores/desktop.ts` — desktop state
 - `src/stores/filesystem.ts` — virtual filesystem tree
 
-Virtual filesystem: `C:\Software_Engineering`, `D:\Systems_Data`, `E:\DevOps_Academy`.
+Virtual filesystem: `C:\Software_Engineering`, `D:\Systems_Data`, `E:\Knowledge_Base`.
 
 ## Path Aliases
 

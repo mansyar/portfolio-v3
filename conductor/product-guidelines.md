@@ -99,12 +99,12 @@ The Luna OS portfolio speaks with the confidence and competence of a seasoned sy
 - Frontmatter fields are populated at build time with GitHub API data (stars, commits, last push date)
 - Content should describe the engineering challenges, architecture decisions, and personal contributions
 
-### DevOps Academy Articles
+### Knowledge Base Articles
 
-- Categorized by topic (Linux, Docker, CI/CD, etc.)
+- Categorized by topic (Software Engineering, AI, DevOps, etc.)
 - Sorted by `order` field within each category
 - Written as educational reference material — clear, practical, and example-driven
-- Styled as Windows XP Help and Support Center articles
+- Styled as classic Windows XP Knowledge Base articles
 
 ## Technical Boundaries
 
