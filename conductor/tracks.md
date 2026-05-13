@@ -21,3 +21,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- URL State Persistence track archived to conductor/archive/url-state-persistence_20260513/ -->
 
 <!-- My Documents & Recycle Bin track archived to conductor/archive/mydocs-recyclebin_20260514/ -->
+
+---
+
+- [ ] **Track: Implement Track 4A — Mobile Safe Mode as detailed in @docs/ROADMAP.md, @docs/PRD.md, and @docs/TDD.md**
+      _Link: [./tracks/mobile-safe-mode_20260514/](./tracks/mobile-safe-mode_20260514/)_
