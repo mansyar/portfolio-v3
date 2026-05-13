@@ -17,7 +17,4 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 <!-- Knowledge Base track archived to conductor/archive/knowledge-base_20260513/ -->
 
----
-
-- [x] **Track: GitHub Data Sync**
-      _Link: [./tracks/github-data-sync_20260513/](./tracks/github-data-sync_20260513/)_
+<!-- GitHub Data Sync track archived to conductor/archive/github-data-sync_20260513/ -->
