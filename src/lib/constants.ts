@@ -1,9 +1,11 @@
 /**
  * Virtual filesystem type definitions and static tree constant.
  *
- * Mirrors the content collections structure:
- * - C: and D: drives → projects collection (filtered by `drive` field)
- * - E: drive → articles collection (grouped by `category`)
+ * The dynamic FILE_SYSTEM tree is generated at build time by
+ * scripts/generate-filesystem.mjs (output to filesystem.json).
+ * The static tree below serves as the source of truth for dev mode
+ * and tests. At build time, generate-filesystem.mjs produces a matching
+ * trees from compiled content JSON.
  */
 
 // ── Discriminated union types ──────────────────────────────────────
@@ -34,7 +36,7 @@ export interface FSFile {
 
 export type FSNode = FSDrive | FSFolder | FSFile;
 
-// ── Static filesystem tree ─────────────────────────────────────────
+// ── Full filesystem tree ───────────────────────────────────────────
 
 export const FILE_SYSTEM: FSDrive[] = [
   {
