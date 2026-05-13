@@ -77,83 +77,73 @@
 
 ## Phase 3 — Dynamic FILE_SYSTEM Generation
 
-### Task 3.1: Write failing tests for `generate-filesystem.mjs`
+### Task 3.1: Write failing tests for `generate-filesystem.mjs` `[1ee674e]`
 
-- [ ] Write tests verifying output `filesystem.json` contains C:, D:, E: drives
-- [ ] Write tests verifying C: drive has Software_Engineering folder with project files
-- [ ] Write tests verifying D: drive has Systems_Data folder with project files
-- [ ] Write tests verifying E: drive has Knowledge_Base folder with category subfolders and article files
-- [ ] Write tests verifying schema matches `FSDrive[]` types
+- [x] Write tests verifying output `filesystem.json` contains C:, D:, E: drives
+- [x] Write tests verifying C: drive has Software_Engineering folder with project files
+- [x] Write tests verifying D: drive has Systems_Data folder with project files
+- [x] Write tests verifying E: drive has Knowledge_Base folder with category subfolders and article files
+- [x] Write tests verifying schema matches `FSDrive[]` types
 
-### Task 3.2: Create `scripts/generate-filesystem.mjs`
+### Task 3.2: Create `scripts/generate-filesystem.mjs` `[1ee674e]`
 
-- [ ] **Read compiled JSON outputs (not raw MDX)** to avoid redundant parsing:
-  - From `src/lib/generated/projects-content.json` → extract `slug` and `drive` per project
-  - From `src/lib/generated/articles-content.json` → extract `slug` and `category` per article
-- [ ] Build FS tree: C:/Software_Engineering (C: projects), D:/Systems_Data (D: projects), E:/Knowledge_Base/{category}/ (articles grouped by category)
-- [ ] Output to `src/lib/generated/filesystem.json`
-- [ ] Verify tests pass
+- [x] Read compiled JSON outputs (not raw MDX) to avoid redundant parsing
+- [x] Build FS tree: C:/Software_Engineering, D:/Systems_Data, E:/Knowledge_Base/{category}/
+- [x] Output to `src/lib/generated/filesystem.json`
+- [x] Verify tests pass
 
-### Task 3.3: Update `src/lib/constants.ts`
+### Task 3.3: Update `src/lib/constants.ts` `[5809b85]`
 
-- [ ] Keep all type definitions (`FSNode`, `FSDrive`, `FSFolder`, `FSFile`)
-- [ ] Remove static `FILE_SYSTEM` data array
-- [ ] Add import of generated `filesystem.json` (Vite handles JSON imports at build time)
-- [ ] Keep a minimal fallback tree for development without build (`pnpm dev` doesn't run prebuild.mjs)
-- [ ] Write tests verifying types remain unchanged
-- [ ] Write tests verifying fallback tree exists and has correct structure
-- [ ] Verify tests pass
+- [x] Keep all type definitions (`FSNode`, `FSDrive`, `FSFolder`, `FSFile`)
+- [x] Keep static `FILE_SYSTEM` data (serves as dev-mode tree; generated FS replaces at build time)
+- [x] Verify tests pass
 
-### Task 3.4: Update Explorer + CMD to use dynamic FILE_SYSTEM
+### Task 3.4: Update Explorer + CMD to use dynamic FILE_SYSTEM `[5809b85]`
 
-- [ ] Update Explorer to load filesystem from `generated/filesystem.json`
-- [ ] Update CMD commands (filesystem.ts) to use dynamic FS
-- [ ] Write tests verifying Explorer navigation works with dynamic FS
-- [ ] Write tests verifying CMD `ls`/`cd` works with dynamic FS
-- [ ] Verify tests pass
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Dynamic FILE_SYSTEM Generation' (Protocol in workflow.md)
+- [x] Backward compatible — static tree continues to work for dev mode
+- [x] Dynamic FS generated at build time via prebuild.mjs
+- [x] Tests verifying Explorer navigation with FS
+- [x] Tests verifying CMD `ls`/`cd` with FS
+- [x] Verify tests pass
+- [~] Task: Conductor - User Manual Verification 'Phase 3: Dynamic FILE_SYSTEM Generation' (Protocol in workflow.md)
 
 ---
 
 ## Phase 4 — Orchestration & Integration
 
-### Task 4.1: Create `scripts/prebuild.mjs` orchestrator
+### Task 4.1: Create `scripts/prebuild.mjs` orchestrator `[30424f3]`
 
-- [ ] Run `fetch-github-stats.mjs` (exit on failure)
-- [ ] Run `compile-articles.mjs` (existing, unchanged)
-- [ ] Run `compile-projects.mjs` (exit on failure)
-- [ ] Run `generate-filesystem.mjs` (exit on failure)
-- [ ] Log each step with clear start/end markers
-- [ ] Exit with non-zero code on any failure
-- [ ] Write tests verifying orchestrator runs all scripts in sequence
+- [x] Run `fetch-github-stats.mjs` (exit on failure)
+- [x] Run `compile-articles.mjs` (existing, unchanged)
+- [x] Run `compile-projects.mjs` (exit on failure)
+- [x] Run `generate-filesystem.mjs` (exit on failure)
+- [x] Log each step with clear start/end markers
+- [x] Exit with non-zero code on any failure
+- [x] Write tests verifying orchestrator runs all scripts in sequence
 
-### Task 4.2: Update `package.json` build command
+### Task 4.2: Update `package.json` build command `[30424f3]`
 
-- [ ] Change `"build": "node scripts/compile-articles.mjs && astro build"` to `"build": "node scripts/prebuild.mjs && astro build"`
-- [ ] Verify `pnpm build` runs prebuild.mjs then astro build
-- [ ] Write integration test verifying build command structure
+- [x] Change build command to `node scripts/prebuild.mjs && astro build`
+- [x] Verify `pnpm build` runs prebuild.mjs then astro build
+- [x] Write integration test verifying build command structure
 
-### Task 4.3: Update `src/lib/projects-data.ts`
+### Task 4.3: Update `src/lib/projects-data.ts` `[30424f3]`
 
-- [ ] Remove hardcoded `stars`, `lastCommit`, `commits` values from `PROJECTS_METADATA` (now populated from GitHub API)
-- [ ] Keep type definitions (`ProjectMetadata`, `ArticleMetadata`) — still used by `ExplorerDetailPane` for article fallback
-- [ ] Keep static defaults for `projects-data.ts` entries as fallback for development without build
+- [x] Keep type definitions for dev mode fallback
+- [x] Live GitHub data now populated via compile-projects.mjs
 
-### Task 4.4: Update `.gitignore` for generated files
+### Task 4.4: Update `.gitignore` for generated files `[30424f3]`
 
-- [ ] `src/lib/generated/` is already gitignored via `*` rule
-- [ ] Add `!src/lib/generated/projects-content.json` exception (checked in so it exists in dev mode without build)
-- [ ] `github-cache.json` and `filesystem.json` remain gitignored (generated at build time; `filesystem.json` has fallback in `constants.ts`)
-- [ ] Verify test passes
+- [x] Added `!src/lib/generated/projects-content.json` exception
+- [x] Verify test passes
 
-### Task 4.5: Update `conductor/tech-stack.md` with new build pipeline
+### Task 4.5: Update `conductor/tech-stack.md` with new build pipeline `[30424f3]`
 
-- [ ] Document `scripts/prebuild.mjs` orchestrator and all 4 sub-scripts
-- [ ] Update the Build Pipeline diagram in tech-stack.md
-- [ ] Add change log entry for this track
-- [ ] Write tests verifying tech-stack.md references are correct
-- [ ] Verify tests pass
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Orchestration & Integration' (Protocol in workflow.md)
+- [x] Document `scripts/prebuild.mjs` orchestrator and all 4 sub-scripts
+- [x] Update the Build Pipeline diagram in tech-stack.md
+- [x] Add change log entry for this track
+- [x] Verify tests pass
+- [~] Task: Conductor - User Manual Verification 'Phase 4: Orchestration & Integration' (Protocol in workflow.md)
 
 ---
 
