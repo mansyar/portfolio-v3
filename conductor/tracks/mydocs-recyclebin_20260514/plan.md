@@ -20,16 +20,16 @@
 - [x] **Task: Update `projects-data.ts`** (c6597b0)
   - [x] Add `CONTACT_METADATA` export with explicit values
   - [x] Add `RECYCLE_BIN_METADATA` export
-- [ ] Task: Update window store defaults in `windows.ts`
-  - [ ] Modify `buildWindowState()`: `mydocs` defaults `explorerPath` to `D:\My_Documents`
-  - [ ] Modify `buildWindowState()`: `recyclebin` defaults `explorerPath` to `\Recycle_Bin`
-- [ ] Task: Wire `mydocs` + `recyclebin` into WindowLayer
-  - [ ] Mount `<Explorer windowId="mydocs" />` and `<Explorer windowId="recyclebin" />`
-  - [ ] Remove `PLACEHOLDER_CONTENT` entries for both window IDs
-- [ ] Task: Create `public/resume.pdf` — user must provide their actual resume PDF. If not available yet, create a simple placeholder PDF or document that the feature works without it.
-- [ ] Task: Update `scripts/generate-filesystem.mjs` to merge static My Documents entries
-  - [ ] Add hardcoded `D:\My_Documents` entries (Resume.pdf, Certs/, Contact.txt) to the generated tree
-  - [ ] The static constants.ts tree remains the source of truth for dev mode
+- [x] **Task: Update window store defaults in `windows.ts`** (ef4b98d)
+  - [x] Modify `buildWindowState()`: `mydocs` defaults `explorerPath` to `D:\My_Documents`
+  - [x] Modify `buildWindowState()`: `recyclebin` defaults `explorerPath` to `\Recycle_Bin`
+- [x] **Task: Wire `mydocs` + `recyclebin` into WindowLayer** (ef4b98d)
+  - [x] Mount `<Explorer windowId="mydocs" />` and `<Explorer windowId="recyclebin" />`
+  - [x] Remove `PLACEHOLDER_CONTENT` entries for both window IDs
+- [x] **Task: Create `public/resume.pdf` placeholder** (ef4b98d)
+- [x] **Task: Update `scripts/generate-filesystem.mjs`** (ef4b98d)
+  - [x] Add hardcoded `D:\My_Documents` entries (Resume.pdf, Certs/, Contact.txt) to the generated tree
+  - [x] The static constants.ts tree remains the source of truth for dev mode
 - [ ] Task: Conductor - User Manual Verification 'Phase 1'
 
 ## Phase 2 — My Documents View (TDD)
