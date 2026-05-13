@@ -12,14 +12,14 @@
 - [x] Update all test imports and references from `devopsAcademy` to `articles`/`articleSchema`
 - [x] Verify: `CI=true pnpm test` passes
 
-### Task 1.2: Migrate and expand MDX articles
+### Task 1.2: Migrate and expand MDX articles [e28953b]
 
-- [ ] Move `src/content/devops-academy/*.mdx` → `src/content/articles/`
-- [ ] Update frontmatter `category` values to match new convention (e.g., `DevOps`)
-- [ ] Write new article: `microservices-patterns.mdx` (category: `Software Engineering`)
-- [ ] Write new article: `llm-fine-tuning.mdx` (category: `AI`)
-- [ ] Write failing test: all 5 article files have valid frontmatter matching `articleSchema`
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Move `src/content/devops-academy/*.mdx` → `src/content/articles/`
+- [x] Update frontmatter `category` values to match new convention (e.g., `DevOps`)
+- [x] Write new article: `microservices-patterns.mdx` (category: `Software Engineering`)
+- [x] Write new article: `llm-fine-tuning.mdx` (category: `AI`)
+- [x] Write failing test: all 5 article files have valid frontmatter matching `articleSchema`
+- [x] Verify: `CI=true pnpm test` passes
 
 ### Task 1.3: Update static metadata and filesystem
 
