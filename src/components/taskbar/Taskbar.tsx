@@ -8,6 +8,7 @@ import {
 } from '@/stores/windows';
 import type { WindowId } from '@/stores/windows';
 import { $startMenuOpen, toggleStartMenu, $shuttingDown, cancelShutdown } from '@/stores/desktop';
+import { setPendingPushState } from '@/stores/url-sync';
 import { Clock } from './Clock';
 import { StartMenu } from './StartMenu';
 import { ShutdownOverlay } from './ShutdownOverlay';
@@ -51,7 +52,10 @@ export function Taskbar() {
         {/* Start Button */}
         <button
           aria-label="Start"
-          onClick={toggleStartMenu}
+          onClick={() => {
+            setPendingPushState();
+            toggleStartMenu();
+          }}
           className={startMenuOpen ? 'start-btn active' : 'start-btn'}
           style={{
             background: startMenuOpen

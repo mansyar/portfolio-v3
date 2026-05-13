@@ -12,6 +12,7 @@ import {
   moveWindow,
   resizeWindow,
 } from '@/stores/windows';
+import { initUrlSync, setPendingPushState } from '@/stores/url-sync';
 import { WindowFrame } from './WindowFrame';
 import type { WindowId } from '@/stores/windows';
 import type { MouseEvent } from 'react';
@@ -32,11 +33,19 @@ export function WindowLayer() {
   useEffect(() => {
     const handler = (e: Event) => {
       const customEvent = e as CustomEvent;
+      setPendingPushState();
       openWindow(customEvent.detail as WindowId);
     };
     window.addEventListener('luna:open-window', handler);
     return () => {
       window.removeEventListener('luna:open-window', handler);
+    };
+  }, []);
+
+  useEffect(() => {
+    const cleanup = initUrlSync();
+    return () => {
+      cleanup?.();
     };
   }, []);
 
@@ -59,8 +68,14 @@ export function WindowLayer() {
               maximizeWindow(state.id as WindowId);
             }
           }}
-          onClose={() => closeWindow(state.id as WindowId)}
-          onFocusRequest={() => focusWindow(state.id as WindowId)}
+          onClose={() => {
+            setPendingPushState();
+            closeWindow(state.id as WindowId);
+          }}
+          onFocusRequest={() => {
+            setPendingPushState();
+            focusWindow(state.id as WindowId);
+          }}
           onDragStart={(e: MouseEvent) => {
             if (state.status !== 'maximized' && state.status !== 'minimized') {
               focusWindow(state.id as WindowId);
