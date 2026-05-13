@@ -16,3 +16,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Task Manager track archived to conductor/archive/task-manager_20260512/ -->
 
 <!-- Knowledge Base track archived to conductor/archive/knowledge-base_20260513/ -->
+
+---
+
+- [ ] **Track: GitHub Data Sync**
+      _Link: [./tracks/github-data-sync_20260513/](./tracks/github-data-sync_20260513/)_
