@@ -19,14 +19,14 @@ describe('fetch-github-stats script file', () => {
 describe('parseRepoUrl()', () => {
   it('should parse a standard GitHub URL', async () => {
     const mod = await import('@/../scripts/fetch-github-stats.mjs');
-    const result = mod.parseRepoUrl('https://github.com/ansyarr/icarus-server-manager');
-    expect(result).toEqual({ owner: 'ansyarr', repo: 'icarus-server-manager' });
+    const result = mod.parseRepoUrl('https://github.com/mansyar/icarus-server-manager');
+    expect(result).toEqual({ owner: 'mansyar', repo: 'icarus-server-manager' });
   });
 
   it('should handle .git suffix', async () => {
     const mod = await import('@/../scripts/fetch-github-stats.mjs');
-    const result = mod.parseRepoUrl('https://github.com/ansyarr/test-repo.git');
-    expect(result).toEqual({ owner: 'ansyarr', repo: 'test-repo' });
+    const result = mod.parseRepoUrl('https://github.com/mansyar/test-repo.git');
+    expect(result).toEqual({ owner: 'mansyar', repo: 'test-repo' });
   });
 
   it('should return null for non-GitHub URLs', async () => {
@@ -40,7 +40,7 @@ describe('parseRepoUrl()', () => {
 
 describe('writeCache() and readCache()', () => {
   const testData = {
-    'ansyarr/test-repo': {
+    'mansyar/test-repo': {
       name: 'test-repo',
       stargazers_count: 42,
       pushed_at: '2026-04-15T10:00:00Z',
@@ -75,15 +75,15 @@ describe('writeCache() and readCache()', () => {
     expect(existsSync(cacheFile)).toBe(true);
     const raw = readFileSync(cacheFile, 'utf-8');
     const data = JSON.parse(raw);
-    expect((data['ansyarr/test-repo'] as { stargazers_count: number }).stargazers_count).toBe(42);
-    expect((data['ansyarr/test-repo'] as { commits: number }).commits).toBe(100);
+    expect((data['mansyar/test-repo'] as { stargazers_count: number }).stargazers_count).toBe(42);
+    expect((data['mansyar/test-repo'] as { commits: number }).commits).toBe(100);
   });
 
   it('readCache should return parsed data from cache file', async () => {
     const mod = await import('@/../scripts/fetch-github-stats.mjs');
     const data = mod.readCache();
     expect(data).not.toBeNull();
-    expect((data!['ansyarr/test-repo'] as { name: string }).name).toBe('test-repo');
+    expect((data!['mansyar/test-repo'] as { name: string }).name).toBe('test-repo');
   });
 
   it('readCache should return null when no cache file exists', async () => {
@@ -105,12 +105,12 @@ describe('extractReposFromProjects()', () => {
     const repos = mod.extractReposFromProjects();
     expect(repos.length).toBeGreaterThanOrEqual(3); // 3 projects
 
-    // Should find ansyarr/icarus-server-manager
+    // Should find mansyar/icarus-server-manager
     const target = repos.find(
       (r: { owner: string; repo: string }) => r.repo === 'icarus-server-manager',
     );
     expect(target).toBeDefined();
-    expect(target!.owner).toBe('ansyarr');
+    expect(target!.owner).toBe('mansyar');
     expect(target!.slug).toBe('icarus-server-manager');
   });
 });

@@ -26,7 +26,7 @@ const CACHE_FILE = resolve(OUTPUT_DIR, 'github-cache.json');
 
 /**
  * Parse repo owner and name from a GitHub URL.
- * @param {string} url - Full GitHub repo URL (e.g. "https://github.com/ansyarr/icarus-server-manager")
+ * @param {string} url - Full GitHub repo URL (e.g. "https://github.com/mansyar/icarus-server-manager")
  * @returns {{ owner: string, repo: string } | null}
  */
 export function parseRepoUrl(url) {

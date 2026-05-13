@@ -27,7 +27,7 @@ export const PROJECTS_METADATA: Record<string, ProjectMetadata> = {
     title: 'Icarus Server Manager',
     description:
       'A lightweight, self-hosted server management dashboard for monitoring system metrics, managing Docker containers, and orchestrating deployments via a clean web UI.',
-    repoUrl: 'https://github.com/ansyarr/icarus-server-manager',
+    repoUrl: 'https://github.com/mansyar/icarus-server-manager',
     language: 'TypeScript',
     techStack: ['Node.js', 'Express', 'PostgreSQL', 'Docker', 'Redis'],
     stars: 142,
@@ -38,7 +38,7 @@ export const PROJECTS_METADATA: Record<string, ProjectMetadata> = {
     title: 'Chasing Chapters',
     description:
       'A community-driven book discovery and reading tracker app with personalized recommendations, reading streaks, and social features for book enthusiasts.',
-    repoUrl: 'https://github.com/ansyarr/chasing-chapters',
+    repoUrl: 'https://github.com/mansyar/chasing-chapters',
     language: 'Python',
     techStack: ['Python', 'Django', 'PostgreSQL', 'Elasticsearch', 'Redis', 'Celery'],
     stars: 89,
@@ -49,7 +49,7 @@ export const PROJECTS_METADATA: Record<string, ProjectMetadata> = {
     title: 'Tubular Bexus OSW',
     description:
       'An experimental real-time data pipeline framework for streaming ETL transformations, built with a custom actor model for fault-tolerant, low-latency data processing.',
-    repoUrl: 'https://github.com/ansyarr/tubular-bexus-osw',
+    repoUrl: 'https://github.com/mansyar/tubular-bexus-osw',
     language: 'Rust',
     techStack: ['Rust', 'Apache Kafka', 'Arrow', 'Tokio', 'gRPC'],
     stars: 67,

@@ -60,7 +60,7 @@ describe('fetchRepoStats()', () => {
     };
     mockFetch.mockResolvedValueOnce(buildJsonResponse(apiResponse));
 
-    const result = await github.fetchRepoStats('ansyarr', 'icarus-server-manager');
+    const result = await github.fetchRepoStats('mansyar', 'icarus-server-manager');
 
     expect(result).toEqual({
       name: 'icarus-server-manager',
@@ -82,10 +82,10 @@ describe('fetchRepoStats()', () => {
       }),
     );
 
-    await github.fetchRepoStats('ansyarr', 'test-repo');
+    await github.fetchRepoStats('mansyar', 'test-repo');
 
     expect(mockFetch).toHaveBeenCalledWith(
-      'https://api.github.com/repos/ansyarr/test-repo',
+      'https://api.github.com/repos/mansyar/test-repo',
       expect.objectContaining({}),
     );
   });
@@ -105,7 +105,7 @@ describe('fetchRepoStats()', () => {
       }),
     );
 
-    await github.fetchRepoStats('ansyarr', 'test-repo');
+    await github.fetchRepoStats('mansyar', 'test-repo');
 
     expect(mockFetch).toHaveBeenCalledWith(
       expect.any(String),
@@ -133,7 +133,7 @@ describe('fetchRepoStats()', () => {
       }),
     );
 
-    await github.fetchRepoStats('ansyarr', 'test-repo');
+    await github.fetchRepoStats('mansyar', 'test-repo');
 
     const callArgs = mockFetch.mock.calls[0];
     const options = callArgs[1] as RequestInit;
@@ -146,13 +146,13 @@ describe('fetchRepoStats()', () => {
   it('should throw on non-200 response', async () => {
     mockFetch.mockResolvedValueOnce(buildJsonResponse({ message: 'Not found' }, 404));
 
-    await expect(github.fetchRepoStats('ansyarr', 'nonexistent')).rejects.toThrow();
+    await expect(github.fetchRepoStats('mansyar', 'nonexistent')).rejects.toThrow();
   });
 
   it('should throw on network failure', async () => {
     mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
-    await expect(github.fetchRepoStats('ansyarr', 'test-repo')).rejects.toThrow('Network error');
+    await expect(github.fetchRepoStats('mansyar', 'test-repo')).rejects.toThrow('Network error');
   });
 
   it('should pass an AbortSignal to fetch', async () => {
@@ -166,7 +166,7 @@ describe('fetchRepoStats()', () => {
       }),
     );
 
-    await github.fetchRepoStats('ansyarr', 'test-repo');
+    await github.fetchRepoStats('mansyar', 'test-repo');
 
     const callArgs = mockFetch.mock.calls[0];
     const options = callArgs[1] as RequestInit;
@@ -188,7 +188,7 @@ describe('fetchRepoStats()', () => {
     });
 
     // Use a very short timeout (50ms) to make it fast
-    await expect(github.fetchRepoStats('ansyarr', 'test-repo', 50)).rejects.toThrow(/timed out/);
+    await expect(github.fetchRepoStats('mansyar', 'test-repo', 50)).rejects.toThrow(/timed out/);
   }, 10000);
 });
 
@@ -198,11 +198,11 @@ describe('fetchRepoCommitCount()', () => {
   it('should return a number by parsing the Link header', async () => {
     mockFetch.mockResolvedValueOnce(
       buildCommitsResponse(
-        '<https://api.github.com/repos/ansyarr/test-repo/commits?per_page=1&page=10>; rel="last"',
+        '<https://api.github.com/repos/mansyar/test-repo/commits?per_page=1&page=10>; rel="last"',
       ),
     );
 
-    const count = await github.fetchRepoCommitCount('ansyarr', 'test-repo');
+    const count = await github.fetchRepoCommitCount('mansyar', 'test-repo');
     expect(typeof count).toBe('number');
     expect(count).toBe(10);
   });
@@ -210,26 +210,26 @@ describe('fetchRepoCommitCount()', () => {
   it('should return 1 when no Link header (single page)', async () => {
     mockFetch.mockResolvedValueOnce(buildCommitsResponse(undefined));
 
-    const count = await github.fetchRepoCommitCount('ansyarr', 'test-repo');
+    const count = await github.fetchRepoCommitCount('mansyar', 'test-repo');
     expect(count).toBe(1);
   });
 
   it('should throw on non-200 response', async () => {
     mockFetch.mockResolvedValueOnce(buildJsonResponse({ message: 'Not found' }, 404));
 
-    await expect(github.fetchRepoCommitCount('ansyarr', 'nonexistent')).rejects.toThrow();
+    await expect(github.fetchRepoCommitCount('mansyar', 'nonexistent')).rejects.toThrow();
   });
 
   it('should throw on malformed Link header', async () => {
     mockFetch.mockResolvedValueOnce(buildCommitsResponse('not-a-valid-link-header'));
 
-    await expect(github.fetchRepoCommitCount('ansyarr', 'test-repo')).rejects.toThrow();
+    await expect(github.fetchRepoCommitCount('mansyar', 'test-repo')).rejects.toThrow();
   });
 
   it('should throw on network failure', async () => {
     mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
-    await expect(github.fetchRepoCommitCount('ansyarr', 'test-repo')).rejects.toThrow(
+    await expect(github.fetchRepoCommitCount('mansyar', 'test-repo')).rejects.toThrow(
       'Network error',
     );
   });
@@ -245,7 +245,7 @@ describe('fetchRepoCommitCount()', () => {
       });
     });
 
-    await expect(github.fetchRepoCommitCount('ansyarr', 'test-repo', 50)).rejects.toThrow(
+    await expect(github.fetchRepoCommitCount('mansyar', 'test-repo', 50)).rejects.toThrow(
       /timed out/,
     );
   }, 10000);

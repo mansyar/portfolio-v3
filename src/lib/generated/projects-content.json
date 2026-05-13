@@ -1,0 +1,53 @@
+{
+  "chasing-chapters": {
+    "frontmatter": {
+      "title": "Chasing Chapters",
+      "slug": "chasing-chapters",
+      "drive": "C",
+      "description": "A community-driven book discovery and reading tracker app with personalized recommendations, reading streaks, and social features for book enthusiasts.",
+      "repoUrl": "https://github.com/mansyar/chasing-chapters",
+      "language": "Python",
+      "techStack": ["Python", "Django", "PostgreSQL", "Elasticsearch", "Redis", "Celery"],
+      "stars": 89,
+      "lastCommit": "2026-03-28",
+      "commits": 256,
+      "status": "active",
+      "icon": "book"
+    },
+    "bodyHtml": "<h2>Chasing Chapters</h2>\n<p>A community-driven book discovery platform that combines personal reading tracking with social discovery features. Users can log books, track reading progress, join book clubs, and receive personalized recommendations.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Reading Tracker</strong>: Log books, track pages/chapters, maintain reading streaks</li>\n<li><strong>Smart Recommendations</strong>: ML-powered suggestions based on reading history and preferences</li>\n<li><strong>Book Clubs</strong>: Create or join reading groups with shared bookshelves and discussion forums</li>\n<li><strong>Social Feed</strong>: Share reviews, ratings, and reading milestones with followers</li>\n<li><strong>Advanced Search</strong>: Elasticsearch-powered full-text search across millions of books</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Python/Django backend with PostgreSQL as the primary database and Elasticsearch for full-text search capabilities. Redis serves as both a cache and message broker for Celery task queues.</p>\n<h3>Architecture</h3>\n<p>The application uses a service-oriented architecture within Django, with separate apps for books, users, social features, and recommendations. Celery handles async tasks like recommendation generation and email notifications.</p>\n"
+  },
+  "icarus-server-manager": {
+    "frontmatter": {
+      "title": "Icarus Server Manager",
+      "slug": "icarus-server-manager",
+      "drive": "C",
+      "description": "A lightweight, self-hosted server management dashboard for monitoring system metrics, managing Docker containers, and orchestrating deployments via a clean web UI.",
+      "repoUrl": "https://github.com/mansyar/icarus-server-manager",
+      "language": "TypeScript",
+      "techStack": ["Node.js", "Express", "PostgreSQL", "Docker", "Redis"],
+      "stars": 142,
+      "lastCommit": "2026-04-15",
+      "commits": 384,
+      "status": "active",
+      "icon": "server"
+    },
+    "bodyHtml": "<h2>Icarus Server Manager</h2>\n<p>A lightweight, self-hosted server management dashboard that brings together system monitoring, Docker container management, and deployment orchestration in a clean, accessible web interface.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Real-time Monitoring</strong>: Live system metrics (CPU, memory, disk, network) with historical graphing</li>\n<li><strong>Docker Management</strong>: Start, stop, restart, and view logs for containers directly from the dashboard</li>\n<li><strong>Deployment Orchestration</strong>: One-click deployment from GitHub webhooks with rollback support</li>\n<li><strong>User Management</strong>: Role-based access control for team environments</li>\n<li><strong>Alert System</strong>: Configurable thresholds with email and webhook notifications</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Built with TypeScript across the stack — Node.js/Express backend, PostgreSQL for metrics storage, Redis for caching and real-time pub/sub, and Docker for containerized deployment.</p>\n<h3>Architecture</h3>\n<p>The application follows a modular monolith pattern, with clear separation between the API layer, service layer, and data access layer. WebSocket connections provide real-time metric streaming to the dashboard frontend.</p>\n"
+  },
+  "tubular-bexus-osw": {
+    "frontmatter": {
+      "title": "Tubular Bexus OSW",
+      "slug": "tubular-bexus-osw",
+      "drive": "D",
+      "description": "An experimental real-time data pipeline framework for streaming ETL transformations, built with a custom actor model for fault-tolerant, low-latency data processing.",
+      "repoUrl": "https://github.com/mansyar/tubular-bexus-osw",
+      "language": "Rust",
+      "techStack": ["Rust", "Apache Kafka", "Arrow", "Tokio", "gRPC"],
+      "stars": 67,
+      "lastCommit": "2026-04-10",
+      "commits": 192,
+      "status": "active",
+      "icon": "pipeline"
+    },
+    "bodyHtml": "<h2>Tubular Bexus OSW</h2>\n<p>An experimental real-time data pipeline framework that implements a custom actor model for streaming ETL transformations. Built for fault-tolerant, low-latency data processing at scale.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Actor Model</strong>: Lightweight actors with message-passing for parallel data processing</li>\n<li><strong>Streaming ETL</strong>: Real-time transformation pipelines with exactly-once semantics</li>\n<li><strong>Schema Evolution</strong>: Arrow-based schema management with automatic migration</li>\n<li><strong>Fault Tolerance</strong>: Supervised actor trees with automatic recovery</li>\n<li><strong>gRPC API</strong>: High-performance bidirectional streaming for data ingestion and retrieval</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Written entirely in Rust, leveraging Tokio for async runtime, Apache Kafka for stream ingestion, Arrow for columnar data processing, and gRPC for inter-service communication.</p>\n<h3>Architecture</h3>\n<p>Each pipeline stage runs as a supervised actor within a Tokio task. Data flows through a directed acyclic graph of transformation stages, with backpressure handling at every level. Checkpointing to Kafka ensures exactly-once processing guarantees.</p>\n"
+  }
+}

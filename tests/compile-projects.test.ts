@@ -19,7 +19,7 @@ describe('compile-projects script', () => {
         cacheFile,
         JSON.stringify(
           {
-            'ansyarr/icarus-server-manager': {
+            'mansyar/icarus-server-manager': {
               name: 'icarus-server-manager',
               stargazers_count: 142,
               pushed_at: '2026-04-15T10:00:00Z',
@@ -27,7 +27,7 @@ describe('compile-projects script', () => {
               language: 'TypeScript',
               commits: 384,
             },
-            'ansyarr/chasing-chapters': {
+            'mansyar/chasing-chapters': {
               name: 'chasing-chapters',
               stargazers_count: 89,
               pushed_at: '2026-03-28T10:00:00Z',
@@ -35,7 +35,7 @@ describe('compile-projects script', () => {
               language: 'Python',
               commits: 256,
             },
-            'ansyarr/tubular-bexus-osw': {
+            'mansyar/tubular-bexus-osw': {
               name: 'tubular-bexus-osw',
               stargazers_count: 67,
               pushed_at: '2026-04-10T10:00:00Z',
