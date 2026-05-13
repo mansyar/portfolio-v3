@@ -17,5 +17,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Knowledge Base — MDX article browser with category sidebar and XP styling**
-  _Link: [./tracks/knowledge-base_20260513/](./tracks/knowledge-base_20260513/)_
+- [x] **Track: Knowledge Base — MDX article browser with category sidebar and XP styling**
+      _Link: [./tracks/knowledge-base_20260513/](./tracks/knowledge-base_20260513/)_

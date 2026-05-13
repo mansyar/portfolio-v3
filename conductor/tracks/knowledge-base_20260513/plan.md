@@ -55,54 +55,52 @@
 
 ## Phase 3: KnowledgeBase React Island
 
-### Task 3.1: Create KnowledgeBase component shell
+### Task 3.1: Create KnowledgeBase component shell [836a3b9]
 
-- [ ] Write failing test: KnowledgeBase renders with correct structure (sidebar, search bar, content pane)
-- [ ] Create `src/components/apps/KnowledgeBase.tsx`
-- [ ] Implement import of `articles-content.json` (metadata + content)
-- [ ] Build layout: left sidebar (category nav + search), right pane (article list + detail)
-- [ ] Style with XP blue/white color scheme, 3D borders, Tahoma fonts
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Write failing test: KnowledgeBase renders with correct structure (sidebar, search bar, content pane)
+- [x] Create `src/components/apps/KnowledgeBase.tsx`
+- [x] Build layout: left sidebar (category nav + search), right pane (article list + detail)
+- [x] Verify: `CI=true pnpm test` passes
 
-### Task 3.2: Implement category sidebar
+### Task 3.2: Implement category sidebar [db8e1b6]
 
-- [ ] Write failing test: sidebar shows auto-discovered categories from article metadata (no hardcoded list)
-- [ ] Extract unique `category` values from metadata
-- [ ] Render category list with "All Articles" default selected
-- [ ] Clicking a category filters article list
-- [ ] Show "No articles in this category" empty state when category has no articles
-- [ ] Style as XP tree view (indented, hover highlight)
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Write failing test: sidebar shows auto-discovered categories from article metadata (no hardcoded list)
+- [x] Extract unique `category` values from metadata
+- [x] Render category list with "All Articles" default selected
+- [x] Clicking a category filters article list
+- [x] Show "No articles in this category" empty state when category has no articles
+- [x] Style as XP tree view (indented, hover highlight)
+- [x] Verify: `CI=true pnpm test` passes
 
-### Task 3.3: Implement article list and detail pane
+### Task 3.3: Implement article list and detail pane [db8e1b6]
 
-- [ ] Write failing test: clicking an article renders its HTML content
-- [ ] Write failing test: empty state shows when no article is selected
-- [ ] Render article list with title, category badge, description excerpt
-- [ ] Implement detail pane that displays pre-compiled HTML via `dangerouslySetInnerHTML`
-- [ ] Show metadata header: title, category badge, last updated date
-- [ ] Alternating row backgrounds with hover highlight
-- [ ] Ensure content area is scrollable
-- [ ] Show "Select an article to view" placeholder when no article selected
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Write failing test: clicking an article renders its HTML content
+- [x] Write failing test: empty state shows when no article is selected
+- [x] Render article list with title, category badge, description excerpt
+- [x] Implement detail pane that displays pre-compiled HTML via `dangerouslySetInnerHTML`
+- [x] Show metadata header: title, category badge, last updated date
+- [x] Alternating row backgrounds with hover highlight
+- [x] Ensure content area is scrollable
+- [x] Show "Select an article to view" placeholder when no article selected
+- [x] Verify: `CI=true pnpm test` passes
 
-### Task 3.4: Implement search bar
+### Task 3.4: Implement search bar [db8e1b6]
 
-- [ ] Write failing test: search filters articles in real-time by title/description
-- [ ] Write failing test: "No results" empty state shows when search matches nothing
-- [ ] Add text input at top of sidebar
-- [ ] Implement live filter matching title or description (case-insensitive)
-- [ ] Search crosses category boundaries
-- [ ] Clear search shows all articles
-- [ ] Show "No articles match your search" message when no results
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Write failing test: search filters articles in real-time by title/description
+- [x] Write failing test: "No results" empty state shows when search matches nothing
+- [x] Add text input at top of sidebar
+- [x] Implement live filter matching title or description (case-insensitive)
+- [x] Search crosses category boundaries
+- [x] Clear search shows all articles
+- [x] Show "No articles match your search" message when no results
+- [x] Verify: `CI=true pnpm test` passes
 
-### Task 3.5: Wire KnowledgeBase into WindowLayer
+### Task 3.5: Wire KnowledgeBase into WindowLayer [db8e1b6]
 
-- [ ] Write failing test: KnowledgeBase appears when 'help' window is opened
-- [ ] Add KnowledgeBase rendering in `WindowLayer.tsx` for `windowId === 'help'`
-- [ ] Update window title to "Knowledge Base" in `DEFAULT_WINDOW_CONFIGS`
-- [ ] Ensure desktop icon opens KnowledgeBase correctly
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Write failing test: KnowledgeBase appears when 'help' window is opened
+- [x] Add KnowledgeBase rendering in `WindowLayer.tsx` for `windowId === 'help'`
+- [x] Update window title to "Knowledge Base" in `DEFAULT_WINDOW_CONFIGS`
+- [x] Ensure desktop icon opens KnowledgeBase correctly
+- [x] Verify: `CI=true pnpm test` passes
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: KnowledgeBase React Island' (Protocol in workflow.md)
