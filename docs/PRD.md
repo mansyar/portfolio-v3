@@ -133,7 +133,7 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
     - Automatic deploy on `git push`.
     - CRON Job via GitHub Actions triggers a build at 00:00 UTC daily to update commit counts/repo data.
     - Build command: `node scripts/prebuild.mjs && astro build`.
-4.  **Edge Logic:** Cloudflare Functions handle the URL Search Param parsing for window state persistence.
+4.  **State Persistence:** URL search params (`?w=`, `?focus=`, `?start=`, `?path=`) are handled entirely client-side via Nano Stores syncing to `history.replaceState()`/`pushState()`. No Cloudflare Functions or edge logic needed — the static site serves the same HTML regardless of URL params, and hydration happens in the browser on load.
 
 ---
 
