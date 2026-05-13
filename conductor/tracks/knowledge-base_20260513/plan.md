@@ -21,15 +21,15 @@
 - [x] Write failing test: all 5 article files have valid frontmatter matching `articleSchema`
 - [x] Verify: `CI=true pnpm test` passes
 
-### Task 1.3: Update static metadata and filesystem
+### Task 1.3: Update static metadata and filesystem [762a4a0]
 
-- [ ] Rename `DEVOPS_METADATA` → `ARTICLES_METADATA` in `src/lib/projects-data.ts`, update references
-- [ ] Update `FILE_SYSTEM` in `src/lib/constants.ts`: rename `DevOps_Academy` → `Knowledge_Base`
-- [ ] Add subfolder entries per category under `E:\Knowledge_Base\`
-- [ ] Place article file entries in their respective category subfolders
-- [ ] Update `cat` command in `commands.ts` to use `ARTICLES_METADATA`
-- [ ] Write failing tests for filesystem changes (new path resolves correctly)
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Rename `DEVOPS_METADATA` → `ARTICLES_METADATA` in `src/lib/projects-data.ts`, update references
+- [x] Update `FILE_SYSTEM` in `src/lib/constants.ts`: rename `DevOps_Academy` → `Knowledge_Base`
+- [x] Add subfolder entries per category under `E:\Knowledge_Base\`
+- [x] Place article file entries in their respective category subfolders
+- [x] Update `cat` command in `commands.ts` to use `ARTICLES_METADATA`
+- [x] Write failing tests for filesystem changes (new path resolves correctly)
+- [x] Verify: `CI=true pnpm test` passes
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Content Collection Rename & MDX Migration' (Protocol in workflow.md)
 
