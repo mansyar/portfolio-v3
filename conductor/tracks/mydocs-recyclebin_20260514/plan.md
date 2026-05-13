@@ -4,29 +4,22 @@
 
 ## Phase 1 — Filesystem & Data Setup
 
-- [ ] Task: Write tests for filesystem and data changes
-  - [ ] Test: D: drive has BOTH Systems_Data and My_Documents as children
-  - [ ] Test: My_Documents contains Resume.pdf, Certs/ (empty folder), Contact.txt
-  - [ ] Test: resolvePath('D:\\My_Documents') returns correct folder node
-  - [ ] Test: getChildren('\\') returns C:, D:, E: drives PLUS a virtual Recycle_Bin entry
-  - [ ] Test: resolvePath('\\Recycle_Bin') returns special recycle bin node
-  - [ ] Test: chasing-chapters-v1 slug resolves in RECYCLE_BIN_METADATA
-  - [ ] Test: CONTACT_METADATA has all 6 fields (name, title, email, github, linkedin, location)
-- [ ] Task: Update `FILE_SYSTEM` in `constants.ts`
-  - [ ] Add `D:\My_Documents` as a second folder alongside existing `D:\Systems_Data`
-  - [ ] Inside `My_Documents`: `Resume.pdf` (file, slug: 'resume'), `Certs/` (empty folder), `Contact.txt` (file, slug: 'contact')
-  - [ ] Add `\Recycle_Bin` as a virtual root-level folder — modify `getChildren('\\')` to include it alongside drives, and `resolvePath` to handle `\Recycle_Bin`
-  - [ ] Inside `\Recycle_Bin`: `chasing-chapters-v1` (file, slug: 'chasing-chapters-v1', special styling)
-- [ ] Task: Update `projects-data.ts`
-  - [ ] Add `CONTACT_METADATA` export with explicit values:
-        name: "Muhammad Ansyar Rafi Putra",
-        title: "Software Engineer (DevOps & Data)",
-        email: "your.email@example.com",
-        github: "github.com/mansyar",
-        linkedin: "linkedin.com/in/your-profile",
-        location: "Indonesia"
-  - [ ] Add `RECYCLE_BIN_METADATA` export with:
-        'chasing-chapters-v1': { title, status: 'archived', description, repoUrl }
+- [x] **Task: Write tests for filesystem and data changes** (commit: TBD)
+  - [x] Test: D: drive has BOTH Systems_Data and My_Documents as children
+  - [x] Test: My_Documents contains Resume.pdf, Certs/ (empty folder), Contact.txt
+  - [x] Test: resolvePath('D:\\My_Documents') returns correct folder node
+  - [x] Test: getChildren('\\') returns C:, D:, E: drives PLUS a virtual Recycle_Bin entry
+  - [x] Test: resolvePath('\\Recycle_Bin') returns special recycle bin node
+  - [x] Test: chasing-chapters-v1 slug resolves in RECYCLE_BIN_METADATA
+  - [x] Test: CONTACT_METADATA has all 6 fields (name, title, email, github, linkedin, location)
+- [x] **Task: Update `FILE_SYSTEM` in `constants.ts`** (commit: TBD)
+  - [x] Add `D:\My_Documents` as a second folder alongside existing `D:\Systems_Data`
+  - [x] Inside `My_Documents`: `Resume.pdf` (file, slug: 'resume'), `Certs/` (empty folder), `Contact.txt` (file, slug: 'contact')
+  - [x] Add `\Recycle_Bin` as a virtual root-level folder — modify `getChildren('\\')` to include it alongside drives, and `resolvePath` to handle `\Recycle_Bin`
+  - [x] Inside `\Recycle_Bin`: `chasing-chapters-v1` (file, slug: 'chasing-chapters-v1', special styling)
+- [x] **Task: Update `projects-data.ts`** (commit: TBD)
+  - [x] Add `CONTACT_METADATA` export with explicit values
+  - [x] Add `RECYCLE_BIN_METADATA` export
 - [ ] Task: Update window store defaults in `windows.ts`
   - [ ] Modify `buildWindowState()`: `mydocs` defaults `explorerPath` to `D:\My_Documents`
   - [ ] Modify `buildWindowState()`: `recyclebin` defaults `explorerPath` to `\Recycle_Bin`

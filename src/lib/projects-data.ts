@@ -100,3 +100,42 @@ export const ARTICLES_METADATA: Record<string, ArticleMetadata> = {
     lastUpdated: '2026-05-13',
   },
 };
+
+// ── Contact Metadata ──────────────────────────────────────────────
+
+export interface ContactMetadata {
+  name: string;
+  title: string;
+  email: string;
+  github: string;
+  linkedin: string;
+  location: string;
+}
+
+export const CONTACT_METADATA: ContactMetadata = {
+  name: 'Muhammad Ansyar Rafi Putra',
+  title: 'Software Engineer (DevOps & Data)',
+  email: 'your.email@example.com',
+  github: 'github.com/mansyar',
+  linkedin: 'linkedin.com/in/your-profile',
+  location: 'Indonesia',
+};
+
+// ── Recycle Bin Metadata ──────────────────────────────────────────
+
+export interface RecycleBinItem {
+  title: string;
+  status: string;
+  description: string;
+  repoUrl: string;
+}
+
+export const RECYCLE_BIN_METADATA: Record<string, RecycleBinItem> = {
+  'chasing-chapters-v1': {
+    title: 'chasing-chapters (v1)',
+    status: 'archived',
+    description:
+      'Original version of the chasing-chapters project (pre-v2). This version has been superseded by the current active version.',
+    repoUrl: 'https://github.com/mansyar/chasing-chapters',
+  },
+};

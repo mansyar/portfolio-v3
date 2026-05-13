@@ -1,5 +1,38 @@
 import { FILE_SYSTEM, type FSNode, type FSDrive, type FSFolder } from '@/lib/constants';
 
+// ── Virtual Recycle Bin ──────────────────────────────────────────
+
+/**
+ * Synthetic Recycle Bin folder shown at the root level alongside drives.
+ */
+const RECYCLE_BIN_FOLDER: FSFolder = {
+  type: 'folder',
+  name: 'Recycle_Bin',
+  icon: '/icons/recycle-bin.svg',
+  children: [
+    {
+      type: 'file',
+      name: 'chasing-chapters (v1)',
+      icon: '/icons/file.svg',
+      slug: 'chasing-chapters-v1',
+      size: '—',
+    },
+  ],
+};
+
+/**
+ * Check if a path resolves to the virtual Recycle Bin.
+ */
+function isRecycleBinPath(normalized: string): boolean {
+  return (
+    normalized === '\\Recycle_Bin' ||
+    normalized === 'Recycle_Bin' ||
+    normalized === '\\Recycle_Bin\\'
+  );
+}
+
+// ── Path Utilities ────────────────────────────────────────────────
+
 /**
  * Normalize a path: replace forward slashes, collapse multiple backslashes,
  * strip trailing backslash (except for root `\`).
@@ -29,9 +62,17 @@ export function splitPath(path: string): string[] {
  * @example
  * resolvePath('C:\Software_Engineering') → FSFolder node
  * resolvePath('Z:\') → null
+ * resolvePath('\Recycle_Bin') → virtual Recycle Bin folder
  */
 export function resolvePath(path: string): FSNode | null {
-  const segments = splitPath(path);
+  const normalized = normalize(path);
+
+  // Handle virtual Recycle Bin path
+  if (isRecycleBinPath(normalized)) {
+    return RECYCLE_BIN_FOLDER;
+  }
+
+  const segments = splitPath(normalized);
   if (segments.length === 0) return null;
 
   // First segment must match a drive name (e.g. "C:")
@@ -64,12 +105,17 @@ export function resolvePath(path: string): FSNode | null {
  * Get the children of a path. Returns an empty array if the path
  * doesn't exist or points to a file.
  *
- * The root path `\` returns the top-level drives.
+ * The root path `\` returns the top-level drives plus the virtual Recycle Bin.
  */
 export function getChildren(path: string): FSNode[] {
   const normalized = normalize(path);
   if (normalized === '\\') {
-    return [...FILE_SYSTEM];
+    return [...FILE_SYSTEM, RECYCLE_BIN_FOLDER];
+  }
+
+  // Handle virtual Recycle Bin contents
+  if (isRecycleBinPath(normalized)) {
+    return [...RECYCLE_BIN_FOLDER.children];
   }
 
   const node = resolvePath(normalized);
