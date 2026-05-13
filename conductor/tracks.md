@@ -14,3 +14,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Command Prompt track archived to conductor/archive/command-prompt_20260512/ -->
 
 <!-- Task Manager track archived to conductor/archive/task-manager_20260512/ -->
+
+---
+
+- [ ] **Track: Knowledge Base — MDX article browser with category sidebar and XP styling**
+      _Link: [./tracks/knowledge-base_20260513/](./tracks/knowledge-base_20260513/)_
