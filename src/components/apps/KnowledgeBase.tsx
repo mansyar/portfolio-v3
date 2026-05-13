@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 
+// Generated at build time by scripts/compile-articles.mjs
 import articlesData from '@/lib/generated/articles-content.json';
 
 interface ArticleMeta {
@@ -56,35 +57,50 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
   const selectedHtml = selectedArticle ? typedData.content[selectedArticle] : null;
 
   return (
-    <div className="xp-knowledge-base" data-window-id={windowId}>
-      <div className="xp-kb-sidebar">
-        <div className="xp-kb-search">
+    // Main container: full-height flex row with XP Knowledge Base blue/white scheme
+    <div className="flex h-full font-['Tahoma','sans-serif'] text-xs" data-window-id={windowId}>
+      {/* ─── Left Sidebar: Search + Categories ─── */}
+      <div className="w-56 min-w-56 bg-[#d3e5fa] border-r-2 border-[#0046d5] flex flex-col overflow-hidden">
+        {/* Search bar */}
+        <div className="p-2 border-b border-[#b6cce0]">
           <input
             type="text"
             placeholder="Search articles..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-2 py-1 text-xs border-2 border-[#7f9db9] bg-white
+              focus:outline-none focus:border-[#0046d5] font-['Tahoma','sans-serif']"
           />
         </div>
-        <div className="xp-kb-categories">
-          {categories.map((cat) => (
-            <div
-              key={cat}
-              className={`xp-kb-category-item${selectedCategory === cat || (cat === 'All Articles' && !selectedCategory) ? ' xp-kb-category-active' : ''}`}
-              onClick={() => {
-                setSelectedCategory(cat === 'All Articles' ? null : cat);
-                setSelectedArticle(null);
-              }}
-            >
-              {cat}
-            </div>
-          ))}
+
+        {/* Category list */}
+        <div className="flex-1 overflow-y-auto py-1">
+          {categories.map((cat) => {
+            const isActive =
+              selectedCategory === cat || (cat === 'All Articles' && !selectedCategory);
+            return (
+              <div
+                key={cat}
+                className={`px-3 py-1 cursor-pointer select-none text-xs
+                  ${isActive ? 'bg-[#0046d5] text-white' : 'text-black hover:bg-[#b6cce0]'}`}
+                onClick={() => {
+                  setSelectedCategory(cat === 'All Articles' ? null : cat);
+                  setSelectedArticle(null);
+                }}
+              >
+                {cat}
+              </div>
+            );
+          })}
         </div>
       </div>
-      <div className="xp-kb-content">
-        <div className="xp-kb-article-list">
+
+      {/* ─── Right Content Pane: Article List + Detail ─── */}
+      <div className="flex-1 flex flex-col overflow-hidden bg-white">
+        {/* Article list */}
+        <div className="h-1/2 min-h-32 overflow-y-auto border-b-2 border-[#b6cce0]">
           {filteredArticles.length === 0 ? (
-            <div className="xp-kb-list-empty">
+            <div className="p-4 text-center text-gray-500 italic">
               {searchQuery.trim()
                 ? 'No articles match your search'
                 : 'No articles in this category'}
@@ -93,32 +109,45 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
             filteredArticles.map(([slug, meta], index) => (
               <div
                 key={slug}
-                className={`xp-kb-list-item${selectedArticle === slug ? ' xp-kb-list-item-active' : ''}${index % 2 === 1 ? ' xp-kb-list-item-alt' : ''}`}
+                className={`px-3 py-2 cursor-pointer select-none border-b border-[#e0e0e0]
+                  ${selectedArticle === slug ? 'bg-[#0046d5] text-white' : index % 2 === 1 ? 'bg-[#f0f4fa]' : 'bg-white'}
+                  ${selectedArticle !== slug ? 'hover:bg-[#b6cce0]' : ''}`}
                 onClick={() => setSelectedArticle(slug)}
               >
-                <div className="xp-kb-list-title">{meta.title}</div>
-                <div className="xp-kb-list-category">{meta.category}</div>
-                <div className="xp-kb-list-desc">{meta.description}</div>
+                <div className="font-bold text-xs">{meta.title}</div>
+                <div className="text-[10px] mt-0.5 opacity-75">{meta.category}</div>
+                <div className="text-[10px] mt-0.5 text-gray-600 line-clamp-2">
+                  {meta.description}
+                </div>
               </div>
             ))
           )}
         </div>
-        <div className="xp-kb-detail-pane">
+
+        {/* Detail pane */}
+        <div className="flex-1 overflow-y-auto p-3 bg-white">
           {!selectedMeta ? (
-            <div className="xp-kb-detail-placeholder">Select an article to view</div>
+            <div className="p-4 text-center text-gray-500 italic">Select an article to view</div>
           ) : (
-            <div className="xp-kb-detail-content">
-              <div className="xp-kb-detail-header">
-                <h2 className="xp-kb-detail-title">{selectedMeta.title}</h2>
-                <div className="xp-kb-detail-meta">
-                  <span className="xp-kb-detail-category">{selectedMeta.category}</span>
-                  <span className="xp-kb-detail-date">
-                    Last updated: {selectedMeta.lastUpdated}
+            <div className="max-w-full">
+              {/* Metadata header */}
+              <div className="mb-3 pb-2 border-b border-[#b6cce0]">
+                <h2 className="text-sm font-bold text-[#0046d5] m-0">{selectedMeta.title}</h2>
+                <div className="flex gap-2 mt-1 text-[10px] text-gray-600">
+                  <span className="bg-[#0046d5] text-white px-1.5 py-0.5 text-[10px]">
+                    {selectedMeta.category}
                   </span>
+                  <span>Last updated: {selectedMeta.lastUpdated}</span>
                 </div>
               </div>
+
+              {/* Rendered HTML content */}
               <div
-                className="xp-kb-detail-body"
+                className="xp-kb-detail-body text-xs leading-relaxed [&_h2]:text-sm [&_h2]:font-bold [&_h2]:mt-3 [&_h2]:mb-1
+                  [&_h3]:text-xs [&_h3]:font-bold [&_h3]:mt-2 [&_h3]:mb-1
+                  [&_p]:mb-2 [&_ul]:mb-2 [&_ul]:pl-5 [&_li]:mb-0.5
+                  [&_pre]:bg-[#f0f0f0] [&_pre]:p-2 [&_pre]:mb-2 [&_pre]:border [&_pre]:border-[#ccc]
+                  [&_code]:text-xs [&_strong]:font-bold"
                 dangerouslySetInnerHTML={{ __html: selectedHtml ?? '' }}
               />
             </div>
