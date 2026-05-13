@@ -6,7 +6,7 @@
 
 ### Tasks
 
-- [x] Task: Write failing tests for URL parsing and serialization
+- [x] Task: Write failing tests for URL parsing and serialization (b286296)
   - [x] Test: `parseParams()` extracts `w`, `focus`, `start`, `path` from URL search string
   - [x] Test: `serializeState()` generates correct URL param string from current stores
   - [x] Test: Path conversion: `C:/Software_Engineering` ↔ `C:\Software_Engineering`
@@ -19,7 +19,7 @@
   - [x] Test: Unknown `w` IDs (e.g., `w=bogus`) are silently skipped
   - [x] Test: `isHydrating` flag prevents store subscriber from writing URL
 
-- [x] Task: Implement `src/stores/url-sync.ts`
+- [x] Task: Implement `src/stores/url-sync.ts` (b286296)
   - [x] Define types: `UrlState` (parsed params — guards unknown WindowIds), `PathConverter` utilities
   - [x] Implement `isHydrating` boolean flag — set `true` at start of hydration, `false` after completion. Store subscriber checks this before writing to URL.
   - [x] Implement `parseParams(search: string): UrlState` — parse URLSearchParams into structured state. Unknown/invalid WindowIds in `w` param are filtered out silently (with `console.warn`).
