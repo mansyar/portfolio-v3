@@ -66,6 +66,7 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
           <input
             type="text"
             placeholder="Search articles..."
+            aria-label="Search articles"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-2 py-1 text-xs border-2 border-[#7f9db9] bg-white
@@ -81,11 +82,20 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
             return (
               <div
                 key={cat}
+                role="button"
+                tabIndex={0}
                 className={`px-3 py-1 cursor-pointer select-none text-xs
                   ${isActive ? 'bg-[#0046d5] text-white' : 'text-black hover:bg-[#b6cce0]'}`}
                 onClick={() => {
                   setSelectedCategory(cat === 'All Articles' ? null : cat);
                   setSelectedArticle(null);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedCategory(cat === 'All Articles' ? null : cat);
+                    setSelectedArticle(null);
+                  }
                 }}
               >
                 {cat}
@@ -109,10 +119,18 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
             filteredArticles.map(([slug, meta], index) => (
               <div
                 key={slug}
+                role="button"
+                tabIndex={0}
                 className={`px-3 py-2 cursor-pointer select-none border-b border-[#e0e0e0]
                   ${selectedArticle === slug ? 'bg-[#0046d5] text-white' : index % 2 === 1 ? 'bg-[#f0f4fa]' : 'bg-white'}
                   ${selectedArticle !== slug ? 'hover:bg-[#b6cce0]' : ''}`}
                 onClick={() => setSelectedArticle(slug)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedArticle(slug);
+                  }
+                }}
               >
                 <div className="font-bold text-xs">{meta.title}</div>
                 <div className="text-[10px] mt-0.5 opacity-75">{meta.category}</div>

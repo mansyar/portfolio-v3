@@ -42,9 +42,6 @@ function parseFrontmatter(content) {
   for (const line of lines) {
     const keyMatch = line.match(/^(\w+):\s*(.*)/);
     if (keyMatch) {
-      if (currentKey) {
-        // Store previous key
-      }
       currentKey = keyMatch[1];
       const rawValue = keyMatch[2].trim();
       metadata[currentKey] = parseYamlValue(rawValue);
