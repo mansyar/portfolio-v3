@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.9 · **Updated:** 2026-05-13  
+**Version:** 2.0 · **Updated:** 2026-05-13  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -29,7 +29,7 @@ gantt
     Track 2D – Knowledge Base     :done, p2d, after p2a, 3d
 
     section Phase 3
-    Track 3A – GitHub Data Sync   :p3a, after p2a, 2d
+    Track 3A – GitHub Data Sync   :done, p3a, after p2a, 2d
     Track 3B – URL State Persist  :p3b, after p1c, 2d
     Track 3C – My Docs & Bin      :p3c, after p2a, 2d
 
@@ -580,11 +580,11 @@ Track 2D produced 11 feature/fix commits, 5 plan/checkpoint commits, 1 review fi
 
 ## Phase 3 — Integration & Data
 
-### Track 3A — GitHub Data Sync
+### Track 3A — GitHub Data Sync ✅ _(Completed 2026-05-13)_
 
-> Build-time GitHub API fetching to populate project metadata (stars, commits, last push). Also inherits deferred Explorer enhancements from [Track 2A](#track-2a--explorer-content).
+> Build-time GitHub API fetching to populate project metadata (stars, commits, last push). Also inherits deferred Explorer enhancements from [Track 2A](#track-2a--explorer-content). All pre-build steps orchestrated via `scripts/prebuild.mjs`.
 
-**Refs:** [PRD §6](./PRD.md#6-devops--deployment-strategy) · [TDD §4.2](./TDD.md#42-github-api-data-shape) · [TDD §14](./TDD.md#14-build--deploy-pipeline)
+**Refs:** [PRD §6](./PRD.md#6-devops--deployment-strategy) · [TDD §4.2](./TDD.md#42-github-api-data-shape) · [TDD §14](./TDD.md#14-build--deploy-pipeline) · T3A [spec](conductor/archive/github-data-sync_20260513/spec.md) · T3A [plan](conductor/archive/github-data-sync_20260513/plan.md)
 
 #### Notes on Inherited Scope (from Track 2A)
 
@@ -595,25 +595,70 @@ Track 2D produced 11 feature/fix commits, 5 plan/checkpoint commits, 1 review fi
 
 #### Tasks
 
-- [ ] Create `src/lib/github.ts` with `fetchRepoStats()` ([TDD §4.2](./TDD.md#42-github-api-data-shape))
-- [ ] Integrate into Astro build pipeline — fetch data, merge into content collection entries
-- [ ] Cache last-good API response in `src/content/_cache/github.json` ([TDD §11](./TDD.md#11-error-states))
-- [ ] Fallback to cache on API failure with console warning ([TDD §11](./TDD.md#11-error-states))
-- [ ] Build dynamic `FILE_SYSTEM` at build time from `getCollection('projects')` + `getCollection('articles')` (replaces static T2A tree)
-- [ ] Pre-render MDX project bodies to HTML strings at build time and make them available to Explorer's detail pane
-- [ ] Verify fetched data appears in Explorer project listings and CMD `cat` output
+- [x] Create `src/lib/github.ts` with `fetchRepoStats()` + `fetchRepoCommitCount()` ([TDD §4.2](./TDD.md#42-github-api-data-shape))
+- [x] `GITHUB_TOKEN` env var support with unauthenticated fallback (60/hr limit sufficient for 3 repos)
+- [x] Request timeout (configurable, default 10s) via `AbortController`
+- [x] Cache last-good API response in `src/lib/generated/github-cache.json` ([TDD §11](./TDD.md#11-error-states))
+- [x] Fallback to cache on API failure with console warning, fail build if no cache ([TDD §11](./TDD.md#11-error-states))
+- [x] `scripts/fetch-github-stats.mjs` — reads repo URLs from project MDX frontmatter, fetches all stats, writes cache
+- [x] `scripts/compile-projects.mjs` — parses project MDX frontmatter + renders body to HTML via `marked`, merges GitHub data
+- [x] `ExplorerDetailPane.tsx` — imports from `projects-content.json` instead of static metadata, renders full body HTML
+- [x] `scripts/generate-filesystem.mjs` — builds dynamic `FILE_SYSTEM` from compiled JSON outputs (no redundant MDX parsing)
+- [x] `scripts/prebuild.mjs` — orchestrator running all 4 sub-scripts in sequence; `pnpm build` → `node scripts/prebuild.mjs && astro build`
+- [x] `src/lib/constants.ts` — preserves static `FILE_SYSTEM` as dev-mode fallback
+- [x] `.gitignore` — added `!src/lib/generated/projects-content.json` exception
+- [x] Update GitHub username from `ansyarr` to `mansyar` across all MDX + data files
 
 #### Acceptance Criteria
 
 ```
-
 ✅ `pnpm build` fetches live GitHub data and injects into project content
-✅ FILE_SYSTEM is dynamically built from content collections (no longer a static mirror)
-✅ Explorer detail pane renders full project MDX body content (upgraded from T2A metadata-only)
-✅ If GitHub API is unreachable, build succeeds using cached data
-✅ Explorer shows real star counts and last commit dates
+✅ `GITHUB_TOKEN` env var is respected when set
+✅ FILE_SYSTEM is dynamically built from compiled JSON at build time (no redundant MDX re-parsing)
+✅ Explorer detail pane imports from `projects-content.json` and renders full MDX project body HTML
+✅ Explorer shows real star counts, last commit dates, and commit counts
+✅ CMD `cat` shows live fetched values, not hardcoded
+✅ `projects-content.json` checked into git — works in dev mode without build
+✅ `constants.ts` keeps minimal fallback tree for dev mode
+✅ If GitHub API is unreachable, build succeeds using cached data with console warning
+✅ If no cache and API fails, build fails with clear error
+✅ `prebuild.mjs` orchestrates all 4 scripts in correct order
+✅ `conductor/tech-stack.md` updated with new build pipeline
+✅ `pnpm build` completes successfully (~3.44s)
+✅ 462 tests passing, 31 test files, all pre-commit hooks clean
+```
+
+#### Key Files Created/Modified
 
 ```
+src/lib/github.ts                       — GitHub API fetch module (fetchRepoStats, fetchRepoCommitCount)
+scripts/fetch-github-stats.mjs          — Build-time fetch script with cache fallback
+scripts/compile-projects.mjs            — Project MDX → HTML + GitHub data merge
+scripts/generate-filesystem.mjs         — Dynamic FILE_SYSTEM tree from compiled JSON
+scripts/prebuild.mjs                    — Orchestrator (4 sub-scripts in sequence)
+src/components/apps/ExplorerDetailPane.tsx — Body HTML rendering, commits display, live GitHub data
+src/lib/constants.ts                    — Updated comments, static tree preserved as fallback
+src/lib/projects-data.ts                — GitHub username fix
+src/content/projects/*.mdx              — GitHub username fix
+package.json                            — Build command: prebuild.mjs → astro build
+.gitignore                              — Added projects-content.json exception
+conductor/tech-stack.md                 — Updated build pipeline diagram + changelog
+```
+
+#### Test Files Created
+
+```
+tests/lib/github.test.ts                — 15 tests (auth, timeout, Link header, error handling)
+tests/fetch-github-stats.test.ts        — 8 tests (URL parsing, cache read/write, repo extraction)
+tests/compile-projects.test.ts          — 9 tests (output schema, frontmatter, bodyHtml, GitHub merge)
+tests/generate-filesystem.test.ts       — 8 tests (drive structure, folder hierarchy, type shape)
+tests/prebuild.test.ts                  — 4 tests (script existence, sub-script references, error handling)
+tests/explorer.test.tsx (modified)      — 1 new body HTML rendering test
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 3A produced 17 feature/plan/checkpoint commits, 1 review fix commit, 1 archive commit — across ~1,891+ lines changed (24 files). Track archived at `conductor/archive/github-data-sync_20260513/`. Username fix from `ansyarr` to `mansyar` included.
 
 ---
 
@@ -825,7 +870,7 @@ graph TD
     style T2B fill:#e67e22,color:#fff
     style T2C fill:#27ae60,color:#fff
     style T2D fill:#e67e22,color:#fff
-    style T3A fill:#9b59b6,color:#fff
+    style T3A fill:#27ae60,color:#fff
     style T3B fill:#9b59b6,color:#fff
     style T3C fill:#9b59b6,color:#fff
     style T4A fill:#e74c3c,color:#fff

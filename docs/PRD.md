@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.5  
+**Version:** 1.6  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -114,7 +114,7 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Detail Pane:** Renders pre-compiled HTML via `dangerouslySetInnerHTML`. Metadata header shows title, category badge (blue `#0046d5`), and last updated date. Scrollable content area.
 - **Search:** Text input at top of sidebar. Real-time filtering by title or description (case-insensitive). Crosses category boundaries — shows matches from all categories regardless of active category filter.
 - **Content Pipeline:** Articles stored as MDX in `src/content/articles/`. At build time, `scripts/compile-articles.mjs` parses frontmatter (manual YAML, no `gray-matter`) and renders body to HTML via `marked` (1-package lightweight approach). Output: `src/lib/generated/articles-content.json` (~1.6KB for 5 articles).
-- **Build Integration:** `"build": "node scripts/compile-articles.mjs && astro build"` — compile runs before Astro, total ~3.5s.
+- **Build Integration:** `"build": "node scripts/prebuild.mjs && astro build"` — the prebuild orchestrator runs all 4 pre-processing scripts (fetch-github-stats, compile-articles, compile-projects, generate-filesystem) before Astro, total ~3.44s.
 - **Articles:** 5 articles across 3 categories: DevOps (Docker Basics, Linux Essentials, CI/CD Pipeline), Software Engineering (Microservices Patterns), AI (LLM Fine-Tuning Guide).
 - **Accessibility:** `aria-label` on search input, `role="button"` and keyboard support (Enter/Space) on category and article items.
 
@@ -122,11 +122,17 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ## 6. DevOps & Deployment Strategy
 
-1.  **Data Sync:** Astro fetches GitHub repo stats during build time using `Astro.fetchContent` or custom loaders.
+1.  **Data Sync:** Build-time GitHub API fetching via `scripts/prebuild.mjs` orchestrator:
+    - `fetch-github-stats.mjs` — fetches stars, commits, and last push date from `GET /repos/{owner}/{repo}` and commits endpoint (Link header parsing for total count). Supports `GITHUB_TOKEN` env var for authenticated requests (60/hr limit without token is sufficient for 3 repos). Caches to `github-cache.json`.
+    - `compile-articles.mjs` — compiles article MDX → `articles-content.json` (metadata + HTML).
+    - `compile-projects.mjs` — compiles project MDX → `projects-content.json` (frontmatter + body HTML with GitHub data merge overwriting hardcoded stars/commits/lastCommit).
+    - `generate-filesystem.mjs` — builds dynamic `FILE_SYSTEM` tree (`filesystem.json`) from compiled JSON outputs (no redundant MDX re-parsing).
+    - Cache fallback: on GitHub API failure, reads `github-cache.json`. Warning on cache hit, error + exit on cache miss.
 2.  **Asset Pipeline:** Images are converted to WebP; icons remain high-quality SVGs.
 3.  **Deployment:**
     - Automatic deploy on `git push`.
     - CRON Job via GitHub Actions triggers a build at 00:00 UTC daily to update commit counts/repo data.
+    - Build command: `node scripts/prebuild.mjs && astro build`.
 4.  **Edge Logic:** Cloudflare Functions handle the URL Search Param parsing for window state persistence.
 
 ---

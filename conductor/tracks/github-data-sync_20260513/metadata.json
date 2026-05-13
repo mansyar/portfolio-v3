@@ -1,8 +1,0 @@
-{
-  "track_id": "github-data-sync_20260513",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-05-13T19:22:00Z",
-  "updated_at": "2026-05-13T19:22:00Z",
-  "description": "Build-time GitHub API fetching for project metadata, dynamic FILE_SYSTEM generation from content collections, and full MDX body rendering in Explorer detail pane."
-}
