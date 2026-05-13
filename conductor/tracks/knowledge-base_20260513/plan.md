@@ -2,15 +2,15 @@
 
 ## Phase 1: Content Collection Rename & MDX Migration
 
-### Task 1.1: Rename content collection and schema
+### Task 1.1: Rename content collection and schema [7d6705b]
 
-- [ ] Write failing test: `articles` collection exists in `src/content.config.ts` and loads MDX from `src/content/articles/`
-- [ ] Rename `devopsAcademy` to `articles` in `src/content.config.ts`
-- [ ] Rename `devopsAcademySchema` to `articleSchema` in `src/lib/content-schemas.ts`
-- [ ] Change `category` from `z.enum(['Docker', 'Linux', 'CI/CD'])` to `z.string()` to support auto-discovery
-- [ ] Update `export const collections` in `content.config.ts` to `{ projects, articles }`
-- [ ] Update all test imports and references from `devopsAcademy` to `articles`/`articleSchema`
-- [ ] Verify: `CI=true pnpm test` passes
+- [x] Write failing test: `articles` collection exists in `src/content.config.ts` and loads MDX from `src/content/articles/`
+- [x] Rename `devopsAcademy` to `articles` in `src/content.config.ts`
+- [x] Rename `devopsAcademySchema` to `articleSchema` in `src/lib/content-schemas.ts`
+- [x] Change `category` from `z.enum(['Docker', 'Linux', 'CI/CD'])` to `z.string()` to support auto-discovery
+- [x] Update `export const collections` in `content.config.ts` to `{ projects, articles }`
+- [x] Update all test imports and references from `devopsAcademy` to `articles`/`articleSchema`
+- [x] Verify: `CI=true pnpm test` passes
 
 ### Task 1.2: Migrate and expand MDX articles
 
