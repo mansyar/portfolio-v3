@@ -30,7 +30,7 @@ gantt
 
     section Phase 3
     Track 3A – GitHub Data Sync   :done, p3a, after p2a, 2d
-    Track 3B – URL State Persist  :p3b, after p1c, 2d
+    Track 3B – URL State Persist  :done, p3b, after p1c, 2d
     Track 3C – My Docs & Bin      :p3c, after p2a, 2d
 
     section Phase 4
@@ -662,7 +662,7 @@ Track 3A produced 17 feature/plan/checkpoint commits, 1 review fix commit, 1 arc
 
 ---
 
-### Track 3B — URL State Persistence
+### Track 3B — URL State Persistence ✅ _(Completed 2026-05-13)_
 
 > Sync window state to URL search params for deep-linking and share-ability. Also inherits Explorer path persistence deferred from [Track 2A](#track-2a--explorer-content).
 
@@ -676,11 +676,18 @@ Track 3A produced 17 feature/plan/checkpoint commits, 1 review fix commit, 1 arc
 
 #### Tasks
 
-- [ ] Create URL ↔ store sync logic in `src/stores/windows.ts` ([TDD §2](./TDD.md#2-routing--url-strategy))
-- [ ] On page load: parse `?w=`, `?focus=`, `?start=`, `?path=` → hydrate stores ([TDD §2](./TDD.md#2-routing--url-strategy))
-- [ ] On store change: debounced `replaceState()` to update URL (no reload) ([TDD §2](./TDD.md#2-routing--url-strategy))
-- [ ] Sync Explorer `explorerPath` to/from `?path=` URL param
-- [ ] Test all deep-link examples from TDD §2
+- [x] Create `src/stores/url-sync.ts` — dedicated URL ↔ store sync module with `parseParams`, `serializeState`, `hydrateFromUrl`, `initUrlSync` ([TDD §2](./TDD.md#2-routing--url-strategy))
+- [x] On page load: `hydrateFromUrl()` parses `?w=`, `?focus=`, `?start=`, `?path=` → hydrates stores via `openWindow()`, `focusWindow()`, `openStartMenu()` ([TDD §2](./TDD.md#2-routing--url-strategy))
+- [x] `isHydrating` boolean flag prevents feedback loop during hydration
+- [x] Subscribe to `$windows`, `$startMenuOpen`, `$activeWindow` with 100ms debounce → `replaceState()`/`pushState()` (no reload) ([TDD §2](./TDD.md#2-routing--url-strategy))
+- [x] `setPendingPushState()` marks user-initiated actions for `pushState`; all other changes use `replaceState`
+- [x] Sync Explorer `explorerPath` to/from `?path=` URL param with forward/backslash conversion
+- [x] `popstate` event listener re-hydrates stores for browser back/forward navigation
+- [x] No-op guard: skip `replaceState()` when serialized state matches current URL
+- [x] Integrate `initUrlSync()` in WindowLayer `useEffect` on mount
+- [x] Wire `setPendingPushState()` for window open/close/focus and Start Menu toggle
+- [x] 36 unit tests covering parsing, serialization, path conversion, hydration, subscriber guards
+- [x] SSR safety: `typeof window !== 'undefined'` guard in `initUrlSync()`
 
 #### Acceptance Criteria
 
@@ -689,8 +696,18 @@ Track 3A produced 17 feature/plan/checkpoint commits, 1 review fix commit, 1 arc
 ✅ Opening windows updates the URL with correct params
 ✅ Pasting a URL with `?w=explorer&path=C:/Software_Engineering` opens Explorer to that path
 ✅ Pasting a URL with `?w=cmd,taskmanager&focus=cmd` opens both windows with CMD focused
+✅ Pasting a URL with `?start=1` opens the Start Menu on load
 ✅ Closing all windows returns URL to clean `/`
-✅ Browser back/forward navigates window state history
+✅ Browser back/forward navigates window state history correctly
+✅ Start Menu state is reflected in URL (`?start=1`)
+✅ Path uses forward slashes in URL, backslashes in store
+✅ Invalid paths fall back to `C:\` gracefully
+✅ No page reload occurs during any URL update
+✅ URL updates are debounced at 100ms — no spamming during rapid operations
+✅ No spurious `replaceState()` calls during drag/resize (no-op guard)
+✅ Unknown window IDs in URL params are silently skipped with console warning
+✅ Initial hydration uses `replaceState()` — browser back button doesn't show duplicate states
+✅ Hydration order is correct: `focusWindow()` called last so focused window has highest z-index
 
 ```
 

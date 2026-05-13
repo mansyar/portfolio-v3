@@ -99,9 +99,13 @@ https://mansyar.dev/?w=cmd,taskmanager&focus=cmd&start=0
 
 ### Implementation
 
-- Nano Stores sync to `URLSearchParams` via a `$urlSync` computed store
-- On page load: parse URL → hydrate stores
-- On store change: debounced `replaceState()` (no page reload)
+- Dedicated `src/stores/url-sync.ts` module owns all URL ↔ store synchronization logic
+- On page load: `hydrateFromUrl()` parses `?w=`, `?focus=`, `?start=`, `?path=` → hydrates stores via `openWindow()`, `focusWindow()`, `openStartMenu()`
+- An `isHydrating` boolean flag prevents feedback loops during hydration
+- On store change: debounced (100ms) `replaceState()`/`pushState()` updates URL (no page reload)
+- `setPendingPushState()` marks user-initiated actions (window open/close/focus, Start Menu toggle) for `pushState`; all other changes use `replaceState`
+- `popstate` event listener re-hydrates stores for browser back/forward navigation
+- No-op guard skips `replaceState()` when serialized state matches current URL
 - Cloudflare Pages handles this client-side (no edge function needed for static params)
 
 ---

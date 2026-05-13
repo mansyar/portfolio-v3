@@ -1,8 +1,0 @@
-{
-  "track_id": "url-state-persistence_20260513",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-05-13T22:09:00Z",
-  "updated_at": "2026-05-13T22:09:00Z",
-  "description": "Sync Nano Stores window state to URL search params for deep-linking, shareability, and browser history navigation. Fulfills deferred Explorer path persistence from Track 2A."
-}
