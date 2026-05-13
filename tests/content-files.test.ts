@@ -1,13 +1,19 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 
 const projectsDir = resolve(__dirname, '..', 'src', 'content', 'projects');
-const devopsDir = resolve(__dirname, '..', 'src', 'content', 'devops-academy');
+const articlesDir = resolve(__dirname, '..', 'src', 'content', 'articles');
 
 const projectFiles = ['icarus-server-manager.mdx', 'chasing-chapters.mdx', 'tubular-bexus-osw.mdx'];
 
-const devopsFiles = ['docker-basics.mdx', 'linux-essentials.mdx', 'ci-cd-pipeline.mdx'];
+const articleFiles = [
+  'docker-basics.mdx',
+  'linux-essentials.mdx',
+  'ci-cd-pipeline.mdx',
+  'microservices-patterns.mdx',
+  'llm-fine-tuning.mdx',
+];
 
 function parseFrontmatter(content: string): Record<string, unknown> {
   const match = content.match(/^---\s*\n([\s\S]*?)\n---/);
@@ -88,19 +94,58 @@ describe('Project MDX Files', () => {
   });
 });
 
-describe('DevOps Academy MDX Files', () => {
-  it.each(devopsFiles)('devops file "%s" should exist', (file) => {
-    expect(existsSync(resolve(devopsDir, file))).toBe(true);
+describe('Article MDX Files (migrated from devops-academy)', () => {
+  it.each(articleFiles)('article file "%s" should exist in src/content/articles/', (file) => {
+    expect(existsSync(resolve(articlesDir, file))).toBe(true);
   });
 
-  it.each(devopsFiles)('devops file "%s" should have valid frontmatter', (file) => {
-    const content = readFileSync(resolve(devopsDir, file), 'utf-8');
+  it.each(articleFiles)(
+    'article file "%s" should have valid frontmatter matching articleSchema',
+    (file) => {
+      const content = readFileSync(resolve(articlesDir, file), 'utf-8');
+      const fm = parseFrontmatter(content);
+      expect(fm.title).toBeTruthy();
+      expect(fm.slug).toBeTruthy();
+      expect(fm.category).toBeTruthy();
+      expect(typeof fm.category).toBe('string');
+      expect(fm.description).toBeTruthy();
+      expect(typeof fm.order).toBe('number');
+      expect(fm.lastUpdated).toBeTruthy();
+    },
+  );
+
+  it('should have exactly 5 article files', () => {
+    const files = readdirSync(articlesDir).filter((f: string) => f.endsWith('.mdx'));
+    expect(files).toHaveLength(5);
+  });
+
+  it('docker-basics should have category DevOps', () => {
+    const content = readFileSync(resolve(articlesDir, 'docker-basics.mdx'), 'utf-8');
     const fm = parseFrontmatter(content);
-    expect(fm.title).toBeTruthy();
-    expect(fm.slug).toBeTruthy();
-    expect(fm.category).toBeTruthy();
-    expect(['Docker', 'Linux', 'CI/CD']).toContain(fm.category);
-    expect(fm.description).toBeTruthy();
-    expect(typeof fm.order).toBe('number');
+    expect(fm.category).toBe('DevOps');
+  });
+
+  it('linux-essentials should have category DevOps', () => {
+    const content = readFileSync(resolve(articlesDir, 'linux-essentials.mdx'), 'utf-8');
+    const fm = parseFrontmatter(content);
+    expect(fm.category).toBe('DevOps');
+  });
+
+  it('ci-cd-pipeline should have category DevOps', () => {
+    const content = readFileSync(resolve(articlesDir, 'ci-cd-pipeline.mdx'), 'utf-8');
+    const fm = parseFrontmatter(content);
+    expect(fm.category).toBe('DevOps');
+  });
+
+  it('microservices-patterns should have category Software Engineering', () => {
+    const content = readFileSync(resolve(articlesDir, 'microservices-patterns.mdx'), 'utf-8');
+    const fm = parseFrontmatter(content);
+    expect(fm.category).toBe('Software Engineering');
+  });
+
+  it('llm-fine-tuning should have category AI', () => {
+    const content = readFileSync(resolve(articlesDir, 'llm-fine-tuning.mdx'), 'utf-8');
+    const fm = parseFrontmatter(content);
+    expect(fm.category).toBe('AI');
   });
 });

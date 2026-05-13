@@ -16,7 +16,7 @@ const requiredDirectories = [
   'src/components/mobile',
   // Content directories
   'src/content/projects',
-  'src/content/devops-academy',
+  'src/content/articles',
   // Infrastructure directories
   'src/layouts',
   'src/pages',

@@ -1,0 +1,57 @@
+---
+title: Microservices Patterns
+slug: microservices-patterns
+category: Software Engineering
+order: 1
+description: A comprehensive overview of common microservices architectural patterns — service decomposition, communication strategies, data management, and observability.
+lastUpdated: '2026-05-13'
+---
+
+## Microservices Patterns
+
+Microservices architecture decomposes an application into independently deployable services that communicate over a network. This guide covers the essential patterns you need to build robust microservice-based systems.
+
+### Decomposition Patterns
+
+- **Decompose by Business Capability**: Align services with business functions (inventory, billing, shipping)
+- **Decompose by Subdomain**: Use Domain-Driven Design bounded contexts to define service boundaries
+- **Strangler Fig**: Incrementally replace monolithic components with microservices
+
+### Communication Patterns
+
+```
+Service A ──HTTP/REST──→ Service B
+    │                        │
+    │                        │
+    └────Message Queue───────┘
+```
+
+- **Synchronous**: REST, gRPC for request-response interactions
+- **Asynchronous**: Message brokers (Kafka, RabbitMQ) for event-driven communication
+- **API Gateway**: Single entry point for routing, auth, rate limiting
+
+### Data Management
+
+- **Database per Service**: Each service owns its data store — prevents tight coupling
+- **Saga Pattern**: Distributed transactions via choreography or orchestration
+- **CQRS**: Separate read and write models for query/command optimization
+- **Event Sourcing**: Persist state changes as an append-only event log
+
+### Observability
+
+- **Distributed Tracing**: Trace requests across service boundaries (Jaeger, Zipkin)
+- **Centralized Logging**: Aggregate logs from all services (ELK stack)
+- **Health Checks**: `/health` and `/ready` endpoints for Kubernetes probes
+
+### Deployment
+
+- **Containerization**: Docker packages each service with its dependencies
+- **Orchestration**: Kubernetes manages service deployment, scaling, and healing
+- **Service Mesh**: Istio/Linkerd handle service-to-service communication, retries, and circuit breaking
+
+### Best Practices
+
+- Design for failure — use circuit breakers, retries, and timeouts
+- Implement CI/CD pipelines per service for independent deployments
+- Version APIs explicitly (e.g., `/v1/orders`, `/v2/orders`)
+- Use infrastructure as code for reproducible environments

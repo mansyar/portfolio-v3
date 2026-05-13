@@ -1,0 +1,79 @@
+---
+title: LLM Fine-Tuning Guide
+slug: llm-fine-tuning
+category: AI
+order: 1
+description: A practical guide to fine-tuning large language models — from data preparation and LoRA techniques to evaluation and deployment considerations.
+lastUpdated: '2026-05-13'
+---
+
+## LLM Fine-Tuning Guide
+
+Fine-tuning adapts a pre-trained large language model to perform specific tasks or understand domain-specific knowledge. This guide covers the end-to-end process from data preparation to deployment.
+
+### When to Fine-Tune
+
+Consider fine-tuning when:
+
+- **Domain Specialization**: You need the model to understand technical jargon (legal, medical, code)
+- **Task Specificity**: Standard prompting doesn't achieve the desired output format or quality
+- **Data Privacy**: You cannot send proprietary data through third-party API endpoints
+- **Latency**: On-device or self-hosted inference is required
+
+### Data Preparation
+
+```
+Raw Data → Clean → Format → Validate → Split (80/10/10)
+```
+
+- Collect high-quality, task-specific examples (min 500-1000 for noticeable improvements)
+- Format as instruction-response pairs or conversation turns
+- Deduplicate and filter low-quality samples
+- Include edge cases and failure scenarios
+
+### Fine-Tuning Techniques
+
+#### Full Fine-Tuning
+
+- Updates all model parameters
+- Requires significant compute (multiple GPUs)
+- Best for major domain adaptation
+
+#### LoRA (Low-Rank Adaptation)
+
+- Adds trainable rank-decomposition matrices to attention layers
+- Reduces trainable parameters by 10,000x
+- Memory efficient — fine-tune on a single consumer GPU
+- Easy to swap adapters without full model reload
+
+#### QLoRA
+
+- Quantizes the base model to 4-bit precision
+- Adds LoRA adapters on top
+- Fine-tune 65B parameter models on a single 48GB GPU
+- Negligible quality loss compared to full fine-tuning
+
+### Hyperparameters
+
+| Parameter          | Typical Range  | Notes                              |
+| ------------------ | -------------- | ---------------------------------- |
+| Learning Rate      | 1e-5 to 5e-4   | Lower for full fine-tuning         |
+| Batch Size         | 4-64           | Larger batches with gradient accum |
+| Epochs             | 1-5            | Stop when eval loss plateaus       |
+| LoRA Rank (r)      | 8-64           | Higher = more capacity             |
+| LoRA Alpha         | 16-128         | Usually 2x the rank                |
+| Warmup Steps       | 50-200         | Stabilizes initial training        |
+
+### Evaluation
+
+- **Perplexity**: Measure of prediction quality on held-out data
+- **Human Evaluation**: Rate outputs for relevance, accuracy, and tone
+- **Task-Specific Metrics**: BLEU for translation, ROUGE for summarization, F1 for classification
+- **A/B Testing**: Compare fine-tuned vs. base model on real user queries
+
+### Deployment
+
+- Export in GGUF format for CPU-friendly inference (llama.cpp)
+- Use vLLM or TGI for high-throughput GPU serving
+- Dockerize with model weights and inference server
+- Implement a feedback loop to collect real-world performance data
