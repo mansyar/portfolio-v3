@@ -74,6 +74,11 @@ export function Explorer({ windowId }: ExplorerProps) {
   );
 
   const handleFileClick = useCallback((slug: string) => {
+    // Resume.pdf opens directly in a new browser tab
+    if (slug === 'resume') {
+      window.open('/resume.pdf', '_blank');
+      return;
+    }
     setSelectedSlug(slug);
   }, []);
 

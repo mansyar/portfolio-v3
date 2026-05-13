@@ -30,7 +30,7 @@
 - [x] **Task: Update `scripts/generate-filesystem.mjs`** (ef4b98d)
   - [x] Add hardcoded `D:\My_Documents` entries (Resume.pdf, Certs/, Contact.txt) to the generated tree
   - [x] The static constants.ts tree remains the source of truth for dev mode
-- [ ] Task: Conductor - User Manual Verification 'Phase 1'
+- [x] **Task: Conductor - User Manual Verification 'Phase 1'** (done — user reported Contact.txt not showing; fixed in subsequent commits)
 
 ## Phase 2 — My Documents View (TDD)
 
@@ -41,13 +41,12 @@
   - [ ] Test: navigating into Certs/ shows "This folder is empty."
   - [ ] Test: clicking Contact.txt shows contact metadata in detail pane
   - [ ] Test: breadcrumb segments show correct path for My Documents
-- [ ] Task: Implement Resume.pdf click → new tab behavior
-  - [ ] Add `onSpecialFileClick` callback prop to `ExplorerFileList` (or check by file name in `Explorer.tsx`)
-  - [ ] When file name is `Resume.pdf`, call `window.open('/resume.pdf')` instead of setting selected slug
-- [ ] Task: Implement Contact.txt detail pane
-  - [ ] Add `CONTACT_METADATA` import and lookup in `ExplorerDetailPane.tsx`
-  - [ ] Display contact card: title, description section with all 6 fields
-  - [ ] GitHub renders as a clickable link, other fields as text
+- [x] **Task: Implement Resume.pdf click → new tab behavior** (commit: coming)
+  - [x] When slug is 'resume', call `window.open('/resume.pdf')` instead of setting selected slug
+- [x] **Task: Implement Contact.txt detail pane** (commit: coming)
+  - [x] Add `CONTACT_METADATA` import and lookup in `ExplorerDetailPane.tsx`
+  - [x] Display contact card with all 6 fields (name, title, email, github, linkedin, location)
+  - [x] GitHub and LinkedIn render as clickable links
 - [ ] Task: Conductor - User Manual Verification 'Phase 2'
 
 ## Phase 3 — Recycle Bin View (TDD)
@@ -63,10 +62,10 @@
         grayed-out icon (opacity 0.5), strikethrough name, reduced opacity on row
   - [ ] Apply `.xp-file-row-deleted` class to recycle bin file rows in `ExplorerFileList.tsx`
   - [ ] Detect recycle bin path and pass styling context to FileListItem
-- [ ] Task: Implement Recycle Bin detail pane
-  - [ ] Add `RECYCLE_BIN_METADATA` import and lookup in `ExplorerDetailPane.tsx`
-  - [ ] Display: archived status badge ("ARCHIVED" in gray), description, repository link
-  - [ ] Add disabled "Restore" button with tooltip "Cannot restore — Original location does not exist"
+- [x] **Task: Implement Recycle Bin detail pane** (commit: coming)
+  - [x] Add `RECYCLE_BIN_METADATA` import and lookup in `ExplorerDetailPane.tsx`
+  - [x] Display: archived status badge ("ARCHIVED" in gray), description, repository link
+  - [x] Add disabled "Restore" button with tooltip "Cannot restore — Original location does not exist"
 - [ ] Task: Conductor - User Manual Verification 'Phase 3'
 
 ## Phase 4 — Integration & Verification

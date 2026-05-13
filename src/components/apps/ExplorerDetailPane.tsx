@@ -1,5 +1,5 @@
 import projectsContent from '@/lib/generated/projects-content.json';
-import { ARTICLES_METADATA } from '@/lib/projects-data';
+import { ARTICLES_METADATA, CONTACT_METADATA, RECYCLE_BIN_METADATA } from '@/lib/projects-data';
 import type { ArticleMetadata } from '@/lib/projects-data';
 
 interface ExplorerDetailPaneProps {
@@ -34,6 +34,90 @@ type ProjectsContentMap = Record<string, ProjectEntry>;
 
 export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
   if (!slug) return null;
+
+  // ── Contact card ─────────────────────────────────────────────
+  if (slug === 'contact') {
+    const contact = CONTACT_METADATA;
+    return (
+      <div className="xp-detail-pane" role="region" aria-label="Contact details">
+        <h2 className="xp-detail-title">{contact.name}</h2>
+        <p className="xp-detail-description">{contact.title}</p>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">Email:</span>
+          <span className="xp-detail-value">{contact.email}</span>
+        </div>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">GitHub:</span>
+          <a
+            href={`https://${contact.github}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="xp-detail-value xp-detail-link"
+          >
+            {contact.github}
+          </a>
+        </div>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">LinkedIn:</span>
+          <a
+            href={`https://${contact.linkedin}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="xp-detail-value xp-detail-link"
+          >
+            {contact.linkedin}
+          </a>
+        </div>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">Location:</span>
+          <span className="xp-detail-value">{contact.location}</span>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Recycle Bin item ─────────────────────────────────────────
+  const recycleData = RECYCLE_BIN_METADATA[slug];
+  if (recycleData) {
+    return (
+      <div className="xp-detail-pane" role="region" aria-label="Recycle Bin details">
+        <h2 className="xp-detail-title">{recycleData.title}</h2>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">Status:</span>
+          <span className="xp-badge xp-badge-archived">{recycleData.status.toUpperCase()}</span>
+        </div>
+
+        <p className="xp-detail-description">{recycleData.description}</p>
+
+        {recycleData.repoUrl && (
+          <div className="xp-detail-section">
+            <span className="xp-detail-label">Repository:</span>
+            <a
+              href={recycleData.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="xp-detail-value xp-detail-link"
+            >
+              {recycleData.repoUrl}
+            </a>
+          </div>
+        )}
+
+        <button
+          className="xp-button xp-button-restore"
+          disabled
+          title="Cannot restore — Original location does not exist"
+        >
+          Restore
+        </button>
+      </div>
+    );
+  }
 
   // Try projects content first (includes bodyHtml + live GitHub data)
   const projects = projectsContent as unknown as ProjectsContentMap;

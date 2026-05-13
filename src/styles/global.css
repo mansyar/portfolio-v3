@@ -171,3 +171,26 @@
     opacity: 1;
   }
 }
+
+/* === Explorer Detail Pane Extras === */
+
+.xp-badge-archived {
+  background: #d4d0c8;
+  color: #666666;
+  font-weight: bold;
+}
+
+.xp-detail-link {
+  color: #0000cc;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.xp-detail-link:hover {
+  color: #ff0000;
+}
+
+.xp-button-restore {
+  margin-top: 12px;
+  width: 100%;
+}
