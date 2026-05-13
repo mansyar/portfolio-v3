@@ -21,5 +21,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: URL State Persistence**
+- [x] **Track: URL State Persistence**
       _Link: [./tracks/url-state-persistence_20260513/](./tracks/url-state-persistence_20260513/)_
