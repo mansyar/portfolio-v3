@@ -6,15 +6,18 @@
 
 ### Task 1.1: Write failing tests for `fetchRepoStats()`
 
-- [ ] Write tests verifying `fetchRepoStats()` returns correct shape (`stargazers_count`, `pushed_at`, `default_branch`, `language`)
+- [ ] Write tests verifying `fetchRepoStats()` returns correct shape (`name`, `stargazers_count`, `pushed_at`, `default_branch`, `language` — per TDD §4.2)
+- [ ] Write tests verifying `fetchRepoCommitCount()` returns a number by parsing the `Link` header
 - [ ] Write tests verifying `GITHUB_TOKEN` is passed as `Authorization: Bearer` header
 - [ ] Write tests verifying unauthenticated fallback when no token
-- [ ] Write tests verifying error handling (network failure, non-200 response)
+- [ ] Write tests verifying error handling (network failure, non-200 response, malformed Link header)
 - [ ] Write tests verifying request timeout behavior
 
 ### Task 1.2: Implement `src/lib/github.ts`
 
-- [ ] Create `src/lib/github.ts` with exported `GitHubRepoData` type and `fetchRepoStats(owner, repo)` function
+- [ ] Create `src/lib/github.ts` with exported types (`GitHubRepoData` includes `name` per TDD §4.2) and functions (`fetchRepoStats`, `fetchRepoCommitCount`)
+- [ ] `fetchRepoStats(owner, repo)` — calls `GET /repos/{owner}/{repo}`, returns `{ name, stargazers_count, pushed_at, default_branch, language }`
+- [ ] `fetchRepoCommitCount(owner, repo)` — calls `GET /repos/{owner}/{repo}/commits?per_page=1&page=1`, parses `Link` header for `rel="last"` page number
 - [ ] Implement authenticated request path (reads `GITHUB_TOKEN` env var)
 - [ ] Implement unauthenticated fallback
 - [ ] Add request timeout (configurable, default 10s)
@@ -30,10 +33,10 @@
 ### Task 1.4: Create `scripts/fetch-github-stats.mjs`
 
 - [ ] Read project repo URLs from MDX files or projects-data
-- [ ] Call `fetchRepoStats()` for each unique `owner/repo`
-- [ ] On success: write to `src/lib/generated/github-cache.json`
+- [ ] Call `fetchRepoStats()` and `fetchRepoCommitCount()` for each unique `owner/repo`
+- [ ] On success: write combined data (stats + commit count) to `src/lib/generated/github-cache.json`
 - [ ] On failure: read cache file; if exists, log warning and continue; if not, log error and exit with non-zero
-- [ ] Log each repo's result (stars, last commit) to console
+- [ ] Log each repo's result (stars, last commit, commits) to console
 - [ ] Verify tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: GitHub API Fetch Layer' (Protocol in workflow.md)
 
@@ -44,25 +47,27 @@
 ### Task 2.1: Write failing tests for `compile-projects.mjs`
 
 - [ ] Write tests verifying output file `projects-content.json` exists
-- [ ] Write tests verifying schema: `Record<string, { frontmatter, bodyHtml }>`
-- [ ] Write tests verifying frontmatter fields (title, slug, drive, description, repoUrl, techStack, status)
+- [ ] Write tests verifying schema: `Record<string, { frontmatter: ProjectMetadata, bodyHtml: string }>`
+- [ ] Write tests verifying frontmatter fields (title, slug, drive, description, repoUrl, techStack, status, icon)
 - [ ] Write tests verifying body is rendered to valid HTML string
-- [ ] Write tests verifying GitHub API data merges with frontmatter (stars, lastCommit replace hardcoded values)
+- [ ] Write tests verifying GitHub API data merges with frontmatter (stars, lastCommit, commits replace hardcoded values)
 
 ### Task 2.2: Create `scripts/compile-projects.mjs`
 
 - [ ] Read project MDX files from `src/content/projects/`
 - [ ] Parse YAML frontmatter (manual parsing, no external lib — same approach as compile-articles.mjs)
 - [ ] Render MDX body to HTML using `marked`
-- [ ] Merge with fetched GitHub API data (overwrite `stars`, `lastCommit`)
-- [ ] Output to `src/lib/generated/projects-content.json`
+- [ ] Merge with fetched GitHub API data — overwrite hardcoded `stars`, `lastCommit`, and `commits` with values from `github-cache.json`
+- [ ] Output to `src/lib/generated/projects-content.json` with schema `Record<string, { frontmatter: ProjectMetadata, bodyHtml: string }>`
 - [ ] Verify tests pass
 
-### Task 2.3: Update Explorer detail pane to render body HTML
+### Task 2.3: Update ExplorerDetailPane to render full project body HTML
 
-- [ ] Load `projects-content.json` in Explorer (import at build time, bundled as static data)
-- [ ] When a project file is selected, render `bodyHtml` in a scrollable content area
-- [ ] Keep frontmatter header (title, badges, repo link) above the body
+- [ ] **Switch import source:** `ExplorerDetailPane.tsx` currently imports `PROJECTS_METADATA` from `projects-data.ts` — update to import from `src/lib/generated/projects-content.json` instead
+- [ ] The JSON provides both frontmatter (with live GitHub stars/lastCommit/commits) and `bodyHtml`
+- [ ] Render `bodyHtml` in a scrollable content area below the metadata header
+- [ ] Keep frontmatter header (title, language, tech stack badges, stars, last commit, GitHub link) above the body
+- [ ] Keep backward compatibility: fallback to `ARTICLES_METADATA` from `projects-data.ts` for article entries (not in `projects-content.json`)
 - [ ] Write tests verifying body HTML renders in detail pane
 - [ ] Write tests verifying fallback to metadata-only if no body HTML available
 - [ ] Verify tests pass
@@ -82,8 +87,9 @@
 
 ### Task 3.2: Create `scripts/generate-filesystem.mjs`
 
-- [ ] Read project MDX files, extract `slug` and `drive` field from frontmatter
-- [ ] Read article MDX files, extract `slug` and `category` from frontmatter
+- [ ] **Read compiled JSON outputs (not raw MDX)** to avoid redundant parsing:
+  - From `src/lib/generated/projects-content.json` → extract `slug` and `drive` per project
+  - From `src/lib/generated/articles-content.json` → extract `slug` and `category` per article
 - [ ] Build FS tree: C:/Software_Engineering (C: projects), D:/Systems_Data (D: projects), E:/Knowledge_Base/{category}/ (articles grouped by category)
 - [ ] Output to `src/lib/generated/filesystem.json`
 - [ ] Verify tests pass
@@ -92,10 +98,10 @@
 
 - [ ] Keep all type definitions (`FSNode`, `FSDrive`, `FSFolder`, `FSFile`)
 - [ ] Remove static `FILE_SYSTEM` data array
-- [ ] Add async import or build-time import of generated JSON
-- [ ] Keep a minimal fallback tree for development without build
+- [ ] Add import of generated `filesystem.json` (Vite handles JSON imports at build time)
+- [ ] Keep a minimal fallback tree for development without build (`pnpm dev` doesn't run prebuild.mjs)
 - [ ] Write tests verifying types remain unchanged
-- [ ] Write tests verifying fallback tree exists
+- [ ] Write tests verifying fallback tree exists and has correct structure
 - [ ] Verify tests pass
 
 ### Task 3.4: Update Explorer + CMD to use dynamic FILE_SYSTEM
@@ -129,14 +135,24 @@
 
 ### Task 4.3: Update `src/lib/projects-data.ts`
 
-- [ ] Remove hardcoded `stars`, `lastCommit` values from `PROJECTS_METADATA`
-- [ ] Import GitHub data from build-time generated JSON
-- [ ] Keep static defaults for development without build
+- [ ] Remove hardcoded `stars`, `lastCommit`, `commits` values from `PROJECTS_METADATA` (now populated from GitHub API)
+- [ ] Keep type definitions (`ProjectMetadata`, `ArticleMetadata`) — still used by `ExplorerDetailPane` for article fallback
+- [ ] Keep static defaults for `projects-data.ts` entries as fallback for development without build
 
 ### Task 4.4: Update `.gitignore` for generated files
 
-- [ ] Add `src/lib/generated/` — all build-time JSON outputs are gitignored (except `!articles-content.json` and `!projects-content.json` as they are needed for runtime)
+- [ ] `src/lib/generated/` is already gitignored via `*` rule
+- [ ] Add `!src/lib/generated/projects-content.json` exception (checked in so it exists in dev mode without build)
+- [ ] `github-cache.json` and `filesystem.json` remain gitignored (generated at build time; `filesystem.json` has fallback in `constants.ts`)
 - [ ] Verify test passes
+
+### Task 4.5: Update `conductor/tech-stack.md` with new build pipeline
+
+- [ ] Document `scripts/prebuild.mjs` orchestrator and all 4 sub-scripts
+- [ ] Update the Build Pipeline diagram in tech-stack.md
+- [ ] Add change log entry for this track
+- [ ] Write tests verifying tech-stack.md references are correct
+- [ ] Verify tests pass
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Orchestration & Integration' (Protocol in workflow.md)
 
 ---
@@ -147,9 +163,10 @@
 
 - [ ] Execute `pnpm build`
 - [ ] Verify `fetch-github-stats.mjs` completes with console output showing stars/commits for each repo
-- [ ] Verify `filesystem.json` is generated with correct structure
-- [ ] Verify `projects-content.json` is generated with frontmatter + body HTML
-- [ ] Verify `github-cache.json` is created
+- [ ] Verify `github-cache.json` is created with `name`, `stargazers_count`, `pushed_at`, `language`, and commit count for each repo
+- [ ] Verify `projects-content.json` is generated with frontmatter (including live stars, lastCommit, commits) + body HTML
+- [ ] Verify `filesystem.json` is generated with correct structure (read from compiled JSON, not raw MDX)
+- [ ] Verify `compile-articles.mjs` still runs correctly (unchanged)
 
 ### Task 5.2: Verify Explorer displays full project body
 
@@ -160,7 +177,7 @@
 ### Task 5.3: Verify CMD shows fetched data
 
 - [ ] In Command Prompt, run `cat icarus-server-manager`
-- [ ] Confirm `Stars:` and `Last Commit:` show live fetched values (not hardcoded ones)
+- [ ] Confirm `Stars:`, `Last Commit:`, and `Commits:` show live fetched values (not hardcoded ones)
 - [ ] Run `ls` and `cd` to verify filesystem works with dynamic data
 
 ### Task 5.4: Verify API failure fallback
