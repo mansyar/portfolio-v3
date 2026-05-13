@@ -1,6 +1,6 @@
 # Track 2D — Knowledge Base Implementation Plan
 
-## Phase 1: Content Collection Rename & MDX Migration
+## Phase 1: Content Collection Rename & MDX Migration [checkpoint: 6afafa8]
 
 ### Task 1.1: Rename content collection and schema [7d6705b]
 
@@ -31,7 +31,7 @@
 - [x] Write failing tests for filesystem changes (new path resolves correctly)
 - [x] Verify: `CI=true pnpm test` passes
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Content Collection Rename & MDX Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Content Collection Rename & MDX Migration' (Protocol in workflow.md)
 
 ## Phase 2: Build-Time MDX Compilation Pipeline
 
