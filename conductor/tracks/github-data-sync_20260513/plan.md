@@ -44,22 +44,22 @@
 
 ## Phase 2 — MDX Project Body Compilation
 
-### Task 2.1: Write failing tests for `compile-projects.mjs`
+### Task 2.1: Write failing tests for `compile-projects.mjs` `[60da0a0]`
 
-- [ ] Write tests verifying output file `projects-content.json` exists
-- [ ] Write tests verifying schema: `Record<string, { frontmatter: ProjectMetadata, bodyHtml: string }>`
-- [ ] Write tests verifying frontmatter fields (title, slug, drive, description, repoUrl, techStack, status, icon)
-- [ ] Write tests verifying body is rendered to valid HTML string
-- [ ] Write tests verifying GitHub API data merges with frontmatter (stars, lastCommit, commits replace hardcoded values)
+- [x] Write tests verifying output file `projects-content.json` exists
+- [x] Write tests verifying schema: `Record<string, { frontmatter: ProjectMetadata, bodyHtml: string }>`
+- [x] Write tests verifying frontmatter fields (title, slug, drive, description, repoUrl, techStack, status, icon)
+- [x] Write tests verifying body is rendered to valid HTML string
+- [x] Write tests verifying GitHub API data merges with frontmatter (stars, lastCommit, commits replace hardcoded values)
 
-### Task 2.2: Create `scripts/compile-projects.mjs`
+### Task 2.2: Create `scripts/compile-projects.mjs` `[60da0a0]`
 
-- [ ] Read project MDX files from `src/content/projects/`
-- [ ] Parse YAML frontmatter (manual parsing, no external lib — same approach as compile-articles.mjs)
-- [ ] Render MDX body to HTML using `marked`
-- [ ] Merge with fetched GitHub API data — overwrite hardcoded `stars`, `lastCommit`, and `commits` with values from `github-cache.json`
-- [ ] Output to `src/lib/generated/projects-content.json` with schema `Record<string, { frontmatter: ProjectMetadata, bodyHtml: string }>`
-- [ ] Verify tests pass
+- [x] Read project MDX files from `src/content/projects/`
+- [x] Parse YAML frontmatter (manual parsing, no external lib — same approach as compile-articles.mjs)
+- [x] Render MDX body to HTML using `marked`
+- [x] Merge with fetched GitHub API data — overwrite hardcoded `stars`, `lastCommit`, and `commits` with values from `github-cache.json`
+- [x] Output to `src/lib/generated/projects-content.json` with schema `Record<string, { frontmatter: ProjectMetadata, bodyHtml: string }>`
+- [x] Verify tests pass
 
 ### Task 2.3: Update ExplorerDetailPane to render full project body HTML
 
