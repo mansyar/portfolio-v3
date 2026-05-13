@@ -147,6 +147,16 @@
 
 ---
 
+## Phase: Review Fixes
+
+### Task R1: Fix test isolation (shared cache cleanup) `[131e1ad]`
+
+- [x] Remove `afterAll` cleanup of `github-cache.json` that broke `compile-projects.test.ts`
+- [x] Remove unused `afterAll` import from test file
+- [x] Verify all 462 tests pass
+
+---
+
 ## Phase 5 — End-to-End Verification
 
 ### Task 5.1: Run full build pipeline
