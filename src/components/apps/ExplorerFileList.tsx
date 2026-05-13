@@ -26,6 +26,7 @@ export function ExplorerFileList({
   }
 
   const normalizedPath = path.endsWith('\\') ? path : path + '\\';
+  const isRecycleBin = path === '\\Recycle_Bin' || path === '\\Recycle_Bin\\';
 
   return (
     <div className="xp-file-list" role="list" aria-label="File list">
@@ -58,6 +59,7 @@ export function ExplorerFileList({
               isSelected={node.type === 'file' && (node as { slug?: string }).slug === selectedSlug}
               onFileClick={onFileClick}
               onFolderNavigate={onFolderNavigate}
+              isDeleted={isRecycleBin}
             />
           ))}
         </tbody>
@@ -72,15 +74,25 @@ function FileListItem({
   isSelected,
   onFileClick,
   onFolderNavigate,
+  isDeleted = false,
 }: {
   node: FSNode;
   parentPath: string;
   isSelected: boolean;
   onFileClick: (slug: string) => void;
   onFolderNavigate: (path: string) => void;
+  isDeleted?: boolean;
 }) {
   const isFile = node.type === 'file';
   const icon = isFile ? '/icons/file.svg' : '/icons/folder.svg';
+  const typeLabel =
+    isDeleted && isFile
+      ? 'Deleted File'
+      : node.type === 'drive'
+        ? 'Local Disk'
+        : node.type === 'folder'
+          ? 'File Folder'
+          : 'MDX File';
 
   const handleClick = () => {
     if (isFile) {
@@ -90,23 +102,32 @@ function FileListItem({
     }
   };
 
+  const rowClass = [
+    'xp-file-row',
+    isSelected ? 'xp-file-row-selected' : '',
+    isDeleted ? 'xp-file-row-deleted' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <tr
-      className={`xp-file-row ${isSelected ? 'xp-file-row-selected' : ''}`}
-      onClick={handleClick}
-      role="row"
-      aria-selected={isSelected}
-    >
+    <tr className={rowClass} onClick={handleClick} role="row" aria-selected={isSelected}>
       <td className="xp-col-icon">
-        <img src={icon} alt="" width={16} height={16} className="xp-file-icon" />
+        <img
+          src={icon}
+          alt=""
+          width={16}
+          height={16}
+          className={`xp-file-icon${isDeleted ? ' xp-file-icon-deleted' : ''}`}
+        />
       </td>
       <td className="xp-col-name">
-        <span className="xp-file-name">{node.name}</span>
+        <span className={`xp-file-name${isDeleted ? ' xp-file-name-deleted' : ''}`}>
+          {isDeleted ? <span className="xp-file-name-strikethrough">{node.name}</span> : node.name}
+        </span>
       </td>
       <td className="xp-col-size">{isFile ? ((node as { size?: string }).size ?? '—') : ''}</td>
-      <td className="xp-col-type">
-        {node.type === 'drive' ? 'Local Disk' : node.type === 'folder' ? 'File Folder' : 'MDX File'}
-      </td>
+      <td className="xp-col-type">{typeLabel}</td>
       <td className="xp-col-date">—</td>
     </tr>
   );

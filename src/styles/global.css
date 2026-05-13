@@ -194,3 +194,18 @@
   margin-top: 12px;
   width: 100%;
 }
+
+/* === Recycle Bin Deleted File Styling === */
+
+.xp-file-row-deleted {
+  opacity: 0.6;
+}
+
+.xp-file-icon-deleted {
+  opacity: 0.5;
+}
+
+.xp-file-name-strikethrough {
+  text-decoration: line-through;
+  color: #666666;
+}
