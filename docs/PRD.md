@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.4  
+**Version:** 1.5  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -107,8 +107,16 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ### 5.3 Knowledge Base
 
-- **UI:** Classic blue/white pane with a search bar and sidebar with category tree navigation.
-- **Content:** Renders MDX articles spanning Software Engineering, AI, DevOps, and more, styled as classic Windows XP Knowledge Base articles.
+- **React Island:** `KnowledgeBase.tsx` with component-local state (no Nano Stores needed).
+- **Layout:** Two-column layout — left sidebar (blue `#d3e5fa` panel) with search bar + category tree, right content pane with article list (top) and detail view (bottom).
+- **Category Sidebar:** Auto-discovered from article frontmatter `category` field. "All Articles" default selected. Clicking filters the article list.
+- **Article List:** Shows title, category badge, and description excerpt. Alternating row backgrounds with hover highlight. Clicking an article opens it in the detail pane.
+- **Detail Pane:** Renders pre-compiled HTML via `dangerouslySetInnerHTML`. Metadata header shows title, category badge (blue `#0046d5`), and last updated date. Scrollable content area.
+- **Search:** Text input at top of sidebar. Real-time filtering by title or description (case-insensitive). Crosses category boundaries — shows matches from all categories regardless of active category filter.
+- **Content Pipeline:** Articles stored as MDX in `src/content/articles/`. At build time, `scripts/compile-articles.mjs` parses frontmatter (manual YAML, no `gray-matter`) and renders body to HTML via `marked` (1-package lightweight approach). Output: `src/lib/generated/articles-content.json` (~1.6KB for 5 articles).
+- **Build Integration:** `"build": "node scripts/compile-articles.mjs && astro build"` — compile runs before Astro, total ~3.5s.
+- **Articles:** 5 articles across 3 categories: DevOps (Docker Basics, Linux Essentials, CI/CD Pipeline), Software Engineering (Microservices Patterns), AI (LLM Fine-Tuning Guide).
+- **Accessibility:** `aria-label` on search input, `role="button"` and keyboard support (Enter/Space) on category and article items.
 
 ---
 

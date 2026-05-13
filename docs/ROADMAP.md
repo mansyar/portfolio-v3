@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 1.8 · **Updated:** 2026-05-12  
+**Version:** 1.9 · **Updated:** 2026-05-13  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -26,7 +26,7 @@ gantt
     Track 2A – Explorer + Content :done, p2a, after p1b, 4d
     Track 2B – Command Prompt     :done, p2b, after p1b, 3d
     Track 2C – Task Manager       :done, p2c, after p1b, 3d
-    Track 2D – Knowledge Base     :p2d, after p2a, 3d
+    Track 2D – Knowledge Base     :done, p2d, after p2a, 3d
 
     section Phase 3
     Track 3A – GitHub Data Sync   :p3a, after p2a, 2d
@@ -510,36 +510,71 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 
 ---
 
-### Track 2D — Knowledge Base
+### Track 2D — Knowledge Base ✅ _(Completed 2026-05-13)_
 
-> MDX article browser styled as the classic XP Knowledge Base pane. Hosts variative articles spanning Software Engineering, AI, DevOps, and more.
+> MDX article browser styled as the classic XP Knowledge Base pane. Hosts 5 variative articles across DevOps, Software Engineering, and AI categories. Content is pre-compiled at build time to JSON for fast runtime access.
 
 **Refs:** [PRD §5.3](./PRD.md#53-knowledge-base) · [TDD §4.1](./TDD.md#41-content-collection-schemas) (article schema) · [TDD §6](./TDD.md#6-component-inventory)
 
 #### Tasks
 
-- [ ] Rename content collection from `devopsAcademy` to `articles` with broadened `category` field (Software Engineering, AI, DevOps, etc.)
-- [ ] Rename content source directory from `src/content/devops-academy/` to `src/content/articles/`
-- [ ] Rename virtual filesystem folder from `E:\DevOps_Academy` to `E:\Knowledge_Base` with subfolders per category
-- [ ] Write initial MDX articles covering multiple categories (SE, AI, DevOps)
-- [ ] Create `KnowledgeBase.tsx` — blue/white pane with search bar and sidebar ([PRD §5.3](./PRD.md#53-knowledge-base))
-- [ ] Implement sidebar category tree navigation
-- [ ] Implement basic text search filtering over articles
-- [ ] Render selected MDX article in the main content pane
-- [ ] Style to match classic XP Knowledge Base window aesthetic
+- [x] Rename content collection from `devopsAcademy` to `articles` with broadened `category` field (`z.string()`)
+- [x] Migrate MDX files from `src/content/devops-academy/` to `src/content/articles/`
+- [x] Write 2 new articles: `microservices-patterns.mdx` (Software Engineering) + `llm-fine-tuning.mdx` (AI)
+- [x] Rename virtual filesystem from `E:\DevOps_Academy` to `E:\Knowledge_Base` with subfolders per category (DevOps, Software_Engineering, AI)
+- [x] Rename `DEVOPS_METADATA` to `ARTICLES_METADATA` with 5 entries, rename `DevopsAcademyMetadata` to `ArticleMetadata`
+- [x] Create `scripts/compile-articles.mjs` — standalone build-time script using `marked` (no Astro API)
+- [x] Integrate compile step into build pipeline: `"build": "node scripts/compile-articles.mjs && astro build"`
+- [x] Create `KnowledgeBase.tsx` — React island with sidebar, search, article list, HTML detail pane
+- [x] Wire KnowledgeBase into WindowLayer at `windowId === 'help'`, rename "Help & Support" → "Knowledge Base"
+- [x] Style with Tailwind utility classes (blue XP panel, Tahoma font, 3D borders)
 
 #### Acceptance Criteria
 
 ```
-✅ Knowledge Base opens showing categories in sidebar
-✅ Clicking a category shows its articles
-✅ Clicking an article renders MDX content
-✅ Search bar filters articles by title/description
-✅ Layout matches the classic XP Knowledge Base pane aesthetic
-✅ E:\Knowledge_Base shows subfolders per category (DevOps, Software_Engineering, AI, etc.)
+✅ Content collection renamed from devopsAcademy to articles with broadened categories
+✅ 5 articles across 3 categories: DevOps (3), Software Engineering (1), AI (1)
+✅ scripts/compile-articles.mjs compiles 5 articles → articles-content.json (1.6KB)
+✅ pnpm build runs compile script before astro build (total: ~3.5s)
+✅ KnowledgeBase window opens from desktop icon and Start Menu
+✅ Left sidebar shows auto-discovered categories (All Articles, DevOps, AI, Software Engineering)
+✅ Clicking a category filters article list
+✅ Clicking an article renders pre-compiled HTML in detail pane with metadata header
+✅ Search filters articles in real-time by title/description, crosses category boundaries
+✅ Empty states shown: "No articles in this category" / "No articles match your search"
+✅ Layout matches classic XP Knowledge Base pane (blue/white, Tahoma, search bar)
+✅ CMD cat command still works with ARTICLES_METADATA
+✅ 412 tests passing, all pre-commit hooks clean
+✅ All src/ files under 500 lines (modularity check passes)
 ```
 
+#### Key Files Created/Modified
+
 ```
+src/components/apps/KnowledgeBase.tsx     — React island: sidebar, search, article list, HTML detail pane (159 lines)
+scripts/compile-articles.mjs             — Standalone build script: manual YAML parsing + marked rendering
+src/lib/generated/articles-content.json  — Pre-compiled article data (metadata + HTML, 1.6KB)
+src/lib/content-schemas.ts (modified)    — devopsAcademySchema → articleSchema, z.string() for category
+src/lib/projects-data.ts (modified)      — DEVOPS_METADATA → ARTICLES_METADATA, 5 entries
+src/lib/constants.ts (modified)          — E:\Knowledge_Base with DevOps/Software_Engineering/AI subfolders
+src/lib/commands.ts (modified)           — ARTICLES_METADATA import, cat handler updated
+src/components/apps/ExplorerDetailPane.tsx (modified) — Updated type references
+src/content.config.ts (modified)         — devopsAcademy → articles collection
+src/components/window/WindowLayer.tsx (modified) — KnowledgeBase wired at 'help' window ID
+src/components/taskbar/StartMenu.tsx (mod.) — "Help & Support" → "Knowledge Base"
+src/stores/windows.ts (modified)         — Window title: "Help & Support" → "Knowledge Base"
+src/pages/index.astro (modified)         — Desktop icon label: "Help & Support" → "Knowledge Base"
+tests/KnowledgeBase.test.tsx             — 15 component + integration tests
+tests/compile-articles.test.ts           — 8 script output validation tests
+package.json (modified)                  — Added marked dependency, updated build script
+.gitignore (modified)                    — Added src/lib/generated/* with !articles-content.json exception
+eslint.config.mjs (modified)             — Added scripts/ to ignores
+conductor/tech-stack.md (modified)       — Added marked to core stack, updated build pipeline, added changelog
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 2D produced 11 feature/fix commits, 5 plan/checkpoint commits, 1 review fix commit, 1 docs sync commit, 1 archive commit across all phases. Track archived at `conductor/archive/knowledge-base_20260513/`.
 
 ---
 
@@ -759,7 +794,7 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 ✅ CRON job triggers daily build to refresh GitHub data
 ✅ Build completes in under 60 seconds
 
-````
+```
 
 ---
 
@@ -797,7 +832,7 @@ graph TD
     style T4B fill:#e74c3c,color:#fff
     style T4C fill:#e74c3c,color:#fff
     style T5A fill:#1abc9c,color:#fff
-````
+```
 
 ### Parallel Work Opportunities
 
