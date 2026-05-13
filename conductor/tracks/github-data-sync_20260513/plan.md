@@ -2,7 +2,7 @@
 
 ---
 
-## Phase 1 — GitHub API Fetch Layer
+## Phase 1 — GitHub API Fetch Layer [checkpoint: be014f5]
 
 ### Task 1.1: Write failing tests for `fetchRepoStats()` `[c48366b]`
 
@@ -38,7 +38,7 @@
 - [x] On failure: read cache file; if exists, log warning and continue; if not, log error and exit with non-zero
 - [x] Log each repo's result (stars, last commit, commits) to console
 - [x] Verify tests pass
-- [~] Task: Conductor - User Manual Verification 'Phase 1: GitHub API Fetch Layer' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: GitHub API Fetch Layer' (Protocol in workflow.md)
 
 ---
 
