@@ -55,7 +55,7 @@ export const DEFAULT_WINDOW_CONFIGS: Record<WindowId, WindowConfig> = {
     minHeight: 250,
   },
   help: {
-    title: 'Help & Support',
+    title: 'Knowledge Base',
     icon: '/icons/help-support.svg',
     width: 750,
     height: 550,

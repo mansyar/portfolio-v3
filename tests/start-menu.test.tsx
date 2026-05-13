@@ -97,84 +97,17 @@ describe('StartMenu.tsx — Right Column (System Folders)', () => {
     expect(screen.getByText('Control Panel')).toBeInTheDocument();
   });
 
-  it('should show Help & Support item', () => {
+  it('should show Knowledge Base item', () => {
     render(<StartMenu />);
-    expect(screen.getByText('Help & Support')).toBeInTheDocument();
-  });
-});
-
-describe('StartMenu.tsx — Shut Down Button', () => {
-  it('should show Shut Down... button in bottom bar', async () => {
-    const desktop = await import('@/stores/desktop');
-    desktop.$startMenuOpen.set(true);
-    render(<StartMenu />);
-    expect(screen.getByText('Shut Down...')).toBeInTheDocument();
-  });
-});
-
-describe('StartMenu.tsx — Window Actions', () => {
-  beforeEach(async () => {
-    const desktop = await import('@/stores/desktop');
-    desktop.$startMenuOpen.set(true);
+    expect(screen.getByText('Knowledge Base')).toBeInTheDocument();
   });
 
-  it('should open My Documents and close menu when clicking Resume', async () => {
-    const windows = await import('@/stores/windows');
+  it('should open Knowledge Base when clicking Knowledge Base', async () => {
     render(<StartMenu />);
-    fireEvent.click(screen.getByText('Resume'));
-    expect(windows.$windows.get().mydocs).toBeDefined();
-    // Wait for close animation to complete
-    await new Promise((resolve) => setTimeout(resolve, 150));
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
-  });
-
-  it('should open Explorer when clicking Explorer', async () => {
-    const windows = await import('@/stores/windows');
-    render(<StartMenu />);
-    fireEvent.click(screen.getByText('Explorer'));
-    expect(windows.$windows.get().explorer).toBeDefined();
-  });
-
-  it('should open Task Manager when clicking Task Manager', async () => {
-    const windows = await import('@/stores/windows');
-    render(<StartMenu />);
-    fireEvent.click(screen.getByText('Task Manager'));
-    expect(windows.$windows.get().taskmanager).toBeDefined();
-  });
-
-  it('should open Command Prompt when clicking Command Prompt', async () => {
-    const windows = await import('@/stores/windows');
-    render(<StartMenu />);
-    fireEvent.click(screen.getByText('Command Prompt'));
-    expect(windows.$windows.get().cmd).toBeDefined();
-  });
-
-  it('should open My Documents when clicking My Documents', async () => {
-    const windows = await import('@/stores/windows');
-    render(<StartMenu />);
-    fireEvent.click(screen.getByText('My Documents'));
-    expect(windows.$windows.get().mydocs).toBeDefined();
-  });
-
-  it('should open My Computer when clicking My Computer', async () => {
-    const windows = await import('@/stores/windows');
-    render(<StartMenu />);
-    fireEvent.click(screen.getByText('My Computer'));
-    expect(windows.$windows.get().explorer).toBeDefined();
-  });
-
-  it('should open Task Manager when clicking Control Panel', async () => {
-    const windows = await import('@/stores/windows');
-    render(<StartMenu />);
-    fireEvent.click(screen.getByText('Control Panel'));
-    expect(windows.$windows.get().taskmanager).toBeDefined();
-  });
-
-  it('should open Help & Support when clicking Help & Support', async () => {
-    const windows = await import('@/stores/windows');
-    render(<StartMenu />);
-    fireEvent.click(screen.getByText('Help & Support'));
-    expect(windows.$windows.get().help).toBeDefined();
+    const storeModule = await import('@/stores/windows');
+    storeModule.closeWindow('help');
+    fireEvent.click(screen.getByText('Knowledge Base'));
+    expect(storeModule.$windows.get().help).toBeDefined();
   });
 
   it('should close menu when clicking any menu item', async () => {

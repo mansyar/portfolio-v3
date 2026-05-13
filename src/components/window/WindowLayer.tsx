@@ -18,10 +18,10 @@ import type { MouseEvent } from 'react';
 import { Explorer } from '@/components/apps/Explorer';
 import { CmdPrompt } from '@/components/apps/CmdPrompt';
 import { TaskManager } from '@/components/apps/TaskManager';
+import { KnowledgeBase } from '@/components/apps/KnowledgeBase';
 
 const PLACEHOLDER_CONTENT: Record<string, string> = {
   mydocs: 'My Documents — Coming Soon in Track 2B',
-  help: 'Help & Support — Coming Soon in Track 2C',
   recyclebin: 'Recycle Bin — Coming Soon in Track 2F',
 };
 
@@ -92,6 +92,10 @@ function renderContent(id: WindowId) {
 
   if (id === 'taskmanager') {
     return <TaskManager windowId={id} />;
+  }
+
+  if (id === 'help') {
+    return <KnowledgeBase windowId={id} />;
   }
 
   const placeholder = PLACEHOLDER_CONTENT[id];

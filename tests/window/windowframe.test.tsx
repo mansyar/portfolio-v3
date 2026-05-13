@@ -67,7 +67,7 @@ describe('WindowFrame.tsx', () => {
     const placeholders = [
       { id: 'explorer', text: 'My Computer' },
       { id: 'mydocs', text: 'My Documents' },
-      { id: 'help', text: 'Help & Support' },
+      { id: 'help', text: 'Knowledge Base' },
       { id: 'cmd', text: 'Command Prompt' },
       { id: 'taskmanager', text: 'Task Manager' },
       { id: 'recyclebin', text: 'Recycle Bin' },

@@ -25,4 +25,5 @@ pnpm-debug.log*
 
 coverage/
 __test_modularity__/
-src/lib/generated/
+src/lib/generated/*
+!src/lib/generated/articles-content.json

@@ -48,7 +48,7 @@ describe('Window Types & Default Configs', () => {
     const mod = await import('@/stores/windows');
     const cfg = mod.DEFAULT_WINDOW_CONFIGS.help;
     expect(cfg).toMatchObject({
-      title: 'Help & Support',
+      title: 'Knowledge Base',
       width: 750,
       height: 550,
       x: 60,

@@ -87,7 +87,7 @@ describe('Home Page Integration', () => {
   it('should render 5 desktop icons with correct labels', () => {
     expect(html).toContain('My Computer');
     expect(html).toContain('My Documents');
-    expect(html).toContain('Help &amp; Support');
+    expect(html).toContain('Knowledge Base');
     expect(html).toContain('Command Prompt');
     expect(html).toContain('Recycle Bin');
   });

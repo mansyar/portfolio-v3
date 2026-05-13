@@ -35,7 +35,7 @@ const RIGHT_ITEMS: MenuItem[] = [
     icon: '/icons/task-manager.svg',
     windowId: 'taskmanager',
   },
-  { id: 'help', label: 'Help & Support', icon: '/icons/help-support.svg', windowId: 'help' },
+  { id: 'help', label: 'Knowledge Base', icon: '/icons/help-support.svg', windowId: 'help' },
 ];
 
 const ALL_ITEMS = [...LEFT_ITEMS, ...RIGHT_ITEMS];
