@@ -18,6 +18,7 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 | **Content**           | MDX + Astro Content | —             | Project write-ups and DevOps Academy articles                   |
 | **Language**          | TypeScript          | ^5.x          | Strict type checking across all source files                    |
 | **Schema Validation** | Zod                 | ^4.x          | Runtime validation for content collection frontmatter schemas   |
+| **Markdown Renderer** | marked              | ^18.x         | Build-time MDX-to-HTML compilation for Knowledge Base articles  |
 
 ## Integrations
 
@@ -70,7 +71,7 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 ### Build Pipeline
 
 ```
-git push → GitHub Actions → pnpm install → Fetch GitHub API → astro build → Cloudflare Pages
+git push → GitHub Actions → pnpm install → Fetch GitHub API → node scripts/compile-articles.mjs → astro build → Cloudflare Pages
 ```
 
 ## Performance Budgets
@@ -99,6 +100,13 @@ git push → GitHub Actions → pnpm install → Fetch GitHub API → astro buil
 ---
 
 ## Change Log
+
+### 2026-05-13 — Added `marked` for build-time MDX compilation
+
+- **Reason:** Track 2D (Knowledge Base) requires a lightweight markdown-to-HTML renderer for the `compile-articles.mjs` build script.
+- **Impact:** `node scripts/compile-articles.mjs` runs before `astro build`. Articles are now pre-compiled to JSON for runtime use by the KnowledgeBase React island.
+- **Files affected:** `package.json`, `scripts/compile-articles.mjs`
+- **Packages added:** `marked`
 
 ### 2026-05-11 — Astro v5.x → v6.x
 
