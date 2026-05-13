@@ -114,6 +114,14 @@ prebuild.mjs
 
 ## Change Log
 
+### 2026-05-14 — Track 3C: My Documents & Recycle Bin — Virtual filesystem additions
+
+- **Reason:** Track 3C requires My Documents (Resume.pdf, Certs/, Contact.txt) on D: drive and a virtual Recycle Bin at root level for displaying archived/deleted project items.
+- **Impact:** `D:\My_Documents` added as sibling folder to `D:\Systems_Data`. `\Recycle_Bin` added as virtual root-level folder (not a drive) via special-cased `getChildren()`/`resolvePath()` in `filesystem.ts`. New data exports: `CONTACT_METADATA` (6 fields), `RECYCLE_BIN_METADATA` with archive status. `scripts/generate-filesystem.mjs` updated to include static My_Documents entries. Explorer reused for both views.
+- **Packages added:** None (pure data + component changes).
+- **Files affected:** `src/lib/constants.ts`, `src/lib/filesystem.ts`, `src/lib/projects-data.ts`, `src/stores/windows.ts`, `src/components/apps/Explorer.tsx`, `src/components/apps/ExplorerDetailPane.tsx`, `src/components/apps/ExplorerFileList.tsx`, `src/components/window/WindowLayer.tsx`, `src/styles/global.css`, `scripts/generate-filesystem.mjs`, `public/resume.pdf`
+- **Tests added:** `tests/filesystem.test.ts` (22 tests — core utilities + My Documents/Recycle Bin filesystem), `tests/explorer.test.tsx` (10 new My Documents + Recycle Bin + Resume click tests)
+
 ### 2026-05-13 — Track 3A: GitHub Data Sync — Build pipeline overhaul
 
 - **Reason:** Track 3A requires live GitHub data (stars, commits, last commit date) to be fetched at build time and merged into project MDX content. The build pipeline was restructured with a `prebuild.mjs` orchestrator that runs 4 sub-scripts in sequence.

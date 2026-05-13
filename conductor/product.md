@@ -22,7 +22,9 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 
 - **Windows XP Luna Desktop:** Bliss wallpaper, desktop icons, taskbar with Start Menu
 - **Window Manager:** State-driven draggable, resizable, minimizable/maximizable windows powered by Nano Stores
-- **File Explorer:** Virtual filesystem with `C:\`, `D:\`, `E:\` drives, folder navigation, and MDX content rendering
+- **File Explorer:** Virtual filesystem with `C:\`, `D:\`, `E:\` drives, folder navigation, MDX content rendering, and special views for My Documents and Recycle Bin
+- **My Documents:** Explorer view at `D:\My_Documents` with Resume.pdf (opens in new tab), Certs folder (placeholder), and Contact.txt (contact info card with clickable links)
+- **Recycle Bin:** Explorer view at `\Recycle_Bin` with deleted/archived file styling — grayed-out icon, strikethrough name, disabled Restore button — for legacy project items
 - **Command Prompt:** Functional terminal emulator with `ls`, `cd`, `cat`, `neofetch`, and other shell commands
 - **Task Manager:** Processes tab showing skill entries + Performance tab with live-animated skill graphs
 - **Knowledge Base:** MDX article browser styled as the classic XP Knowledge Base pane
@@ -40,7 +42,7 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 - **Project MDX Files:** Detailed project write-ups with frontmatter (repo URL, tech stack, status)
 - **Articles MDX:** Variative articles spanning Software Engineering, AI, DevOps, and more
 - **GitHub API Sync:** Build-time data fetching for live star counts and commit dates
-- **Resume:** Embedded PDF viewer in My Documents
+- **Resume:** PDF file accessible via My Documents — opens in a new browser tab on click
 
 ## User Experience Principles
 

@@ -713,26 +713,44 @@ Track 3A produced 17 feature/plan/checkpoint commits, 1 review fix commit, 1 arc
 
 ---
 
-### Track 3C — My Documents & Recycle Bin
+### Track 3C — My Documents & Recycle Bin ✅ _(Completed 2026-05-14)_
 
-> My Documents contains resume, certs, and contact info. Recycle Bin links to legacy content.
+> My Documents displays a professional portfolio folder (Resume PDF, Certs placeholder, Contact info). Recycle Bin provides an archived/deleted-style view linking to legacy content (`chasing-chapters` v1). Both reuse the existing Explorer component with special views.
 
-**Refs:** [PRD §4](./PRD.md#-desktop-icons) · [TDD §4.4](./TDD.md#44-resume)
+**Refs:** [PRD §4](./PRD.md#-desktop-icons) · [TDD §4.4](./TDD.md#44-resume) · T3C [spec](conductor/archive/mydocs-recyclebin_20260514/spec.md) · T3C [plan](conductor/archive/mydocs-recyclebin_20260514/plan.md)
 
 #### Tasks
 
-- [ ] Add `resume.pdf` to `public/` ([TDD §4.4](./TDD.md#44-resume))
-- [ ] Create My Documents Explorer view: `Resume.pdf`, `Certs/` folder, `Contact.txt`
-- [ ] PDF click → `window.open()` in new tab ([TDD §4.4](./TDD.md#44-resume))
-- [ ] Create Recycle Bin Explorer view with links to `mansyar.github.io` and old repos ([PRD §4](./PRD.md#-desktop-icons))
+- [x] Add `D:\My_Documents` to virtual filesystem with `Resume.pdf`, `Certs/` (empty), `Contact.txt`
+- [x] Add `CONTACT_METADATA` export with 6 fields (name, title, email, github, linkedin, location)
+- [x] Wire `mydocs` window → Explorer at `D:\My_Documents` default path
+- [x] Resume.pdf click → `window.open('/resume.pdf', '_blank')` opens in new tab
+- [x] Certs/ folder shows "This folder is empty." when navigated into
+- [x] Contact.txt shows formatted contact card in detail pane (clickable GitHub & LinkedIn links)
+- [x] Create `\Recycle_Bin` virtual root-level folder with `chasing-chapters (v1)` deleted item
+- [x] Add `RECYCLE_BIN_METADATA` with archive status, description, and repo URL
+- [x] Wire `recyclebin` window → Explorer at `\Recycle_Bin` default path
+- [x] Deleted-file styling: grayed-out icon, strikethrough name, reduced opacity, 'Deleted File' type label
+- [x] Detail pane shows ARCHIVED badge + disabled Restore button with tooltip
+- [x] Update `scripts/generate-filesystem.mjs` to include static `My_Documents` entries
+- [x] Create placeholder `public/resume.pdf` (user to replace with actual resume PDF)
+- [x] Re-add core filesystem utility regression tests (splitPath, getParent, resolvePath edge cases)
 
 #### Acceptance Criteria
 
 ```
 
-✅ My Documents opens showing Resume.pdf, Certs folder, Contact.txt
-✅ Clicking Resume.pdf opens the PDF in a new browser tab
-✅ Recycle Bin shows legacy project links (styled as "deleted" files)
+✅ My Documents (D:\My_Documents) opens showing Resume.pdf, Certs/, Contact.txt
+✅ Clicking Resume.pdf opens PDF in a new browser tab
+✅ Certs/ shows "This folder is empty."
+✅ Contact.txt shows contact card with all 6 metadata fields (clickable GitHub/LinkedIn)
+✅ Recycle Bin (\Recycle_Bin) opens with "chasing-chapters (v1)" as a deleted/archived item
+✅ Clicking item shows archive status badge + disabled Restore button + tooltip
+✅ Grayed-out icon, strikethrough name, reduced opacity on deleted items
+✅ Both views support back/up/breadcrumb navigation
+✅ D: drive shows both Systems_Data and My_Documents (existing content preserved)
+✅ 514 tests passing, 90.41% coverage, all src/ files under 500 lines
+✅ Track archived (13 commits, ~833 lines changed across 16 files)
 
 ```
 

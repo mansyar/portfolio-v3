@@ -1,8 +1,8 @@
 # Technical Design Document: Luna OS Portfolio
 
 **Parent:** [PRD.md](./PRD.md)  
-**Version:** 1.3  
-**Last Updated:** 2026-05-13
+**Version:** 1.4  
+**Last Updated:** 2026-05-14
 
 ---
 
@@ -15,7 +15,7 @@ portfolio-v3/
 │   ├── icons/                    # Desktop & app icons (SVG/PNG)
 │   ├── wallpapers/               # bliss.webp, bliss.avif
 │   ├── sounds/                   # startup.mp3, error.mp3 (optional)
-│   └── resume.pdf
+│   └── resume.pdf                # Placeholder PDF; user must replace with actual resume
 ├── src/
 │   ├── components/
 │   │   ├── desktop/              # Astro: Desktop, DesktopIcon, Wallpaper
@@ -292,6 +292,14 @@ export const FILE_SYSTEM: FSNode = {
           // Populated from `projects` collection where drive === 'D'
         },
       },
+      My_Documents: {
+        type: 'folder',
+        children: {
+          Resume.pdf: { type: 'file', slug: 'resume', size: '0 B' },
+          Certs: { type: 'folder', children: [] },               // empty placeholder
+          Contact.txt: { type: 'file', slug: 'contact', size: '0.5 KB' },
+        },
+      },
     },
   },
   'E:': {
@@ -308,9 +316,11 @@ export const FILE_SYSTEM: FSNode = {
 };
 ```
 
+**Virtual Recycle Bin:** A synthetic `FSFolder` node (`Recycle_Bin`) is injected at the root level (`\`) alongside the three drives by `getChildren('\\')`. It is not part of `FILE_SYSTEM` — instead it's handled via a `isRecycleBinPath()` guard in `filesystem.ts`'s `resolvePath()` and `getChildren()` functions. Contents: a single deleted file `chasing-chapters (v1)` with slug `chasing-chapters-v1`.
+
 ### 4.4 Resume
 
-`Resume.pdf` is a **real PDF file** in `public/`. The "My Documents" Explorer window shows it as a clickable file that opens in a new browser tab via `window.open()`.
+`Resume.pdf` is a **real PDF file** in `public/`. The "My Documents" Explorer window shows it as a clickable file that opens in a new browser tab via `window.open('/resume.pdf', '_blank')`. The click handler checks for slug `'resume'` in `Explorer.tsx`'s `handleFileClick` and opens the tab instead of setting a selected slug. A placeholder PDF is provided at `public/resume.pdf` — the user must replace it with their actual resume PDF.
 
 ---
 
