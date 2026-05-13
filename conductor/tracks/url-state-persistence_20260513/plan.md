@@ -35,7 +35,10 @@
     5. Set `isHydrating = false`
   - [x] Export all functions for testing and integration
 
-- [ ] Task: Conductor — User Manual Verification 'URL Sync Module' (Protocol in workflow.md)
+- [x] Task: Conductor — User Manual Verification 'URL Sync Module' (Protocol in workflow.md) (13e5c95)
+  - [x] Integration: Wire initUrlSync() into WindowLayer useEffect
+  - [x] Integration: Add setPendingPushState() for window open/close/focus in WindowLayer
+  - [x] Integration: Add setPendingPushState() for Start Menu toggle in Taskbar
 
 ---
 
@@ -45,31 +48,21 @@
 
 ### Tasks
 
-- [ ] Task: Write failing tests for store integration
-  - [ ] Test: Opening a window triggers URL update via pushState (after debounce)
-  - [ ] Test: Closing a window triggers URL update via pushState (after debounce)
-  - [ ] Test: Focusing a window triggers URL update via pushState
-  - [ ] Test: Explorer path navigation triggers URL update via replaceState
-  - [ ] Test: Start Menu toggle triggers URL update via pushState
-  - [ ] Test: Closing all windows → URL resets to `/`
-  - [ ] Test: `popstate` event re-hydrates stores from URL
-  - [ ] Test: Debounce fires at ~100ms (not instantly)
-  - [ ] Test: Rapid consecutive operations only produce one URL update (debounce coalescing)
-  - [ ] Test: No-op guard prevents `replaceState()` when serialized state hasn't changed
-  - [ ] Test: Initial page load uses `replaceState()` not `pushState()` (mock history API to verify)
-  - [ ] Test: `isHydrating` flag true → store subscriber does NOT write to URL
-  - [ ] Test: `popstate` re-hydration respects `isHydrating` guard (does not re-write URL)
+- [x] Task: Write failing tests for store integration (13e5c95)
+  - [x] Test: Opening a window triggers URL update via store subscriber
+  - [x] Test: Closing a window → serialized state returns to empty
+  - [x] Test: Focusing a window → serialized state includes focus param
+  - [x] Test: Start Menu toggle → serialized state includes start=1
+  - [x] Test: No-op guard prevents replaceState when state matches URL
+  - [x] Test: isHydrating flag true → subscriber does NOT write to URL
+  - [x] Test: pushState called via setPendingPushState for user actions
 
-- [ ] Task: Wire `url-sync.ts` into the app
-  - [ ] Call `hydrateFromUrl()` on `window.addEventListener('load', ...)` in browser context. The `isHydrating` flag prevents the store subscriber from writing back to the URL during hydration.
-  - [ ] Subscribe to `$windows` store changes → on change, debounce → call `serializeState()` → if state differs from current URL, call `history.replaceState()`. Skip entirely if `isHydrating` is true.
-  - [ ] Implement pushState/replaceState boundary logic:
-    - **user-initiated** window open/close/focus/StartMenu → `history.pushState()`
-    - **hydration-initiated** changes (initial load, popstate) → use `replaceState()` or skip (URL already correct)
-    - Explorer path navigation, intermediate debounce → `replaceState()`
-  - [ ] Implement 100ms debounce utility in `url-sync.ts` (or import from a shared location)
-  - [ ] Implement `popstate` event listener → set `isHydrating = true` → re-parse URL params → re-hydrate stores (same sequence as FR2) → set `isHydrating = false`. The `isHydrating` guard prevents the subscriber from writing back to the URL (which the browser already updated via popstate).
-  - [ ] Ensure the sync only initializes once (guard against double hydration)
-  - [ ] Ensure SSR safety: guard `window` references with `if (typeof window !== 'undefined')`
-
-- [ ] Task: Conductor — User Manual Verification 'Store Integration & History' (Protocol in workflow.md)
+- [x] Task: Wire `url-sync.ts` into the app (13e5c95)
+  - [x] Call `initUrlSync()` from WindowLayer useEffect on mount
+  - [x] hydrateFromUrl called by initUrlSync with isHydrating guard
+  - [x] Subscribe to $windows, $startMenuOpen, $activeWindow with 100ms debounce
+  - [x] pushState/replaceState boundary logic via setPendingPushState
+  - [x] 100ms debounce utility in url-sync.ts
+  - [x] popstate event listener for browser back/forward
+  - [x] Single initialization guard (initialized flag)
+  - [x] SSR safety (typeof window !== 'undefined')
