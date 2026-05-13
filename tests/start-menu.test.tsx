@@ -113,8 +113,8 @@ describe('StartMenu.tsx — Right Column (System Folders)', () => {
   it('should close menu when clicking any menu item', async () => {
     render(<StartMenu />);
     fireEvent.click(screen.getByText('Resume'));
-    // Wait for close animation to complete
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    // Wait for close animation (100ms) + React re-render + buffer
+    await new Promise((resolve) => setTimeout(resolve, 300));
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 });
