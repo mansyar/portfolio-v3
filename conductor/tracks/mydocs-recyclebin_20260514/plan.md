@@ -18,14 +18,14 @@
 - [x] **Task: Write tests for My Documents view behaviors** (565d5c3)
 - [x] **Task: Implement Resume.pdf click → new tab behavior** (565d5c3)
 - [x] **Task: Implement Contact.txt detail pane** (565d5c3)
-- [ ] Task: Conductor - User Manual Verification 'Phase 2'
+- [x] **Task: Conductor - User Manual Verification 'Phase 2'** [checkpoint: 06ae5ab]
 
 ## Phase 3 — Recycle Bin View (TDD)
 
 - [x] **Task: Write tests for Recycle Bin view** (565d5c3)
-- [x] **Task: Implement deleted-file visual styling** (coming)
+- [x] **Task: Implement deleted-file visual styling** (e71e577)
 - [x] **Task: Implement Recycle Bin detail pane** (565d5c3)
-- [ ] Task: Conductor - User Manual Verification 'Phase 3'
+- [x] **Task: Conductor - User Manual Verification 'Phase 3'** [checkpoint: 06ae5ab]
 
 ## Phase 4 — Integration & Verification
 
@@ -35,4 +35,4 @@
   - [x] `pnpm lint` — 0 errors, 2 pre-existing warnings
   - [x] `node scripts/check-modularity.js` — all files under 500 lines
 - [x] **Task: Commit all changes with descriptive messages and git notes** (done throughout)
-- [ ] Task: Conductor - User Manual Verification 'Phase 4'
+- [x] **Task: Conductor - User Manual Verification 'Phase 4'** [checkpoint: 06ae5ab]
