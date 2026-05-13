@@ -104,3 +104,7 @@
 - [x] Verify: `CI=true pnpm test` passes
 
 - [x] Task: Conductor - User Manual Verification 'Phase 3: KnowledgeBase React Island' (Protocol in workflow.md)
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions [6f395aa]
