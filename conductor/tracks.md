@@ -18,3 +18,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Knowledge Base track archived to conductor/archive/knowledge-base_20260513/ -->
 
 <!-- GitHub Data Sync track archived to conductor/archive/github-data-sync_20260513/ -->
+
+---
+
+- [ ] **Track: URL State Persistence**
+      _Link: [./tracks/url-state-persistence_20260513/](./tracks/url-state-persistence_20260513/)_
