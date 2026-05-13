@@ -1,6 +1,93 @@
 import { describe, it, expect } from 'vitest';
 import { FILE_SYSTEM } from '@/lib/constants';
-import { resolvePath, getChildren } from '@/lib/filesystem';
+import { resolvePath, getChildren, getParent, splitPath } from '@/lib/filesystem';
+
+// ── Core filesystem utility tests (regression guard) ─────────────
+
+describe('splitPath', () => {
+  it('should return empty array for root', () => {
+    expect(splitPath('\\')).toEqual([]);
+  });
+
+  it('should return segments for a nested path', () => {
+    expect(splitPath('C:\\Software_Engineering\\icarus-server-manager.mdx')).toEqual([
+      'C:',
+      'Software_Engineering',
+      'icarus-server-manager.mdx',
+    ]);
+  });
+
+  it('should handle trailing backslash', () => {
+    expect(splitPath('C:\\')).toEqual(['C:']);
+  });
+});
+
+describe('getParent', () => {
+  it('should return root for a drive path', () => {
+    expect(getParent('C:\\')).toBe('\\');
+  });
+
+  it('should return parent folder path', () => {
+    expect(getParent('C:\\Software_Engineering')).toBe('C:\\');
+  });
+
+  it('should return empty string for root', () => {
+    expect(getParent('\\')).toBe('');
+  });
+});
+
+describe('resolvePath (core)', () => {
+  it('should resolve a drive root path', () => {
+    const node = resolvePath('C:\\');
+    expect(node).not.toBeNull();
+    expect(node).toBeDefined();
+    expect(node!.type).toBe('drive');
+  });
+
+  it('should resolve a nested folder path', () => {
+    const node = resolvePath('C:\\Software_Engineering');
+    expect(node).not.toBeNull();
+    if (node) {
+      expect(node.type).toBe('folder');
+      expect(node.name).toBe('Software_Engineering');
+    }
+  });
+
+  it('should resolve a file path', () => {
+    const node = resolvePath('C:\\Software_Engineering\\icarus-server-manager.mdx');
+    expect(node).not.toBeNull();
+    if (node) {
+      expect(node.type).toBe('file');
+    }
+  });
+
+  it('should return null for non-existent path', () => {
+    expect(resolvePath('Z:\\')).toBeNull();
+  });
+});
+
+describe('getChildren (core)', () => {
+  it('should return 4 items at root (3 drives + Recycle Bin)', () => {
+    const children = getChildren('\\');
+    expect(children).toHaveLength(4);
+  });
+
+  it('should return 2 project files for C:\\Software_Engineering', () => {
+    const children = getChildren('C:\\Software_Engineering');
+    expect(children).toHaveLength(2);
+  });
+
+  it('should return empty array for a file path', () => {
+    const children = getChildren('C:\\Software_Engineering\\icarus-server-manager.mdx');
+    expect(children).toEqual([]);
+  });
+
+  it('should return empty array for non-existent path', () => {
+    expect(getChildren('Z:\\')).toEqual([]);
+  });
+});
+
+// ── My Documents filesystem tests ────────────────────────────────
 
 describe('FILE_SYSTEM — D: drive', () => {
   it('should have Systems_Data and My_Documents as children of D: drive', () => {
@@ -52,12 +139,13 @@ describe('resolvePath — My Documents', () => {
   it('should resolve D:\\My_Documents to the My_Documents folder node', () => {
     const node = resolvePath('D:\\My_Documents');
     expect(node).not.toBeNull();
-    expect(node!.type).toBe('folder');
-    if (node!.type === 'folder') {
-      expect(node!.name).toBe('My_Documents');
+    if (node && node.type === 'folder') {
+      expect(node.name).toBe('My_Documents');
     }
   });
 });
+
+// ── Recycle Bin filesystem tests ─────────────────────────────────
 
 describe('getChildren — root with Recycle Bin', () => {
   it('should return C:, D:, E: drives plus a Recycle_Bin entry at root', () => {
@@ -78,9 +166,8 @@ describe('resolvePath — Recycle Bin', () => {
   it('should resolve \\Recycle_Bin to a folder node', () => {
     const node = resolvePath('\\Recycle_Bin');
     expect(node).not.toBeNull();
-    expect(node!.type).toBe('folder');
-    if (node!.type === 'folder') {
-      expect(node!.name).toBe('Recycle_Bin');
+    if (node && node.type === 'folder') {
+      expect(node.name).toBe('Recycle_Bin');
     }
   });
 });

@@ -21,6 +21,7 @@ import { CmdPrompt } from '@/components/apps/CmdPrompt';
 import { TaskManager } from '@/components/apps/TaskManager';
 import { KnowledgeBase } from '@/components/apps/KnowledgeBase';
 
+// Reserved for future window types that don't have a component yet
 const PLACEHOLDER_CONTENT: Record<string, string> = {};
 
 export function WindowLayer() {
