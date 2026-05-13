@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.6  
+**Version:** 1.7  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -50,18 +50,20 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ### 🖥️ Desktop Icons
 
-| Icon               | Type    | Content / Action                                                    |
-| :----------------- | :------ | :------------------------------------------------------------------ |
-| **My Computer**    | Folder  | Opens Explorer for `C:\Software_Engineering` and `D:\Systems_Data`. |
-| **My Documents**   | Folder  | Contains `Resume.pdf`, `Certs/` folder, and contact info.           |
-| **Knowledge Base** | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).     |
-| **Command Prompt** | App     | Functional React terminal for CLI navigation.                       |
-| **Recycle Bin**    | Archive | Links to `mansyar.github.io` (Legacy) and old repositories.         |
+| Icon               | Type    | Content / Action                                                                                                                                                     |
+| :----------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **My Computer**    | Folder  | Opens Explorer for `C:\Software_Engineering` and `D:\Systems_Data`.                                                                                                  |
+| **My Documents**   | Folder  | `D:\My_Documents` Explorer view with `Resume.pdf` (opens in new tab), `Certs/` (empty placeholder), and `Contact.txt` (formatted contact card with clickable links). |
+| **Knowledge Base** | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).                                                                                                      |
+| **Command Prompt** | App     | Functional React terminal for CLI navigation.                                                                                                                        |
+| **Recycle Bin**    | Archive | `\Recycle_Bin` virtual folder with deleted/archived item (`chasing-chapters (v1)`). Grayed-out icon, strikethrough name, disabled Restore button.                    |
 
 ### 📂 Directory Details
 
-- **C:\Software_Engineering:** Features `icarus-server-manager` and `portable-mc-manager`.
+- **C:\Software_Engineering:** Features `icarus-server-manager` and `chasing-chapters`.
 - **D:\Systems_Data:** Features `tubular-bexus-osw` and data-heavy system logs.
+- **D:\My_Documents:** Portfolio documents — `Resume.pdf` (opens in new tab), `Certs/` (empty placeholder for future certificates), `Contact.txt` (contact info card).
+- **\Recycle_Bin:** Virtual root-level folder (not a drive) containing archived/deleted items — `chasing-chapters (v1)` with grayed-out styling.
 - **E:\Knowledge_Base:** MDX articles spanning Software Engineering, AI, DevOps, and more, browsed through the Knowledge Base application.
 
 ---
