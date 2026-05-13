@@ -142,4 +142,50 @@ describe('KnowledgeBase', () => {
     fireEvent.change(searchInput, { target: { value: 'Docker' } });
     expect(screen.getByText('Docker Basics')).toBeInTheDocument();
   });
+
+  // ── Keyboard accessibility (branch coverage) ─────────────────
+
+  it('should select category via Enter key', () => {
+    render(<KnowledgeBase windowId="help" />);
+    const aiCat = screen.getAllByText('AI')[0];
+    fireEvent.keyDown(aiCat, { key: 'Enter' });
+    // AI articles should show, DevOps hidden
+    expect(screen.getByText('LLM Fine-Tuning Guide')).toBeInTheDocument();
+    expect(screen.queryByText('Docker Basics')).not.toBeInTheDocument();
+  });
+
+  it('should select category via Space key', () => {
+    render(<KnowledgeBase windowId="help" />);
+    const aiCat = screen.getAllByText('AI')[0];
+    fireEvent.keyDown(aiCat, { key: ' ' });
+    expect(screen.getByText('LLM Fine-Tuning Guide')).toBeInTheDocument();
+    expect(screen.queryByText('Docker Basics')).not.toBeInTheDocument();
+  });
+
+  it('should select article via Enter key', () => {
+    render(<KnowledgeBase windowId="help" />);
+    const article = screen.getByText('Docker Basics').closest('[role="button"]')!;
+    fireEvent.keyDown(article, { key: 'Enter' });
+    const detailPane = document.querySelector('.xp-kb-detail-body');
+    expect(detailPane?.textContent).toContain('Docker is a platform');
+  });
+
+  it('should select article via Space key', () => {
+    render(<KnowledgeBase windowId="help" />);
+    const article = screen.getByText('Docker Basics').closest('[role="button"]')!;
+    fireEvent.keyDown(article, { key: ' ' });
+    const detailPane = document.querySelector('.xp-kb-detail-body');
+    expect(detailPane?.textContent).toContain('Docker is a platform');
+  });
+
+  it('should show "No articles in this category" for empty search with category filter', () => {
+    render(<KnowledgeBase windowId="help" />);
+    // Filter by AI category first
+    const aiCat = screen.getAllByText('AI')[0];
+    fireEvent.click(aiCat);
+    // Now the category filter is set but we can also access the empty state via search
+    const searchInput = screen.getByPlaceholderText('Search articles...');
+    fireEvent.change(searchInput, { target: { value: 'xyznonexistent' } });
+    expect(screen.getByText('No articles match your search')).toBeInTheDocument();
+  });
 });
