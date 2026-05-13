@@ -65,13 +65,26 @@ The Luna OS Portfolio is built on a modern, performance-optimized web stack with
 ### Content Pipeline
 
 - MDX files in `src/content/projects/` and `src/content/articles/`
-- GitHub API data fetched at build time, merged into content collections
+- GitHub API data fetched at build time via `fetch-github-stats.mjs`, cached in `github-cache.json`
+- Project MDX compiled with GitHub data merge via `compile-projects.mjs` → `projects-content.json`
+- Article MDX compiled via `compile-articles.mjs` → `articles-content.json`
+- Dynamic FILE_SYSTEM tree generated from compiled JSON via `generate-filesystem.mjs`
 - Cache fallback on API failure for offline resilience
 
 ### Build Pipeline
 
 ```
-git push → GitHub Actions → pnpm install → Fetch GitHub API → node scripts/compile-articles.mjs → astro build → Cloudflare Pages
+git push → GitHub Actions → pnpm install → node scripts/prebuild.mjs → astro build → Cloudflare Pages
+```
+
+The `prebuild.mjs` orchestrator runs 4 sub-scripts in sequence:
+
+```
+prebuild.mjs
+ ├── 1. fetch-github-stats.mjs   — Fetch live stars, last commit, commit count from GitHub API
+ ├── 2. compile-articles.mjs     — Compile article MDX → JSON (articles-content.json)
+ ├── 3. compile-projects.mjs     — Compile project MDX → JSON with GitHub data merge (projects-content.json)
+ └── 4. generate-filesystem.mjs  — Build dynamic FILE_SYSTEM tree from compiled JSON (filesystem.json)
 ```
 
 ## Performance Budgets
@@ -100,6 +113,15 @@ git push → GitHub Actions → pnpm install → Fetch GitHub API → node scrip
 ---
 
 ## Change Log
+
+### 2026-05-13 — Track 3A: GitHub Data Sync — Build pipeline overhaul
+
+- **Reason:** Track 3A requires live GitHub data (stars, commits, last commit date) to be fetched at build time and merged into project MDX content. The build pipeline was restructured with a `prebuild.mjs` orchestrator that runs 4 sub-scripts in sequence.
+- **Impact:** Build command changed from `node scripts/compile-articles.mjs && astro build` to `node scripts/prebuild.mjs && astro build`. Four new scripts: `fetch-github-stats.mjs`, `compile-projects.mjs`, `generate-filesystem.mjs`, and `prebuild.mjs`.
+- **New generated files:** `src/lib/generated/projects-content.json` (project MDX + GitHub data), `src/lib/generated/filesystem.json` (dynamic FS tree). `github-cache.json` added as gitignored cache.
+- **Static tree preserved:** `src/lib/constants.ts` keeps the static `FILE_SYSTEM` for dev mode; build-time generation produces matching dynamic tree.
+- **Packages added:** None (uses existing `marked` for MDX rendering).
+- **Files affected:** `package.json`, `.gitignore`, `conductor/tech-stack.md`
 
 ### 2026-05-13 — Added `marked` for build-time MDX compilation
 
