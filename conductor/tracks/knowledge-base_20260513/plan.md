@@ -35,21 +35,21 @@
 
 ## Phase 2: Build-Time MDX Compilation Pipeline
 
-### Task 2.1: Create compile-articles script
+### Task 2.1: Create compile-articles script [d052d71]
 
-- [ ] Create `scripts/compile-articles.mjs` (standalone, no Astro API dependency)
-- [ ] Implement frontmatter parsing (manual YAML parse, or install `gray-matter`)
-- [ ] Implement MDX body → HTML rendering using lightweight markdown renderer (e.g., `marked` — 1 package)
-- [ ] Output JSON to `src/lib/generated/articles-content.json`
-- [ ] Write failing test: script produces valid JSON with expected schema
-- [ ] Verify script runs successfully: `node scripts/compile-articles.mjs`
+- [x] Create `scripts/compile-articles.mjs` (standalone, no Astro API dependency)
+- [x] Implement frontmatter parsing (manual YAML parse, no gray-matter needed)
+- [x] Implement MDX body → HTML rendering using `marked` (1 package)
+- [x] Output JSON to `src/lib/generated/articles-content.json`
+- [x] Write failing test: script produces valid JSON with expected schema
+- [x] Verify script runs successfully: `node scripts/compile-articles.mjs`
 
-### Task 2.2: Integrate pipeline into build
+### Task 2.2: Integrate pipeline into build [b8a80a9]
 
-- [ ] Update `package.json` build script to `"build": "node scripts/compile-articles.mjs && astro build"`
-- [ ] Add `src/lib/generated/` to `.gitignore`
-- [ ] Write failing test: test file reads generated JSON and validates structure
-- [ ] Verify: `CI=true pnpm build` produces the JSON file without errors
+- [x] Update `package.json` build script to `"build": "node scripts/compile-articles.mjs && astro build"`
+- [x] Add `src/lib/generated/` to `.gitignore`
+- [x] Write failing test: test file reads generated JSON and validates structure
+- [x] Verify: `CI=true pnpm build` produces the JSON file without errors
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Build-Time MDX Compilation Pipeline' (Protocol in workflow.md)
 
