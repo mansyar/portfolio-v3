@@ -29,10 +29,10 @@
 
 ## Phase 4 — Integration & Verification
 
-- [ ] Task: Run full test suite + coverage
-  - [ ] `CI=true pnpm test:coverage` (≥80%)
-- [ ] Task: Pre-commit checks
-  - [ ] `pnpm lint` — no lint errors
-  - [ ] `node scripts/check-modularity.js` — no file exceeds 500 lines
-- [ ] Task: Commit all changes with descriptive messages and git notes
+- [x] **Task: Run full test suite + coverage** (e71e577)
+  - [x] `CI=true pnpm test:coverage` (≥80%) — 90.41% statements, 81.47% branches, 90.38% functions, 92.43% lines
+- [x] **Task: Pre-commit checks** (e71e577)
+  - [x] `pnpm lint` — 0 errors, 2 pre-existing warnings
+  - [x] `node scripts/check-modularity.js` — all files under 500 lines
+- [x] **Task: Commit all changes with descriptive messages and git notes** (done throughout)
 - [ ] Task: Conductor - User Manual Verification 'Phase 4'
