@@ -26,49 +26,6 @@ const CACHE_FILE = resolve(GENERATED_DIR, 'github-cache.json');
 
 // ── Frontmatter parsing (manual — no gray-matter dependency) ────────
 
-function parseFrontmatter(content) {
-  const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
-  if (!match) throw new Error('No frontmatter block found');
-  const yamlBlock = match[1];
-  const body = match[2].trim();
-
-  const metadata = {};
-  let currentKey = '';
-
-  const lines = yamlBlock.split('\n');
-  for (const line of lines) {
-    const keyMatch = line.match(/^(\w+):\s*(.*)/);
-    if (keyMatch) {
-      currentKey = keyMatch[1];
-      const rawValue = keyMatch[2].trim();
-      metadata[currentKey] = parseYamlValue(rawValue);
-    } else if (line.trim() && currentKey) {
-      // Continuation of a multi-line value (like description)
-      const existing = metadata[currentKey];
-      if (typeof existing === 'string') {
-        metadata[currentKey] = existing + ' ' + line.trim();
-      } else if (Array.isArray(existing)) {
-        // List continuation (for techStack)
-        const itemMatch = line.trim().match(/^\s*-\s*(.*)/);
-        if (itemMatch) {
-          existing.push(itemMatch[1].trim());
-        }
-      }
-    }
-    // Handle list items (like techStack)
-    const listMatch = line.match(/^\s*-\s*(.*)/);
-    if (listMatch && currentKey && !line.match(/^(\w+):/)) {
-      const itemValue = parseYamlValue(listMatch[1].trim());
-      if (!Array.isArray(metadata[currentKey])) {
-        metadata[currentKey] = [];
-      }
-      metadata[currentKey].push(itemValue);
-    }
-  }
-
-  return { metadata, body };
-}
-
 function parseYamlValue(raw) {
   if (raw === 'true') return true;
   if (raw === 'false') return false;
@@ -152,7 +109,7 @@ function loadGithubCache() {
  */
 function buildSlugLookup(githubCache) {
   const lookup = {};
-  for (const [key, data] of Object.entries(githubCache)) {
+  for (const data of Object.values(githubCache)) {
     if (data.slug) {
       lookup[data.slug] = data;
     }

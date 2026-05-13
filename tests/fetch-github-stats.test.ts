@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { existsSync, readFileSync, unlinkSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 
@@ -61,12 +61,8 @@ describe('writeCache() and readCache()', () => {
     }
   });
 
-  afterAll(() => {
-    // Clean up
-    if (existsSync(cacheFile)) {
-      unlinkSync(cacheFile);
-    }
-  });
+  // Note: No afterAll cleanup for cache file — it's a shared resource
+  // that other tests (compile-projects.test.ts) depend on.
 
   it('writeCache should create a cache file with correct JSON', async () => {
     const mod = await import('@/../scripts/fetch-github-stats.mjs');
