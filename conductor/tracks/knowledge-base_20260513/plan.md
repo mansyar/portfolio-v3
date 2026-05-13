@@ -53,7 +53,7 @@
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Build-Time MDX Compilation Pipeline' (Protocol in workflow.md)
 
-## Phase 3: KnowledgeBase React Island
+## Phase 3: KnowledgeBase React Island [checkpoint: 6efced0]
 
 ### Task 3.1: Create KnowledgeBase component shell [836a3b9]
 
@@ -103,4 +103,4 @@
 - [x] Ensure desktop icon opens KnowledgeBase correctly
 - [x] Verify: `CI=true pnpm test` passes
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: KnowledgeBase React Island' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: KnowledgeBase React Island' (Protocol in workflow.md)
