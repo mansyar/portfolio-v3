@@ -33,7 +33,7 @@
 
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Content Collection Rename & MDX Migration' (Protocol in workflow.md)
 
-## Phase 2: Build-Time MDX Compilation Pipeline
+## Phase 2: Build-Time MDX Compilation Pipeline [checkpoint: 3350153]
 
 ### Task 2.1: Create compile-articles script [d052d71]
 
@@ -51,7 +51,7 @@
 - [x] Write failing test: test file reads generated JSON and validates structure
 - [x] Verify: `CI=true pnpm build` produces the JSON file without errors
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Build-Time MDX Compilation Pipeline' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Build-Time MDX Compilation Pipeline' (Protocol in workflow.md)
 
 ## Phase 3: KnowledgeBase React Island [checkpoint: 6efced0]
 
