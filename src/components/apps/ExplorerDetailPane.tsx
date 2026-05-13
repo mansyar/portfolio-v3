@@ -1,39 +1,66 @@
-import { PROJECTS_METADATA, ARTICLES_METADATA } from '@/lib/projects-data';
-import type { ProjectMetadata, ArticleMetadata } from '@/lib/projects-data';
+import projectsContent from '@/lib/generated/projects-content.json';
+import { ARTICLES_METADATA } from '@/lib/projects-data';
+import type { ArticleMetadata } from '@/lib/projects-data';
 
 interface ExplorerDetailPaneProps {
   slug: string | null;
 }
 
-type DetailData = ProjectMetadata | ArticleMetadata;
+/**
+ * Shape of each entry in projects-content.json.
+ * Subset of the full frontmatter fields relevant to the detail pane.
+ */
+interface ProjectEntryFrontmatter {
+  title: string;
+  description: string;
+  repoUrl: string;
+  language: string;
+  techStack: string[];
+  stars: number;
+  lastCommit: string;
+  commits: number;
+  status: string;
+  icon: string;
+  slug: string;
+  drive: string;
+}
+
+interface ProjectEntry {
+  frontmatter: ProjectEntryFrontmatter;
+  bodyHtml: string;
+}
+
+type ProjectsContentMap = Record<string, ProjectEntry>;
 
 export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
   if (!slug) return null;
 
-  const data: DetailData | undefined = PROJECTS_METADATA[slug] ?? ARTICLES_METADATA[slug];
+  // Try projects content first (includes bodyHtml + live GitHub data)
+  const projects = projectsContent as unknown as ProjectsContentMap;
+  const projectEntry: ProjectEntry | undefined = projects[slug];
 
-  if (!data) return null;
+  // Fallback to articles metadata
+  const articleData: ArticleMetadata | undefined = ARTICLES_METADATA[slug];
 
-  const isProject = 'repoUrl' in data;
-  const projectData = isProject ? (data as ProjectMetadata) : null;
+  if (!projectEntry && !articleData) return null;
 
   return (
     <div className="xp-detail-pane" role="region" aria-label="File details">
-      <h2 className="xp-detail-title">{data.title}</h2>
-
-      <p className="xp-detail-description">{data.description}</p>
-
-      {projectData && (
+      {projectEntry && (
         <>
+          {/* ── Metadata header ───────────────────────────── */}
+          <h2 className="xp-detail-title">{projectEntry.frontmatter.title}</h2>
+          <p className="xp-detail-description">{projectEntry.frontmatter.description}</p>
+
           <div className="xp-detail-section">
             <span className="xp-detail-label">Language:</span>
-            <span className="xp-detail-value">{projectData.language}</span>
+            <span className="xp-detail-value">{projectEntry.frontmatter.language}</span>
           </div>
 
           <div className="xp-detail-section">
             <span className="xp-detail-label">Tech Stack:</span>
             <div className="xp-detail-badges">
-              {projectData.techStack.map((tech) => (
+              {projectEntry.frontmatter.techStack.map((tech: string) => (
                 <span key={tech} className="xp-badge">
                   {tech}
                 </span>
@@ -43,17 +70,22 @@ export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
 
           <div className="xp-detail-section">
             <span className="xp-detail-label">Stars:</span>
-            <span className="xp-detail-value">⭐ {projectData.stars}</span>
+            <span className="xp-detail-value">⭐ {projectEntry.frontmatter.stars}</span>
+          </div>
+
+          <div className="xp-detail-section">
+            <span className="xp-detail-label">Commits:</span>
+            <span className="xp-detail-value">{projectEntry.frontmatter.commits}</span>
           </div>
 
           <div className="xp-detail-section">
             <span className="xp-detail-label">Last Commit:</span>
-            <span className="xp-detail-value">{projectData.lastCommit}</span>
+            <span className="xp-detail-value">{projectEntry.frontmatter.lastCommit}</span>
           </div>
 
           <div className="xp-detail-section">
             <a
-              href={projectData.repoUrl}
+              href={projectEntry.frontmatter.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="xp-button xp-button-repo"
@@ -61,18 +93,27 @@ export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
               View on GitHub
             </a>
           </div>
+
+          {/* ── Body HTML (rendered from MDX) ─────────────── */}
+          <div
+            className="xp-detail-body"
+            dangerouslySetInnerHTML={{ __html: projectEntry.bodyHtml }}
+          />
         </>
       )}
 
-      {!isProject && (
+      {articleData && (
         <>
+          <h2 className="xp-detail-title">{articleData.title}</h2>
+          <p className="xp-detail-description">{articleData.description}</p>
+
           <div className="xp-detail-section">
             <span className="xp-detail-label">Category:</span>
-            <span className="xp-detail-value">{(data as ArticleMetadata).category}</span>
+            <span className="xp-detail-value">{articleData.category}</span>
           </div>
           <div className="xp-detail-section">
             <span className="xp-detail-label">Last Updated:</span>
-            <span className="xp-detail-value">{(data as ArticleMetadata).lastUpdated}</span>
+            <span className="xp-detail-value">{articleData.lastUpdated}</span>
           </div>
         </>
       )}

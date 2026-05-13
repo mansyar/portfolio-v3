@@ -165,10 +165,21 @@ describe('ExplorerDetailPane', () => {
 
   it('should render project details for a valid slug', () => {
     render(<ExplorerDetailPane slug="icarus-server-manager" />);
-    expect(screen.getByText('Icarus Server Manager')).toBeInTheDocument();
+    // Title appears in both header and bodyHtml — use getAllByText
+    const titles = screen.getAllByText('Icarus Server Manager');
+    expect(titles.length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
     expect(screen.getByText('Node.js')).toBeInTheDocument();
     expect(screen.getByText('View on GitHub')).toBeInTheDocument();
+  });
+
+  it('should render body HTML from projects-content.json', () => {
+    render(<ExplorerDetailPane slug="icarus-server-manager" />);
+    // bodyHtml content should be rendered
+    expect(screen.getByText('Key Features')).toBeInTheDocument();
+    expect(screen.getByText('Real-time Monitoring')).toBeInTheDocument();
+    expect(screen.getByText('Docker Management')).toBeInTheDocument();
+    expect(screen.getByText('Architecture')).toBeInTheDocument();
   });
 
   it('should render article details for an article slug', () => {
