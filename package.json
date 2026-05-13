@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/compile-articles.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
