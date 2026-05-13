@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectSchema, devopsAcademySchema } from '@/lib/content-schemas';
+import { projectSchema, articleSchema } from '@/lib/content-schemas';
 
 const validProject = {
   title: 'Icarus Server Manager',
@@ -16,7 +16,7 @@ const validProject = {
   icon: 'server',
 };
 
-const validDevopsAcademy = {
+const validArticle = {
   title: 'Docker Basics',
   slug: 'docker-basics',
   category: 'Docker',
@@ -67,32 +67,38 @@ describe('Project Schema', () => {
   });
 });
 
-describe('DevOps Academy Schema', () => {
-  it('should parse a valid devops academy entry', () => {
-    const result = devopsAcademySchema.parse(validDevopsAcademy);
+describe('Article Schema (renamed from DevOps Academy)', () => {
+  it('should parse a valid article entry', () => {
+    const result = articleSchema.parse(validArticle);
     expect(result.title).toBe('Docker Basics');
     expect(result.category).toBe('Docker');
     expect(result.order).toBe(1);
   });
 
   it('should require category field', () => {
-    expect(() => devopsAcademySchema.parse(without(validDevopsAcademy, 'category'))).toThrow();
+    expect(() => articleSchema.parse(without(validArticle, 'category'))).toThrow();
   });
 
   it('should reject negative order', () => {
-    expect(() => devopsAcademySchema.parse({ ...validDevopsAcademy, order: -1 })).toThrow();
+    expect(() => articleSchema.parse({ ...validArticle, order: -1 })).toThrow();
   });
 
   it('should require description', () => {
-    expect(() => devopsAcademySchema.parse(without(validDevopsAcademy, 'description'))).toThrow();
+    expect(() => articleSchema.parse(without(validArticle, 'description'))).toThrow();
   });
 
-  it('should accept category values: Docker, Linux, CI/CD', () => {
-    expect(devopsAcademySchema.parse({ ...validDevopsAcademy, category: 'Linux' }).category).toBe(
-      'Linux',
-    );
-    expect(devopsAcademySchema.parse({ ...validDevopsAcademy, category: 'CI/CD' }).category).toBe(
-      'CI/CD',
-    );
+  it('should accept any string category value (not just Docker, Linux, CI/CD)', () => {
+    expect(
+      articleSchema.parse({ ...validArticle, category: 'Software Engineering' }).category,
+    ).toBe('Software Engineering');
+    expect(articleSchema.parse({ ...validArticle, category: 'AI' }).category).toBe('AI');
+    expect(articleSchema.parse({ ...validArticle, category: 'DevOps' }).category).toBe('DevOps');
+  });
+
+  it('should export articleSchema (not devopsAcademySchema)', () => {
+    // This test verifies the rename
+    expect(articleSchema).toBeDefined();
+    // @ts-expect-error - devopsAcademySchema should no longer exist
+    expect(typeof import('@/lib/content-schemas').devopsAcademySchema).toBe('undefined');
   });
 });

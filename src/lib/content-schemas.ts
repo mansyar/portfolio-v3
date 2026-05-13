@@ -22,15 +22,13 @@ export const projectSchema = z.object({
 });
 
 /**
- * Schema for DevOps Academy MDX frontmatter.
- * Articles live on E: drive, grouped by category.
+ * Schema for article MDX frontmatter.
+ * Articles live on E: drive, grouped by category (string — auto-discovered from frontmatter).
  */
-export const devopsAcademySchema = z.object({
+export const articleSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   slug: z.string().min(1, 'Slug is required'),
-  category: z.enum(['Docker', 'Linux', 'CI/CD'], {
-    message: 'Category must be Docker, Linux, or CI/CD',
-  }),
+  category: z.string().min(1, 'Category is required'),
   order: z.number().int().nonnegative('Order must be non-negative'),
   description: z.string().min(1, 'Description is required'),
   lastUpdated: z.string().min(1, 'Last updated date is required'),
@@ -38,4 +36,4 @@ export const devopsAcademySchema = z.object({
 
 /** Inferred types from schemas */
 export type Project = z.infer<typeof projectSchema>;
-export type DevopsAcademy = z.infer<typeof devopsAcademySchema>;
+export type Article = z.infer<typeof articleSchema>;

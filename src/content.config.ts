@@ -1,15 +1,15 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { projectSchema, devopsAcademySchema } from '@/lib/content-schemas';
+import { projectSchema, articleSchema } from '@/lib/content-schemas';
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/projects' }),
   schema: projectSchema,
 });
 
-const devopsAcademy = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/devops-academy' }),
-  schema: devopsAcademySchema,
+const articles = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/articles' }),
+  schema: articleSchema,
 });
 
-export const collections = { projects, devopsAcademy };
+export const collections = { projects, articles };
