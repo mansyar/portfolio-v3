@@ -1,16 +1,16 @@
-import { PROJECTS_METADATA, DEVOPS_METADATA } from '@/lib/projects-data';
-import type { ProjectMetadata, DevopsAcademyMetadata } from '@/lib/projects-data';
+import { PROJECTS_METADATA, ARTICLES_METADATA } from '@/lib/projects-data';
+import type { ProjectMetadata, ArticleMetadata } from '@/lib/projects-data';
 
 interface ExplorerDetailPaneProps {
   slug: string | null;
 }
 
-type DetailData = ProjectMetadata | DevopsAcademyMetadata;
+type DetailData = ProjectMetadata | ArticleMetadata;
 
 export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
   if (!slug) return null;
 
-  const data: DetailData | undefined = PROJECTS_METADATA[slug] ?? DEVOPS_METADATA[slug];
+  const data: DetailData | undefined = PROJECTS_METADATA[slug] ?? ARTICLES_METADATA[slug];
 
   if (!data) return null;
 
@@ -68,11 +68,11 @@ export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
         <>
           <div className="xp-detail-section">
             <span className="xp-detail-label">Category:</span>
-            <span className="xp-detail-value">{(data as DevopsAcademyMetadata).category}</span>
+            <span className="xp-detail-value">{(data as ArticleMetadata).category}</span>
           </div>
           <div className="xp-detail-section">
             <span className="xp-detail-label">Last Updated:</span>
-            <span className="xp-detail-value">{(data as DevopsAcademyMetadata).lastUpdated}</span>
+            <span className="xp-detail-value">{(data as ArticleMetadata).lastUpdated}</span>
           </div>
         </>
       )}

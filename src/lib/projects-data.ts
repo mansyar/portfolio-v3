@@ -14,7 +14,7 @@ export interface ProjectMetadata {
   status: string;
 }
 
-export interface DevopsAcademyMetadata {
+export interface ArticleMetadata {
   title: string;
   description: string;
   category: string;
@@ -58,29 +58,45 @@ export const PROJECTS_METADATA: Record<string, ProjectMetadata> = {
   },
 };
 
-export const DEVOPS_METADATA: Record<string, DevopsAcademyMetadata> = {
+export const ARTICLES_METADATA: Record<string, ArticleMetadata> = {
   'docker-basics': {
     title: 'Docker Basics',
     description:
-      'Learn the fundamentals of Docker — containers, images, Dockerfiles, and basic CLI commands.',
-    category: 'Docker',
+      'Learn the fundamentals of Docker — containers, images, Dockerfiles, and basic CLI commands to get started with containerization.',
+    category: 'DevOps',
     order: 1,
-    lastUpdated: '2026-04-01',
+    lastUpdated: '2026-05-13',
   },
   'linux-essentials': {
     title: 'Linux Essentials',
     description:
       'Essential Linux commands and system administration concepts for DevOps engineers.',
-    category: 'Linux',
-    order: 1,
-    lastUpdated: '2026-03-15',
+    category: 'DevOps',
+    order: 2,
+    lastUpdated: '2026-05-13',
   },
   'ci-cd-pipeline': {
     title: 'CI/CD Pipeline',
     description:
       'A practical guide to setting up continuous integration and deployment pipelines using GitHub Actions.',
-    category: 'CI/CD',
+    category: 'DevOps',
+    order: 3,
+    lastUpdated: '2026-05-13',
+  },
+  'microservices-patterns': {
+    title: 'Microservices Patterns',
+    description:
+      'A comprehensive overview of common microservices architectural patterns — service decomposition, communication strategies, data management, and observability.',
+    category: 'Software Engineering',
     order: 1,
-    lastUpdated: '2026-04-05',
+    lastUpdated: '2026-05-13',
+  },
+  'llm-fine-tuning': {
+    title: 'LLM Fine-Tuning Guide',
+    description:
+      'A practical guide to fine-tuning large language models — from data preparation and LoRA techniques to evaluation and deployment considerations.',
+    category: 'AI',
+    order: 1,
+    lastUpdated: '2026-05-13',
   },
 };

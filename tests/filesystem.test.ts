@@ -48,18 +48,70 @@ describe('FSNode type structure (compile-time check via mock)', () => {
     }
   });
 
-  it('E: drive should have DevOps_Academy folder with 3 articles', () => {
+  it('E: drive should have Knowledge_Base folder (renamed from DevOps_Academy)', () => {
     const eDrive = FILE_SYSTEM.find((d) => d.name.startsWith('E:')) as FSDrive;
     expect(eDrive).toBeDefined();
-    const devops = eDrive.children[0];
-    expect(devops.type).toBe('folder');
-    expect(devops.name).toBe('DevOps_Academy');
-    if (devops.type === 'folder') {
-      expect(devops.children).toHaveLength(3);
-      const names = devops.children.map((c) => c.name);
-      expect(names).toContain('docker-basics.mdx');
-      expect(names).toContain('linux-essentials.mdx');
-      expect(names).toContain('ci-cd-pipeline.mdx');
+    const kb = eDrive.children[0];
+    expect(kb.type).toBe('folder');
+    expect(kb.name).toBe('Knowledge_Base');
+  });
+
+  it('E:\\Knowledge_Base should have subfolders per article category', () => {
+    const eDrive = FILE_SYSTEM.find((d) => d.name.startsWith('E:')) as FSDrive;
+    const kb = eDrive.children[0];
+    expect(kb.type).toBe('folder');
+    if (kb.type === 'folder') {
+      const folderNames = kb.children.map((c) => c.name);
+      expect(folderNames).toContain('DevOps');
+      expect(folderNames).toContain('Software_Engineering');
+      expect(folderNames).toContain('AI');
+    }
+  });
+
+  it('E:\\Knowledge_Base\\DevOps should contain 3 article files', () => {
+    const eDrive = FILE_SYSTEM.find((d) => d.name.startsWith('E:')) as FSDrive;
+    const kb = eDrive.children[0];
+    expect(kb.type).toBe('folder');
+    if (kb.type === 'folder') {
+      const devopsFolder = kb.children.find((c) => c.name === 'DevOps');
+      expect(devopsFolder).toBeDefined();
+      expect(devopsFolder!.type).toBe('folder');
+      if (devopsFolder!.type === 'folder') {
+        const names = devopsFolder!.children.map((c) => c.name);
+        expect(names).toContain('docker-basics.mdx');
+        expect(names).toContain('linux-essentials.mdx');
+        expect(names).toContain('ci-cd-pipeline.mdx');
+      }
+    }
+  });
+
+  it('E:\\Knowledge_Base\\Software_Engineering should contain microservices-patterns article', () => {
+    const eDrive = FILE_SYSTEM.find((d) => d.name.startsWith('E:')) as FSDrive;
+    const kb = eDrive.children[0];
+    expect(kb.type).toBe('folder');
+    if (kb.type === 'folder') {
+      const seFolder = kb.children.find((c) => c.name === 'Software_Engineering');
+      expect(seFolder).toBeDefined();
+      expect(seFolder!.type).toBe('folder');
+      if (seFolder!.type === 'folder') {
+        const names = seFolder!.children.map((c) => c.name);
+        expect(names).toContain('microservices-patterns.mdx');
+      }
+    }
+  });
+
+  it('E:\\Knowledge_Base\\AI should contain llm-fine-tuning article', () => {
+    const eDrive = FILE_SYSTEM.find((d) => d.name.startsWith('E:')) as FSDrive;
+    const kb = eDrive.children[0];
+    expect(kb.type).toBe('folder');
+    if (kb.type === 'folder') {
+      const aiFolder = kb.children.find((c) => c.name === 'AI');
+      expect(aiFolder).toBeDefined();
+      expect(aiFolder!.type).toBe('folder');
+      if (aiFolder!.type === 'folder') {
+        const names = aiFolder!.children.map((c) => c.name);
+        expect(names).toContain('llm-fine-tuning.mdx');
+      }
     }
   });
 });

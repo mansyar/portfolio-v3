@@ -171,10 +171,10 @@ describe('ExplorerDetailPane', () => {
     expect(screen.getByText('View on GitHub')).toBeInTheDocument();
   });
 
-  it('should render academy details for a devops slug', () => {
+  it('should render article details for an article slug', () => {
     render(<ExplorerDetailPane slug="docker-basics" />);
     expect(screen.getByText('Docker Basics')).toBeInTheDocument();
-    expect(screen.getByText('Docker')).toBeInTheDocument();
+    expect(screen.getByText('DevOps')).toBeInTheDocument();
   });
 
   it('should render null for an unknown slug', () => {
@@ -192,12 +192,14 @@ describe('Projects Metadata', () => {
     expect(PROJECTS_METADATA['tubular-bexus-osw']).toBeDefined();
   });
 
-  it('should have metadata for all 3 devops articles', async () => {
-    const { DEVOPS_METADATA } = await import('@/lib/projects-data');
-    expect(Object.keys(DEVOPS_METADATA)).toHaveLength(3);
-    expect(DEVOPS_METADATA['docker-basics']).toBeDefined();
-    expect(DEVOPS_METADATA['linux-essentials']).toBeDefined();
-    expect(DEVOPS_METADATA['ci-cd-pipeline']).toBeDefined();
+  it('should have metadata for all 5 articles (renamed from DEVOPS_METADATA)', async () => {
+    const { ARTICLES_METADATA } = await import('@/lib/projects-data');
+    expect(Object.keys(ARTICLES_METADATA)).toHaveLength(5);
+    expect(ARTICLES_METADATA['docker-basics']).toBeDefined();
+    expect(ARTICLES_METADATA['linux-essentials']).toBeDefined();
+    expect(ARTICLES_METADATA['ci-cd-pipeline']).toBeDefined();
+    expect(ARTICLES_METADATA['microservices-patterns']).toBeDefined();
+    expect(ARTICLES_METADATA['llm-fine-tuning']).toBeDefined();
   });
 });
 

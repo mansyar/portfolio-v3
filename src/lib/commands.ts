@@ -6,7 +6,7 @@
  */
 
 import { getChildren, resolvePath, getParent } from '@/lib/filesystem';
-import { PROJECTS_METADATA, DEVOPS_METADATA } from '@/lib/projects-data';
+import { PROJECTS_METADATA, ARTICLES_METADATA } from '@/lib/projects-data';
 import { FILE_SYSTEM, type FSNode } from '@/lib/constants';
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -196,14 +196,14 @@ const handlerCat: CommandHandler = (args) => {
     return { lines };
   }
 
-  // Check DevOps academy metadata
-  const devops = DEVOPS_METADATA[slug];
-  if (devops) {
+  // Check articles metadata
+  const article = ARTICLES_METADATA[slug];
+  if (article) {
     const lines = [
-      `Title:       ${devops.title}`,
-      `Description: ${devops.description}`,
-      `Category:    ${devops.category}`,
-      `Last Updated: ${devops.lastUpdated}`,
+      `Title:       ${article.title}`,
+      `Description: ${article.description}`,
+      `Category:    ${article.category}`,
+      `Last Updated: ${article.lastUpdated}`,
     ];
     return { lines };
   }

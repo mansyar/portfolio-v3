@@ -3,7 +3,7 @@
  *
  * Mirrors the content collections structure:
  * - C: and D: drives → projects collection (filtered by `drive` field)
- * - E: drive → devopsAcademy collection (grouped by `category`)
+ * - E: drive → articles collection (grouped by `category`)
  */
 
 // ── Discriminated union types ──────────────────────────────────────
@@ -93,29 +93,64 @@ export const FILE_SYSTEM: FSDrive[] = [
     children: [
       {
         type: 'folder',
-        name: 'DevOps_Academy',
+        name: 'Knowledge_Base',
         icon: '/icons/folder.svg',
         children: [
           {
-            type: 'file',
-            name: 'docker-basics.mdx',
-            icon: '/icons/file.svg',
-            slug: 'docker-basics',
-            size: '1.1 KB',
+            type: 'folder',
+            name: 'DevOps',
+            icon: '/icons/folder.svg',
+            children: [
+              {
+                type: 'file',
+                name: 'docker-basics.mdx',
+                icon: '/icons/file.svg',
+                slug: 'docker-basics',
+                size: '1.1 KB',
+              },
+              {
+                type: 'file',
+                name: 'linux-essentials.mdx',
+                icon: '/icons/file.svg',
+                slug: 'linux-essentials',
+                size: '1.2 KB',
+              },
+              {
+                type: 'file',
+                name: 'ci-cd-pipeline.mdx',
+                icon: '/icons/file.svg',
+                slug: 'ci-cd-pipeline',
+                size: '1.4 KB',
+              },
+            ],
           },
           {
-            type: 'file',
-            name: 'linux-essentials.mdx',
-            icon: '/icons/file.svg',
-            slug: 'linux-essentials',
-            size: '1.2 KB',
+            type: 'folder',
+            name: 'Software_Engineering',
+            icon: '/icons/folder.svg',
+            children: [
+              {
+                type: 'file',
+                name: 'microservices-patterns.mdx',
+                icon: '/icons/file.svg',
+                slug: 'microservices-patterns',
+                size: '2.3 KB',
+              },
+            ],
           },
           {
-            type: 'file',
-            name: 'ci-cd-pipeline.mdx',
-            icon: '/icons/file.svg',
-            slug: 'ci-cd-pipeline',
-            size: '1.4 KB',
+            type: 'folder',
+            name: 'AI',
+            icon: '/icons/folder.svg',
+            children: [
+              {
+                type: 'file',
+                name: 'llm-fine-tuning.mdx',
+                icon: '/icons/file.svg',
+                slug: 'llm-fine-tuning',
+                size: '2.5 KB',
+              },
+            ],
           },
         ],
       },
