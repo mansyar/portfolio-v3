@@ -21,10 +21,7 @@ import { CmdPrompt } from '@/components/apps/CmdPrompt';
 import { TaskManager } from '@/components/apps/TaskManager';
 import { KnowledgeBase } from '@/components/apps/KnowledgeBase';
 
-const PLACEHOLDER_CONTENT: Record<string, string> = {
-  mydocs: 'My Documents — Coming Soon in Track 2B',
-  recyclebin: 'Recycle Bin — Coming Soon in Track 2F',
-};
+const PLACEHOLDER_CONTENT: Record<string, string> = {};
 
 export function WindowLayer() {
   const windows = useStore($windows);
@@ -97,7 +94,7 @@ export function WindowLayer() {
 }
 
 function renderContent(id: WindowId) {
-  if (id === 'explorer') {
+  if (id === 'explorer' || id === 'mydocs' || id === 'recyclebin') {
     return <Explorer windowId={id} />;
   }
 

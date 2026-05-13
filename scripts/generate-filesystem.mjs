@@ -110,6 +110,33 @@ function buildProjectDrives(projectsContent) {
           icon: '/icons/folder.svg',
           children: dProjects,
         },
+        {
+          type: 'folder',
+          name: 'My_Documents',
+          icon: '/icons/folder.svg',
+          children: [
+            {
+              type: 'file',
+              name: 'Resume.pdf',
+              icon: '/icons/file.svg',
+              slug: 'resume',
+              size: '0 B',
+            },
+            {
+              type: 'folder',
+              name: 'Certs',
+              icon: '/icons/folder.svg',
+              children: [],
+            },
+            {
+              type: 'file',
+              name: 'Contact.txt',
+              icon: '/icons/file.svg',
+              slug: 'contact',
+              size: '0.5 KB',
+            },
+          ],
+        },
       ],
     });
   }

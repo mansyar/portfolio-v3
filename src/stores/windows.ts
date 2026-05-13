@@ -127,7 +127,14 @@ function buildWindowState(id: WindowId, config: WindowConfig, zIndex: number): W
     minHeight: config.minHeight,
     zIndex,
     status: 'open',
-    explorerPath: id === 'explorer' ? 'C:\\' : undefined,
+    explorerPath:
+      id === 'explorer'
+        ? 'C:\\'
+        : id === 'mydocs'
+          ? 'D:\\My_Documents'
+          : id === 'recyclebin'
+            ? '\\Recycle_Bin'
+            : undefined,
     cmdPath: id === 'cmd' ? 'C:\\' : undefined,
   };
 }

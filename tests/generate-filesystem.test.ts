@@ -87,15 +87,18 @@ describe('generate-filesystem script', () => {
     expect(slugs).toContain('chasing-chapters');
   });
 
-  it('D: drive should have Systems_Data folder with tubular-bexus-osw', () => {
+  it('D: drive should have Systems_Data and My_Documents folders with tubular-bexus-osw', () => {
     const raw = readFileSync(outputFile, 'utf-8');
     const data = JSON.parse(raw);
     const dDrive = data.find((d: { name: string }) => d.name === 'D:');
     expect(dDrive).toBeDefined();
-    expect(dDrive.children).toHaveLength(1);
-    const sysData = dDrive.children[0];
+    expect(dDrive.children).toHaveLength(2);
+    const folderNames = dDrive.children.map((f: { name: string }) => f.name);
+    expect(folderNames).toContain('Systems_Data');
+    expect(folderNames).toContain('My_Documents');
+    const sysData = dDrive.children.find((f: { name: string }) => f.name === 'Systems_Data');
+    expect(sysData).toBeDefined();
     expect(sysData.type).toBe('folder');
-    expect(sysData.name).toBe('Systems_Data');
     const slugs = sysData.children.map((f: { slug: string }) => f.slug);
     expect(slugs).toContain('tubular-bexus-osw');
   });
