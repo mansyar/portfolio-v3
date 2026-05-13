@@ -28,3 +28,4 @@ __test_modularity__/
 src/lib/generated/*
 # !src/lib/generated/articles-content.json
 # !src/lib/generated/projects-content.json
+.tsbuildinfo
