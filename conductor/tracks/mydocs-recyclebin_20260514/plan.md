@@ -36,3 +36,7 @@
   - [x] `node scripts/check-modularity.js` — all files under 500 lines
 - [x] **Task: Commit all changes with descriptive messages and git notes** (done throughout)
 - [x] **Task: Conductor - User Manual Verification 'Phase 4'** [checkpoint: 06ae5ab]
+
+## Phase: Review Fixes
+
+- [x] **Task: Apply review suggestions** (a65a6ca)
