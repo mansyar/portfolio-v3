@@ -14,7 +14,7 @@ Build the **Knowledge Base** application: an MDX article browser styled as a cla
 
 - **FR1.1:** Rename the `devopsAcademy` content collection to `articles` in `src/content.config.ts`
 - **FR1.2:** Rename the `devopsAcademySchema` to `articleSchema` in `src/lib/content-schemas.ts`
-- **FR1.3:** Broaden the `category` field values to include "Software Engineering", "AI", "DevOps" (and any future category)
+- **FR1.3:** Change `category` from `z.enum(['Docker', 'Linux', 'CI/CD'])` to `z.string()` to support any category value (enables auto-discovery from MDX frontmatter)
 - **FR1.4:** Move MDX files from `src/content/devops-academy/` to `src/content/articles/`
 - **FR1.5:** Update `projects-data.ts` references from `DEVOPS_METADATA` to `ARTICLES_METADATA`
 
@@ -35,10 +35,10 @@ Build the **Knowledge Base** application: an MDX article browser styled as a cla
 
 ### FR4: Build-Time MDX-to-HTML Pipeline
 
-- **FR4.1:** Create `scripts/compile-articles.mjs` — a Node.js script that:
-  - Reads all `.mdx` files from `src/content/articles/`
-  - Parses frontmatter (YAML) and body content
-  - Renders the MDX body to an HTML string using `@mdx-js/mdx` (or a simpler unified pipeline: `remark-parse` + `remark-rehype` + `rehype-stringify`)
+- **FR4.1:** Create `scripts/compile-articles.mjs` — a standalone Node.js script (runs before `astro build`, cannot use Astro APIs) that:
+  - Reads all `.mdx` files from `src/content/articles/` directly via `fs`
+  - Parses frontmatter (YAML) and body content using a lightweight approach (e.g., `gray-matter` for frontmatter or manual YAML parsing)
+  - Renders the MDX body to an HTML string using a lightweight markdown-to-HTML renderer (prefer `marked` — 1 package — or a simple custom renderer for headings, paragraphs, code blocks, lists, links)
   - Outputs `src/lib/generated/articles-content.json`
 - **FR4.2:** The JSON schema:
   ```json
@@ -54,7 +54,7 @@ Build the **Knowledge Base** application: an MDX article browser styled as a cla
 - **FR4.3:** Update `package.json` build script to prepend the compilation step:
   `"build": "node scripts/compile-articles.mjs && astro build"`
 - **FR4.4:** Add `src/lib/generated/` to `.gitignore`
-- **FR4.5:** The compiled JSON drives both the Explorer detail pane (article metadata) and the Knowledge Base app (metadata + full HTML content)
+- **FR4.5:** The compiled JSON is the primary data source for the Knowledge Base app (metadata + full HTML content). The separate `ARTICLES_METADATA` in `projects-data.ts` is retained as a secondary static source for the Explorer detail pane and CMD `cat` command — both derive from the same MDX files but through different mechanisms. This dual source is acceptable for v1; future tracks may unify. Both must be updated when adding/editing articles.
 
 ### FR5: KnowledgeBase React Island
 
@@ -103,7 +103,7 @@ Build the **Knowledge Base** application: an MDX article browser styled as a cla
 
 ## Non-Functional Requirements
 
-- **NFR1:** No new npm dependencies if possible. If MDX compilation requires a renderer, prefer `@mdx-js/mdx` (already an Astro transitive dependency) or the simplest possible unified pipeline.
+- **NFR1:** Minimize new npm dependencies. The compile script should use a lightweight markdown renderer (e.g., `marked` — single package). Avoid heavy pipelines like `unified` + `remark-*` + `rehype-*` (5+ packages) since articles are plain markdown without JSX components.
 - **NFR2:** The compiled articles JSON must be deterministic — same MDX files → same output every build.
 - **NFR3:** KnowledgeBase component must stay under 500 lines (modularity rule).
 - **NFR4:** Article HTML content is sanitized (no script injection from MDX body).
@@ -121,12 +121,15 @@ Build the **Knowledge Base** application: an MDX article browser styled as a cla
 ✅ scripts/compile-articles.mjs runs before astro build and generates articles-content.json
 ✅ pnpm build produces the compiled JSON without errors
 ✅ KnowledgeBase window opens from desktop icon
-✅ Left sidebar shows auto-discovered categories from article frontmatter
+✅ Left sidebar shows auto-discovered categories from article frontmatter (no hardcoded list)
 ✅ Clicking a category filters the article list
 ✅ Clicking an article renders its pre-compiled HTML content
 ✅ Search bar filters articles in real-time by title/description
 ✅ Search crosses category boundaries
+✅ Empty state shown when category has no articles
+✅ "No results" message when search matches nothing
 ✅ Layout matches classic XP Knowledge Base aesthetic (blue/white, 3D borders, Tahoma)
 ✅ CMD cat command still works and shows article metadata
 ✅ All existing tests still pass
+✅ All src/ files remain under 500 lines (modularity check)
 ```

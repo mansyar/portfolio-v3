@@ -7,7 +7,7 @@
 - [ ] Write failing test: `articles` collection exists in `src/content.config.ts` and loads MDX from `src/content/articles/`
 - [ ] Rename `devopsAcademy` to `articles` in `src/content.config.ts`
 - [ ] Rename `devopsAcademySchema` to `articleSchema` in `src/lib/content-schemas.ts`
-- [ ] Broaden `category` values to include "Software Engineering", "AI", "DevOps"
+- [ ] Change `category` from `z.enum(['Docker', 'Linux', 'CI/CD'])` to `z.string()` to support auto-discovery
 - [ ] Update `export const collections` in `content.config.ts` to `{ projects, articles }`
 - [ ] Update all test imports and references from `devopsAcademy` to `articles`/`articleSchema`
 - [ ] Verify: `CI=true pnpm test` passes
@@ -37,9 +37,9 @@
 
 ### Task 2.1: Create compile-articles script
 
-- [ ] Create `scripts/compile-articles.mjs`
-- [ ] Implement frontmatter parsing (gray-matter or manual YAML parse)
-- [ ] Implement MDX body → HTML rendering (using unified: remark-parse + remark-rehype + rehype-stringify)
+- [ ] Create `scripts/compile-articles.mjs` (standalone, no Astro API dependency)
+- [ ] Implement frontmatter parsing (manual YAML parse, or install `gray-matter`)
+- [ ] Implement MDX body → HTML rendering using lightweight markdown renderer (e.g., `marked` — 1 package)
 - [ ] Output JSON to `src/lib/generated/articles-content.json`
 - [ ] Write failing test: script produces valid JSON with expected schema
 - [ ] Verify script runs successfully: `node scripts/compile-articles.mjs`
@@ -66,30 +66,35 @@
 
 ### Task 3.2: Implement category sidebar
 
-- [ ] Write failing test: sidebar shows auto-discovered categories from article metadata
+- [ ] Write failing test: sidebar shows auto-discovered categories from article metadata (no hardcoded list)
 - [ ] Extract unique `category` values from metadata
 - [ ] Render category list with "All Articles" default selected
 - [ ] Clicking a category filters article list
+- [ ] Show "No articles in this category" empty state when category has no articles
 - [ ] Style as XP tree view (indented, hover highlight)
 - [ ] Verify: `CI=true pnpm test` passes
 
 ### Task 3.3: Implement article list and detail pane
 
 - [ ] Write failing test: clicking an article renders its HTML content
+- [ ] Write failing test: empty state shows when no article is selected
 - [ ] Render article list with title, category badge, description excerpt
 - [ ] Implement detail pane that displays pre-compiled HTML via `dangerouslySetInnerHTML`
 - [ ] Show metadata header: title, category badge, last updated date
 - [ ] Alternating row backgrounds with hover highlight
 - [ ] Ensure content area is scrollable
+- [ ] Show "Select an article to view" placeholder when no article selected
 - [ ] Verify: `CI=true pnpm test` passes
 
 ### Task 3.4: Implement search bar
 
 - [ ] Write failing test: search filters articles in real-time by title/description
+- [ ] Write failing test: "No results" empty state shows when search matches nothing
 - [ ] Add text input at top of sidebar
 - [ ] Implement live filter matching title or description (case-insensitive)
 - [ ] Search crosses category boundaries
 - [ ] Clear search shows all articles
+- [ ] Show "No articles match your search" message when no results
 - [ ] Verify: `CI=true pnpm test` passes
 
 ### Task 3.5: Wire KnowledgeBase into WindowLayer
