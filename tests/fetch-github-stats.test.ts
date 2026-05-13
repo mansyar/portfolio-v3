@@ -206,6 +206,10 @@ describe('main()', () => {
 
   afterAll(() => {
     vi.restoreAllMocks();
+    // Clean up the cache file to avoid polluting real build data
+    if (existsSync(cacheFile)) {
+      unlinkSync(cacheFile);
+    }
   });
 
   it('should be exported as a function', async () => {

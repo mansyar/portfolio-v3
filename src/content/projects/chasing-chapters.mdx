@@ -2,39 +2,58 @@
 title: Chasing Chapters
 slug: chasing-chapters
 drive: C
-description: A community-driven book discovery and reading tracker app with personalized recommendations, reading streaks, and social features for book enthusiasts.
-repoUrl: https://github.com/mansyar/chasing-chapters
-language: Python
+description: A beautifully crafted personal book review platform — a digital space that feels like a boutique bookstore meets a personal literary journal. Built with Next.js 16 and Payload CMS 3.
+repoUrl: https://github.com/mansyar/chasing-chapters-v2
+language: TypeScript
 techStack:
-  - Python
-  - Django
+  - TypeScript
+  - Next.js 16
+  - Payload CMS 3
   - PostgreSQL
-  - Elasticsearch
   - Redis
-  - Celery
-stars: 89
-lastCommit: '2026-03-28'
-commits: 256
+  - Tailwind CSS 4
+  - Radix UI
+  - shadcn/ui
+  - Motion
+  - Cloudflare R2
+  - Google Cloud Translation
+  - Sentry
+  - Bun
+  - Docker
+stars: 0
+lastCommit: '2026-01-19'
+commits: 0
 status: active
 icon: book
 ---
 
 ## Chasing Chapters
 
-A community-driven book discovery platform that combines personal reading tracking with social discovery features. Users can log books, track reading progress, join book clubs, and receive personalized recommendations.
+A beautifully crafted personal book review platform — a digital space that feels like a boutique bookstore meets a personal literary journal. Built with Next.js 16 with App Router and Payload CMS 3 as the integrated headless CMS.
 
 ### Key Features
 
-- **Reading Tracker**: Log books, track pages/chapters, maintain reading streaks
-- **Smart Recommendations**: ML-powered suggestions based on reading history and preferences
-- **Book Clubs**: Create or join reading groups with shared bookshelves and discussion forums
-- **Social Feed**: Share reviews, ratings, and reading milestones with followers
-- **Advanced Search**: Elasticsearch-powered full-text search across millions of books
+#### For Authors
+- **Rich Review Editor** — Write detailed reviews with structured sections (What I Loved, What Could Be Better, Perfect For)
+- **Favorite Quotes** — Highlight memorable passages with special formatting
+- **Mood & Genre Tagging** — Organize reviews with genres, tags, and mood tags
+- **Reading Stats** — Track reading dates, books per month, and favorite genres
+- **Draft & Schedule** — Save drafts and schedule publications
+- **Comment Moderation** — Approve and manage reader comments
+- **Auto-Translation** — Reviews are automatically translated to Indonesian using Google Cloud Translation API
+
+#### For Readers
+- **Browse & Discover** — Explore reviews by genre, mood, or curated reading lists
+- **Search** — Find books by title, author, or genre
+- **Language Toggle** — Switch between English and Indonesian translations
+- **Reactions** — Like and react to reviews
+- **Comments** — Leave thoughts and engage with reviews
+- **RSS Feed** — Subscribe to new review updates
 
 ### Tech Stack
 
-Python/Django backend with PostgreSQL as the primary database and Elasticsearch for full-text search capabilities. Redis serves as both a cache and message broker for Celery task queues.
+Built with TypeScript on Next.js 16 with App Router, with Payload CMS 3 as the integrated headless CMS. PostgreSQL 16 serves as the primary database, with Redis for translation caching and rate limiting. The frontend uses Tailwind CSS 4 with Radix UI and shadcn/ui components, with Motion (Framer Motion) for animations. Media is stored on Cloudflare R2. Error monitoring via Sentry. Security features include CSP headers, rate limiting, spam detection, and atomic database operations.
 
 ### Architecture
 
-The application uses a service-oriented architecture within Django, with separate apps for books, users, social features, and recommendations. Celery handles async tasks like recommendation generation and email notifications.
+The application follows a collection-driven architecture with Payload CMS. Content types (Reviews, Books, Comments, Authors) are defined as Payload collections with fields, hooks, and access control. The Next.js App Router handles both the public site routes and the Payload admin panel. Server actions handle form submissions with built-in rate limiting and spam detection. The auto-translation pipeline uses Google Cloud Translation API with Redis caching for efficiency. CI/CD uses GitHub Actions with Docker builds and Coolify deployment.

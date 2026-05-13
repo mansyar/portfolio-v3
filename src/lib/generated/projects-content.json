@@ -4,50 +4,65 @@
       "title": "Chasing Chapters",
       "slug": "chasing-chapters",
       "drive": "C",
-      "description": "A community-driven book discovery and reading tracker app with personalized recommendations, reading streaks, and social features for book enthusiasts.",
-      "repoUrl": "https://github.com/mansyar/chasing-chapters",
-      "language": "Python",
-      "techStack": ["Python", "Django", "PostgreSQL", "Elasticsearch", "Redis", "Celery"],
-      "stars": 89,
-      "lastCommit": "2026-03-28",
-      "commits": 256,
+      "description": "A beautifully crafted personal book review platform — a digital space that feels like a boutique bookstore meets a personal literary journal. Built with Next.js 16 and Payload CMS 3.",
+      "repoUrl": "https://github.com/mansyar/chasing-chapters-v2",
+      "language": "TypeScript",
+      "techStack": [
+        "TypeScript",
+        "Next.js 16",
+        "Payload CMS 3",
+        "PostgreSQL",
+        "Redis",
+        "Tailwind CSS 4",
+        "Radix UI",
+        "shadcn/ui",
+        "Motion",
+        "Cloudflare R2",
+        "Google Cloud Translation",
+        "Sentry",
+        "Bun",
+        "Docker"
+      ],
+      "stars": 0,
+      "lastCommit": "2026-01-19",
+      "commits": 0,
       "status": "active",
       "icon": "book"
     },
-    "bodyHtml": "<h2>Chasing Chapters</h2>\n<p>A community-driven book discovery platform that combines personal reading tracking with social discovery features. Users can log books, track reading progress, join book clubs, and receive personalized recommendations.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Reading Tracker</strong>: Log books, track pages/chapters, maintain reading streaks</li>\n<li><strong>Smart Recommendations</strong>: ML-powered suggestions based on reading history and preferences</li>\n<li><strong>Book Clubs</strong>: Create or join reading groups with shared bookshelves and discussion forums</li>\n<li><strong>Social Feed</strong>: Share reviews, ratings, and reading milestones with followers</li>\n<li><strong>Advanced Search</strong>: Elasticsearch-powered full-text search across millions of books</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Python/Django backend with PostgreSQL as the primary database and Elasticsearch for full-text search capabilities. Redis serves as both a cache and message broker for Celery task queues.</p>\n<h3>Architecture</h3>\n<p>The application uses a service-oriented architecture within Django, with separate apps for books, users, social features, and recommendations. Celery handles async tasks like recommendation generation and email notifications.</p>\n"
+    "bodyHtml": "<h2>Chasing Chapters</h2>\n<p>A beautifully crafted personal book review platform — a digital space that feels like a boutique bookstore meets a personal literary journal. Built with Next.js 16 with App Router and Payload CMS 3 as the integrated headless CMS.</p>\n<h3>Key Features</h3>\n<h4>For Authors</h4>\n<ul>\n<li><strong>Rich Review Editor</strong> — Write detailed reviews with structured sections (What I Loved, What Could Be Better, Perfect For)</li>\n<li><strong>Favorite Quotes</strong> — Highlight memorable passages with special formatting</li>\n<li><strong>Mood &amp; Genre Tagging</strong> — Organize reviews with genres, tags, and mood tags</li>\n<li><strong>Reading Stats</strong> — Track reading dates, books per month, and favorite genres</li>\n<li><strong>Draft &amp; Schedule</strong> — Save drafts and schedule publications</li>\n<li><strong>Comment Moderation</strong> — Approve and manage reader comments</li>\n<li><strong>Auto-Translation</strong> — Reviews are automatically translated to Indonesian using Google Cloud Translation API</li>\n</ul>\n<h4>For Readers</h4>\n<ul>\n<li><strong>Browse &amp; Discover</strong> — Explore reviews by genre, mood, or curated reading lists</li>\n<li><strong>Search</strong> — Find books by title, author, or genre</li>\n<li><strong>Language Toggle</strong> — Switch between English and Indonesian translations</li>\n<li><strong>Reactions</strong> — Like and react to reviews</li>\n<li><strong>Comments</strong> — Leave thoughts and engage with reviews</li>\n<li><strong>RSS Feed</strong> — Subscribe to new review updates</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Built with TypeScript on Next.js 16 with App Router, with Payload CMS 3 as the integrated headless CMS. PostgreSQL 16 serves as the primary database, with Redis for translation caching and rate limiting. The frontend uses Tailwind CSS 4 with Radix UI and shadcn/ui components, with Motion (Framer Motion) for animations. Media is stored on Cloudflare R2. Error monitoring via Sentry. Security features include CSP headers, rate limiting, spam detection, and atomic database operations.</p>\n<h3>Architecture</h3>\n<p>The application follows a collection-driven architecture with Payload CMS. Content types (Reviews, Books, Comments, Authors) are defined as Payload collections with fields, hooks, and access control. The Next.js App Router handles both the public site routes and the Payload admin panel. Server actions handle form submissions with built-in rate limiting and spam detection. The auto-translation pipeline uses Google Cloud Translation API with Redis caching for efficiency. CI/CD uses GitHub Actions with Docker builds and Coolify deployment.</p>\n"
   },
   "icarus-server-manager": {
     "frontmatter": {
       "title": "Icarus Server Manager",
       "slug": "icarus-server-manager",
       "drive": "C",
-      "description": "A lightweight, self-hosted server management dashboard for monitoring system metrics, managing Docker containers, and orchestrating deployments via a clean web UI.",
+      "description": "A PySide6 desktop application for deploying, updating, backing up, and monitoring dedicated Icarus game servers with automated SteamCMD integration and smart resource management.",
       "repoUrl": "https://github.com/mansyar/icarus-server-manager",
-      "language": "TypeScript",
-      "techStack": ["Node.js", "Express", "PostgreSQL", "Docker", "Redis"],
-      "stars": 142,
-      "lastCommit": "2026-04-15",
-      "commits": 384,
+      "language": "Python",
+      "techStack": ["Python", "PySide6", "psutil", "SteamCMD", "WinOTify", "GitHub Actions"],
+      "stars": 0,
+      "lastCommit": "2026-03-21",
+      "commits": 406,
       "status": "active",
       "icon": "server"
     },
-    "bodyHtml": "<h2>Icarus Server Manager</h2>\n<p>A lightweight, self-hosted server management dashboard that brings together system monitoring, Docker container management, and deployment orchestration in a clean, accessible web interface.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Real-time Monitoring</strong>: Live system metrics (CPU, memory, disk, network) with historical graphing</li>\n<li><strong>Docker Management</strong>: Start, stop, restart, and view logs for containers directly from the dashboard</li>\n<li><strong>Deployment Orchestration</strong>: One-click deployment from GitHub webhooks with rollback support</li>\n<li><strong>User Management</strong>: Role-based access control for team environments</li>\n<li><strong>Alert System</strong>: Configurable thresholds with email and webhook notifications</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Built with TypeScript across the stack — Node.js/Express backend, PostgreSQL for metrics storage, Redis for caching and real-time pub/sub, and Docker for containerized deployment.</p>\n<h3>Architecture</h3>\n<p>The application follows a modular monolith pattern, with clear separation between the API layer, service layer, and data access layer. WebSocket connections provide real-time metric streaming to the dashboard frontend.</p>\n"
+    "bodyHtml": "<h2>Icarus Sentinel (Server Manager)</h2>\n<p>A lightweight, Python-based desktop application designed to simplify the deployment and maintenance of a dedicated Icarus server. The goal is to offload game logic from the client to a dedicated process to improve FPS and stability, while automating weekly updates, save-game security, and memory optimization.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Safe Launch</strong>: Pre-flight RAM checks and optional auto-update on launch ensure the server is always up-to-date with sufficient system resources</li>\n<li><strong>Smart Backup</strong>: Automated, timestamped ZIP backups of world saves every 30 minutes and upon shutdown, with configurable retention policy to manage disk space</li>\n<li><strong>Save Sync</strong>: Bidirectional synchronization of world saves between local single-player and the dedicated server using a &quot;Keep Newest&quot; conflict policy</li>\n<li><strong>Player Tracking</strong>: Real-time monitoring of connected players, playtime, and server metrics via the Valve A2S protocol with integrated Windows desktop notifications</li>\n<li><strong>Automated CI/CD</strong>: GitHub Actions pipeline for automated Windows executable builds and semantic versioning</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Written in Python 3.11+ with PySide6 providing a high-fidelity industrial dashboard UI. System monitoring uses psutil, server discovery uses the python-a2s library (Valve A2S protocol), and native Windows notifications are powered by winotify.</p>\n<h3>Architecture</h3>\n<p>The application follows a modular Controller-View pattern — business logic is fully decoupled from UI components. No single source file exceeds 500 lines. The core workflows (Safe Launch, Smart Backup, Save Sync, Player Tracking) operate as independent modules orchestrated by a central controller, making the system maintainable and extensible.</p>\n"
   },
   "tubular-bexus-osw": {
     "frontmatter": {
       "title": "Tubular Bexus OSW",
       "slug": "tubular-bexus-osw",
       "drive": "D",
-      "description": "An experimental real-time data pipeline framework for streaming ETL transformations, built with a custom actor model for fault-tolerant, low-latency data processing.",
+      "description": "Onboard software for the TUBULAR BEXUS 26/27 student sounding rocket experiment, developed as part of the REXUS/BEXUS programme for stratospheric experimentation.",
       "repoUrl": "https://github.com/mansyar/tubular-bexus-osw",
-      "language": "Rust",
-      "techStack": ["Rust", "Apache Kafka", "Arrow", "Tokio", "gRPC"],
-      "stars": 67,
-      "lastCommit": "2026-04-10",
-      "commits": 192,
-      "status": "active",
+      "language": "C",
+      "techStack": ["C", "Embedded Systems"],
+      "stars": 0,
+      "lastCommit": "2018-01-16",
+      "commits": 1,
+      "status": "archived",
       "icon": "pipeline"
     },
-    "bodyHtml": "<h2>Tubular Bexus OSW</h2>\n<p>An experimental real-time data pipeline framework that implements a custom actor model for streaming ETL transformations. Built for fault-tolerant, low-latency data processing at scale.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Actor Model</strong>: Lightweight actors with message-passing for parallel data processing</li>\n<li><strong>Streaming ETL</strong>: Real-time transformation pipelines with exactly-once semantics</li>\n<li><strong>Schema Evolution</strong>: Arrow-based schema management with automatic migration</li>\n<li><strong>Fault Tolerance</strong>: Supervised actor trees with automatic recovery</li>\n<li><strong>gRPC API</strong>: High-performance bidirectional streaming for data ingestion and retrieval</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Written entirely in Rust, leveraging Tokio for async runtime, Apache Kafka for stream ingestion, Arrow for columnar data processing, and gRPC for inter-service communication.</p>\n<h3>Architecture</h3>\n<p>Each pipeline stage runs as a supervised actor within a Tokio task. Data flows through a directed acyclic graph of transformation stages, with backpressure handling at every level. Checkpointing to Kafka ensures exactly-once processing guarantees.</p>\n"
+    "bodyHtml": "<h2>Tubular BEXUS Onboard Software</h2>\n<p>Onboard software developed for the TUBULAR BEXUS 26/27 experiment — a student-led research project launched as part of the REXUS/BEXUS programme, which provides stratospheric balloon and sounding rocket platforms for university experiments.</p>\n<h3>Background</h3>\n<p>The REXUS/BEXUS programme (Rocket and Balloon Experiments for University Students) is a collaboration between the German Aerospace Center (DLR), the Swedish National Space Agency (SNSA), and the European Space Agency (ESA). TUBULAR&#39;s experiment was designed for stratospheric flight to conduct scientific measurements using onboard sensors and data logging.</p>\n<h3>Key Responsibilities</h3>\n<ul>\n<li><strong>Onboard Data Acquisition</strong>: Capture and log sensor telemetry during stratospheric flight</li>\n<li><strong>Telemetry Handling</strong>: Process and transmit experimental data through the rocket&#39;s telemetry downlink</li>\n<li><strong>Flight Safety</strong>: Implement watchdog timers and fault-safe states for autonomous operation</li>\n<li><strong>Payload Integration</strong>: Interface with the BEXUS service systems (power, comms, GPS) per the experiment interface specification</li>\n<li><strong>Post-Flight Analysis</strong>: Store experiment data in onboard flash memory for recovery after landing</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Written in C for embedded platforms, with direct hardware register access for sensor interfaces and telemetry UART communication. Development followed the REXUS/BEXUS experiment lifecycle: PDR (Preliminary Design Review), CDR (Critical Design Review), integration testing, and launch campaign.</p>\n<h3>Architecture</h3>\n<p>The software follows a simple super-loop architecture suitable for resource-constrained embedded systems. Initialization routines configure sensors and communication interfaces, then the main loop cycles through data acquisition, telemetry packetization, and health monitoring at deterministic intervals. Watchdog timers provide automatic reset on fault conditions, and a write-once flash storage scheme ensures data integrity through landing impact.</p>\n"
   }
 }

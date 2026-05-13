@@ -21,27 +21,27 @@ describe('compile-projects script', () => {
           {
             'mansyar/icarus-server-manager': {
               name: 'icarus-server-manager',
-              stargazers_count: 142,
-              pushed_at: '2026-04-15T10:00:00Z',
-              default_branch: 'main',
-              language: 'TypeScript',
-              commits: 384,
-            },
-            'mansyar/chasing-chapters': {
-              name: 'chasing-chapters',
-              stargazers_count: 89,
-              pushed_at: '2026-03-28T10:00:00Z',
+              stargazers_count: 0,
+              pushed_at: '2026-03-21T02:12:37Z',
               default_branch: 'main',
               language: 'Python',
-              commits: 256,
+              commits: 406,
+            },
+            'mansyar/chasing-chapters-v2': {
+              name: 'chasing-chapters-v2',
+              stargazers_count: 0,
+              pushed_at: '2026-01-19T09:01:47Z',
+              default_branch: 'main',
+              language: 'TypeScript',
+              commits: 90,
             },
             'mansyar/tubular-bexus-osw': {
               name: 'tubular-bexus-osw',
-              stargazers_count: 67,
-              pushed_at: '2026-04-10T10:00:00Z',
-              default_branch: 'main',
-              language: 'Rust',
-              commits: 192,
+              stargazers_count: 0,
+              pushed_at: '2018-01-16T13:44:54Z',
+              default_branch: 'master',
+              language: null,
+              commits: 1,
             },
           },
           null,
@@ -89,10 +89,10 @@ describe('compile-projects script', () => {
     expect(entry.frontmatter.title).toBe('Icarus Server Manager');
     expect(entry.frontmatter.slug).toBe('icarus-server-manager');
     expect(entry.frontmatter.drive).toBe('C');
-    expect(entry.frontmatter.language).toBe('TypeScript');
-    expect(entry.frontmatter.stars).toBe(142);
-    expect(entry.frontmatter.lastCommit).toBe('2026-04-15');
-    expect(entry.frontmatter.commits).toBe(384);
+    expect(entry.frontmatter.language).toBe('Python');
+    expect(entry.frontmatter.stars).toBe(0);
+    expect(entry.frontmatter.lastCommit).toBe('2026-03-21');
+    expect(entry.frontmatter.commits).toBe(406);
   });
 
   it('should have GitHub API data merged into frontmatter (stars, lastCommit, commits)', () => {
@@ -100,8 +100,8 @@ describe('compile-projects script', () => {
     const data = JSON.parse(raw);
     // Verify GitHub data overwrites hardcoded values
     const entry = data['icarus-server-manager'];
-    expect(entry.frontmatter.stars).toBe(142);
-    expect(entry.frontmatter.commits).toBe(384);
+    expect(entry.frontmatter.stars).toBe(0);
+    expect(entry.frontmatter.commits).toBe(406);
     expect(typeof entry.frontmatter.lastCommit).toBe('string');
   });
 
@@ -122,8 +122,8 @@ describe('compile-projects script', () => {
     const data = JSON.parse(raw);
     const entry = data['icarus-server-manager'];
     expect(Array.isArray(entry.frontmatter.techStack)).toBe(true);
-    expect(entry.frontmatter.techStack).toContain('Node.js');
-    expect(entry.frontmatter.techStack).toContain('Docker');
+    expect(entry.frontmatter.techStack).toContain('Python');
+    expect(entry.frontmatter.techStack).toContain('PySide6');
   });
 
   it('should have all 3 projects with correct slugs', () => {

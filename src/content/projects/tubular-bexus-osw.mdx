@@ -2,38 +2,39 @@
 title: Tubular Bexus OSW
 slug: tubular-bexus-osw
 drive: D
-description: An experimental real-time data pipeline framework for streaming ETL transformations, built with a custom actor model for fault-tolerant, low-latency data processing.
+description: Onboard software for the TUBULAR BEXUS 26/27 student sounding rocket experiment, developed as part of the REXUS/BEXUS programme for stratospheric experimentation.
 repoUrl: https://github.com/mansyar/tubular-bexus-osw
-language: Rust
+language: C
 techStack:
-  - Rust
-  - Apache Kafka
-  - Arrow
-  - Tokio
-  - gRPC
-stars: 67
-lastCommit: '2026-04-10'
-commits: 192
-status: active
+  - C
+  - Embedded Systems
+stars: 0
+lastCommit: '2018-01-16'
+commits: 1
+status: archived
 icon: pipeline
 ---
 
-## Tubular Bexus OSW
+## Tubular BEXUS Onboard Software
 
-An experimental real-time data pipeline framework that implements a custom actor model for streaming ETL transformations. Built for fault-tolerant, low-latency data processing at scale.
+Onboard software developed for the TUBULAR BEXUS 26/27 experiment — a student-led research project launched as part of the REXUS/BEXUS programme, which provides stratospheric balloon and sounding rocket platforms for university experiments.
 
-### Key Features
+### Background
 
-- **Actor Model**: Lightweight actors with message-passing for parallel data processing
-- **Streaming ETL**: Real-time transformation pipelines with exactly-once semantics
-- **Schema Evolution**: Arrow-based schema management with automatic migration
-- **Fault Tolerance**: Supervised actor trees with automatic recovery
-- **gRPC API**: High-performance bidirectional streaming for data ingestion and retrieval
+The REXUS/BEXUS programme (Rocket and Balloon Experiments for University Students) is a collaboration between the German Aerospace Center (DLR), the Swedish National Space Agency (SNSA), and the European Space Agency (ESA). TUBULAR's experiment was designed for stratospheric flight to conduct scientific measurements using onboard sensors and data logging.
+
+### Key Responsibilities
+
+- **Onboard Data Acquisition**: Capture and log sensor telemetry during stratospheric flight
+- **Telemetry Handling**: Process and transmit experimental data through the rocket's telemetry downlink
+- **Flight Safety**: Implement watchdog timers and fault-safe states for autonomous operation
+- **Payload Integration**: Interface with the BEXUS service systems (power, comms, GPS) per the experiment interface specification
+- **Post-Flight Analysis**: Store experiment data in onboard flash memory for recovery after landing
 
 ### Tech Stack
 
-Written entirely in Rust, leveraging Tokio for async runtime, Apache Kafka for stream ingestion, Arrow for columnar data processing, and gRPC for inter-service communication.
+Written in C for embedded platforms, with direct hardware register access for sensor interfaces and telemetry UART communication. Development followed the REXUS/BEXUS experiment lifecycle: PDR (Preliminary Design Review), CDR (Critical Design Review), integration testing, and launch campaign.
 
 ### Architecture
 
-Each pipeline stage runs as a supervised actor within a Tokio task. Data flows through a directed acyclic graph of transformation stages, with backpressure handling at every level. Checkpointing to Kafka ensures exactly-once processing guarantees.
+The software follows a simple super-loop architecture suitable for resource-constrained embedded systems. Initialization routines configure sensors and communication interfaces, then the main loop cycles through data acquisition, telemetry packetization, and health monitoring at deterministic intervals. Watchdog timers provide automatic reset on fault conditions, and a write-once flash storage scheme ensures data integrity through landing impact.

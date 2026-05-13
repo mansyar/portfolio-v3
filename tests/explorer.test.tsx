@@ -168,8 +168,10 @@ describe('ExplorerDetailPane', () => {
     // Title appears in both header and bodyHtml — use getAllByText
     const titles = screen.getAllByText('Icarus Server Manager');
     expect(titles.length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText('TypeScript')).toBeInTheDocument();
-    expect(screen.getByText('Node.js')).toBeInTheDocument();
+    // Python appears as both language label and tech stack badge — use getAllByText
+    const pythonElements = screen.getAllByText('Python');
+    expect(pythonElements.length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText('PySide6')).toBeInTheDocument();
     expect(screen.getByText('View on GitHub')).toBeInTheDocument();
   });
 
@@ -177,8 +179,8 @@ describe('ExplorerDetailPane', () => {
     render(<ExplorerDetailPane slug="icarus-server-manager" />);
     // bodyHtml content should be rendered
     expect(screen.getByText('Key Features')).toBeInTheDocument();
-    expect(screen.getByText('Real-time Monitoring')).toBeInTheDocument();
-    expect(screen.getByText('Docker Management')).toBeInTheDocument();
+    expect(screen.getByText('Safe Launch')).toBeInTheDocument();
+    expect(screen.getByText('Smart Backup')).toBeInTheDocument();
     expect(screen.getByText('Architecture')).toBeInTheDocument();
   });
 
