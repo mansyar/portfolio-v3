@@ -61,17 +61,17 @@
 - [x] Output to `src/lib/generated/projects-content.json` with schema `Record<string, { frontmatter: ProjectMetadata, bodyHtml: string }>`
 - [x] Verify tests pass
 
-### Task 2.3: Update ExplorerDetailPane to render full project body HTML
+### Task 2.3: Update ExplorerDetailPane to render full project body HTML `[95a6cb3]`
 
-- [ ] **Switch import source:** `ExplorerDetailPane.tsx` currently imports `PROJECTS_METADATA` from `projects-data.ts` — update to import from `src/lib/generated/projects-content.json` instead
-- [ ] The JSON provides both frontmatter (with live GitHub stars/lastCommit/commits) and `bodyHtml`
-- [ ] Render `bodyHtml` in a scrollable content area below the metadata header
-- [ ] Keep frontmatter header (title, language, tech stack badges, stars, last commit, GitHub link) above the body
-- [ ] Keep backward compatibility: fallback to `ARTICLES_METADATA` from `projects-data.ts` for article entries (not in `projects-content.json`)
-- [ ] Write tests verifying body HTML renders in detail pane
-- [ ] Write tests verifying fallback to metadata-only if no body HTML available
-- [ ] Verify tests pass
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: MDX Project Body Compilation' (Protocol in workflow.md)
+- [x] **Switch import source:** `ExplorerDetailPane.tsx` currently imports `PROJECTS_METADATA` from `projects-data.ts` — update to import from `src/lib/generated/projects-content.json` instead
+- [x] The JSON provides both frontmatter (with live GitHub stars/lastCommit/commits) and `bodyHtml`
+- [x] Render `bodyHtml` in a scrollable content area below the metadata header
+- [x] Keep frontmatter header (title, language, tech stack badges, stars, last commit, GitHub link) above the body
+- [x] Keep backward compatibility: fallback to `ARTICLES_METADATA` from `projects-data.ts` for article entries (not in `projects-content.json`)
+- [x] Write tests verifying body HTML renders in detail pane
+- [x] Write tests verifying fallback to metadata-only if no body HTML available
+- [x] Verify tests pass
+- [~] Task: Conductor - User Manual Verification 'Phase 2: MDX Project Body Compilation' (Protocol in workflow.md)
 
 ---
 
