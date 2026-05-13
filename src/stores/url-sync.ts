@@ -246,8 +246,11 @@ function debounce(fn: () => void, ms: number): () => void {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      timer = null;
-      fn();
+      try {
+        fn();
+      } finally {
+        timer = null;
+      }
     }, ms);
   };
 }
@@ -297,6 +300,8 @@ export function initUrlSync(): (() => void) | undefined {
   }, 100);
 
   // ── Subscribe to store changes ────────────────────────────────────────
+  // Intentionally does NOT subscribe to $shuttingDown:
+  // shutdown state is transient and should never be persisted in the URL.
   const unsubWindows = $windows.listen(() => {
     debouncedUpdate();
   });
