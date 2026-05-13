@@ -16,14 +16,23 @@
   - [ ] Test: Invalid path → fallback to `C:\`
   - [ ] Test: Empty URL → no hydration (clean desktop)
   - [ ] Test: `path` pointing to a file → navigates to parent directory
+  - [ ] Test: Unknown `w` IDs (e.g., `w=bogus`) are silently skipped
+  - [ ] Test: `isHydrating` flag prevents store subscriber from writing URL
 
 - [ ] Task: Implement `src/stores/url-sync.ts`
-  - [ ] Define types: `UrlState` (parsed params), `PathConverter` utilities
-  - [ ] Implement `parseParams(search: string): UrlState` — parse URLSearchParams into structured state
+  - [ ] Define types: `UrlState` (parsed params — guards unknown WindowIds), `PathConverter` utilities
+  - [ ] Implement `isHydrating` boolean flag — set `true` at start of hydration, `false` after completion. Store subscriber checks this before writing to URL.
+  - [ ] Implement `parseParams(search: string): UrlState` — parse URLSearchParams into structured state. Unknown/invalid WindowIds in `w` param are filtered out silently (with `console.warn`).
   - [ ] Implement `serializeState(): string` — read current stores and generate URLSearchParams string
-  - [ ] Implement `convertPathToStore(urlPath: string): string` — forward slashes → backslashes
+  - [ ] Implement `convertPathToStore(urlPath: string): string` — forward slashes → backslashes. Delegate to `filesystem.ts`'s existing `normalize()` function to avoid reimplementing.
   - [ ] Implement `convertPathToUrl(storePath: string): string` — backslashes → forward slashes
-  - [ ] Implement `hydrateFromUrl()` — on page load, parse URL and call `openWindow()`, set `$activeWindow`, `$startMenuOpen`, Explorer `explorerPath`
+  - [ ] Implement no-op guard: `serializeState()` result compared against `window.location.search.substring(1)`. Skip `replaceState()` if equal.
+  - [ ] Implement `hydrateFromUrl()` — on page load, parse URL and execute hydration in this exact order:
+    1. Parse `w` → call `openWindow(id)` for each valid ID
+    2. Parse `focus` → call `focusWindow(id)` (not just `$activeWindow.set()`) to ensure correct z-index ordering
+    3. Parse `path` → set Explorer's `explorerPath` in the store
+    4. Parse `start` → call `openStartMenu()` if `1`
+    5. Set `isHydrating = false`
   - [ ] Export all functions for testing and integration
 
 - [ ] Task: Conductor — User Manual Verification 'URL Sync Module' (Protocol in workflow.md)
@@ -46,13 +55,20 @@
   - [ ] Test: `popstate` event re-hydrates stores from URL
   - [ ] Test: Debounce fires at ~100ms (not instantly)
   - [ ] Test: Rapid consecutive operations only produce one URL update (debounce coalescing)
+  - [ ] Test: No-op guard prevents `replaceState()` when serialized state hasn't changed
+  - [ ] Test: Initial page load uses `replaceState()` not `pushState()` (mock history API to verify)
+  - [ ] Test: `isHydrating` flag true → store subscriber does NOT write to URL
+  - [ ] Test: `popstate` re-hydration respects `isHydrating` guard (does not re-write URL)
 
 - [ ] Task: Wire `url-sync.ts` into the app
-  - [ ] Call `hydrateFromUrl()` on `window.addEventListener('load', ...)` in browser context
-  - [ ] Subscribe to `$windows` store changes → on change, debounce → call `serializeState()` → `replaceState()`
-  - [ ] Determine pushState boundaries: window open, close, focus change, Start Menu open/close → call `history.pushState()`
+  - [ ] Call `hydrateFromUrl()` on `window.addEventListener('load', ...)` in browser context. The `isHydrating` flag prevents the store subscriber from writing back to the URL during hydration.
+  - [ ] Subscribe to `$windows` store changes → on change, debounce → call `serializeState()` → if state differs from current URL, call `history.replaceState()`. Skip entirely if `isHydrating` is true.
+  - [ ] Implement pushState/replaceState boundary logic:
+    - **user-initiated** window open/close/focus/StartMenu → `history.pushState()`
+    - **hydration-initiated** changes (initial load, popstate) → use `replaceState()` or skip (URL already correct)
+    - Explorer path navigation, intermediate debounce → `replaceState()`
   - [ ] Implement 100ms debounce utility in `url-sync.ts` (or import from a shared location)
-  - [ ] Implement `popstate` event listener → re-parse URL params → re-hydrate stores
+  - [ ] Implement `popstate` event listener → set `isHydrating = true` → re-parse URL params → re-hydrate stores (same sequence as FR2) → set `isHydrating = false`. The `isHydrating` guard prevents the subscriber from writing back to the URL (which the browser already updated via popstate).
   - [ ] Ensure the sync only initializes once (guard against double hydration)
   - [ ] Ensure SSR safety: guard `window` references with `if (typeof window !== 'undefined')`
 
