@@ -4,24 +4,24 @@
 
 ## Phase 1 — GitHub API Fetch Layer
 
-### Task 1.1: Write failing tests for `fetchRepoStats()`
+### Task 1.1: Write failing tests for `fetchRepoStats()` `[c48366b]`
 
-- [ ] Write tests verifying `fetchRepoStats()` returns correct shape (`name`, `stargazers_count`, `pushed_at`, `default_branch`, `language` — per TDD §4.2)
-- [ ] Write tests verifying `fetchRepoCommitCount()` returns a number by parsing the `Link` header
-- [ ] Write tests verifying `GITHUB_TOKEN` is passed as `Authorization: Bearer` header
-- [ ] Write tests verifying unauthenticated fallback when no token
-- [ ] Write tests verifying error handling (network failure, non-200 response, malformed Link header)
-- [ ] Write tests verifying request timeout behavior
+- [x] Write tests verifying `fetchRepoStats()` returns correct shape (`name`, `stargazers_count`, `pushed_at`, `default_branch`, `language` — per TDD §4.2)
+- [x] Write tests verifying `fetchRepoCommitCount()` returns a number by parsing the `Link` header
+- [x] Write tests verifying `GITHUB_TOKEN` is passed as `Authorization: Bearer` header
+- [x] Write tests verifying unauthenticated fallback when no token
+- [x] Write tests verifying error handling (network failure, non-200 response, malformed Link header)
+- [x] Write tests verifying request timeout behavior
 
-### Task 1.2: Implement `src/lib/github.ts`
+### Task 1.2: Implement `src/lib/github.ts` `[c48366b]`
 
-- [ ] Create `src/lib/github.ts` with exported types (`GitHubRepoData` includes `name` per TDD §4.2) and functions (`fetchRepoStats`, `fetchRepoCommitCount`)
-- [ ] `fetchRepoStats(owner, repo)` — calls `GET /repos/{owner}/{repo}`, returns `{ name, stargazers_count, pushed_at, default_branch, language }`
-- [ ] `fetchRepoCommitCount(owner, repo)` — calls `GET /repos/{owner}/{repo}/commits?per_page=1&page=1`, parses `Link` header for `rel="last"` page number
-- [ ] Implement authenticated request path (reads `GITHUB_TOKEN` env var)
-- [ ] Implement unauthenticated fallback
-- [ ] Add request timeout (configurable, default 10s)
-- [ ] Add error handling — throw on non-200, catch network errors
+- [x] Create `src/lib/github.ts` with exported types (`GitHubRepoData` includes `name` per TDD §4.2) and functions (`fetchRepoStats`, `fetchRepoCommitCount`)
+- [x] `fetchRepoStats(owner, repo)` — calls `GET /repos/{owner}/{repo}`, returns `{ name, stargazers_count, pushed_at, default_branch, language }`
+- [x] `fetchRepoCommitCount(owner, repo)` — calls `GET /repos/{owner}/{repo}/commits?per_page=1&page=1`, parses `Link` header for `rel="last"` page number
+- [x] Implement authenticated request path (reads `GITHUB_TOKEN` env var)
+- [x] Implement unauthenticated fallback
+- [x] Add request timeout (configurable, default 10s)
+- [x] Add error handling — throw on non-200, catch network errors
 
 ### Task 1.3: Write tests for GitHub stats fetch script
 
