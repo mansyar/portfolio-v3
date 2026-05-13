@@ -20,7 +20,4 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- GitHub Data Sync track archived to conductor/archive/github-data-sync_20260513/ -->
 <!-- URL State Persistence track archived to conductor/archive/url-state-persistence_20260513/ -->
 
----
-
-- [x] **Track: My Documents & Recycle Bin**
-      _Link: [./tracks/mydocs-recyclebin_20260514/](./tracks/mydocs-recyclebin_20260514/)_
+<!-- My Documents & Recycle Bin track archived to conductor/archive/mydocs-recyclebin_20260514/ -->
