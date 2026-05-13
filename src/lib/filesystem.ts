@@ -4,7 +4,7 @@ import { FILE_SYSTEM, type FSNode, type FSDrive, type FSFolder } from '@/lib/con
  * Normalize a path: replace forward slashes, collapse multiple backslashes,
  * strip trailing backslash (except for root `\`).
  */
-function normalize(path: string): string {
+export function normalize(path: string): string {
   let p = path.replace(/\//g, '\\');
   p = p.replace(/\\+/g, '\\');
   if (p.length > 1 && p.endsWith('\\')) {

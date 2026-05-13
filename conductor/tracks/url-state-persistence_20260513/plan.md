@@ -6,34 +6,34 @@
 
 ### Tasks
 
-- [ ] Task: Write failing tests for URL parsing and serialization
-  - [ ] Test: `parseParams()` extracts `w`, `focus`, `start`, `path` from URL search string
-  - [ ] Test: `serializeState()` generates correct URL param string from current stores
-  - [ ] Test: Path conversion: `C:/Software_Engineering` ↔ `C:\Software_Engineering`
-  - [ ] Test: Comma-sorted `w` param is alphabetically stable
-  - [ ] Test: `start` param omitted when Start Menu is closed
-  - [ ] Test: `path` param omitted when Explorer not open
-  - [ ] Test: Invalid path → fallback to `C:\`
-  - [ ] Test: Empty URL → no hydration (clean desktop)
-  - [ ] Test: `path` pointing to a file → navigates to parent directory
-  - [ ] Test: Unknown `w` IDs (e.g., `w=bogus`) are silently skipped
-  - [ ] Test: `isHydrating` flag prevents store subscriber from writing URL
+- [x] Task: Write failing tests for URL parsing and serialization
+  - [x] Test: `parseParams()` extracts `w`, `focus`, `start`, `path` from URL search string
+  - [x] Test: `serializeState()` generates correct URL param string from current stores
+  - [x] Test: Path conversion: `C:/Software_Engineering` ↔ `C:\Software_Engineering`
+  - [x] Test: Comma-sorted `w` param is alphabetically stable
+  - [x] Test: `start` param omitted when Start Menu is closed
+  - [x] Test: `path` param omitted when Explorer not open
+  - [x] Test: Invalid path → fallback to `C:\`
+  - [x] Test: Empty URL → no hydration (clean desktop)
+  - [x] Test: `path` pointing to a file → navigates to parent directory
+  - [x] Test: Unknown `w` IDs (e.g., `w=bogus`) are silently skipped
+  - [x] Test: `isHydrating` flag prevents store subscriber from writing URL
 
-- [ ] Task: Implement `src/stores/url-sync.ts`
-  - [ ] Define types: `UrlState` (parsed params — guards unknown WindowIds), `PathConverter` utilities
-  - [ ] Implement `isHydrating` boolean flag — set `true` at start of hydration, `false` after completion. Store subscriber checks this before writing to URL.
-  - [ ] Implement `parseParams(search: string): UrlState` — parse URLSearchParams into structured state. Unknown/invalid WindowIds in `w` param are filtered out silently (with `console.warn`).
-  - [ ] Implement `serializeState(): string` — read current stores and generate URLSearchParams string
-  - [ ] Implement `convertPathToStore(urlPath: string): string` — forward slashes → backslashes. Delegate to `filesystem.ts`'s existing `normalize()` function to avoid reimplementing.
-  - [ ] Implement `convertPathToUrl(storePath: string): string` — backslashes → forward slashes
-  - [ ] Implement no-op guard: `serializeState()` result compared against `window.location.search.substring(1)`. Skip `replaceState()` if equal.
-  - [ ] Implement `hydrateFromUrl()` — on page load, parse URL and execute hydration in this exact order:
+- [x] Task: Implement `src/stores/url-sync.ts`
+  - [x] Define types: `UrlState` (parsed params — guards unknown WindowIds), `PathConverter` utilities
+  - [x] Implement `isHydrating` boolean flag — set `true` at start of hydration, `false` after completion. Store subscriber checks this before writing to URL.
+  - [x] Implement `parseParams(search: string): UrlState` — parse URLSearchParams into structured state. Unknown/invalid WindowIds in `w` param are filtered out silently (with `console.warn`).
+  - [x] Implement `serializeState(): string` — read current stores and generate URLSearchParams string
+  - [x] Implement `convertPathToStore(urlPath: string): string` — forward slashes → backslashes. Delegate to `filesystem.ts`'s existing `normalize()` function to avoid reimplementing.
+  - [x] Implement `convertPathToUrl(storePath: string): string` — backslashes → forward slashes
+  - [x] Implement no-op guard: `serializeState()` result compared against `window.location.search.substring(1)`. Skip `replaceState()` if equal.
+  - [x] Implement `hydrateFromUrl()` — on page load, parse URL and execute hydration in this exact order:
     1. Parse `w` → call `openWindow(id)` for each valid ID
     2. Parse `focus` → call `focusWindow(id)` (not just `$activeWindow.set()`) to ensure correct z-index ordering
     3. Parse `path` → set Explorer's `explorerPath` in the store
     4. Parse `start` → call `openStartMenu()` if `1`
     5. Set `isHydrating = false`
-  - [ ] Export all functions for testing and integration
+  - [x] Export all functions for testing and integration
 
 - [ ] Task: Conductor — User Manual Verification 'URL Sync Module' (Protocol in workflow.md)
 
