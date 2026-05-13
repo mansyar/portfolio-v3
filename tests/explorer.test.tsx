@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import type { ComponentType } from 'react';
 
@@ -242,5 +242,96 @@ describe('Explorer (integration)', () => {
     fireEvent.click(screen.getByText('Software_Engineering'));
     // Should now show files inside
     expect(screen.getByText('icarus-server-manager.mdx')).toBeInTheDocument();
+  });
+});
+
+describe('My Documents view', () => {
+  it('should open with explorerPath = D:\\My_Documents', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('mydocs');
+    const windows = stores.$windows.get();
+    expect(windows.mydocs?.explorerPath).toBe('D:\\My_Documents');
+  });
+
+  it('should render Resume.pdf, Certs/, and Contact.txt in file list', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('mydocs');
+    render(<Explorer windowId="mydocs" />);
+    expect(screen.getByText('Resume.pdf')).toBeInTheDocument();
+    expect(screen.getByText('Certs')).toBeInTheDocument();
+    expect(screen.getByText('Contact.txt')).toBeInTheDocument();
+  });
+
+  it('should show "This folder is empty" when navigating into Certs/', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('mydocs');
+    render(<Explorer windowId="mydocs" />);
+    // Click on Certs folder
+    fireEvent.click(screen.getByText('Certs'));
+    expect(screen.getByText('This folder is empty.')).toBeInTheDocument();
+  });
+
+  it('should show contact metadata when clicking Contact.txt', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('mydocs');
+    render(<Explorer windowId="mydocs" />);
+    // Click on Contact.txt
+    fireEvent.click(screen.getByText('Contact.txt'));
+    // Should show contact details
+    expect(screen.getByText('Muhammad Ansyar Rafi Putra')).toBeInTheDocument();
+    expect(screen.getByText('Indonesia')).toBeInTheDocument();
+    expect(screen.getByText('github.com/mansyar')).toBeInTheDocument();
+  });
+
+  it('should show correct breadcrumb segments for My Documents', () => {
+    render(<ExplorerBreadcrumb segments={['D:', 'My_Documents']} onNavigate={() => {}} />);
+    expect(screen.getByText('D:')).toBeInTheDocument();
+    expect(screen.getByText('My_Documents')).toBeInTheDocument();
+  });
+});
+
+describe('Recycle Bin view', () => {
+  it('should open with explorerPath = \\Recycle_Bin', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('recyclebin');
+    const windows = stores.$windows.get();
+    expect(windows.recyclebin?.explorerPath).toBe('\\Recycle_Bin');
+  });
+
+  it('should show chasing-chapters (v1) in file list', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('recyclebin');
+    render(<Explorer windowId="recyclebin" />);
+    expect(screen.getByText('chasing-chapters (v1)')).toBeInTheDocument();
+  });
+
+  it('should show archive metadata when clicking a deleted item', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('recyclebin');
+    render(<Explorer windowId="recyclebin" />);
+    fireEvent.click(screen.getByText('chasing-chapters (v1)'));
+    expect(screen.getByText('ARCHIVED')).toBeInTheDocument();
+    expect(screen.getByText('Restore')).toBeInTheDocument();
+    expect(screen.getByTitle('Cannot restore — Original location does not exist')).toBeDisabled();
+  });
+
+  it('should show correct breadcrumb segments for Recycle Bin', () => {
+    render(<ExplorerBreadcrumb segments={['Recycle_Bin']} onNavigate={() => {}} />);
+    expect(screen.getByText('Recycle_Bin')).toBeInTheDocument();
+  });
+});
+
+describe('Resume.pdf click', () => {
+  beforeEach(() => {
+    // Mock window.open
+    vi.stubGlobal('open', vi.fn());
+  });
+
+  it('should call window.open when clicking Resume.pdf', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('mydocs');
+    render(<Explorer windowId="mydocs" />);
+    fireEvent.click(screen.getByText('Resume.pdf'));
+    expect(window.open).toHaveBeenCalledWith('/resume.pdf', '_blank');
   });
 });
