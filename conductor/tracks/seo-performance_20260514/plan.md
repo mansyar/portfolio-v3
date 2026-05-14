@@ -8,29 +8,20 @@
 
 ## Phase 1 — MetaTags.astro Component & Structured Data
 
-- [ ] Task 1.1: Write failing tests for MetaTags.astro (Red phase)
-  - [ ] Test that MetaTags renders `<title>` with correct content
-  - [ ] Test that MetaTags renders `<meta name="description">` with correct content
-  - [ ] Test that MetaTags renders Open Graph tags (og:title, og:description, og:image, og:type)
-  - [ ] Test that MetaTags renders JSON-LD structured data with Person schema
-  - [ ] Test that `ogImage` prop defaults to `/og-preview.png`
-  - [ ] Test that custom `ogImage` prop overrides the default
-- [ ] Task 1.2: Implement MetaTags.astro (Green phase)
-  - [ ] Create `src/components/desktop/MetaTags.astro` with `title`, `description`, and optional `ogImage` props
-  - [ ] Render `<title>`, `<meta name="description">`, OG meta tags, and `<script type="application/ld+json">`
-  - [ ] Structured data: Person schema with name, jobTitle, and url
-- [ ] Task 1.3: Wire MetaTags into RootLayout.astro (replaces inline head content)
-  - [ ] Import and mount `<MetaTags />` in RootLayout.astro inside `<head>`
-  - [ ] Remove existing inline `<title>` and `<meta name="description">` from RootLayout (MetaTags replaces them)
-  - [ ] Pass `title` and `description` props from RootLayout's existing prop interface to MetaTags
-  - [ ] Verify all existing pages inherit correct meta tags (title, description, OG, JSON-LD)
-- [ ] Task 1.4: Verify existing page title test still passes
-  - [ ] Run `CI=true pnpm test -- tests/pages/index.test.ts` — the test asserts `<title>Luna OS Portfolio</title>`, which must continue passing
-- [ ] Task 1.5: Update tech-stack.md
-  - [ ] Add entry to `conductor/tech-stack.md` change log noting MetaTags component added (no new dependencies)
-- [ ] Task 1.6: Verify coverage and commit
-  - [ ] Run `CI=true pnpm test:coverage` — verify no regressions
-  - [ ] Commit: `feat(seo): Add MetaTags.astro with OG and structured data`
+- [x] Task 1.1: Write failing tests for MetaTags.astro (Red phase) ✓ (tests confirmed failing: "Cannot find package MetaTags.astro")
+  - [x] Test that MetaTags renders `<title>` with correct content
+  - [x] Test that MetaTags renders `<meta name="description">` with correct content
+  - [x] Test that MetaTags renders Open Graph tags (og:title, og:description, og:image, og:type)
+  - [x] Test that MetaTags renders JSON-LD structured data with Person schema
+  - [x] Test that `ogImage` prop defaults to `/og-preview.png`
+  - [x] Test that custom `ogImage` prop overrides the default
+- [x] Task 1.2: Implement MetaTags.astro (Green phase) ✓ (9 tests passing)
+- [x] Task 1.3: Wire MetaTags into RootLayout.astro ✓ (replaces inline title and description)
+- [x] Task 1.4: Verify existing page title test still passes ✓ (index.test.ts passes with 606 tests)
+- [x] Task 1.5: Update tech-stack.md ✓ (change log entry added)
+- [x] Task 1.6: Verify coverage and commit [b6409fe]
+  - [x] Run `pnpm test:coverage` — verify no regressions (87.98% statements, all thresholds met)
+  - [x] Commit: `feat(seo): Add MetaTags.astro with OG and structured data`
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: MetaTags & Structured Data' (Protocol in workflow.md)
 
 ---
