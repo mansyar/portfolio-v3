@@ -38,6 +38,16 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 - **Full Content Access:** All project and article bodies rendered as monospace text blocks, preserving deep-linking and browser history.
 - **Desktop Override:** Opt-in "Desktop Mode" button to force the full XP interface on mobile viewports.
 
+### SEO & Structured Data
+
+- **MetaTags Component:** Astro component injecting `<title>`, `<meta name="description">`, Open Graph tags (og:title, og:description, og:image, og:type), and JSON-LD Person schema with name, jobTitle, and url into `<head>`
+- **OG Image:** `/og-preview.png` referenced in meta tags for social media preview cards
+
+### Error Handling
+
+- **404 Error Page:** Windows XP BSOD-themed page with STOP: 0x000000FE error code, fake memory dump indicator, and "Press any key to restart" link to homepage
+- **Noscript Fallback:** Plain HTML links to all portfolio projects for users with JavaScript disabled
+
 ### Content & Data
 
 - **Project MDX Files:** Detailed project write-ups with frontmatter (repo URL, tech stack, status)
