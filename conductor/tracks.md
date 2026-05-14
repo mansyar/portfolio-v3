@@ -26,3 +26,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Accessibility (Track 4B) archived to conductor/archive/accessibility_20260514/ -->
 
 <!-- SEO & Performance (Track 4C) archived to conductor/archive/seo-performance_20260514/ -->
+
+---
+
+- [ ] **Track: CI/CD & Launch**
+      _Link: [./tracks/cicd-launch_20260514/](./tracks/cicd-launch_20260514/)_
