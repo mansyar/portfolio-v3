@@ -47,7 +47,7 @@
   - [x] Test that content is styled with monospace fonts and preserves basic HTML tags
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Content Rendering & Navigation' (Protocol in workflow.md)
 
-## Phase 5: URL State & Sync Sandbox
+## Phase 5: URL State & Sync Sandbox [checkpoint: 451cc81]
 
 - [x] Task: Sync Safe Mode state to URL (2d2e120)
   - [x] Update `url-sync.ts` to handle `?safe=` and `?slug=` parameters
