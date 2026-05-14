@@ -24,5 +24,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Implement Track 4A — Mobile Safe Mode as detailed in @docs/ROADMAP.md, @docs/PRD.md, and @docs/TDD.md**
-      _Link: [./tracks/mobile-safe-mode_20260514/](./tracks/mobile-safe-mode_20260514/)_
+- [~] **Track: Implement Track 4A — Mobile Safe Mode as detailed in @docs/ROADMAP.md, @docs/PRD.md, and @docs/TDD.md**
+  _Link: [./tracks/mobile-safe-mode_20260514/](./tracks/mobile-safe-mode_20260514/)_
