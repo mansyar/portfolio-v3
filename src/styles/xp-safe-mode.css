@@ -61,8 +61,13 @@
   pointer-events: none;
 }
 
-.terminal-text {
+/* Scoped Terminal Text to avoid global leakage */
+.safe-mode-container .terminal-text,
+.safe-mode-container {
   color: var(--safe-mode-text);
   font-family: var(--safe-mode-font);
+}
+
+.safe-mode-container .terminal-text {
   text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
 }
