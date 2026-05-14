@@ -24,3 +24,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Track 4A ΓÇö Mobile Safe Mode archived to conductor/archive/mobile-safe-mode_20260514/ -->
 
 ---
+
+- [ ] **Track: Accessibility (Track 4B)**
+      _Link: [./tracks/accessibility_20260514/](./tracks/accessibility_20260514/)_
+
+---
