@@ -335,4 +335,49 @@ describe('WindowLayer.tsx', () => {
       expect(state.status).toBe('maximized');
     });
   });
+
+  describe('Escape Key Handler', () => {
+    it('should close active window on Escape key press', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      render(<WindowLayer />);
+      expect(stores.$windows.get().explorer).toBeDefined();
+
+      // Press Escape key
+      fireEvent.keyDown(document, { key: 'Escape' });
+
+      // Window should be in closing state
+      expect(stores.$windows.get().explorer?.status).toBe('closing');
+    });
+
+    it('should ignore non-Escape key presses', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      render(<WindowLayer />);
+
+      // Press a non-Escape key
+      fireEvent.keyDown(document, { key: 'Enter' });
+
+      // Window should remain open
+      expect(stores.$windows.get().explorer).toBeDefined();
+    });
+
+    it('should close Start Menu on Escape before closing window', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+      const desktop = await import('@/stores/desktop');
+      desktop.$startMenuOpen.set(true);
+
+      render(<WindowLayer />);
+
+      // Press Escape
+      fireEvent.keyDown(document, { key: 'Escape' });
+
+      // Start Menu should close, window should remain
+      expect(desktop.$startMenuOpen.get()).toBe(false);
+      expect(stores.$windows.get().explorer).toBeDefined();
+    });
+  });
 });

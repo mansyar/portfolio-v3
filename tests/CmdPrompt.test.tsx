@@ -233,6 +233,47 @@ describe('CmdPrompt component', () => {
     expect(state.explorer.explorerPath).toBe('C:\\Software_Engineering');
   });
 
+  it('should not auto-complete with empty input', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    // Tab with empty input should do nothing
+    fireEvent.keyDown(input, { key: 'Tab' });
+    expect(input.value).toBe('');
+  });
+
+  it('should auto-complete cat file slug with Tab', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+    // Navigate to a folder with projects
+    const windows = stores.$windows.get();
+    const updated = { ...windows.cmd, cmdPath: 'C:\\Software_Engineering' };
+    stores.$windows.set({ ...windows, cmd: updated });
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'cat icarus-s' } });
+    fireEvent.keyDown(input, { key: 'Tab' });
+
+    expect(input.value).toContain('icarus');
+  });
+
+  it('should not crash with Tab completion for unknown prefix', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    // Tab with a completely unknown prefix should not crash
+    fireEvent.change(input, { target: { value: 'zzz' } });
+    fireEvent.keyDown(input, { key: 'Tab' });
+    expect(input.value).toBe('zzz');
+  });
+
   it('should use /? alias for help', async () => {
     const stores = await import('@/stores/windows');
     stores.openWindow('cmd');

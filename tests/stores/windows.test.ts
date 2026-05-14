@@ -402,6 +402,52 @@ describe('Window Actions', () => {
     });
   });
 
+  describe('closeWindow edge cases', () => {
+    it('should handle closing a window that is not the active window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.openWindow('cmd');
+      mod.focusWindow('cmd');
+      expect(mod.$activeWindow.get()).toBe('cmd');
+
+      // Close explorer (not the active window)
+      mod.closeWindow('explorer');
+      // The close is async (120ms timeout), so active window remains 'cmd'
+      expect(mod.$activeWindow.get()).toBe('cmd');
+    });
+
+    it('should handle minimizing then closing a window', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      mod.minimizeWindow('explorer');
+      // Window should be minimized, close should still work
+      mod.closeWindow('explorer');
+      expect(mod.$windows.get().explorer?.status).toBe('closing');
+    });
+
+    it('should handle restoreWindow without cached position', async () => {
+      const mod = await import('@/stores/windows');
+      // Open then maximize then restore - cached position is set during maximize
+      mod.openWindow('explorer');
+      mod.maximizeWindow('explorer');
+      // Now restore from maximized
+      mod.restoreWindow('explorer');
+      expect(mod.$windows.get().explorer?.status).toBe('open');
+    });
+
+    it('should handle maximize and restore cycle', async () => {
+      const mod = await import('@/stores/windows');
+      mod.openWindow('explorer');
+      const origX = mod.$windows.get().explorer.x;
+      mod.maximizeWindow('explorer');
+      expect(mod.$windows.get().explorer?.status).toBe('maximized');
+      mod.restoreWindow('explorer');
+      expect(mod.$windows.get().explorer?.status).toBe('open');
+      // Position should be restored from cache
+      expect(mod.$windows.get().explorer.x).toBe(origX);
+    });
+  });
+
   describe('cmdPath', () => {
     it('should set cmdPath to C:\\ when opening cmd window', async () => {
       const mod = await import('@/stores/windows');

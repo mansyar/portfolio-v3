@@ -461,4 +461,27 @@ describe('url-sync — initUrlSync subscriber guard', () => {
     const params = new URLSearchParams(result);
     expect(params.get('start')).toBe('1');
   });
+
+  it('should serialize correctly with multiple open windows and start menu', async () => {
+    const windows = await import('@/stores/windows');
+    windows.openWindow('explorer');
+    windows.openWindow('cmd');
+    windows.focusWindow('cmd');
+    const desktop = await import('@/stores/desktop');
+    desktop.$startMenuOpen.set(true);
+
+    const mod = await import('@/stores/url-sync');
+    const result = mod.serializeState();
+    const params = new URLSearchParams(result);
+    expect(params.get('w')).toContain('explorer');
+    expect(params.get('w')).toContain('cmd');
+    expect(params.get('focus')).toBe('cmd');
+    expect(params.get('start')).toBe('1');
+  });
+
+  it('should serialize empty state as empty string', async () => {
+    const mod = await import('@/stores/url-sync');
+    const result = mod.serializeState();
+    expect(result).toBe('');
+  });
 });

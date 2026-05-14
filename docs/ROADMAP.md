@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 2.1 · **Updated:** 2026-05-14  
+**Version:** 2.2 · **Updated:** 2026-05-14  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -35,7 +35,7 @@ gantt
 
     section Phase 4
     Track 4A – Mobile Safe Mode   :done, p4a, after p2b, 4d
-    Track 4B – Accessibility      :p4b, after p4a, 2d
+    Track 4B – Accessibility      :done, p4b, after p4a, 2d
     Track 4C – SEO & Performance  :p4c, after p4b, 2d
 
     section Phase 5
@@ -860,32 +860,123 @@ Track 4A produced 14 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 
 ---
 
-### Track 4B — Accessibility
+### Track 4B — Accessibility ✅ _(Completed 2026-05-14)_
 
-> Keyboard navigation, ARIA roles, focus management, and reduced motion support.
+> Comprehensive accessibility implementation: ARIA roles, keyboard navigation, focus management, reduced motion support, and WCAG AA color contrast across all interactive components. Implemented across 7 phases with 13 feature/fix commits, 6 plan/checkpoint commits.
 
-**Refs:** [TDD §10](./TDD.md#10-accessibility-strategy)
+**Refs:** [TDD §10](./TDD.md#10-accessibility-strategy) · [spec](conductor/archive/accessibility_20260514/spec.md) · [plan](conductor/archive/accessibility_20260514/plan.md)
 
 #### Tasks
 
-- [ ] Add ARIA roles to all interactive components ([TDD §10](./TDD.md#10-accessibility-strategy))
-- [ ] Implement keyboard navigation: `Tab` cycles icons → taskbar → windows ([TDD §10](./TDD.md#10-accessibility-strategy))
-- [ ] `Enter` activates focused element, `Escape` closes menus/windows ([TDD §10](./TDD.md#10-accessibility-strategy))
-- [ ] Focus management: opening window moves focus to it, closing returns focus ([TDD §10](./TDD.md#10-accessibility-strategy))
-- [ ] Add `aria-hidden="true"` to decorative elements ([TDD §10](./TDD.md#10-accessibility-strategy))
-- [ ] Add `@media (prefers-reduced-motion: reduce)` to disable animations ([TDD §10](./TDD.md#10-accessibility-strategy))
-- [ ] Verify color contrast passes WCAG AA
+##### Phase 0 — Pre-Audit & Baseline [checkpoint: 4398c78]
+
+- [x] Audit all 30+ interactive components and document current ARIA state in component-by-component inventory table
+- [x] Create `tests/aria-helpers.ts` with 16 reusable helper functions (ARIA attribute assertions, contrast ratio calculations)
+- [x] Verify `@testing-library/jest-dom` already configured
+
+##### Phase 1 — Desktop Shell & Window ARIA [checkpoint: 385cdc0]
+
+- [x] Add `role="group"` + `aria-label="Luna OS Desktop"` to `DesktopLayout.astro`
+- [x] Add `role="button"`, `aria-label`, `tabindex="0"`, Enter/Space key handler to `DesktopIcon.astro`
+- [x] Add `aria-haspopup="menu"` + dynamic `aria-expanded` to Start Button in `Taskbar.tsx`
+- [x] Add `role="timer"` + `aria-live="polite"` + `aria-label="Current time"` to `Clock.tsx`
+- [x] Add `aria-modal="true"` to `WindowFrame.tsx`
+- [x] Add `aria-live="polite"` to `ShutdownOverlay.tsx`
+- [x] Verify pre-existing ARIA on Taskbar, TitleBar, WindowFrame, StartMenu with existing tests
+
+##### Phase 2 — Apps & Safe Mode ARIA [checkpoint: 148522a]
+
+- [x] Add `role="region"` + `aria-label="File Explorer"` to Explorer shell
+- [x] Add `role="log"` + `aria-live="polite"` to CmdPrompt output container
+- [x] Add `role="region"` + `aria-label="Knowledge Base"`, `role="searchbox"` on search input, `role="navigation"` + `aria-label="Article categories"` on KB sidebar
+- [x] Add `role="group"` + `aria-label="Safe Mode Terminal"` to `SafeModeShell.astro`
+- [x] Add `role="status"` + `aria-live="polite"` to `BiosBoot.tsx`
+- [x] Verify pre-existing ARIA on ExplorerToolbar, ExplorerBreadcrumb, ExplorerDetailPane, CmdPrompt, TaskManager
+
+##### Phase 3 — Decorative Elements [checkpoint: 4031365]
+
+- [x] Add `aria-hidden="true"` to window 3D border resize handles (8 divs in WindowFrame)
+- [x] Document CSS-only decorative elements (gradients, pseudo-elements, borders) as not exposed to accessibility tree
+
+##### Phase 4a — Desktop Keyboard Navigation
+
+- [x] Implement global Escape keydown listener in WindowLayer: closes Start Menu → closes active window
+- [x] Guard Escape during shutdown sequence
+- [x] DesktopIcon keyboard support (tabindex, role=button, Enter/Space) pre-implemented in Phase 1
+- [x] Tab cycle is native DOM order (DesktopIcon tabindex=0, Taskbar native buttons, StartMenu keyboard pre-existing)
+
+##### Phase 4b — Focus Management
+
+- [x] Track `document.activeElement` before window opens via `previousFocusElement` module-level variable
+- [x] Auto-focus TitleBar minimize button when window opens (via `requestAnimationFrame`)
+- [x] Restore focus when window closes (fall back to Start button if saved element no longer in DOM)
+
+##### Phase 4c — Skip Link & Focus-Visible Styling
+
+- [x] Add visually-hidden skip-to-content link as first focusable element in `RootLayout.astro`
+- [x] Add `id="main-content"` to `DesktopLayout.astro` wrapper as skip link target
+- [x] Add `.xp-focus-visible` CSS class + `:focus-visible` global styling (dotted outline)
+- [x] Ensure `:focus:not(:focus-visible)` has no outline (mouse-click prevention)
+
+##### Phase 5 — Reduced Motion
+
+- [x] Add CSS overrides for shutdown progress bar, desktop icon hover transition, BIOS cursor (`animate-pulse`), CRT scanline/curvature pseudo-elements under `@media (prefers-reduced-motion: reduce)`
+
+##### Phase 6 — Color Contrast (WCAG AA)
+
+- [x] Write 9 contrast ratio tests verifying all color pairs pass WCAG AA (4.5:1 normal, 3:1 large)
+- [x] Fix link hover color from `#ff0000` (~4.0:1) to `#cc0000` (~5.9:1) for AA compliance
+- [x] Document disabled text (`#aca899` on `#ece9d8` ~2.4:1) as acceptable for disabled state
 
 #### Acceptance Criteria
 
 ```
 
 ✅ Entire site navigable with keyboard only (no mouse required)
-✅ Screen reader announces windows, menus, and content correctly
-✅ Focus is visible and moves logically
-✅ Animations disabled with prefers-reduced-motion
+✅ Tab cycles: Desktop Icons → Skip-to-content → Taskbar → Start Menu (when open) → Open Windows
+✅ Enter/Space activates focused element; Escape closes menus/windows
+✅ Opening a window focuses TitleBar; closing returns focus to previous element
+✅ Focus-visible outline visible on all interactive elements
+✅ All interactive components have correct ARIA roles and labels
+✅ All decorative chrome elements have aria-hidden="true"
+✅ All animations respect prefers-reduced-motion: reduce
+✅ Desktop and Safe Mode color combinations pass WCAG AA (4.5:1 text, 3:1 large text)
+✅ Full test suite continues to pass (557 tests, 41 test files)
 
 ```
+
+#### Key Files Modified
+
+```
+Accessibility attributes implemented across 13 components:
+src/layouts/DesktopLayout.astro      — role="group", aria-label, skip-link target
+src/components/desktop/DesktopIcon.astro — role="button", aria-label, tabindex, key handler
+src/components/taskbar/Taskbar.tsx   — aria-haspopup, aria-expanded on Start Button
+src/components/taskbar/Clock.tsx     — role="timer", aria-live, aria-label
+src/components/window/WindowFrame.tsx — aria-modal, aria-hidden on resize handles
+src/components/taskbar/ShutdownOverlay.tsx — aria-live="polite"
+src/components/window/WindowLayer.tsx — Escape key handler, focus-on-open, focus-return-on-close
+src/components/apps/Explorer.tsx      — role="region", aria-label
+src/components/apps/CmdPrompt.tsx     — role="log", aria-live on output
+src/components/apps/KnowledgeBase.tsx — region, searchbox, navigation roles
+src/components/mobile/BiosBoot.tsx    — role="status", aria-live
+src/layouts/SafeModeShell.astro       — role="group", aria-label
+src/layouts/RootLayout.astro          — skip-to-content link
+src/styles/global.css                 — focus-visible styling, reduced-motion overrides, link hover fix
+```
+
+#### Test Files Created
+
+```
+tests/aria-helpers.ts              — 16 ARIA test utility helpers
+tests/aria-desktop-shell.test.tsx  — 6 desktop shell ARIA tests (Astro)
+tests/aria-apps-safe-mode.test.tsx  — 7 app + safe mode ARIA tests (React)
+tests/aria-contrast.test.ts        — 9 WCAG AA contrast ratio tests
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 4B produced 13 feature/fix commits, 6 plan/checkpoint commits, 1 archive commit — across ~1,200+ lines changed (18+ files). Track archived at `conductor/archive/accessibility_20260514/`.
 
 ---
 

@@ -208,3 +208,17 @@ describe('CONTACT_METADATA — all 6 fields', () => {
     expect(CONTACT_METADATA.location).toBe('Indonesia');
   });
 });
+
+describe('resolvePath edge cases', () => {
+  it('should return null when a non-folder node is encountered before the final segment', () => {
+    // icarus-server-manager is a file (not folder) in the FS tree
+    // Trying to traverse through it should hit line 97 and return null
+    const result = resolvePath('C:\\Software_Engineering\\icarus-server-manager\\nonexistent');
+    expect(result).toBeNull();
+  });
+
+  it('should return null for completely invalid paths', () => {
+    const result = resolvePath('Z:\\');
+    expect(result).toBeNull();
+  });
+});

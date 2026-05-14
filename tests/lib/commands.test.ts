@@ -326,4 +326,83 @@ describe('CmdOutput type', () => {
     const output: CmdOutput = { lines: [], newCmdPath: 'D:\\Systems_Data' };
     expect(output.newCmdPath).toBe('D:\\Systems_Data');
   });
+
+  it('parseCommand should handle empty input returning empty command', () => {
+    const result = parseCommand('');
+    expect(result.command).toBe('');
+    expect(result.args).toEqual([]);
+  });
+
+  it('parseCommand should handle whitespace-only input', () => {
+    const result = parseCommand('   ');
+    expect(result.command).toBe('');
+    expect(result.args).toEqual([]);
+  });
+});
+
+describe('Command edge cases — cd handler', () => {
+  it('cd with empty args should return current path with no error', () => {
+    const handler = COMMAND_REGISTRY['cd'];
+    const result = handler([], { cmdPath: 'C:\\Software_Engineering' });
+    // With no args, cd should return the current path
+    expect(result.newCmdPath).toBe('C:\\Software_Engineering');
+  });
+
+  it('cd with drive root path should resolve correctly', () => {
+    const handler = COMMAND_REGISTRY['cd'];
+    const result = handler(['D:\\'], { cmdPath: 'C:\\Software_Engineering' });
+    expect(result.newCmdPath).toBe('D:\\');
+  });
+
+  it('cd to root with backslash should go to current drive root', () => {
+    const handler = COMMAND_REGISTRY['cd'];
+    const result = handler(['\\'], { cmdPath: 'C:\\Software_Engineering' });
+    expect(result.newCmdPath).toBe('C:\\');
+  });
+
+  it('cd with absolute path starting with backslash should use current drive', () => {
+    const handler = COMMAND_REGISTRY['cd'];
+    const result = handler(['\\Systems_Data'], { cmdPath: 'D:\\' });
+    expect(result.newCmdPath).toBe('D:\\Systems_Data');
+  });
+
+  it('cd with path having trailing backslash should normalize it', () => {
+    const handler = COMMAND_REGISTRY['cd'];
+    const result = handler(['C:\\Software_Engineering\\'], { cmdPath: 'C:\\' });
+    expect(result.newCmdPath).toBe('C:\\Software_Engineering');
+  });
+
+  it('cd with non-existent path should show error', () => {
+    const handler = COMMAND_REGISTRY['cd'];
+    const result = handler(['Z:\\nonexistent'], { cmdPath: 'C:\\' });
+    expect(result.lines[0]).toBe('The system cannot find the path specified.');
+  });
+});
+
+describe('Command edge cases — cat handler', () => {
+  it('cat with empty args should show file not found error', () => {
+    const handler = COMMAND_REGISTRY['cat'];
+    const result = handler([], { cmdPath: 'C:\\' });
+    expect(result.lines[0]).toBe('The system cannot find the file specified.');
+  });
+
+  it('cat with unknown slug should show file not found error', () => {
+    const handler = COMMAND_REGISTRY['cat'];
+    const result = handler(['nonexistent-slug'], { cmdPath: 'C:\\' });
+    expect(result.lines[0]).toBe('The system cannot find the file specified.');
+  });
+});
+
+describe('Command edge cases — open handler', () => {
+  it('open with empty args should show file not found error', () => {
+    const handler = COMMAND_REGISTRY['open'];
+    const result = handler([], { cmdPath: 'C:\\' });
+    expect(result.lines[0]).toBe('The system cannot find the file specified.');
+  });
+
+  it('open with unknown slug should show file not found error', () => {
+    const handler = COMMAND_REGISTRY['open'];
+    const result = handler(['nonexistent'], { cmdPath: 'C:\\' });
+    expect(result.lines[0]).toBe('The system cannot find the file specified.');
+  });
 });

@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.8  
+**Version:** 1.9  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -118,7 +118,7 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Content Pipeline:** Articles stored as MDX in `src/content/articles/`. At build time, `scripts/compile-articles.mjs` parses frontmatter (manual YAML, no `gray-matter`) and renders body to HTML via `marked` (1-package lightweight approach). Output: `src/lib/generated/articles-content.json` (~1.6KB for 5 articles).
 - **Build Integration:** `"build": "node scripts/prebuild.mjs && astro build"` — the prebuild orchestrator runs all 4 pre-processing scripts (fetch-github-stats, compile-articles, compile-projects, generate-filesystem) before Astro, total ~3.44s.
 - **Articles:** 5 articles across 3 categories: DevOps (Docker Basics, Linux Essentials, CI/CD Pipeline), Software Engineering (Microservices Patterns), AI (LLM Fine-Tuning Guide).
-- **Accessibility:** `aria-label` on search input, `role="button"` and keyboard support (Enter/Space) on category and article items.
+- **Accessibility:** Full WCAG AA compliance across all components. ARIA roles include `role="region"` + `aria-label="Knowledge Base"` on outer container, `role="searchbox"` on search input, `role="navigation"` + `aria-label="Article categories"` on category sidebar.
 
 ---
 
@@ -144,3 +144,4 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Performance:** < 100ms TBT (Total Blocking Time).
 - **Authenticity:** Design mirrors 2001-era Windows XP pixel-for-pixel (3D borders, blue gradients).
 - **Utility:** Mobile "Safe Mode" must be fully navigable in under 1.5 seconds.
+- **Accessibility:** Full keyboard navigability, WCAG AA color contrast, screen reader support with ARIA roles, reduced motion support. All animations disabled under `@media (prefers-reduced-motion: reduce)`.
