@@ -87,7 +87,7 @@ export function Explorer({ windowId }: ExplorerProps) {
   }
 
   return (
-    <div className="xp-explorer">
+    <div className="xp-explorer" role="region" aria-label="File Explorer">
       <ExplorerToolbar
         onBack={handleBack}
         onUp={handleUp}

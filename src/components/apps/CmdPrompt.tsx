@@ -251,7 +251,11 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
       onClick={() => hiddenInputRef.current?.focus()}
     >
       {/* Output content — flows naturally, outer wrapper handles scrollbars */}
-      <div style={{ minWidth: 'max-content', whiteSpace: 'pre', lineHeight: '1.3' }}>
+      <div
+        role="log"
+        aria-live="polite"
+        style={{ minWidth: 'max-content', whiteSpace: 'pre', lineHeight: '1.3' }}
+      >
         {outputLines.map((item, i) => {
           if (Array.isArray(item)) {
             return formatOutput(item, `block-${i}`);

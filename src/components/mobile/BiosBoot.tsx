@@ -55,7 +55,11 @@ const BiosBoot: React.FC<BiosBootProps> = ({ onComplete }) => {
   }, []);
 
   return (
-    <div className="font-mono text-[#00ff41] bg-black min-h-screen p-4 leading-relaxed uppercase">
+    <div
+      role="status"
+      aria-live="polite"
+      className="font-mono text-[#00ff41] bg-black min-h-screen p-4 leading-relaxed uppercase"
+    >
       {visibleLines.map((line, index) => (
         <div key={index} className="min-h-[1.5em]">
           {line || '\u00A0'}

@@ -58,7 +58,12 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
 
   return (
     // Main container: full-height flex row with XP Knowledge Base blue/white scheme
-    <div className="flex h-full font-['Tahoma','sans-serif'] text-xs" data-window-id={windowId}>
+    <div
+      role="region"
+      aria-label="Knowledge Base"
+      className="flex h-full font-['Tahoma','sans-serif'] text-xs"
+      data-window-id={windowId}
+    >
       {/* ─── Left Sidebar: Search + Categories ─── */}
       <div className="w-56 min-w-56 bg-[#d3e5fa] border-r-2 border-[#0046d5] flex flex-col overflow-hidden">
         {/* Search bar */}
@@ -67,6 +72,7 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
             type="text"
             placeholder="Search articles..."
             aria-label="Search articles"
+            role="searchbox"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-2 py-1 text-xs border-2 border-[#7f9db9] bg-white
@@ -75,7 +81,11 @@ export function KnowledgeBase({ windowId }: KnowledgeBaseProps) {
         </div>
 
         {/* Category list */}
-        <div className="flex-1 overflow-y-auto py-1">
+        <div
+          role="navigation"
+          aria-label="Article categories"
+          className="flex-1 overflow-y-auto py-1"
+        >
           {categories.map((cat) => {
             const isActive =
               selectedCategory === cat || (cat === 'All Articles' && !selectedCategory);
