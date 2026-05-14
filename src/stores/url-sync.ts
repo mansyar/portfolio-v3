@@ -1,6 +1,13 @@
 import { atom } from 'nanostores';
 import { $windows, $activeWindow, openWindow, focusWindow, type WindowId } from '@/stores/windows';
 import { $startMenuOpen, openStartMenu } from '@/stores/desktop';
+import {
+  $safeModeView,
+  $safeModeSlug,
+  setSafeModeView,
+  setSafeModeSlug,
+  type SafeModeView,
+} from '@/stores/safe-mode';
 import { normalize, resolvePath, getParent } from '@/lib/filesystem';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -10,6 +17,8 @@ export interface UrlState {
   focus?: WindowId;
   start?: boolean;
   path?: string;
+  safe?: SafeModeView;
+  slug?: string;
 }
 
 // ─── Internal State ─────────────────────────────────────────────────────────
@@ -114,6 +123,18 @@ export function parseParams(search: string): UrlState {
     state.path = convertPathToStore(pathRaw);
   }
 
+  // ── Parse `safe` param ────────────────────────────────────────────────
+  const safeRaw = params.get('safe');
+  if (safeRaw) {
+    state.safe = safeRaw as SafeModeView;
+  }
+
+  // ── Parse `slug` param ────────────────────────────────────────────────
+  const slugRaw = params.get('slug');
+  if (slugRaw) {
+    state.slug = slugRaw;
+  }
+
   return state;
 }
 
@@ -131,13 +152,15 @@ export function serializeState(): string {
   const windows = $windows.get();
   const activeWindow = $activeWindow.get();
   const startMenuOpen = $startMenuOpen.get();
+  const safeModeView = $safeModeView.get();
+  const safeModeSlug = $safeModeSlug.get();
 
   const openWindowIds = Object.values(windows)
     .filter((w) => w.status !== 'closing')
     .map((w) => w.id)
     .sort();
 
-  if (openWindowIds.length === 0 && !startMenuOpen) {
+  if (openWindowIds.length === 0 && !startMenuOpen && safeModeView === 'main' && !safeModeSlug) {
     return '';
   }
 
@@ -162,6 +185,16 @@ export function serializeState(): string {
   const explorer = windows.explorer;
   if (explorer && explorer.status !== 'closing' && explorer.explorerPath) {
     params.set('path', convertPathToUrl(explorer.explorerPath));
+  }
+
+  // ── `safe` param ──────────────────────────────────────────────────────
+  if (safeModeView !== 'main') {
+    params.set('safe', safeModeView);
+  }
+
+  // ── `slug` param ──────────────────────────────────────────────────────
+  if (safeModeSlug) {
+    params.set('slug', safeModeSlug);
   }
 
   return params.toString();
@@ -232,6 +265,19 @@ export function hydrateFromUrl(search?: string): void {
   // Step 4: Open Start Menu
   if (params.start) {
     openStartMenu();
+  }
+
+  // Step 5: Safe Mode hydration
+  if (params.safe) {
+    setSafeModeView(params.safe);
+  } else {
+    setSafeModeView('main');
+  }
+
+  if (params.slug) {
+    setSafeModeSlug(params.slug);
+  } else {
+    setSafeModeSlug(null);
   }
 
   isHydrating.set(false);
@@ -315,6 +361,14 @@ export function initUrlSync(): (() => void) | undefined {
     debouncedUpdate();
   });
 
+  const unsubSafeView = $safeModeView.listen(() => {
+    debouncedUpdate();
+  });
+
+  const unsubSafeSlug = $safeModeSlug.listen(() => {
+    debouncedUpdate();
+  });
+
   // ── Popstate listener for browser back/forward ────────────────────────
   const onPopState = (): void => {
     // Re-hydrate stores from the URL the browser navigated to.
@@ -329,6 +383,8 @@ export function initUrlSync(): (() => void) | undefined {
     unsubWindows();
     unsubDesktop();
     unsubActive();
+    unsubSafeView();
+    unsubSafeSlug();
     window.removeEventListener('popstate', onPopState);
     initialized = false;
   };

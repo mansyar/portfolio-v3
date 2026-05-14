@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useStore } from '@nanostores/react';
 import { CONTACT_METADATA } from '@/lib/projects-data';
 import { toggleForceDesktop } from '@/stores/desktop';
+import { $safeModeView, $safeModeSlug, setSafeModeView, setSafeModeSlug } from '@/stores/safe-mode';
+import { setPendingPushState } from '@/stores/url-sync';
 import projectsData from '@/lib/generated/projects-content.json';
 import articlesData from '@/lib/generated/articles-content.json';
-
-type View =
-  | 'main'
-  | 'projects'
-  | 'knowledge-base'
-  | 'contact'
-  | 'project-detail'
-  | 'article-detail';
 
 interface TerminalNavProps {
   onRestart?: () => void;
@@ -35,8 +30,8 @@ interface ArticleMetadataEntry {
 }
 
 const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
-  const [currentView, setCurrentView] = useState<View>('main');
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const currentView = useStore($safeModeView);
+  const selectedId = useStore($safeModeSlug);
 
   const projects = Object.entries(projectsData as Record<string, ProjectDataEntry>).map(
     ([slug, data]) => ({
@@ -57,16 +52,26 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (currentView === 'main') {
-        if (e.key === '1') setCurrentView('projects');
-        if (e.key === '2') setCurrentView('knowledge-base');
-        if (e.key === '3') setCurrentView('contact');
+        if (e.key === '1') {
+          setPendingPushState();
+          setSafeModeView('projects');
+        }
+        if (e.key === '2') {
+          setPendingPushState();
+          setSafeModeView('knowledge-base');
+        }
+        if (e.key === '3') {
+          setPendingPushState();
+          setSafeModeView('contact');
+        }
         if (e.key === '4') toggleForceDesktop();
         if (e.key === '5' && onRestart) onRestart();
       } else {
         if (e.key === '0') {
-          if (currentView === 'project-detail') setCurrentView('projects');
-          else if (currentView === 'article-detail') setCurrentView('knowledge-base');
-          else setCurrentView('main');
+          setPendingPushState();
+          if (currentView === 'project-detail') setSafeModeView('projects');
+          else if (currentView === 'article-detail') setSafeModeView('knowledge-base');
+          else setSafeModeView('main');
         }
       }
     };
@@ -81,7 +86,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
       <ul className="space-y-2">
         <li>
           <button
-            onClick={() => setCurrentView('projects')}
+            onClick={() => {
+              setPendingPushState();
+              setSafeModeView('projects');
+            }}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [1] Projects
@@ -89,7 +97,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </li>
         <li>
           <button
-            onClick={() => setCurrentView('knowledge-base')}
+            onClick={() => {
+              setPendingPushState();
+              setSafeModeView('knowledge-base');
+            }}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [2] Knowledge Base
@@ -97,7 +108,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </li>
         <li>
           <button
-            onClick={() => setCurrentView('contact')}
+            onClick={() => {
+              setPendingPushState();
+              setSafeModeView('contact');
+            }}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [3] Contact
@@ -131,8 +145,9 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
           <li key={p.slug}>
             <button
               onClick={() => {
-                setSelectedId(p.slug);
-                setCurrentView('project-detail');
+                setPendingPushState();
+                setSafeModeSlug(p.slug);
+                setSafeModeView('project-detail');
               }}
               className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
             >
@@ -142,7 +157,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         ))}
         <li className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => setCurrentView('main')}
+            onClick={() => {
+              setPendingPushState();
+              setSafeModeView('main');
+            }}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
@@ -160,8 +178,9 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
           <li key={a.slug}>
             <button
               onClick={() => {
-                setSelectedId(a.slug);
-                setCurrentView('article-detail');
+                setPendingPushState();
+                setSafeModeSlug(a.slug);
+                setSafeModeView('article-detail');
               }}
               className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
             >
@@ -171,7 +190,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         ))}
         <li className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => setCurrentView('main')}
+            onClick={() => {
+              setPendingPushState();
+              setSafeModeView('main');
+            }}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
@@ -194,7 +216,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
       </div>
       <div className="mt-4 pt-4 border-t border-[#00ff41]">
         <button
-          onClick={() => setCurrentView('main')}
+          onClick={() => {
+            setPendingPushState();
+            setSafeModeView('main');
+          }}
           className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
         >
           [0] Back
@@ -225,7 +250,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </div>
         <div className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => setCurrentView('projects')}
+            onClick={() => {
+              setPendingPushState();
+              setSafeModeView('projects');
+            }}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
@@ -255,7 +283,10 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </div>
         <div className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => setCurrentView('knowledge-base')}
+            onClick={() => {
+              setPendingPushState();
+              setSafeModeView('knowledge-base');
+            }}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
