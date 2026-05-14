@@ -1,0 +1,8 @@
+{
+  "track_id": "mobile-safe-mode_20260514",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-05-14T14:00:00Z",
+  "updated_at": "2026-05-14T14:00:00Z",
+  "description": "Implement Track 4A — Mobile Safe Mode as detailed in @docs/ROADMAP.md, @docs/PRD.md, and @docs/TDD.md"
+}
