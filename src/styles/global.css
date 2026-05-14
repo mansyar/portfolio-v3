@@ -154,6 +154,61 @@
   animation: cmdCursorBlink 1s step-end infinite;
 }
 
+/* === Skip-to-content link — visible only on keyboard focus === */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 99999;
+  padding: 8px 16px;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  border: 2px solid #0a6cd8;
+  border-radius: 4px;
+  outline: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.skip-link:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+/* === Focus-Visible Styling === */
+
+.xp-focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse clicks, show for keyboard Tab */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: 2px;
+}
+
+/* Override for XP-styled buttons — keep dotted outline inside border */
+button:focus-visible,
+.xp-button:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="menuitem"]:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .window-open,
   .window-closing,

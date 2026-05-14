@@ -25,6 +25,10 @@ const {
     <title>{title}</title>
   </head>
   <body class="m-0 p-0 overflow-hidden min-h-screen bg-black">
+    <!-- Skip to content link — first focusable element for keyboard users -->
+    <a href="#main-content" class="skip-link" aria-label="Skip to content">
+      Skip to content
+    </a>
     <slot />
   </body>
 </html>
