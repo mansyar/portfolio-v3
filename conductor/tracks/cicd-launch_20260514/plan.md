@@ -51,30 +51,15 @@
 
 ## Phase 2 — Cloudflare Pages Project Setup & Secrets
 
-- [ ] Task 2.1: Write integration test verifying deploy prerequisites
-  - [ ] Verify `dist/` is listed in `.gitignore` (build output is ephemeral — already confirmed)
-  - [ ] Verify `pnpm build` completes successfully (local smoke build)
-  - [ ] Verify `package.json` has `packageManager` field (from Phase 0)
+- [x] Task 2.1: Write integration test verifying deploy prerequisites `4fae6d6`
+  - [x] Verify `dist/` is listed in `.gitignore` (build output is ephemeral — already confirmed)
+  - [x] Verify `pnpm build` completes successfully (local smoke build)
+  - [x] Verify `package.json` has `packageManager` field (from Phase 0)
 - [ ] Task 2.2: Create Cloudflare Pages project (manual — user follows steps)
-  - [ ] Document steps in workflow comments or a separate guide:
-    1. Go to Cloudflare Dashboard → Pages → Create a project → Connect Git
-    2. Select the GitHub repository
-    3. Build settings (not critical since wrangler handles this, but set for dashboard reference):
-       - Build command: `pnpm build`
-       - Build output directory: `dist`
-       - Root directory: `/`
-    4. Add environment variable `GITHUB_TOKEN` in Cloudflare Pages settings
-    5. Deploy and verify initial build succeeds
-    6. **Note the auto-generated `.pages.dev` URL** (needed for CNAME in Phase 3)
-- [ ] Task 2.3: Configure GitHub Actions secrets
-  - [ ] Document steps to add secrets in GitHub repo:
-    1. Go to GitHub repo → Settings → Secrets and variables → Actions
-    2. Add `CLOUDFLARE_API_TOKEN` — Cloudflare API token with `Cloudflare Pages: Edit` permission
-    3. Add `CLOUDFLARE_ACCOUNT_ID` — Cloudflare account ID (Dashboard → My Profile → API Tokens)
-    4. Add `GITHUB_TOKEN` — GitHub Personal Access Token (classic, `repo` scope)
-- [ ] Task 2.4: Verify `GITHUB_TOKEN` is consumed by prebuild scripts
-  - [ ] Audit `scripts/fetch-github-stats.mjs` — confirms it reads `process.env.GITHUB_TOKEN` (line 121, already implemented)
-  - [ ] Confirm unauthenticated fallback still works (existing behavior)
+- [ ] Task 2.3: Configure GitHub Actions secrets (manual — user follows steps)
+- [x] Task 2.4: Verify `GITHUB_TOKEN` is consumed by prebuild scripts `4fae6d6`
+  - [x] Audit `scripts/fetch-github-stats.mjs` — confirms it reads `process.env.GITHUB_TOKEN` (line 121, already implemented)
+  - [x] Confirm unauthenticated fallback still works (existing behavior)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Cloudflare Pages Setup & Secrets' (Protocol in workflow.md)
 
 ## Phase 3 — Custom Domain & DNS Configuration
