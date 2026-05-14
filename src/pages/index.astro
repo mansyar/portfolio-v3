@@ -11,6 +11,35 @@ import ModeContainer from '../components/desktop/ModeContainer';
 ---
 
 <RootLayout>
+  <!-- Noscript fallback: renders when JavaScript is disabled -->
+  <noscript>
+    <div class="noscript-fallback">
+      <p>This portfolio site uses JavaScript for the full interactive experience. Here are the projects available:</p>
+      <ul>
+        <li><a href="https://github.com/mansyar/chasing-chapters-v2">Chasing Chapters</a></li>
+        <li><a href="https://github.com/mansyar/tubular-bexus-osw">Tubular Bexus OSW</a></li>
+        <li><a href="https://github.com/mansyar/icarus-server-manager">Icarus Server Manager</a></li>
+      </ul>
+    </div>
+  </noscript>
+
+  <!-- Inline noscript fallback styles -->
+  <style is:inline>
+    .noscript-fallback {
+      padding: 2rem;
+      font-family: Tahoma, sans-serif;
+      color: #fff;
+      background: #0a246a;
+    }
+    .noscript-fallback ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+    }
+    .noscript-fallback a {
+      color: #4aa5ff;
+    }
+  </style>
+
   <ModeContainer client:load>
     {/* Safe Mode Shell — Visible on Mobile (< 768px) */}
     <div class="block md:group-[.force-desktop]:hidden md:hidden">
