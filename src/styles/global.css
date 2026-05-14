@@ -225,6 +225,29 @@ button:focus-visible,
     animation: none !important;
     opacity: 1;
   }
+
+  /* Shutdown progress bar — stop animation, show full width */
+  .shutdown-progress-bar {
+    animation: none !important;
+    background-position: 0 0 !important;
+  }
+
+  /* DesktopIcon hover — remove transition, keep final state */
+  .desktop-icon {
+    transition: none !important;
+  }
+
+  /* Safe Mode animated elements */
+  .animate-pulse {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  /* CRT scanline/curvature pseudo-elements — remove any animations */
+  .crt-scanlines::before,
+  .crt-curvature::after {
+    animation: none !important;
+  }
 }
 
 /* === Explorer Detail Pane Extras === */
