@@ -1,3 +1,2 @@
 pnpm lint-staged
 node scripts/check-modularity.js
-pnpm astro check
