@@ -12,7 +12,7 @@
   - [x] Verify: Component renders a blank green-on-black terminal screen with subtle CRT effects
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Safe Mode Foundation & Visuals' (Protocol in workflow.md)
 
-## Phase 2: BIOS Boot Sequence
+## Phase 2: BIOS Boot Sequence [checkpoint: a24fec1]
 
 - [x] Task: Implement `BiosBoot.tsx` animation component (e5bf0f5)
   - [x] Define the list of custom branding strings
