@@ -1,0 +1,159 @@
+---
+// 404 — Windows XP Blue Screen of Death
+// Pure Astro/HTML/CSS — Zero JS
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — PAGE_NOT_FOUND</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        background: #0000aa;
+        color: #ffffff;
+        font-family: 'Courier New', 'Lucida Console', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        text-align: left;
+      }
+      .bsod-container {
+        max-width: 720px;
+        width: 100%;
+      }
+      .bsod-header {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+      }
+      .bsod-error-code {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #ffffff;
+      }
+      .bsod-body {
+        margin-bottom: 24px;
+      }
+      .bsod-body p {
+        margin-bottom: 12px;
+      }
+      .bsod-memory-dump {
+        margin-top: 20px;
+        margin-bottom: 32px;
+        font-size: 13px;
+        color: #d0d0d0;
+      }
+      .bsod-dump-bar {
+        display: flex;
+        gap: 2px;
+        margin-top: 6px;
+      }
+      .bsod-dump-bar span {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background: #000088;
+        border: 1px solid #2222cc;
+      }
+      .bsod-dump-bar span.filled {
+        background: #2222cc;
+      }
+      .bsod-dump-bar span:nth-child(-n+32) {
+        background: #2222cc;
+      }
+      .bsod-dump-bar span:nth-child(n+33) {
+        background: #000088;
+      }
+      .bsod-restart {
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      .bsod-restart a {
+        color: #ffffff;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .bsod-restart a:hover,
+      .bsod-restart a:focus {
+        color: #ffff00;
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+      }
+      .bsod-blinking {
+        animation: bsod-blink 1.2s step-end infinite;
+      }
+      @keyframes bsod-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bsod-container">
+      <div class="bsod-header">
+        *** STOP: 0x000000FE (PORTFOLIO_NOT_FOUND)
+      </div>
+
+      <div class="bsod-body">
+        <p>
+          A problem has been detected and the system has been halted to prevent
+          damage to your computer.
+        </p>
+        <p>
+          The requested page does not exist or has been moved.
+        </p>
+        <p>
+          If this is the first time you've seen this error screen,
+          try navigating back to the homepage.
+        </p>
+        <p>
+          <strong>Technical information:</strong>
+        </p>
+        <p>
+          *** STOP: 0x000000FE (0x00000000, 0x00000000, 0x00000000, 0x00000000)
+        </p>
+        <p>
+          *** PORTFOLIO_NOT_FOUND — The requested URL does not correspond to any known page in this portfolio.
+        </p>
+      </div>
+
+      <div class="bsod-memory-dump">
+        <p>Physical memory dump in progress...</p>
+        <p>Contact your system administrator or technical support group for further assistance.</p>
+        <div class="bsod-dump-bar">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="bsod-restart">
+        <span class="bsod-blinking">Press any key to restart</span>
+        &mdash;
+        <a href="/">Return to Homepage</a>
+      </div>
+    </div>
+  </body>
+</html>
