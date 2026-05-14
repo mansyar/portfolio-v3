@@ -85,3 +85,10 @@
   - [ ] Manual: Run `pnpm build && pnpm preview` then run Lighthouse in Chrome DevTools
   - [ ] Manual: Verify Performance score > 90, TBT < 100ms
   - [ ] Manual: Navigate to /nonexistent-page to verify 404 BSOD page
+
+---
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions [bd4d801]
+  - [x] Removed dead CSS (`.bsod-error-code`, `.filled`) from 404.astro
