@@ -26,14 +26,14 @@
 
 ## Phase 3: Terminal Navigation & Input UI
 
-- [ ] Task: Create `TerminalNav.tsx` component
-  - [ ] Define the menu structure: Projects, Knowledge Base, Contact, Desktop Mode, Restart
-  - [ ] Implement touch-to-select logic
-  - [ ] Write tests for menu rendering and touch navigation
-- [ ] Task: Implement Passive Keyboard Listener
-  - [ ] Implement a hidden numeric input parser (0-5) to trigger menu actions
-  - [ ] Ensure the mobile virtual keyboard is NOT forced open automatically
-  - [ ] Write tests for keyboard navigation
+- [x] Task: Create `TerminalNav.tsx` component (bd7766d)
+  - [x] Define the menu structure: Projects, Knowledge Base, Contact, Desktop Mode, Restart
+  - [x] Implement touch-to-select logic
+  - [x] Write tests for menu rendering and touch navigation
+- [x] Task: Implement Passive Keyboard Listener (bd7766d)
+  - [x] Implement a hidden numeric input parser (0-5) to trigger menu actions
+  - [x] Ensure the mobile virtual keyboard is NOT forced open automatically
+  - [x] Write tests for keyboard navigation
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Terminal Navigation & Input UI' (Protocol in workflow.md)
 
 ## Phase 4: Content Rendering & Navigation
