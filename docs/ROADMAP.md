@@ -1088,7 +1088,7 @@ Track 4C produced 8 feature/fix commits, 5 plan/checkpoint commits, 1 review fix
 - [ ] Configure build steps: `pnpm install` → fetch GitHub data → `astro build` → deploy
 - [ ] Add CRON trigger: `0 0 * * *` (daily at 00:00 UTC) ([PRD §6](./PRD.md#6-devops--deployment-strategy))
 - [ ] Configure Cloudflare Pages project
-- [ ] Set up custom domain (`mansyar.dev`) with SSL
+- [ ] Set up custom domain (`os-portfolio.ansyar-world.top`) with SSL (note: i have existing domain in Hostinger)
 - [ ] Smoke test: push to main → site live within 2 minutes
 
 #### Acceptance Criteria
