@@ -2,10 +2,10 @@
 
 ## Phase 1: Safe Mode Foundation & Visuals
 
-- [ ] Task: Define Safe Mode CSS tokens and CRT utility classes
-  - [ ] Add `--safe-mode-*` tokens to `xp-theme.css`
-  - [ ] Create `.crt-effects` utility with scanlines and curvature
-  - [ ] Write tests verifying CSS token availability and CRT class structure
+- [x] Task: Define Safe Mode CSS tokens and CRT utility classes (5263688)
+  - [x] Add `--safe-mode-*` tokens to `xp-theme.css`
+  - [x] Create `.crt-effects` utility with scanlines and curvature
+  - [x] Write tests verifying CSS token availability and CRT class structure
 - [ ] Task: Create `SafeModeShell.astro` layout
   - [ ] Implement full-screen black background with green monospace text
   - [ ] Add the CRT effect overlay
