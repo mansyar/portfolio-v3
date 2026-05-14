@@ -23,9 +23,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- My Documents & Recycle Bin track archived to conductor/archive/mydocs-recyclebin_20260514/ -->
 <!-- Track 4A ΓÇö Mobile Safe Mode archived to conductor/archive/mobile-safe-mode_20260514/ -->
 
----
-
-- [x] **Track: Accessibility (Track 4B)**
-      _Link: [./tracks/accessibility_20260514/](./tracks/accessibility_20260514/)_
+<!-- Accessibility (Track 4B) archived to conductor/archive/accessibility_20260514/ -->
 
 ---
