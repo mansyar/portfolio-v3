@@ -114,6 +114,14 @@ prebuild.mjs
 
 ## Change Log
 
+### 2026-05-15 — Track 5A: CI/CD & Launch
+
+- **Reason:** Track 5A establishes the CI/CD pipeline, Cloudflare Pages deployment, custom domain setup with SSL, and deploy hook for CRON-triggered daily rebuilds.
+- **Impact:** New `.github/workflows/deploy.yml` with push + CRON triggers. Cloudflare Pages project created with native CI. Custom domain `portfolio-os.ansyar-world.top` configured with automatic SSL via Cloudflare. Three GitHub secrets configured: `GITHUB_TOKEN`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_DEPLOY_HOOK_URL`. Removed `@astrojs/cloudflare` adapter (unnecessary for static site). Vitest config migrated to standalone config with `@/` path alias.
+- **New files:** `.github/workflows/deploy.yml`, `scripts/smoke-test.mjs`
+- **Tests added:** `tests/workflow.test.ts` (15 tests), `tests/deploy-prerequisites.test.ts` (6 tests), `tests/smoke-test.test.ts` (8 tests)
+- **Live URL:** `https://portfolio-os.ansyar-world.top`
+
 ### 2026-05-14 — Track 4C: MetaTags.astro — SEO and structured data component
 
 - **Reason:** Track 4C requires a reusable Astro component for injecting `<title>`, `<meta name="description">`, Open Graph tags, and JSON-LD structured data into `<head>`. Replaces the existing inline title and description in RootLayout.astro.
