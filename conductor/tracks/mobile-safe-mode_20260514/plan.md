@@ -49,11 +49,11 @@
 
 ## Phase 5: URL State & Sync Sandbox
 
-- [ ] Task: Sync Safe Mode state to URL
-  - [ ] Update `url-sync.ts` to handle `?safe=` and `?slug=` parameters
-  - [ ] Implement a mode-switch guard to ensure Safe Mode URL parsing does not clear Desktop state (e.g., `?w=`, `?path=`)
-  - [ ] Implement hydration from URL on load
-  - [ ] Write tests for deep-linking and browser back/forward navigation in Safe Mode
+- [x] Task: Sync Safe Mode state to URL (2d2e120)
+  - [x] Update `url-sync.ts` to handle `?safe=` and `?slug=` parameters
+  - [x] Implement a mode-switch guard to ensure Safe Mode URL parsing does not clear Desktop state (e.g., `?w=`, `?path=`)
+  - [x] Implement hydration from URL on load
+  - [x] Write tests for deep-linking and browser back/forward navigation in Safe Mode
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: URL State & Sync Sandbox' (Protocol in workflow.md)
 
 ## Phase 6: Final Integration & CSS Toggling
