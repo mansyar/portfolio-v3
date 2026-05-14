@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import MetaTags from '../components/desktop/MetaTags.astro';
 
 interface Props {
   title?: string;
@@ -20,9 +21,8 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content={themeColor} />
-    <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
+    <MetaTags title={title} description={description} />
   </head>
   <body class="m-0 p-0 overflow-hidden min-h-screen bg-black">
     <!-- Skip to content link — first focusable element for keyboard users -->

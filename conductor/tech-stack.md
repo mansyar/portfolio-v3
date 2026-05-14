@@ -114,6 +114,13 @@ prebuild.mjs
 
 ## Change Log
 
+### 2026-05-14 — Track 4C: MetaTags.astro — SEO and structured data component
+
+- **Reason:** Track 4C requires a reusable Astro component for injecting `<title>`, `<meta name="description">`, Open Graph tags, and JSON-LD structured data into `<head>`. Replaces the existing inline title and description in RootLayout.astro.
+- **Impact:** New `src/components/desktop/MetaTags.astro` component with `title`, `description`, and optional `ogImage` props. RootLayout.astro imports MetaTags instead of inline `<title>` and `<meta name="description">`. All pages now inherit OG tags and Person schema structured data.
+- **Packages added:** None (pure Astro component, zero JS).
+- **Files affected:** `src/components/desktop/MetaTags.astro` (new), `src/layouts/RootLayout.astro` (import MetaTags, remove inline title/description), `tests/MetaTags.test.ts` (new, 9 tests)
+
 ### 2026-05-14 — Track 3C: My Documents & Recycle Bin — Virtual filesystem additions
 
 - **Reason:** Track 3C requires My Documents (Resume.pdf, Certs/, Contact.txt) on D: drive and a virtual Recycle Bin at root level for displaying archived/deleted project items.
