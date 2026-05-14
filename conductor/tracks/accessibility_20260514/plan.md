@@ -105,7 +105,7 @@ _Add correct ARIA roles, labels, and properties to desktop shell, taskbar, windo
 
 ---
 
-## Phase 2 — ARIA Roles: Applications & Safe Mode
+## Phase 2 — ARIA Roles: Applications & Safe Mode `[checkpoint: 148522a]`
 
 _Add correct ARIA roles, labels, and properties to Explorer, CmdPrompt, TaskManager, KnowledgeBase, and Safe Mode components._
 
