@@ -9,7 +9,7 @@ on:
 concurrency: deploy-${{ github.ref }}
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -29,11 +29,9 @@ jobs:
       - name: Build project
         run: pnpm build
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Used by scripts/fetch-github-stats.mjs for authenticated API calls
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN || '' }}
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=luna-os-portfolio
+      - name: Trigger Cloudflare Pages deploy hook (CRON only)
+        if: github.event_name == 'schedule'
+        run: curl -f -X POST "${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}"

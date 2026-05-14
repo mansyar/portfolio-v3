@@ -61,26 +61,25 @@ describe('GitHub Actions Workflow — deploy.yml', () => {
     expect(content).toContain('pnpm build');
   });
 
-  it('should reference cloudflare/wrangler-action@v3', () => {
-    const content = getWorkflowContent();
-    expect(content).toContain('cloudflare/wrangler-action@v3');
-  });
-
-  it('should deploy with pages deploy command to luna-os-portfolio', () => {
-    const content = getWorkflowContent();
-    expect(content).toContain('pages deploy dist --project-name=luna-os-portfolio');
-  });
-
-  it('should pass CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID secrets', () => {
-    const content = getWorkflowContent();
-    expect(content).toContain('secrets.CLOUDFLARE_API_TOKEN');
-    expect(content).toContain('secrets.CLOUDFLARE_ACCOUNT_ID');
-  });
-
   it('should pass GITHUB_TOKEN to the build step', () => {
     const content = getWorkflowContent();
     expect(content).toContain('GITHUB_TOKEN');
     expect(content).toContain('secrets.GITHUB_TOKEN');
+  });
+
+  it('should reference CLOUDFLARE_DEPLOY_HOOK_URL secret for CRON deploy', () => {
+    const content = getWorkflowContent();
+    expect(content).toContain('CLOUDFLARE_DEPLOY_HOOK_URL');
+  });
+
+  it('should trigger deploy hook only on schedule events', () => {
+    const content = getWorkflowContent();
+    expect(content).toContain("github.event_name == 'schedule'");
+  });
+
+  it('should use curl for the deploy hook call', () => {
+    const content = getWorkflowContent();
+    expect(content).toContain('curl -f -X POST');
   });
 
   it('should have a ubuntu-latest runner', () => {
