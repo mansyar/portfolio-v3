@@ -6,7 +6,7 @@
 
 ---
 
-## Phase 0 — Prerequisites: package.json & .gitignore Fixes
+## Phase 0 — Prerequisites: package.json & .gitignore Fixes [checkpoint: 37e82c3]
 
 - [x] Task 0.1: Add `packageManager` field to `package.json` `80de8d4`
   - [x] Add `"packageManager": "pnpm@10.29.3"` to `package.json` (after `engines` block)
@@ -20,7 +20,7 @@
   - [x] Run `pnpm test` — confirm no regressions
   - [x] Run `pnpm typecheck` — confirm zero errors
   - [x] Commit: `chore(config): Add packageManager field and fix .gitignore generated files tracking`
-- [ ] Task: Conductor - User Manual Verification 'Phase 0: Prerequisites' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 0: Prerequisites' (Protocol in workflow.md) `37e82c3`
 
 ## Phase 1 — GitHub Actions Workflow
 
