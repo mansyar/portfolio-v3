@@ -25,7 +25,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Accessibility (Track 4B)**
-      _Link: [./tracks/accessibility_20260514/](./tracks/accessibility_20260514/)_
+- [~] **Track: Accessibility (Track 4B)**
+  _Link: [./tracks/accessibility_20260514/](./tracks/accessibility_20260514/)_
 
 ---

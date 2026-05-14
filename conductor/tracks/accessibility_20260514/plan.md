@@ -12,25 +12,60 @@ _Document the current accessibility state of all components before making change
 
 ### Tasks
 
-- [ ] Task: Audit all interactive components and document current ARIA state
-  - [ ] Audit: WindowFrame — verify `role="dialog"`, `aria-label`, note missing `aria-modal`
-  - [ ] Audit: TitleBar buttons — verify existing `aria-label` values (Minimize/Maximize/Close)
-  - [ ] Audit: Taskbar — verify existing `role="toolbar"`, `aria-label="Taskbar"`, Start Button `aria-label="Start"`
-  - [ ] Audit: StartMenu — verify existing `role="menu"`, `role="menuitem"`, Tab/Enter/Escape handlers, `aria-activedescendant`
-  - [ ] Audit: ExplorerToolbar — verify `role="toolbar"`, `aria-label`
-  - [ ] Audit: ExplorerBreadcrumb — verify `<nav>` landmark, `aria-label`
-  - [ ] Audit: ExplorerDetailPane — verify `role="region"` usage
-  - [ ] Audit: CmdPrompt — verify `role="terminal"`, `role="textbox"`, `aria-label`
-  - [ ] Audit: TaskManager — verify `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-controls`
-  - [ ] Audit: ShutdownOverlay — verify `role="status"` (note: NOT `alertdialog`)
-  - [ ] Audit: Reduced motion in `global.css` — document already-compliant overrides
-  - [ ] Audit: KnowledgeBase — verify partial ARIA on search input
-  - [ ] Audit: Produce a component-by-component ARIA inventory table as reference
+- [x] Task: Audit all interactive components and document current ARIA state
+  - [x] Audit: WindowFrame — ✅ `role="dialog"` + `aria-label={state.title}` exist; ❌ `aria-modal` missing
+  - [x] Audit: TitleBar buttons — ✅ `aria-label="Minimize/Maximize/Close"` exist on buttons
+  - [x] Audit: Taskbar — ✅ `role="toolbar"` + `aria-label="Taskbar"` exist; Start Button ✅ `aria-label="Start"` exists
+  - [x] Audit: StartMenu — ✅ `role="menu"` + `aria-activedescendant` + Tab/Enter/Escape + `role="menuitem"` on items; MARP avatar ✅ `aria-hidden="true"`
+  - [x] Audit: ExplorerToolbar — ✅ `role="toolbar"` + `aria-label="Explorer toolbar"` exist
+  - [x] Audit: ExplorerBreadcrumb — ✅ `<nav>` landmark + `aria-label="Current path"` exist
+  - [x] Audit: ExplorerDetailPane — ✅ `role="region"` + `aria-label` exist
+  - [x] Audit: CmdPrompt — ✅ `role="terminal"` + `aria-label="Command Prompt"` on container; ✅ `role="textbox"` + `aria-label="Command input"` on input; ❌ output area missing `role="log"` + `aria-live="polite"`
+  - [x] Audit: TaskManager — ✅ Full `role="tablist"` / `role="tab"` / `role="tabpanel"` with `aria-selected`, `aria-controls`, `aria-labelledby`, `aria-hidden` all present; ArrowLeft/ArrowRight keyboard handling on tablist
+  - [x] Audit: ShutdownOverlay — ✅ `role="status"` + `aria-label="Shutting down"` exist; ❌ `aria-live="polite"` missing
+  - [x] Audit: Reduced motion in `global.css` — ✅ Window animations, Start Menu, CMD cursor blink, transitions all overridden; ❌ `.shutdown-progress-bar` has no reduce-motion override; ❌ CRT scanline/curvature pseudo-elements have no override; ❌ DesktopIcon hover `background-color` transition has no override; ✅ BIOS boot typewriter already skips on reduced motion (checked via JS `matchMedia`)
+  - [x] Audit: KnowledgeBase — ❌ outer container missing `role="region"` + `aria-label="Knowledge Base"`; ⚠️ search input has `aria-label="Search articles"` but missing `role="searchbox"`; ❌ category sidebar divs have `role="button"` but outer nav missing `role="navigation"` + `aria-label="Article categories"`
+  - [x] Audit: Produce a component-by-component ARIA inventory table as reference (see below)
 
-- [ ] Task: Set up accessibility testing infrastructure
-  - [ ] Implement: Add `@testing-library/jest-dom` matchers if not already configured (for `toHaveAttribute`, `toHaveRole`)
-  - [ ] Implement: Create test utility helpers for querying ARIA attributes across React + Astro components
-  - [ ] Implement: Verify `CI=true pnpm test` still passes with new test infrastructure
+### Comprehensive ARIA Audit Results
+
+| #   | Component               | Role                                                | Key Attributes                                                 | Status                                       |
+| --- | ----------------------- | --------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------- |
+| 1   | DesktopLayout           | `role="group"`                                      | `aria-label="Luna OS Desktop"`                                 | ❌ Needs implement                           |
+| 2   | DesktopIcon             | `role="button"`                                     | `aria-label`, `tabindex="0"`, Enter/Space handler              | ❌ Needs implement                           |
+| 3   | Taskbar                 | `role="toolbar"`                                    | `aria-label="Taskbar"`                                         | ✅ Pre-existing                              |
+| 4   | Start Button            | `role="button"` (native)                            | `aria-label="Start"` exists; `aria-haspopup` + `aria-expanded` | ⚠️ Partial                                   |
+| 5   | Clock                   | `role="timer"`                                      | `aria-live="polite"`, `aria-label="Current time"`              | ❌ Needs implement                           |
+| 6   | StartMenu outer         | `role="menu"`                                       | `aria-activedescendant`, Tab/Enter/Escape handlers             | ✅ Pre-existing                              |
+| 7   | StartMenu items         | `role="menuitem"`                                   | tabIndex={-1}                                                  | ✅ Pre-existing                              |
+| 8   | MARP avatar             | —                                                   | `aria-hidden="true"`                                           | ✅ Pre-existing                              |
+| 9   | WindowFrame             | `role="dialog"`                                     | `aria-label={state.title}` exists; `aria-modal="true"`         | ⚠️ Partial                                   |
+| 10  | TitleBar buttons        | `role="button"` (native)                            | `aria-label="Minimize/Maximize/Close"`                         | ✅ Pre-existing                              |
+| 11  | TitleBar gradient       | CSS only (no separate element)                      | N/A — CSS background not exposed to AT                         | ✅ Defer (CSS only)                          |
+| 12  | Resize handles (8 divs) | Presentational                                      | No role/tabIndex — invisible mouse targets                     | ❌ Needs `aria-hidden="true"`                |
+| 13  | ShutdownOverlay         | `role="status"`                                     | `aria-label="Shutting down"` exists; `aria-live="polite"`      | ⚠️ Partial                                   |
+| 14  | Explorer outer          | `role="region"`                                     | `aria-label="File Explorer"`                                   | ❌ Needs implement                           |
+| 15  | ExplorerToolbar         | `role="toolbar"`                                    | `aria-label="Explorer toolbar"`                                | ✅ Pre-existing                              |
+| 16  | ExplorerBreadcrumb      | `<nav>` landmark                                    | `aria-label="Current path"`                                    | ✅ Pre-existing                              |
+| 17  | ExplorerFileList        | `role="list"` (outer) + `role="grid"` (inner table) | `aria-label="File list"`                                       | ✅ Pre-existing                              |
+| 18  | ExplorerDetailPane      | `role="region"`                                     | `aria-label` varies by context                                 | ✅ Pre-existing                              |
+| 19  | CmdPrompt container     | `role="terminal"`                                   | `aria-label="Command Prompt"`                                  | ✅ Pre-existing                              |
+| 20  | CmdPrompt input         | `role="textbox"`                                    | `aria-label="Command input"`                                   | ✅ Pre-existing                              |
+| 21  | CmdPrompt output        | `role="log"`                                        | `aria-live="polite"`                                           | ❌ Needs implement                           |
+| 22  | TaskManager tablist     | `role="tablist"`                                    | `aria-label="Task Manager tabs"`, Arrow keys                   | ✅ Pre-existing                              |
+| 23  | TaskManager tabs        | `role="tab"`                                        | `aria-selected`, `aria-controls`                               | ✅ Pre-existing                              |
+| 24  | TaskManager tabpanels   | `role="tabpanel"`                                   | `aria-labelledby`, `aria-hidden`                               | ✅ Pre-existing                              |
+| 25  | KnowledgeBase outer     | `role="region"`                                     | `aria-label="Knowledge Base"`                                  | ❌ Needs implement                           |
+| 26  | KB search input         | —                                                   | `aria-label="Search articles"`; missing `role="searchbox"`     | ⚠️ Partial                                   |
+| 27  | KB category sidebar     | `role="navigation"`                                 | `aria-label="Article categories"`                              | ❌ Needs implement                           |
+| 28  | SafeModeShell           | `role="group"`                                      | `aria-label="Safe Mode Terminal"`                              | ❌ Needs implement                           |
+| 29  | BiosBoot                | `role="status"`                                     | `aria-live="polite"`                                           | ❌ Needs implement                           |
+| 30  | TerminalNav buttons     | Native `<button>`                                   | Implicit role; text content as accessible name                 | ✅ Pre-existing (text is descriptive enough) |
+
+- [x] Task: Set up accessibility testing infrastructure `fe23802`
+  - [x] Implement: Add `@testing-library/jest-dom` matchers if not already configured (for `toHaveAttribute`, `toHaveRole`) — ✅ Already configured in `tests/setup.ts`
+  - [x] Implement: Create test utility helpers for querying ARIA attributes across React + Astro components
+  - [x] Implement: Verify `CI=true pnpm test` still passes with new test infrastructure
 
 - [ ] Task: Conductor — User Manual Verification 'Phase 0 — Pre-Audit & Baseline' (Protocol in workflow.md)
 
