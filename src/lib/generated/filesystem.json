@@ -1,0 +1,148 @@
+[
+  {
+    "type": "drive",
+    "name": "C:",
+    "icon": "/icons/drive-c.svg",
+    "children": [
+      {
+        "type": "folder",
+        "name": "Software_Engineering",
+        "icon": "/icons/folder.svg",
+        "children": [
+          {
+            "type": "file",
+            "name": "chasing-chapters.mdx",
+            "icon": "/icons/file.svg",
+            "slug": "chasing-chapters",
+            "size": "5.0 KB"
+          },
+          {
+            "type": "file",
+            "name": "icarus-server-manager.mdx",
+            "icon": "/icons/file.svg",
+            "slug": "icarus-server-manager",
+            "size": "6.0 KB"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "drive",
+    "name": "D:",
+    "icon": "/icons/drive-d.svg",
+    "children": [
+      {
+        "type": "folder",
+        "name": "Systems_Data",
+        "icon": "/icons/folder.svg",
+        "children": [
+          {
+            "type": "file",
+            "name": "tubular-bexus-osw.mdx",
+            "icon": "/icons/file.svg",
+            "slug": "tubular-bexus-osw",
+            "size": "5.0 KB"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "My_Documents",
+        "icon": "/icons/folder.svg",
+        "children": [
+          {
+            "type": "file",
+            "name": "Resume.pdf",
+            "icon": "/icons/file.svg",
+            "slug": "resume",
+            "size": "0 B"
+          },
+          {
+            "type": "folder",
+            "name": "Certs",
+            "icon": "/icons/folder.svg",
+            "children": []
+          },
+          {
+            "type": "file",
+            "name": "Contact.txt",
+            "icon": "/icons/file.svg",
+            "slug": "contact",
+            "size": "0.5 KB"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "drive",
+    "name": "E:",
+    "icon": "/icons/drive-e.svg",
+    "children": [
+      {
+        "type": "folder",
+        "name": "Knowledge_Base",
+        "icon": "/icons/folder.svg",
+        "children": [
+          {
+            "type": "folder",
+            "name": "DevOps",
+            "icon": "/icons/folder.svg",
+            "children": [
+              {
+                "type": "file",
+                "name": "ci-cd-pipeline.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "ci-cd-pipeline",
+                "size": "4.0 KB"
+              },
+              {
+                "type": "file",
+                "name": "docker-basics.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "docker-basics",
+                "size": "4.0 KB"
+              },
+              {
+                "type": "file",
+                "name": "linux-essentials.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "linux-essentials",
+                "size": "5.0 KB"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "AI",
+            "icon": "/icons/folder.svg",
+            "children": [
+              {
+                "type": "file",
+                "name": "llm-fine-tuning.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "llm-fine-tuning",
+                "size": "5.0 KB"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "Software_Engineering",
+            "icon": "/icons/folder.svg",
+            "children": [
+              {
+                "type": "file",
+                "name": "microservices-patterns.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "microservices-patterns",
+                "size": "7.0 KB"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
