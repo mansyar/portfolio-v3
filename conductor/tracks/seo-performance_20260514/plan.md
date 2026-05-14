@@ -28,21 +28,21 @@
 
 ## Phase 2 — 404 BSOD Page
 
-- [ ] Task 2.1: Write failing tests for 404 page (Red phase)
-  - [ ] Test that 404.astro renders BSOD-style blue background
-  - [ ] Test that page shows "STOP: 0x000000FE (PORTFOLIO_NOT_FOUND)" error code
-  - [ ] Test that "Press any key to restart" link points to `/`
-  - [ ] Test that the restart link is keyboard-accessible
-- [ ] Task 2.2: Implement 404.astro (Green phase)
-  - [ ] Create `src/pages/404.astro` with BSOD styling
-  - [ ] Blue background, white monospace text, BSOD error header
-  - [ ] Technical body text mimicking real BSOD
-  - [ ] "Press any key to restart" link → `/`
-  - [ ] Fake memory dump progress indicator (CSS-only)
-  - [ ] Ensure WCAG AA color contrast compliance
-- [ ] Task 2.3: Verify coverage and commit
-  - [ ] Run `CI=true pnpm test:coverage` — verify no regressions
-  - [ ] Commit: `feat(ui): Add 404 BSOD page`
+- [x] Task 2.1: Write failing tests for 404 page (Red phase) ✓ (Cannot find 404.astro)
+  - [x] Test that 404.astro renders BSOD-style blue background
+  - [x] Test that page shows "STOP: 0x000000FE (PORTFOLIO_NOT_FOUND)" error code
+  - [x] Test that "Press any key to restart" link points to `/`
+  - [x] Test that the restart link is keyboard-accessible
+- [x] Task 2.2: Implement 404.astro (Green phase) ✓ (9 tests passing, pure Astro/HTML/CSS zero JS)
+  - [x] Create `src/pages/404.astro` with BSOD styling
+  - [x] Blue background, white monospace text, BSOD error header
+  - [x] Technical body text mimicking real BSOD
+  - [x] "Press any key to restart" link → `/`
+  - [x] Fake memory dump progress indicator (CSS-only)
+  - [x] Ensure WCAG AA color contrast compliance
+- [x] Task 2.3: Verify coverage and commit [768cb84]
+  - [x] Run coverage — verify no regressions (87.99% statements, all thresholds met)
+  - [x] Commit: `feat(ui): Add 404 BSOD page`
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: 404 BSOD Page' (Protocol in workflow.md)
 
 ---
