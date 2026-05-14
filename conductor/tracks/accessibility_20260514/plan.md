@@ -6,7 +6,7 @@
 
 ---
 
-## Phase 0 — Pre-Audit & Baseline Documentation
+## Phase 0 — Pre-Audit & Baseline Documentation `[checkpoint: 4398c78]`
 
 _Document the current accessibility state of all components before making changes. This prevents wasting effort re-implementing existing ARIA and ensures tests are written for genuinely missing attributes only._
 
