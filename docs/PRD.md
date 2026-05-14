@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.7  
+**Version:** 1.8  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 

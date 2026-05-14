@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 2.0 · **Updated:** 2026-05-13  
+**Version:** 2.1 · **Updated:** 2026-05-14  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -34,7 +34,7 @@ gantt
     Track 3C – My Docs & Bin      :p3c, after p2a, 2d
 
     section Phase 4
-    Track 4A – Mobile Safe Mode   :p4a, after p2b, 4d
+    Track 4A – Mobile Safe Mode   :done, p4a, after p2b, 4d
     Track 4B – Accessibility      :p4b, after p4a, 2d
     Track 4C – SEO & Performance  :p4c, after p4b, 2d
 
@@ -758,34 +758,105 @@ Track 3A produced 17 feature/plan/checkpoint commits, 1 review fix commit, 1 arc
 
 ## Phase 4 — Mobile & Polish
 
-### Track 4A — Mobile Safe Mode
+### Track 4A — Mobile Safe Mode ✅ _(Completed 2026-05-14)_
 
-> Full mobile experience: BIOS boot sequence, terminal menu navigation, all content accessible.
+> Full mobile experience: BIOS boot sequence, terminal menu navigation, all content accessible. Implemented across 6 phases with 14 feature/fix commits, 6 plan/checkpoint commits, 1 review fix commit, and 1 archive commit.
 
-**Refs:** [PRD §3.2](./PRD.md#32-the-mobile-experience-safe-mode) · [TDD §8](./TDD.md#8-mobile-safe-mode-specification)
+**Refs:** [PRD §3.2](./PRD.md#32-the-mobile-experience-safe-mode) · [TDD §8](./TDD.md#8-mobile-safe-mode-specification) · T4A [spec](conductor/archive/mobile-safe-mode_20260514/spec.md) · T4A [plan](conductor/archive/mobile-safe-mode_20260514/plan.md)
 
 #### Tasks
 
-- [ ] Create `SafeModeShell.astro` — black screen with green monospace text ([TDD §8](./TDD.md#8-mobile-safe-mode-specification))
-- [ ] Implement boot sequence animation (line-by-line text, 50ms/line) ([TDD §8](./TDD.md#8-mobile-safe-mode-specification), [TDD §9](./TDD.md#9-animations--transitions))
-- [ ] Create numbered menu system: `[1] Projects [2] Skills [3] About [4] Contact` ([TDD §8](./TDD.md#8-mobile-safe-mode-specification))
-- [ ] Render all content (projects, skills, about, contact) as monospace text blocks
-- [ ] Implement `[0] Back` navigation ([TDD §8](./TDD.md#8-mobile-safe-mode-specification))
-- [ ] Add CRT scanline + curvature CSS effects ([TDD §8](./TDD.md#8-mobile-safe-mode-specification))
-- [ ] Conditional rendering: viewport < 768px → Safe Mode, else → Desktop ([PRD §3.2](./PRD.md#32-the-mobile-experience-safe-mode))
+##### Phase 1 — Safe Mode Foundation & Visuals [checkpoint: 283fab5]
+
+- [x] Define Safe Mode CSS tokens and CRT utility classes in `xp-safe-mode.css` (5263688)
+- [x] Create `SafeModeShell.astro` with full-screen black background, green monospace text, CRT effects overlay (fe8cbc1)
+- [x] Write tests verifying CSS token availability and CRT class structure
+
+##### Phase 2 — BIOS Boot Sequence [checkpoint: a24fec1]
+
+- [x] Implement `BiosBoot.tsx` animation component with typewriter text effect (e5bf0f5)
+- [x] Define custom branding strings (MANSYAR OS v1.0, Loading PORTFOLIO.SYS, etc.)
+- [x] Enforce 2-second total boot animation duration
+- [x] `prefers-reduced-motion` skips animation entirely
+- [x] Write tests for line order, 2s completion, and reduced-motion handling
+
+##### Phase 3 — Terminal Navigation & Input UI [checkpoint: e9bf80c]
+
+- [x] Create `TerminalNav.tsx` with menu structure: Projects, Knowledge Base, Contact, Desktop Mode, Restart (bd7766d)
+- [x] Implement touch-to-select (tap) navigation
+- [x] Implement passive keyboard listener (hidden input, numeric keys 0-5, no virtual keyboard popup)
+- [x] Write tests for menu rendering, touch navigation, and keyboard input
+
+##### Phase 4 — Content Rendering & Navigation [checkpoint: 5e76f30]
+
+- [x] Implement content views within `TerminalNav.tsx` for project/article lists (8edd402)
+- [x] Implement detailed article/project view using monospace HTML
+- [x] Implement `[0] Back` navigation to return to previous menu level
+- [x] Write tests for content navigation and monospace styling
+
+##### Phase 5 — URL State & Sync Sandbox [checkpoint: 451cc81]
+
+- [x] Sync Safe Mode state to URL: `?safe=` view + `?slug=` deep-link (2d2e120)
+- [x] Mode-switch guard prevents Safe Mode URL from clearing Desktop state (`?w=`, `?path=`)
+- [x] Implement hydration from URL on page load
+- [x] Write tests for deep-linking, browser back/forward, and state sandboxing
+
+##### Phase 6 — Final Integration & CSS Toggling
+
+- [x] Responsive toggling: `hidden md:block` / `block md:hidden` at 768px breakpoint (12cf48f)
+- [x] Desktop override: `$forceDesktop` Nano Store + `.force-desktop` CSS class (12cf48f)
+- [x] Update SEO meta tags for mobile accessibility (6d1e563)
+- [x] Final layout fix: single `RootLayout` to prevent styling leaks (829d618)
+- [x] Scope Safe Mode terminal text to prevent CSS leaking to desktop (14ecd80)
+- [x] Apply review suggestions: improved test isolation and modularity check robustness (83c1e35)
 
 #### Acceptance Criteria
 
 ```
 
 ✅ Resizing browser below 768px shows the Safe Mode boot sequence
-✅ Boot text appears line-by-line, then shows numbered menu
-✅ All 4 menu options render their content correctly
-✅ [0] Back returns to previous menu
-✅ CRT visual effects are visible and subtle
-✅ All portfolio content is accessible on mobile
+✅ Boot text appears line-by-line (50ms/line), completes in exactly 2 seconds
+✅ Tapping `[1] Projects`, `[2] Knowledge Base`, `[3] Contact` renders content correctly
+✅ `[0] Back` returns to previous menu level
+✅ `[4] Desktop Mode` forces desktop view via Nano Store override
+✅ `[5] Restart` retriggers the BIOS boot animation
+✅ CRT scanline and curvature effects visible but subtle
+✅ URL state syncs without clearing Desktop window params
+✅ All portfolio content accessible via mobile terminal
+✅ 535 tests passing, 88.61% statement coverage, all src/ files under 500 lines
 
 ```
+
+#### Key Files Created
+
+```
+src/styles/xp-safe-mode.css                — Safe Mode CSS tokens (--safe-mode-*) + CRT utility classes
+src/layouts/SafeModeShell.astro            — Full-screen black/green terminal layout with CRT overlay
+src/components/mobile/BiosBoot.tsx         — 2-second typewriter boot animation component
+src/components/mobile/TerminalNav.tsx      — Numbered menu, content views, passive keyboard listener
+src/components/mobile/SafeModeManager.tsx  — Orchestrator: boot → menu → restart cycle
+src/components/desktop/ModeContainer.tsx   — Desktop override wrapper (force-desktop class)
+src/stores/safe-mode.ts                    — Nano Store: $safeModeView, $safeModeSlug
+src/stores/url-sync.ts (modified)          — Safe mode URL params (?safe=, ?slug=) + desktop state sandbox
+src/stores/desktop.ts (modified)           — Added $forceDesktop atom
+src/pages/index.astro (modified)           — Responsive toggling between Desktop/Safe Mode
+src/layouts/DesktopLayout.astro (modified) — Added RootLayout wrapper
+```
+
+#### Test Files Created/Modified
+
+```
+tests/safe-mode-shell.test.ts              — 1 SafeModeShell rendering test (Astro container)
+tests/safe-mode-visuals.test.ts            — 3 CSS token + CRT class verification tests
+tests/safe-mode-url.test.ts                — 5 URL sync + sandbox tests
+tests/BiosBoot.test.tsx                    — 3 BIOS animation tests (order, timing, reduced motion)
+tests/TerminalNav.test.tsx                 — 7 TerminalNav tests (menu, touch, keyboard)
+tests/ModeContainer.test.tsx               — 2 force-desktop store integration tests
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 4A produced 14 feature/fix commits, 6 plan/checkpoint commits, 1 review fix commit, 1 docs sync commit, 1 archive commit — across ~1,800+ lines changed (20+ files). Track archived at `conductor/archive/mobile-safe-mode_20260514/`.
 
 ---
 

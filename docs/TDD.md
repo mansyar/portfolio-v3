@@ -1,7 +1,7 @@
 # Technical Design Document: Luna OS Portfolio
 
 **Parent:** [PRD.md](./PRD.md)  
-**Version:** 1.4  
+**Version:** 1.5  
 **Last Updated:** 2026-05-14
 
 ---
