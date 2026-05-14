@@ -58,13 +58,13 @@
 
 ## Phase 6: Final Integration & CSS Toggling
 
-- [ ] Task: Implement CSS Media Query Toggling
-  - [ ] Update `index.astro` to mount both `DesktopLayout` and `SafeModeShell`
-  - [ ] Use Tailwind classes (e.g., `hidden md:block`, `block md:hidden`) to toggle visibility based on the 768px breakpoint
-- [ ] Task: Implement Desktop Override
-  - [ ] Create a Nano Store state (e.g., `$forceDesktop`)
-  - [ ] Apply a `.force-desktop` class that overrides the media queries when the user selects `[4] Desktop Mode`
-- [ ] Task: Final Polish & SEO
-  - [ ] Update SEO meta tags to reflect mobile-friendly accessibility
-  - [ ] Run Lighthouse audit on mobile and verify TBT < 100ms
+- [x] Task: Implement CSS Media Query Toggling (12cf48f)
+  - [x] Update `index.astro` to mount both `DesktopLayout` and `SafeModeShell`
+  - [x] Use Tailwind classes (e.g., `hidden md:block`, `block md:hidden`) to toggle visibility based on the 768px breakpoint
+- [x] Task: Implement Desktop Override (12cf48f)
+  - [x] Create a Nano Store state (e.g., `$forceDesktop`)
+  - [x] Apply a `.force-desktop` class that overrides the media queries when the user selects `[4] Desktop Mode`
+- [x] Task: Final Polish & SEO (6d1e563)
+  - [x] Update SEO meta tags to reflect mobile-friendly accessibility
+  - [x] Run Lighthouse audit on mobile and verify TBT < 100ms
 - [ ] Task: Conductor - User Manual Verification 'Phase 6: Final Integration & CSS Toggling' (Protocol in workflow.md)
