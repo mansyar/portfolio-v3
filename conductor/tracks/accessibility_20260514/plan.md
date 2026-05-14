@@ -77,29 +77,29 @@ _Add correct ARIA roles, labels, and properties to desktop shell, taskbar, windo
 
 ### Tasks
 
-- [ ] Task: Write tests for missing ARIA attributes on Desktop Shell & Window System (skipping already-verified items)
-  - [ ] Write tests: DesktopLayout has `role="group"` with `aria-label="Luna OS Desktop"`
-  - [ ] Write tests: DesktopIcon has `role="button"`, `aria-label="{label}"`, `tabindex="0"`
-  - [ ] Write tests: Start Button has `aria-haspopup="menu"` and `aria-expanded` (dynamically reflects menu state)
-  - [ ] Write tests: Clock has `role="timer"` and `aria-live="polite"`
-  - [ ] Write tests: WindowFrame has `aria-modal="true"` (verify `role="dialog"` and `aria-label` already exist)
-  - [ ] Write tests: WindowLayer rendered windows have an accessible container label
-  - [ ] Write tests: ShutdownOverlay has `aria-live="polite"` (verify `role="status"` already exists)
+- [x] Task: Write tests for missing ARIA attributes on Desktop Shell & Window System (skipping already-verified items)
+  - [x] Write tests: DesktopLayout has `role="group"` with `aria-label="Luna OS Desktop"`
+  - [x] Write tests: DesktopIcon has `role="button"`, `aria-label="{label}"`, `tabindex="0"`
+  - [x] Write tests: Start Button has `aria-haspopup="menu"` and `aria-expanded` (dynamically reflects menu state)
+  - [x] Write tests: Clock has `role="timer"` and `aria-live="polite"`
+  - [x] Write tests: WindowFrame has `aria-modal="true"` (verify `role="dialog"` and `aria-label` already exist)
+  - [x] Write tests: WindowLayer rendered windows have an accessible container label
+  - [x] Write tests: ShutdownOverlay has `aria-live="polite"` (verify `role="status"` already exists)
 
-- [ ] Task: Implement missing ARIA roles for Desktop Shell components
-  - [ ] Implement: Add `role="group"` and `aria-label="Luna OS Desktop"` to DesktopLayout wrapper (not `role="application"` — preserves native Tab navigation)
-  - [ ] Implement: Add `role="button"`, `aria-label`, `tabindex="0"` to DesktopIcon.astro
-  - [ ] Implement: Add `aria-haspopup="menu"` and `aria-expanded` (dynamic: `${startMenuOpen}`) to Start Button
-  - [ ] Implement: Add `role="timer"` and `aria-live="polite"` to Clock component
-  - [ ] Implement: Add `aria-modal="true"` to WindowFrame div (alongside existing `role="dialog"` and `aria-label`)
-  - [ ] Implement: Verify `role="status"` remains on ShutdownOverlay (do NOT change to `alertdialog`) — add `aria-live="polite"` if missing
+- [x] Task: Implement missing ARIA roles for Desktop Shell components `6c56bd2`
+  - [x] Implement: Add `role="group"` and `aria-label="Luna OS Desktop"` to DesktopLayout wrapper (not `role="application"` — preserves native Tab navigation)
+  - [x] Implement: Add `role="button"`, `aria-label`, `tabindex="0"` to DesktopIcon.astro
+  - [x] Implement: Add `aria-haspopup="menu"` and `aria-expanded` (dynamic: `${startMenuOpen}`) to Start Button
+  - [x] Implement: Add `role="timer"` and `aria-live="polite"` to Clock component
+  - [x] Implement: Add `aria-modal="true"` to WindowFrame div (alongside existing `role="dialog"` and `aria-label`)
+  - [x] Implement: Verify `role="status"` remains on ShutdownOverlay (do NOT change to `alertdialog`) — add `aria-live="polite"` if missing
 
-- [ ] Task: Verify existing pre-implemented ARIA roles with non-failing tests
-  - [ ] Write tests (verify-only): Taskbar `role="toolbar"`, `aria-label="Taskbar"` already present
-  - [ ] Write tests (verify-only): Start Button `aria-label="Start"` already present
-  - [ ] Write tests (verify-only): TitleBar minimize/maximize/close buttons have correct `aria-label`
-  - [ ] Write tests (verify-only): WindowFrame has `role="dialog"` and `aria-label="{title}"`
-  - [ ] Write tests (verify-only): StartMenu has `role="menu"`, items have `role="menuitem"`
+- [x] Task: Verify existing pre-implemented ARIA roles with non-failing tests
+  - [x] Write tests (verify-only): Taskbar `role="toolbar"`, `aria-label="Taskbar"` already present — ✅ existing test in `taskbar.test.tsx`
+  - [x] Write tests (verify-only): Start Button `aria-label="Start"` already present — ✅ existing test in `taskbar.test.tsx`
+  - [x] Write tests (verify-only): TitleBar minimize/maximize/close buttons have correct `aria-label` — ✅ existing test in `windowframe.test.tsx`
+  - [x] Write tests (verify-only): WindowFrame has `role="dialog"` and `aria-label="{title}"` — ✅ existing test in `windowframe.test.tsx`
+  - [x] Write tests (verify-only): StartMenu has `role="menu"`, items have `role="menuitem"` — ✅ existing test in `start-menu.test.tsx`
 
 - [ ] Task: Conductor — User Manual Verification 'Phase 1 — ARIA Roles: Desktop Shell & Window System' (Protocol in workflow.md)
 
