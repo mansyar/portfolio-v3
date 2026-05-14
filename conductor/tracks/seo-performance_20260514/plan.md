@@ -22,7 +22,7 @@
 - [x] Task 1.6: Verify coverage and commit [b6409fe]
   - [x] Run `pnpm test:coverage` — verify no regressions (87.98% statements, all thresholds met)
   - [x] Commit: `feat(seo): Add MetaTags.astro with OG and structured data`
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: MetaTags & Structured Data' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 1: MetaTags & Structured Data' (Protocol in workflow.md)
 
 ---
 

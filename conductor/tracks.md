@@ -27,5 +27,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: SEO & Performance (Track 4C)**
-      _Link: [./tracks/seo-performance_20260514/](./tracks/seo-performance_20260514/)_
+- [~] **Track: SEO & Performance (Track 4C)**
+  _Link: [./tracks/seo-performance_20260514/](./tracks/seo-performance_20260514/)_
