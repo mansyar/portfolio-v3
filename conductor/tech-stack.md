@@ -122,6 +122,15 @@ prebuild.mjs
 - **Files affected:** `src/lib/constants.ts`, `src/lib/filesystem.ts`, `src/lib/projects-data.ts`, `src/stores/windows.ts`, `src/components/apps/Explorer.tsx`, `src/components/apps/ExplorerDetailPane.tsx`, `src/components/apps/ExplorerFileList.tsx`, `src/components/window/WindowLayer.tsx`, `src/styles/global.css`, `scripts/generate-filesystem.mjs`, `public/resume.pdf`
 - **Tests added:** `tests/filesystem.test.ts` (22 tests — core utilities + My Documents/Recycle Bin filesystem), `tests/explorer.test.tsx` (10 new My Documents + Recycle Bin + Resume click tests)
 
+### 2026-05-14 — Track 4A: Mobile Safe Mode — Retro terminal experience
+
+- **Reason:** Implement a mobile-first alternative to the XP desktop to ensure performance and themed accessibility.
+- **Impact:** Integrated `BiosBoot` and `TerminalNav` React components into a new `SafeModeShell`. Refactored layout architecture to a single `RootLayout.astro` model to prevent styling leaks and fix invalid nested `<body>` HTML. Added `$safeMode` store for terminal state and `$forceDesktop` for mode overriding.
+- **New Features:** Animated boot sequence, numeric keyboard navigation (0-5), full MDX content rendering in terminal style, and URL state synchronization (`?safe=`, `?slug=`).
+- **Packages added:** `@nanostores/react` (updated usage), `astro/container` (for layout testing).
+- **Files affected:** `src/pages/index.astro`, `src/layouts/RootLayout.astro`, `src/layouts/DesktopLayout.astro`, `src/layouts/SafeModeShell.astro`, `src/stores/url-sync.ts`, `src/stores/desktop.ts`, `src/styles/xp-safe-mode.css`
+- **Tests added:** `tests/BiosBoot.test.tsx`, `tests/TerminalNav.test.tsx`, `tests/safe-mode-url.test.ts`, `tests/safe-mode-shell.test.ts`, `tests/ModeContainer.test.tsx`, `tests/safe-mode-visuals.test.ts`
+
 ### 2026-05-13 — Track 3A: GitHub Data Sync — Build pipeline overhaul
 
 - **Reason:** Track 3A requires live GitHub data (stars, commits, last commit date) to be fetched at build time and merged into project MDX content. The build pipeline was restructured with a `prebuild.mjs` orchestrator that runs 4 sub-scripts in sequence.

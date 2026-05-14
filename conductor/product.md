@@ -32,10 +32,11 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 
 ### Mobile Safe Mode (< 768px viewport)
 
-- **BIOS Boot Sequence:** Animated line-by-line text on boot
-- **Terminal Menu:** Numbered text-based navigation (`[1] Projects [2] Skills [3] About [4] Contact`)
+- **BIOS Boot Sequence:** Animated 2-second line-by-line branding text on initial load, skipable via reduced motion settings.
+- **Terminal Menu:** Numbered text-based navigation (`[1] Projects [2] Knowledge Base [3] Contact [4] Desktop Mode [5] Restart`).
 - **CRT Visual Effects:** Scanline overlay and screen curvature
-- **Full Content Access:** All portfolio content rendered as monospace text blocks
+- **Full Content Access:** All project and article bodies rendered as monospace text blocks, preserving deep-linking and browser history.
+- **Desktop Override:** Opt-in "Desktop Mode" button to force the full XP interface on mobile viewports.
 
 ### Content & Data
 
