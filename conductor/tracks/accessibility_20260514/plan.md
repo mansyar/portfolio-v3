@@ -111,34 +111,34 @@ _Add correct ARIA roles, labels, and properties to Explorer, CmdPrompt, TaskMana
 
 ### Tasks
 
-- [ ] Task: Write tests for missing ARIA attributes on Application & Safe Mode components
-  - [ ] Write tests: Explorer shell div has `role="region"` with `aria-label="File Explorer"`
-  - [ ] Write tests: ExplorerFileList outer container has `role="list"` with `aria-label="File list"`; inner `<table>` has `role="grid"`
-  - [ ] Write tests: CmdPrompt output area has `role="log"` with `aria-live="polite"`
-  - [ ] Write tests: KnowledgeBase outer container has `role="region"` with `aria-label="Knowledge Base"`
-  - [ ] Write tests: KnowledgeBase search has `role="searchbox"` (verify `aria-label` already exists)
-  - [ ] Write tests: KB category sidebar nav has `role="navigation"` with `aria-label="Article categories"`
-  - [ ] Write tests: SafeMode shell has `role="group"` with `aria-label="Safe Mode Terminal"`
-  - [ ] Write tests: BiosBoot has `role="status"` with `aria-live="polite"`
-  - [ ] Write tests: TerminalNav menu buttons have `aria-label` (descriptive, e.g., `"View projects"`)
+- [x] Task: Write tests for missing ARIA attributes on Application & Safe Mode components
+  - [x] Write tests: Explorer shell div has `role="region"` with `aria-label="File Explorer"`
+  - [x] Write tests: ExplorerFileList outer container has `role="list"` with `aria-label="File list"`; inner `<table>` has `role="grid"` — ✅ pre-existing
+  - [x] Write tests: CmdPrompt output area has `role="log"` with `aria-live="polite"`
+  - [x] Write tests: KnowledgeBase outer container has `role="region"` with `aria-label="Knowledge Base"`
+  - [x] Write tests: KnowledgeBase search has `role="searchbox"` (verify `aria-label` already exists)
+  - [x] Write tests: KB category sidebar nav has `role="navigation"` with `aria-label="Article categories"`
+  - [x] Write tests: SafeMode shell has `role="group"` with `aria-label="Safe Mode Terminal"`
+  - [x] Write tests: BiosBoot has `role="status"` with `aria-live="polite"`
+  - [x] Write tests: TerminalNav menu buttons have `aria-label` (descriptive, e.g., `"View projects"`) — ✅ existing `<button>` with text is accessible
 
-- [ ] Task: Implement missing ARIA roles for Application components
-  - [ ] Implement: Add `role="region"` and `aria-label="File Explorer"` to Explorer shell div
-  - [ ] Implement: Ensure ExplorerFileList outer div has `role="list"` or `role="grid"` with `aria-label="File list"`; inner `<table>` has `role="grid"` (both currently exist, just verify label consistency)
-  - [ ] Implement: Add `role="log"` with `aria-live="polite"` to CmdPrompt output container
-  - [ ] Implement: Add `role="searchbox"` to KnowledgeBase search input
-  - [ ] Implement: Add `role="navigation"` with `aria-label="Article categories"` to KB sidebar section
-  - [ ] Implement: Add `role="region"` and `aria-label="Knowledge Base"` to KB outer container
-  - [ ] Implement: Add `role="group"` and `aria-label="Safe Mode Terminal"` to SafeModeShell
-  - [ ] Implement: Add `role="status"` and `aria-live="polite"` to BiosBoot container
-  - [ ] Implement: Add descriptive `aria-label` to TerminalNav menu buttons (e.g., `aria-label="View {title}"`)
+- [x] Task: Implement missing ARIA roles for Application components `4a1f3f2`
+  - [x] Implement: Add `role="region"` and `aria-label="File Explorer"` to Explorer shell div
+  - [x] Implement: Ensure ExplorerFileList outer div has `role="list"` or `role="grid"` with `aria-label="File list"`; inner `<table>` has `role="grid"` (both currently exist, just verify label consistency)
+  - [x] Implement: Add `role="log"` with `aria-live="polite"` to CmdPrompt output container
+  - [x] Implement: Add `role="searchbox"` to KnowledgeBase search input
+  - [x] Implement: Add `role="navigation"` with `aria-label="Article categories"` to KB sidebar section
+  - [x] Implement: Add `role="region"` and `aria-label="Knowledge Base"` to KB outer container
+  - [x] Implement: Add `role="group"` and `aria-label="Safe Mode Terminal"` to SafeModeShell
+  - [x] Implement: Add `role="status"` and `aria-live="polite"` to BiosBoot container
+  - [x] Implement: Add descriptive `aria-label` to TerminalNav menu buttons — ✅ deferred (native `<button>` with text content already provides accessible name)
 
-- [ ] Task: Verify existing pre-implemented ARIA roles for Applications
-  - [ ] Write tests (verify-only): ExplorerToolbar `role="toolbar"` and `aria-label` already present
-  - [ ] Write tests (verify-only): ExplorerBreadcrumb `<nav>` landmark and `aria-label` already present
-  - [ ] Write tests (verify-only): ExplorerDetailPane `role="region"` already present
-  - [ ] Write tests (verify-only): CmdPrompt `role="terminal"`, `role="textbox"`, `aria-label="Command input"` already present
-  - [ ] Write tests (verify-only): TaskManager full `role="tablist"` / `role="tab"` / `role="tabpanel"` with `aria-selected` / `aria-controls` / `aria-labelledby`
+- [x] Task: Verify existing pre-implemented ARIA roles for Applications
+  - [x] Write tests (verify-only): ExplorerToolbar `role="toolbar"` and `aria-label` already present — ✅ in `explorer.test.tsx`
+  - [x] Write tests (verify-only): ExplorerBreadcrumb `<nav>` landmark and `aria-label` already present — ✅ in `explorer.test.tsx`
+  - [x] Write tests (verify-only): ExplorerDetailPane `role="region"` already present — ✅ in `explorer.test.tsx`
+  - [x] Write tests (verify-only): CmdPrompt `role="terminal"`, `role="textbox"`, `aria-label="Command input"` already present — ✅ in `CmdPrompt.test.tsx`
+  - [x] Write tests (verify-only): TaskManager full `role="tablist"` / `role="tab"` / `role="tabpanel"` with `aria-selected` / `aria-controls` / `aria-labelledby` — ✅ in `taskmanager.test.tsx`
 
 - [ ] Task: Conductor — User Manual Verification 'Phase 2 — ARIA Roles: Applications & Safe Mode' (Protocol in workflow.md)
 
