@@ -173,7 +173,7 @@ _Identify and hide all purely decorative XP chrome elements from screen readers.
 
 ---
 
-## Phase 4a — Desktop-Level Keyboard Navigation & Tab Cycle
+## Phase 4a — Desktop-Level Keyboard Navigation & Tab Cycle `[checkpoint: 5fd3374]`
 
 _Implement the keyboard tab cycle across desktop-level chrome: Desktop Icons, Taskbar, Start Menu. Focus management (focus-on-open, focus-return-on-close) lives in WindowLayer._
 
@@ -211,7 +211,7 @@ _Implement per-window tab order and focus management for each application type. 
 
 ### Tasks
 
-- [ ] Task: Write failing tests for focus management and application-level keyboard nav
+- [~] Task: Write failing tests for focus management and application-level keyboard nav
   - [ ] Write tests: Opening a window (from DesktopIcon, Start Menu, CMD `open`) moves focus to TitleBar
   - [ ] Write tests: Tab within a window cycles: TitleBar minimize → maximize → close → window content
   - [ ] Write tests: Closing a window returns focus to previously focused element (DesktopIcon or Taskbar button)

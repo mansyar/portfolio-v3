@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useStore } from '@/lib/useStore';
 import {
   $windows,
@@ -25,13 +25,19 @@ import { KnowledgeBase } from '@/components/apps/KnowledgeBase';
 // Reserved for future window types that don't have a component yet
 const PLACEHOLDER_CONTENT: Record<string, string> = {};
 
+/** Track the element that had focus before a window was opened */
+let previousFocusElement: Element | null = null;
+
 export function WindowLayer() {
   const windows = useStore($windows);
   const activeWindow = useStore($activeWindow);
+  const prevWindowCountRef = useRef(Object.keys(windows).length);
 
   useEffect(() => {
     const handler = (e: Event) => {
       const customEvent = e as CustomEvent;
+      // Save current focus before opening a window
+      previousFocusElement = document.activeElement;
       setPendingPushState();
       openWindow(customEvent.detail as WindowId);
     };
@@ -76,7 +82,47 @@ export function WindowLayer() {
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
+  // Focus-on-open: when a new window becomes active, focus its TitleBar
   const entries = Object.values(windows);
+  const currentCount = entries.length;
+
+  useEffect(() => {
+    const prevCount = prevWindowCountRef.current;
+    prevWindowCountRef.current = currentCount;
+
+    // A window was just opened — focus its TitleBar
+    if (currentCount > prevCount && activeWindow) {
+      requestAnimationFrame(() => {
+        const titlebar = document.querySelector(
+          `[data-testid="window-titlebar"]`,
+        ) as HTMLElement | null;
+        if (titlebar) {
+          // Focus the first button (minimize) in the TitleBar
+          const firstButton = titlebar.querySelector('button');
+          if (firstButton) {
+            firstButton.focus();
+          } else {
+            titlebar.focus();
+          }
+        }
+      });
+    }
+
+    // A window was just closed — restore previous focus
+    if (currentCount < prevCount && previousFocusElement) {
+      requestAnimationFrame(() => {
+        const saved = previousFocusElement as HTMLElement | null;
+        if (saved && document.contains(saved) && typeof saved.focus === 'function') {
+          saved.focus();
+        } else {
+          // Fall back to Taskbar or first DesktopIcon
+          const fallback = document.querySelector('.start-btn') as HTMLElement | null;
+          fallback?.focus();
+        }
+        previousFocusElement = null;
+      });
+    }
+  }, [currentCount, activeWindow]);
 
   if (entries.length === 0) return null;
 
