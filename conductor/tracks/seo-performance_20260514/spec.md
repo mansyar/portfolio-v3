@@ -10,7 +10,7 @@
 
 ## Overview
 
-Implement comprehensive SEO, performance optimization, and error handling for the Luna OS Portfolio. This track creates a reusable `MetaTags.astro` component with Open Graph and structured data, generates a Windows XP BSOD-themed 404 page, optimizes the asset pipeline (WebP/AVIF images, font subsetting), adds a `<noscript>` fallback for JS-disabled users, and audits the site to achieve a Lighthouse Performance score > 90 with TBT < 100ms.
+Implement comprehensive SEO, performance optimization, and error handling for the Luna OS Portfolio. This track creates a reusable `MetaTags.astro` component with Open Graph and structured data, generates a Windows XP BSOD-themed 404 page, audits the asset pipeline (wallpaper is inline SVG — no bitmap files exist; fonts use system `local()` reference — no woff2 files exist), adds a `<noscript>` fallback for JS-disabled users, and audits the site to achieve a Lighthouse Performance score > 90 with TBT < 100ms.
 
 **Refs:** [ROADMAP §Track 4C](../../docs/ROADMAP.md) · [TDD §11](../../docs/TDD.md#11-error-states) · [TDD §12](../../docs/TDD.md#12-seo--meta-strategy) · [PRD §6](../../docs/PRD.md#6-devops--deployment-strategy) · [PRD §7](../../docs/PRD.md#7-success-metrics)
 
@@ -18,12 +18,11 @@ Implement comprehensive SEO, performance optimization, and error handling for th
 
 ## Architecture Decisions
 
-- **MetaTags is an Astro component** (zero JS) that injects `<title>`, `<meta>`, `<script type="application/ld+json">`, and Open Graph tags into `<head>`.
+- **MetaTags is an Astro component** (zero JS) that injects `<title>`, `<meta>`, `<script type="application/ld+json">`, and Open Graph tags into `<head>`. MetaTags **replaces** the existing inline `<title>` and `<meta name="description">` in `RootLayout.astro` to avoid duplication.
 - **404 page** is a standalone Astro page (`src/pages/404.astro`) styled as a Windows XP BSOD using existing XP design tokens. The "restart" link navigates to `/`.
-- **og-preview.png** is a hand-crafted static image placed at `/public/og-preview.png`. The user will provide it; this track only sets up the meta tag reference.
-- **Font subsetting** is done via a build-time script or manual subsetting of Tahoma woff2 files to Latin-only character ranges.
-- **Asset optimization** focuses on converting any non-WebP/AVIF images in `/public/wallpapers/` to modern formats. Icons remain SVG (already optimal).
-- **`<noscript>` fallback** is server-rendered HTML in `index.astro`, listing all project links so search engines and JS-disabled users can access content.
+- **og-preview.png** is a hand-crafted static image placed at `/public/og-preview.png`. The user will provide it; this track only sets up the meta tag reference. **Note:** The OG image will show a broken preview on social media until the user places the file.
+- **No font or image files to optimize**: The wallpaper (`Wallpaper.astro`) is 100% inline SVG/CSS — no bitmap files exist in `/public/wallpapers/`. The Tahoma font is loaded via `local('Tahoma')` system reference — no woff2 files exist in `/public/fonts/` to subset. SVG icons are already optimal. The asset audit phase verifies this state rather than performing conversions.
+- **`<noscript>` fallback** is server-rendered HTML in `index.astro`, listing the 3 portfolio projects as plain HTML links (title → GitHub repo URL). Articles and contact info are excluded per TDD §11 scope.
 - **Lighthouse audit** is a manual verification step — no CI pipeline change in this track.
 
 ---
@@ -57,11 +56,12 @@ Implement comprehensive SEO, performance optimization, and error handling for th
 - Use existing XP theme tokens where applicable
 - No JS required — pure Astro/CSS
 
-### FR3 — Asset Optimization
+### FR3 — Asset Audit
 
-- Convert any non-optimized images in `/public/wallpapers/` to WebP format (or verify they already are)
-- Subset Tahoma font files in `/public/fonts/` to Latin-only characters to reduce font file size
-- No changes to SVG icons (already optimal)
+- **Wallpaper audit**: Verify `Wallpaper.astro` uses inline SVG/CSS with no external bitmap dependencies. Confirm `/public/wallpapers/` contains no image files (only `.gitkeep`). No conversion needed — the component is already zero-JS and zero-bitmap.
+- **Font audit**: Verify `xp-theme.css` loads Tahoma via `local('Tahoma')` system reference. Confirm `/public/fonts/` contains no woff2 files (only `.gitkeep`). Verify `font-display: swap` is set on all `@font-face` declarations. No subsetting needed — there are no font files to subset.
+- **Icon audit**: Verify SVG icons in `/public/icons/` are already in optimal vector format. No changes needed.
+- **Document findings**: Write a brief report of the audit confirming the asset pipeline's current state.
 
 ### FR4 — `<noscript>` Fallback
 
@@ -86,7 +86,7 @@ Implement comprehensive SEO, performance optimization, and error handling for th
 - **No new npm dependencies** — all features use built-in Astro capabilities or existing dependencies
 - **SEO compliance**: Crawlable by search engines, proper meta tags, structured data for rich snippets
 - **Accessibility**: 404 page must pass WCAG AA color contrast (white text on blue), the restart link must be keyboard-accessible
-- **Performance**: Font subsetting must not regress existing performance
+- **Performance**: Asset audit must verify no performance regressions — `font-display: swap` must be present, no render-blocking external assets
 
 ---
 
@@ -97,8 +97,8 @@ Implement comprehensive SEO, performance optimization, and error handling for th
 ✅ OG image meta tag points to /og-preview.png
 ✅ 404 page shows a styled Windows XP BSOD with STOP: 0x000000FE error code
 ✅ "Press any key to restart" link on 404 page navigates to /
-✅ All images use modern formats (WebP/AVIF)
-✅ Tahoma fonts are subset to Latin-only characters
+✅ Asset audit confirms wallpaper is inline SVG (no bitmap files), fonts are system-local (no woff2 files)
+✅ `font-display: swap` is present on all @font-face declarations
 ✅ <noscript> fallback lists all projects as plain HTML links
 ✅ Lighthouse Performance score > 90
 ✅ TBT < 100ms
