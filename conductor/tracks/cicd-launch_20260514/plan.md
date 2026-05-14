@@ -24,29 +24,29 @@
 
 ## Phase 1 — GitHub Actions Workflow
 
-- [ ] Task 1.1: Create `.github/workflows/deploy.yml` with push-triggered workflow
-  - [ ] Create `.github/` directory and `deploy.yml`
-  - [ ] Set workflow name: `Deploy to Cloudflare Pages`
-  - [ ] Add trigger: `on: push: branches: [main]`
-  - [ ] Define job `deploy` with `ubuntu-latest` runner
-  - [ ] Step: Checkout repository (`actions/checkout@v4`)
-  - [ ] Step: Setup Node.js 22 (`actions/setup-node@v4` with `node-version: '22'`)
-  - [ ] Step: Install pnpm (`pnpm/action-setup@v4` — auto-detects version from `packageManager` field)
-  - [ ] Step: Install dependencies (`pnpm install --frozen-lockfile`)
-  - [ ] Step: Build project (`pnpm build` — single command runs prebuild.mjs then astro build)
-  - [ ] Step: Deploy to Cloudflare Pages (`cloudflare/wrangler-action@v3` with `apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}`, `accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}`, and `command: pages deploy dist --project-name=luna-os-portfolio`)
-  - [ ] Step: Pass `GITHUB_TOKEN` from secrets as environment variable to prebuild scripts
-- [ ] Task 1.2: Add CRON schedule trigger
-  - [ ] Add `schedule: - cron: '0 0 * * *'` to workflow triggers
-  - [ ] Add concurrency group: `concurrency: deploy-${{ github.ref }}` to prevent overlapping runs
-- [ ] Task 1.3: Write workflow validation tests
-  - [ ] Create `tests/workflow.test.ts` verifying `.github/workflows/deploy.yml` exists
-  - [ ] Verify file contains expected content patterns (checkout, node, pnpm, build, deploy, cron, concurrency)
-  - [ ] Verify file references all required steps: `actions/checkout`, `actions/setup-node`, `pnpm/action-setup`, `cloudflare/wrangler-action`
-  - [ ] Verify `on.push.branches` includes `main`
-  - [ ] Verify `schedule.cron` includes `'0 0 * * *'`
-  - [ ] Note: YAML validity is verified by GitHub when the workflow is pushed (no YAML parser library needed)
-- [ ] Task 1.4: Run test suite and verify no regressions
+- [x] Task 1.1: Create `.github/workflows/deploy.yml` with push-triggered workflow `7e55c52`
+  - [x] Create `.github/` directory and `deploy.yml`
+  - [x] Set workflow name: `Deploy to Cloudflare Pages`
+  - [x] Add trigger: `on: push: branches: [main]`
+  - [x] Define job `deploy` with `ubuntu-latest` runner
+  - [x] Step: Checkout repository (`actions/checkout@v4`)
+  - [x] Step: Setup Node.js 22 (`actions/setup-node@v4` with `node-version: '22'`)
+  - [x] Step: Install pnpm (`pnpm/action-setup@v4` — auto-detects version from `packageManager` field)
+  - [x] Step: Install dependencies (`pnpm install --frozen-lockfile`)
+  - [x] Step: Build project (`pnpm build` — single command runs prebuild.mjs then astro build)
+  - [x] Step: Deploy to Cloudflare Pages (`cloudflare/wrangler-action@v3` with `apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}`, `accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}`, and `command: pages deploy dist --project-name=luna-os-portfolio`)
+  - [x] Step: Pass `GITHUB_TOKEN` from secrets as environment variable to prebuild scripts
+- [x] Task 1.2: Add CRON schedule trigger `7e55c52`
+  - [x] Add `schedule: - cron: '0 0 * * *'` to workflow triggers
+  - [x] Add concurrency group: `concurrency: deploy-${{ github.ref }}` to prevent overlapping runs
+- [x] Task 1.3: Write workflow validation tests `7e55c52`
+  - [x] Create `tests/workflow.test.ts` verifying `.github/workflows/deploy.yml` exists
+  - [x] Verify file contains expected content patterns (checkout, node, pnpm, build, deploy, cron, concurrency)
+  - [x] Verify file references all required steps: `actions/checkout`, `actions/setup-node`, `pnpm/action-setup`, `cloudflare/wrangler-action`
+  - [x] Verify `on.push.branches` includes `main`
+  - [x] Verify `schedule.cron` includes `'0 0 * * *'`
+  - [x] Note: YAML validity is verified by GitHub when the workflow is pushed (no YAML parser library needed)
+- [x] Task 1.4: Run test suite and verify no regressions `7e55c52`
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: GitHub Actions Workflow' (Protocol in workflow.md)
 
 ## Phase 2 — Cloudflare Pages Project Setup & Secrets
