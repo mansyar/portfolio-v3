@@ -1,6 +1,6 @@
 # Implementation Plan: Mobile Safe Mode (Track 4A)
 
-## Phase 1: Safe Mode Foundation & Visuals
+## Phase 1: Safe Mode Foundation & Visuals [checkpoint: 283fab5]
 
 - [x] Task: Define Safe Mode CSS tokens and CRT utility classes (5263688)
   - [x] Add `--safe-mode-*` tokens to `xp-theme.css`
