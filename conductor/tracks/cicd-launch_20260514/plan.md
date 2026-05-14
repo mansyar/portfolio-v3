@@ -34,7 +34,7 @@
   - [x] Step: Install pnpm (`pnpm/action-setup@v4` — auto-detects version from `packageManager` field)
   - [x] Step: Install dependencies (`pnpm install --frozen-lockfile`)
   - [x] Step: Build project (`pnpm build` — single command runs prebuild.mjs then astro build)
-  - [x] Step: Deploy to Cloudflare Pages (`cloudflare/wrangler-action@v3` with `apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}`, `accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}`, and `command: pages deploy dist --project-name=luna-os-portfolio`)
+  - [x] Step: Deploy via Cloudflare native CI (push) + deploy hook curl (CRON) — uses `CLOUDFLARE_DEPLOY_HOOK_URL` secret
   - [x] Step: Pass `GITHUB_TOKEN` from secrets as environment variable to prebuild scripts
 - [x] Task 1.2: Add CRON schedule trigger `7e55c52`
   - [x] Add `schedule: - cron: '0 0 * * *'` to workflow triggers
@@ -55,12 +55,13 @@
   - [x] Verify `dist/` is listed in `.gitignore` (build output is ephemeral — already confirmed)
   - [x] Verify `pnpm build` completes successfully (local smoke build)
   - [x] Verify `package.json` has `packageManager` field (from Phase 0)
-- [ ] Task 2.2: Create Cloudflare Pages project (manual — user follows steps)
-- [ ] Task 2.3: Configure GitHub Actions secrets (manual — user follows steps)
+- [x] Task 2.2: Create Cloudflare Pages project (manual — user completed via Cloudflare Dashboard)
+- [x] Task 2.3: Configure GitHub Actions secrets (manual — user configured in GitHub repo settings)
+- [x] Task 2.5: Create Cloudflare deploy hook for CRON rebuilds (manual — user created hook in Cloudflare Dashboard, added as `CLOUDFLARE_DEPLOY_HOOK_URL` secret)
 - [x] Task 2.4: Verify `GITHUB_TOKEN` is consumed by prebuild scripts `4fae6d6`
   - [x] Audit `scripts/fetch-github-stats.mjs` — confirms it reads `process.env.GITHUB_TOKEN` (line 121, already implemented)
   - [x] Confirm unauthenticated fallback still works (existing behavior)
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Cloudflare Pages Setup & Secrets' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Cloudflare Pages Setup & Secrets' (Protocol in workflow.md)
 
 ## Phase 3 — Custom Domain & DNS Configuration
 
@@ -73,7 +74,7 @@
   - [ ] Log in to Hostinger DNS panel
   - [ ] Add CNAME record:
     - Name: `os-portfolio`
-    - Target: `<your-cloudflare-pages-project>.pages.dev` (noted in Phase 2)
+    - Target: `portfolio-v3.m-ansyarafi.workers.dev`
     - TTL: `3600` (1 hour) or Auto
 - [ ] Task 3.3: Verify domain and SSL
   - [ ] Visit `https://os-portfolio.ansyar-world.top` and confirm SSL lock icon
