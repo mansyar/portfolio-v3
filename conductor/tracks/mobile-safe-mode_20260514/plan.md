@@ -14,14 +14,14 @@
 
 ## Phase 2: BIOS Boot Sequence
 
-- [ ] Task: Implement `BiosBoot.tsx` animation component
-  - [ ] Define the list of custom branding strings
-  - [ ] Create a "typewriter" effect component that renders lines sequentially
-  - [ ] Enforce a 2-second total duration for the animation
-- [ ] Task: Write tests for BIOS animation
-  - [ ] Test that lines appear in order
-  - [ ] Test that animation completes within 2s
-  - [ ] Test that `prefers-reduced-motion` skips the animation
+- [x] Task: Implement `BiosBoot.tsx` animation component (e5bf0f5)
+  - [x] Define the list of custom branding strings
+  - [x] Create a "typewriter" effect component that renders lines sequentially
+  - [x] Enforce a 2-second total duration for the animation
+- [x] Task: Write tests for BIOS animation (e5bf0f5)
+  - [x] Test that lines appear in order
+  - [x] Test that animation completes within 2s
+  - [x] Test that `prefers-reduced-motion` skips the animation
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: BIOS Boot Sequence' (Protocol in workflow.md)
 
 ## Phase 3: Terminal Navigation & Input UI
