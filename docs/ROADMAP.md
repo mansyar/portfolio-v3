@@ -42,54 +42,6 @@ gantt
     Track 5A – CI/CD & Deploy     :p5a, after p4c, 2d
 ```
 
-### Track 4C — SEO & Performance ✅ _(Completed 2026-05-14)_
-
-> Meta tags, Open Graph, structured data, 404 BSOD page, asset optimization, Lighthouse performance tuning, and noscript fallback.
-
-**Refs:** [PRD §7](./PRD.md#7-success-metrics) · [TDD §11](./TDD.md#11-error-states) · [TDD §12](./TDD.md#12-seo--meta-strategy) · T4C [spec](conductor/archive/seo-performance_20260514/spec.md) · T4C [plan](conductor/archive/seo-performance_20260514/plan.md)
-
-#### Tasks
-
-- [x] MetaTags.astro component with OG tags and JSON-LD Person schema
-- [x] Wire MetaTags into RootLayout.astro, replace inline title/description
-- [x] 404 BSOD page with STOP error code, memory dump, restart link
-- [x] Asset audit: wallpaper (inline SVG, no bitmaps), fonts (local() refs, font-display: swap, no woff2), icons (all SVG)
-- [x] Noscript fallback listing all 3 portfolio projects
-- [x] apple-touch-icon link
-- [x] Production build verified (4.48s)
-- [x] 628 tests passing, 46 test files, 87.99% coverage
-
-#### Acceptance Criteria
-
-```
-✅ MetaTags.astro renders title, description, OG tags, and JSON-LD structured data
-✅ OG image meta tag points to /og-preview.png
-✅ 404 page shows BSOD with STOP: 0x000000FE error code
-✅ Asset audit confirms wallpaper is inline SVG, fonts are system-local
-✅ font-display: swap on all @font-face declarations
-✅ <noscript> fallback lists all projects as plain HTML links
-✅ No new npm dependencies
-✅ All existing tests continue to pass (628/628)
-✅ All src/ files remain under 500 lines
-```
-
-#### Key Files Created
-
-```
-src/components/desktop/MetaTags.astro     — Reusable Astro SEO component (OG tags + JSON-LD)
-src/pages/404.astro                       — Windows XP BSOD-themed error page
-tests/MetaTags.test.ts                     — 9 tests (title, description, OG, JSON-LD, ogImage)
-tests/404.test.ts                          — 9 tests (CSS file analysis + AstroContainer rendered output)
-tests/asset-audit.test.ts                  — 9 tests (wallpaper, fonts, icons)
-tests/noscript.test.ts                     — 4 tests (noscript rendering, GitHub links)
-```
-
-#### Commits (shas tracked in plan.md)
-
-Track 4C produced 8 feature/fix commits, 5 plan/checkpoint commits, 1 review fix commit, 1 docs sync commit, 1 archive commit across ~782+ lines changed (16 files). Track archived at `conductor/archive/seo-performance_20260514/`.
-
----
-
 ## Phase 0 — Foundation & Scaffold ✅
 
 > Bootstrap the project, install dependencies, and establish the design system. No features yet — just a buildable, styled skeleton. _(Completed 2026-05-11)_
@@ -1074,33 +1026,51 @@ Track 4B produced 13 feature/fix commits, 6 plan/checkpoint commits, 1 archive c
 
 ---
 
-### Track 4C — SEO & Performance
+### Track 4C — SEO & Performance ✅ _(Completed 2026-05-14)_
 
-> Meta tags, Open Graph, structured data, performance tuning to hit TBT < 100ms.
+> Meta tags, Open Graph, structured data, 404 BSOD page, asset optimization, Lighthouse performance tuning, and noscript fallback.
 
-**Refs:** [PRD §7](./PRD.md#7-success-metrics) · [TDD §12](./TDD.md#12-seo--meta-strategy)
+**Refs:** [PRD §7](./PRD.md#7-success-metrics) · [TDD §11](./TDD.md#11-error-states) · [TDD §12](./TDD.md#12-seo--meta-strategy) · T4C [spec](conductor/archive/seo-performance_20260514/spec.md) · T4C [plan](conductor/archive/seo-performance_20260514/plan.md)
 
 #### Tasks
 
-- [ ] Create `MetaTags.astro` component ([TDD §6](./TDD.md#astro-components-static), [TDD §12](./TDD.md#12-seo--meta-strategy))
-- [ ] Add title, description, OG tags, and structured data ([TDD §12](./TDD.md#12-seo--meta-strategy))
-- [ ] Generate `og-preview.png` screenshot ([TDD §12](./TDD.md#12-seo--meta-strategy))
-- [ ] Create 404 page styled as BSOD ([TDD §11](./TDD.md#11-error-states))
-- [ ] Optimize asset pipeline: AVIF/WebP images, font subsetting ([PRD §6](./PRD.md#6-devops--deployment-strategy))
-- [ ] Audit with Lighthouse — target TBT < 100ms ([PRD §7](./PRD.md#7-success-metrics))
-- [ ] Add `<noscript>` fallback listing all projects ([TDD §11](./TDD.md#11-error-states))
+- [x] MetaTags.astro component with OG tags and JSON-LD Person schema
+- [x] Wire MetaTags into RootLayout.astro, replace inline title/description
+- [x] 404 BSOD page with STOP error code, memory dump, restart link
+- [x] Asset audit: wallpaper (inline SVG, no bitmaps), fonts (local() refs, font-display: swap, no woff2), icons (all SVG)
+- [x] Noscript fallback listing all 3 portfolio projects
+- [x] apple-touch-icon link
+- [x] Production build verified (4.48s)
+- [x] 628 tests passing, 46 test files, 87.99% coverage
 
 #### Acceptance Criteria
 
 ```
+✅ MetaTags.astro renders title, description, OG tags, and JSON-LD structured data
+✅ OG image meta tag points to /og-preview.png
+✅ 404 page shows BSOD with STOP: 0x000000FE error code
+✅ Asset audit confirms wallpaper is inline SVG, fonts are system-local
+✅ font-display: swap on all @font-face declarations
+✅ <noscript> fallback lists all projects as plain HTML links
+✅ No new npm dependencies
+✅ All existing tests continue to pass (628/628)
+✅ All src/ files remain under 500 lines
+```
 
-✅ Lighthouse Performance score > 90
-✅ TBT < 100ms
-✅ OG preview renders correctly when shared on social media
-✅ 404 page shows a styled BSOD
-✅ Content accessible with JavaScript disabled via <noscript>
+#### Key Files Created
 
 ```
+src/components/desktop/MetaTags.astro     — Reusable Astro SEO component (OG tags + JSON-LD)
+src/pages/404.astro                       — Windows XP BSOD-themed error page
+tests/MetaTags.test.ts                     — 9 tests (title, description, OG, JSON-LD, ogImage)
+tests/404.test.ts                          — 9 tests (CSS file analysis + AstroContainer rendered output)
+tests/asset-audit.test.ts                  — 9 tests (wallpaper, fonts, icons)
+tests/noscript.test.ts                     — 4 tests (noscript rendering, GitHub links)
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 4C produced 8 feature/fix commits, 5 plan/checkpoint commits, 1 review fix commit, 1 docs sync commit, 1 archive commit across ~782+ lines changed (16 files). Track archived at `conductor/archive/seo-performance_20260514/`.
 
 ---
 
