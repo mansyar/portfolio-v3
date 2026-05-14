@@ -26,3 +26,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Accessibility (Track 4B) archived to conductor/archive/accessibility_20260514/ -->
 
 ---
+
+- [ ] **Track: SEO & Performance (Track 4C)**
+      _Link: [./tracks/seo-performance_20260514/](./tracks/seo-performance_20260514/)_
