@@ -46,3 +46,12 @@ export function triggerShutdown(): void {
 export function cancelShutdown(): void {
   $shuttingDown.set(false);
 }
+
+/**
+ * Force Desktop mode on mobile (overrides CSS media queries).
+ */
+export const $forceDesktop = atom<boolean>(false);
+
+export function toggleForceDesktop(): void {
+  $forceDesktop.set(!$forceDesktop.get());
+}
