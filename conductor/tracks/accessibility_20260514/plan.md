@@ -71,7 +71,7 @@ _Document the current accessibility state of all components before making change
 
 ---
 
-## Phase 1 — ARIA Roles: Desktop Shell & Window System
+## Phase 1 — ARIA Roles: Desktop Shell & Window System `[checkpoint: 385cdc0]`
 
 _Add correct ARIA roles, labels, and properties to desktop shell, taskbar, window system components. Where ARIA already exists (verified in Phase 0), write tests only._
 
