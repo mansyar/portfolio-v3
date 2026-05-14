@@ -18,7 +18,7 @@ export function Clock() {
   const minutes = pad(time.getMinutes());
 
   return (
-    <span className="xp-clock">
+    <span className="xp-clock" role="timer" aria-live="polite" aria-label="Current time">
       {hours}:{minutes}
     </span>
   );

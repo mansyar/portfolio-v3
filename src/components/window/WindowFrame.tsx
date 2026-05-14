@@ -55,6 +55,7 @@ export function WindowFrame({
     <div
       role="dialog"
       aria-label={state.title}
+      aria-modal="true"
       style={{
         position: 'absolute',
         left: state.x,

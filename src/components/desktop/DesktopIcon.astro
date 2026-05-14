@@ -15,10 +15,14 @@ const ondblclick = `this.classList.add('desktop-icon--active'); setTimeout(() =>
 
 <div
   class="desktop-icon"
+  role="button"
+  aria-label={label}
+  tabindex="0"
   data-window-id={windowId}
   data-window-label={label}
   onclick={onclick}
   ondblclick={ondblclick}
+  onkeydown={`if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); ${onclick} }`}
 >
   <img
     src={icon}

@@ -59,6 +59,7 @@ export function ShutdownOverlay({ onClose }: ShutdownOverlayProps) {
     <div
       role="status"
       aria-label="Shutting down"
+      aria-live="polite"
       style={{
         position: 'fixed',
         inset: 0,

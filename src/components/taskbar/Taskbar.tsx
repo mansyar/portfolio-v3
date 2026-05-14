@@ -52,6 +52,8 @@ export function Taskbar() {
         {/* Start Button */}
         <button
           aria-label="Start"
+          aria-haspopup="menu"
+          aria-expanded={startMenuOpen}
           onClick={() => {
             setPendingPushState();
             toggleStartMenu();
