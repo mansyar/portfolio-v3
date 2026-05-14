@@ -13,6 +13,7 @@ import {
   resizeWindow,
 } from '@/stores/windows';
 import { initUrlSync, setPendingPushState } from '@/stores/url-sync';
+import { $startMenuOpen, closeStartMenu, $shuttingDown } from '@/stores/desktop';
 import { WindowFrame } from './WindowFrame';
 import type { WindowId } from '@/stores/windows';
 import type { MouseEvent } from 'react';
@@ -45,6 +46,34 @@ export function WindowLayer() {
     return () => {
       cleanup?.();
     };
+  }, []);
+
+  // Escape key handler: close Start Menu or active window
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+
+      // Guard against Escape during shutdown sequence
+      if ($shuttingDown.get()) return;
+
+      // If Start Menu is open, close it
+      if ($startMenuOpen.get()) {
+        e.preventDefault();
+        closeStartMenu();
+        return;
+      }
+
+      // If active window exists, close it
+      const active = $activeWindow.get();
+      if (active) {
+        e.preventDefault();
+        setPendingPushState();
+        closeWindow(active);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
   const entries = Object.values(windows);
