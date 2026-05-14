@@ -6,10 +6,10 @@
   - [x] Add `--safe-mode-*` tokens to `xp-theme.css`
   - [x] Create `.crt-effects` utility with scanlines and curvature
   - [x] Write tests verifying CSS token availability and CRT class structure
-- [ ] Task: Create `SafeModeShell.astro` layout
-  - [ ] Implement full-screen black background with green monospace text
-  - [ ] Add the CRT effect overlay
-  - [ ] Verify: Component renders a blank green-on-black terminal screen with subtle CRT effects
+- [x] Task: Create `SafeModeShell.astro` layout (fe8cbc1)
+  - [x] Implement full-screen black background with green monospace text
+  - [x] Add the CRT effect overlay
+  - [x] Verify: Component renders a blank green-on-black terminal screen with subtle CRT effects
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Safe Mode Foundation & Visuals' (Protocol in workflow.md)
 
 ## Phase 2: BIOS Boot Sequence
