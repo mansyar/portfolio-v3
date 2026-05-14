@@ -12,7 +12,7 @@
 
 ## Overview
 
-Establish a fully automated CI/CD pipeline using GitHub Actions and Cloudflare Pages. Every push to `main` triggers a production build and deploy via a single `cloudflare/wrangler-action@v3` step. A daily CRON job (00:00 UTC) refreshes GitHub API data. The site is served via a custom domain (`os-portfolio.ansyar-world.top`) with automatic SSL. Three environment secrets are configured: `GITHUB_TOKEN` (GitHub API auth), `CLOUDFLARE_API_TOKEN` (Wrangler deploy auth), and `CLOUDFLARE_ACCOUNT_ID` (Cloudflare account identifier).
+Establish a fully automated CI/CD pipeline using GitHub Actions and Cloudflare Pages. Every push to `main` triggers a production build and deploy via a single `cloudflare/wrangler-action@v3` step. A daily CRON job (00:00 UTC) refreshes GitHub API data. The site is served via a custom domain (`portfolio-os.ansyar-world.top`) with automatic SSL. Three environment secrets are configured: `GITHUB_TOKEN` (GitHub API auth), `CLOUDFLARE_API_TOKEN` (Wrangler deploy auth), and `CLOUDFLARE_ACCOUNT_ID` (Cloudflare account identifier).
 
 ## Architecture Decisions
 
@@ -56,7 +56,7 @@ Establish a fully automated CI/CD pipeline using GitHub Actions and Cloudflare P
 
 ### FR3 — Custom Domain & SSL
 
-- After Cloudflare Pages project is created (FR2), add `os-portfolio.ansyar-world.top` as a custom domain in the Cloudflare Pages dashboard
+- After Cloudflare Pages project is created (FR2), add `portfolio-os.ansyar-world.top` as a custom domain in the Cloudflare Pages dashboard
 - Configure DNS via Hostinger's DNS panel:
   - Add CNAME record: `os-portfolio` → `<your-cloudflare-pages-project>.pages.dev`
 - Wait for automatic SSL certificate provisioning by Cloudflare (~1-5 minutes)

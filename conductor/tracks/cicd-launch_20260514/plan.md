@@ -65,20 +65,11 @@
 
 ## Phase 3 — Custom Domain & DNS Configuration
 
-- [ ] Task 3.1: Configure custom domain in Cloudflare Pages
-  - [ ] Go to Cloudflare Pages project → Custom domains → Add custom domain
-  - [ ] Enter `os-portfolio.ansyar-world.top`
-  - [ ] Cloudflare will show the DNS target (the `.pages.dev` URL from Phase 2)
-  - [ ] Wait for SSL certificate provisioning (automatic, ~1-5 minutes)
-- [ ] Task 3.2: Configure DNS in Hostinger
-  - [ ] Log in to Hostinger DNS panel
-  - [ ] Add CNAME record:
-    - Name: `os-portfolio`
-    - Target: `portfolio-v3.m-ansyarafi.workers.dev`
-    - TTL: `3600` (1 hour) or Auto
-- [ ] Task 3.3: Verify domain and SSL
-  - [ ] Visit `https://os-portfolio.ansyar-world.top` and confirm SSL lock icon
-  - [ ] Verify full site loads correctly through the custom domain
+- [x] Task 3.1: Configure custom domain in Cloudflare Pages (manual — user added via Cloudflare Dashboard)
+- [x] Task 3.2: Configure DNS CNAME record (manual — user added proxied CNAME in Cloudflare DNS)
+- [x] Task 3.3: Verify domain and SSL
+  - [x] Domain `portfolio-os.ansyar-world.top` successfully added and SSL active
+  - [x] DNS resolves correctly to Cloudflare Pages project
 - [ ] Task 3.4: Update project documentation references
   - [ ] Update `conductor/product.md` or `conductor/tech-stack.md` with the live URL
   - [ ] Update `docs/PRD.md` and `docs/TDD.md` URL references if applicable
@@ -88,7 +79,7 @@
 
 - [ ] Task 4.1: Create post-deploy smoke test script
   - [ ] Create `scripts/smoke-test.mjs` using Node.js native `fetch` (available in Node 22) that:
-    1. Performs HTTP GET on `https://os-portfolio.ansyar-world.top`
+    1. Performs HTTP GET on `https://portfolio-os.ansyar-world.top`
     2. Verifies HTTP 200 response status
     3. Checks response HTML contains `<title>` with "Luna" or "Portfolio" (confirms site content)
     4. Checks response headers for `content-type` containing `text/html`
