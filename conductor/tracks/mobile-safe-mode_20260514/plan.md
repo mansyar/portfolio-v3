@@ -36,7 +36,7 @@
   - [x] Write tests for keyboard navigation
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Terminal Navigation & Input UI' (Protocol in workflow.md)
 
-## Phase 4: Content Rendering & Navigation
+## Phase 4: Content Rendering & Navigation [checkpoint: 5e76f30]
 
 - [x] Task: Implement Safe Mode Content Views (8edd402)
   - [x] Create rendering logic within `TerminalNav.tsx` (or a sub-component) to display project and article lists
