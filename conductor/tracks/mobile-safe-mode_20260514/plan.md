@@ -38,13 +38,13 @@
 
 ## Phase 4: Content Rendering & Navigation
 
-- [ ] Task: Implement Safe Mode Content Views
-  - [ ] Create rendering logic within `TerminalNav.tsx` (or a sub-component) to display project and article lists
-  - [ ] Implement detailed view for articles/projects using Monospace HTML
-  - [ ] Implement `[0] Back` functionality to return to previous menu levels
-- [ ] Task: Write tests for content views
-  - [ ] Test navigating into a project and back
-  - [ ] Test that content is styled with monospace fonts and preserves basic HTML tags
+- [x] Task: Implement Safe Mode Content Views (8edd402)
+  - [x] Create rendering logic within `TerminalNav.tsx` (or a sub-component) to display project and article lists
+  - [x] Implement detailed view for articles/projects using Monospace HTML
+  - [x] Implement `[0] Back` functionality to return to previous menu levels
+- [x] Task: Write tests for content views (8edd402)
+  - [x] Test navigating into a project and back
+  - [x] Test that content is styled with monospace fonts and preserves basic HTML tags
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Content Rendering & Navigation' (Protocol in workflow.md)
 
 ## Phase 5: URL State & Sync Sandbox
