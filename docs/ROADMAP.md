@@ -90,12 +90,6 @@ Track 4C produced 8 feature/fix commits, 5 plan/checkpoint commits, 1 review fix
 
 ---
 
-<!-- Keep trailing mermaid backtick -->
-
-```
-
----
-
 ## Phase 0 — Foundation & Scaffold ✅
 
 > Bootstrap the project, install dependencies, and establish the design system. No features yet — just a buildable, styled skeleton. _(Completed 2026-05-11)_
@@ -1136,7 +1130,7 @@ Track 4B produced 13 feature/fix commits, 6 plan/checkpoint commits, 1 archive c
 ✅ CRON job triggers daily build to refresh GitHub data
 ✅ Build completes in under 60 seconds
 
-````
+```
 
 ---
 
@@ -1174,7 +1168,7 @@ graph TD
     style T4B fill:#e74c3c,color:#fff
     style T4C fill:#e74c3c,color:#fff
     style T5A fill:#1abc9c,color:#fff
-````
+```
 
 ### Parallel Work Opportunities
 
