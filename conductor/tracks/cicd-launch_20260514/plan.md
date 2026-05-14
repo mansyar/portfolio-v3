@@ -22,7 +22,7 @@
   - [x] Commit: `chore(config): Add packageManager field and fix .gitignore generated files tracking`
 - [x] Task: Conductor - User Manual Verification 'Phase 0: Prerequisites' (Protocol in workflow.md) `37e82c3`
 
-## Phase 1 — GitHub Actions Workflow
+## Phase 1 — GitHub Actions Workflow [checkpoint: 564d95b]
 
 - [x] Task 1.1: Create `.github/workflows/deploy.yml` with push-triggered workflow `7e55c52`
   - [x] Create `.github/` directory and `deploy.yml`
@@ -47,7 +47,7 @@
   - [x] Verify `schedule.cron` includes `'0 0 * * *'`
   - [x] Note: YAML validity is verified by GitHub when the workflow is pushed (no YAML parser library needed)
 - [x] Task 1.4: Run test suite and verify no regressions `7e55c52`
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: GitHub Actions Workflow' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: GitHub Actions Workflow' (Protocol in workflow.md) `564d95b`
 
 ## Phase 2 — Cloudflare Pages Project Setup & Secrets
 
