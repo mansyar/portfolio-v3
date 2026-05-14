@@ -73,7 +73,7 @@
 - [ ] Task 3.4: Update project documentation references
   - [ ] Update `conductor/product.md` or `conductor/tech-stack.md` with the live URL
   - [ ] Update `docs/PRD.md` and `docs/TDD.md` URL references if applicable
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Custom Domain & DNS' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Custom Domain & DNS' (Protocol in workflow.md)
 
 ## Phase 4 — Final Smoke Test & Verification
 

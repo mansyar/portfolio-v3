@@ -29,5 +29,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: CI/CD & Launch**
-  _Link: [./tracks/cicd-launch_20260514/](./tracks/cicd-launch_20260514/)_
+- [x] **Track: CI/CD & Launch**
+      _Link: [./tracks/cicd-launch_20260514/](./tracks/cicd-launch_20260514/)_
