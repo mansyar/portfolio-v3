@@ -40,15 +40,24 @@ function checkModularity() {
   const violations = [];
 
   for (const file of files) {
-    // Skip .gitkeep and dotfiles intended as placeholders
-    if (file.endsWith('.gitkeep')) continue;
+    const filename = relative(projectRoot, file);
+
+    // 1. Skip hidden files (starting with .)
+    if (file.split(/[\\/]/).pop().startsWith('.')) continue;
+
+    // 2. Skip generated directory
+    if (filename.includes('src' + join('/', 'lib', 'generated'))) continue;
+
+    // 3. Only check source code and style files
+    const isSourceFile = /\.(ts|tsx|astro|css)$/.test(file);
+    if (!isSourceFile) continue;
 
     const content = readFileSync(file, 'utf-8');
     const lineCount = content.split('\n').length;
 
     if (lineCount > MAX_LINES) {
       violations.push({
-        file: relative(projectRoot, file),
+        file: filename,
         lines: lineCount,
       });
     }
