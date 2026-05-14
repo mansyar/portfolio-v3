@@ -29,3 +29,9 @@ src/lib/generated/*
 # !src/lib/generated/articles-content.json
 # !src/lib/generated/projects-content.json
 *.tsbuildinfo
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
