@@ -3,10 +3,12 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
 const themePath = resolve(__dirname, '..', 'src', 'styles', 'xp-theme.css');
+const safeModePath = resolve(__dirname, '..', 'src', 'styles', 'xp-safe-mode.css');
 const globalPath = resolve(__dirname, '..', 'src', 'styles', 'global.css');
 
 describe('XP Theme CSS', () => {
   const css = readFileSync(themePath, 'utf-8');
+  const safeCss = readFileSync(safeModePath, 'utf-8');
 
   it('should define Luna Blue taskbar color', () => {
     expect(css).toContain('--xp-blue-taskbar');
@@ -41,8 +43,8 @@ describe('XP Theme CSS', () => {
   });
 
   it('should define Safe Mode color tokens', () => {
-    expect(css).toContain('--xp-safe-bg');
-    expect(css).toContain('--xp-safe-text');
+    expect(safeCss).toContain('--xp-safe-bg');
+    expect(safeCss).toContain('--xp-safe-text');
   });
 
   it('should define button styles', () => {

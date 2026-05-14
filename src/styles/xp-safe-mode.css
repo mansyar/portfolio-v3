@@ -1,0 +1,68 @@
+/* === Safe Mode / BIOS Colors (Track 4A) === */
+:root {
+  --safe-mode-bg: #000000;
+  --safe-mode-text: #00ff41;
+  --safe-mode-text-dim: #008b1a;
+  --safe-mode-text-bright: #00ff41;
+  --safe-mode-font: 'Courier New', 'Consolas', monospace;
+  --safe-mode-scanline-opacity: 0.1;
+
+  /* === Legacy Safe Mode / BIOS Colors === */
+  --xp-safe-bg: #000000;
+  --xp-safe-text: #00ff41;
+  --xp-safe-text-dim: #008b1a;
+  --xp-safe-text-bright: #00ff41;
+  --xp-safe-accent: #ffff00;
+  --xp-safe-font: 'Courier New', 'Consolas', monospace;
+  --xp-safe-font-size: 14px;
+  --xp-scanline-opacity: 0.03;
+}
+
+/* === CRT & Terminal Utility Classes === */
+
+.crt-effects {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-scanlines {
+  position: relative;
+}
+
+.crt-scanlines::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 10;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+}
+
+.crt-curvature {
+  position: relative;
+}
+
+.crt-curvature::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: radial-gradient(circle, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 100%);
+  z-index: 11;
+  pointer-events: none;
+}
+
+.terminal-text {
+  color: var(--safe-mode-text);
+  font-family: var(--safe-mode-font);
+  text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+}
