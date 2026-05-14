@@ -24,7 +24,7 @@
   - [x] Test that `prefers-reduced-motion` skips the animation
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: BIOS Boot Sequence' (Protocol in workflow.md)
 
-## Phase 3: Terminal Navigation & Input UI
+## Phase 3: Terminal Navigation & Input UI [checkpoint: e9bf80c]
 
 - [x] Task: Create `TerminalNav.tsx` component (bd7766d)
   - [x] Define the menu structure: Projects, Knowledge Base, Contact, Desktop Mode, Restart
