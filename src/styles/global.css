@@ -22,10 +22,10 @@
   --color-xp-disabled-text: #aca899;
 
   /* Safe Mode Colors */
-  --color-xp-safe-bg: #000000;
-  --color-xp-safe-text: #00ff00;
-  --color-xp-safe-text-dim: #008800;
-  --color-xp-safe-accent: #ffff00;
+  --color-xp-safe-bg: var(--safe-mode-bg);
+  --color-xp-safe-text: var(--safe-mode-text);
+  --color-xp-safe-text-dim: var(--safe-mode-text-dim);
+  --color-xp-safe-accent: var(--xp-safe-accent);
 
   /* Border Colors */
   --color-xp-border-outset-top: #ffffff;
