@@ -1,7 +1,7 @@
 # Technical Design Document: Luna OS Portfolio
 
 **Parent:** [PRD.md](./PRD.md)  
-**Version:** 1.6  
+**Version:** 1.7  
 **Last Updated:** 2026-05-14
 
 ---
@@ -29,7 +29,8 @@ portfolio-v3/
 │   ├── layouts/
 │   │   └── DesktopLayout.astro   # Main shell: wallpaper + taskbar + window layer
 │   ├── pages/
-│   │   └── index.astro           # Single page app entry
+│   │   ├── index.astro           # Single page app entry
+│   │   └── 404.astro             # Windows XP BSOD error page (Track 4C)
 │   ├── stores/                   # Nano Stores (see §3)
 │   │   ├── windows.ts
 │   │   ├── desktop.ts
@@ -475,13 +476,13 @@ export const FILE_SYSTEM: FSNode = {
 
 ### Astro Components (Static)
 
-| Component       | Props                   | Responsibility                                            |
-| :-------------- | :---------------------- | :-------------------------------------------------------- |
-| `DesktopLayout` | —                       | Page shell: wallpaper + icon grid + island mount points   |
-| `DesktopIcon`   | `icon, label, windowId` | Renders icon + label, double-click opens window via store |
-| `Wallpaper`     | —                       | Responsive `<picture>` with AVIF/WebP sources             |
-| `SafeModeShell` | —                       | Mobile layout with BIOS boot text and terminal nav        |
-| `MetaTags`      | `title, description`    | SEO head content                                          |
+| Component       | Props                   | Responsibility                                                                    |
+| :-------------- | :---------------------- | :-------------------------------------------------------------------------------- |
+| `DesktopLayout` | —                       | Page shell: wallpaper + icon grid + island mount points                           |
+| `DesktopIcon`   | `icon, label, windowId` | Renders icon + label, double-click opens window via store                         |
+| `Wallpaper`     | `imageSrc?`             | Inline SVG/CSS Bliss-style rolling hills; optional `imageSrc` for bitmap fallback |
+| `SafeModeShell` | —                       | Mobile layout with BIOS boot text and terminal nav                                |
+| `MetaTags`      | `title, description`    | SEO head content                                                                  |
 
 ---
 
@@ -663,48 +664,33 @@ C:\MANSYAR>_
 
 ## 11. Error States
 
-| Scenario                  | Handling                                                                                                                             |
-| :------------------------ | :----------------------------------------------------------------------------------------------------------------------------------- |
-| **GitHub API failure**    | Build uses cached data from last successful fetch. Console warning logged.                                                           |
-| **404 page**              | Styled as Windows XP BSOD (Blue Screen of Death) with error code and "restart" link.                                                 |
-| **Empty Explorer folder** | "This folder is empty" message with folder icon (matching XP).                                                                       |
-| **CMD invalid path**      | `The system cannot find the path specified.`                                                                                         |
-| **Offline/JS disabled**   | Astro SSR serves static desktop view. No interactive windows, but content accessible via `<noscript>` fallback listing all projects. |
+| Scenario                  | Handling                                                                                                                                      |
+| :------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| **GitHub API failure**    | Build uses cached data from last successful fetch. Console warning logged.                                                                    |
+| **404 page**              | Styled as Windows XP BSOD with `*** STOP: 0x000000FE (PORTFOLIO_NOT_FOUND)`, fake memory dump indicator, and "Press any key to restart" link. |
+| **Empty Explorer folder** | "This folder is empty" message with folder icon (matching XP).                                                                                |
+| **CMD invalid path**      | `The system cannot find the path specified.`                                                                                                  |
+| **Offline/JS disabled**   | Astro SSR serves static desktop view. `<noscript>` block lists all 3 portfolio projects as plain HTML links with XP-themed fallback CSS.      |
 
 ---
 
 ## 12. SEO & Meta Strategy
 
-```html
-<!-- Default meta (index.astro) -->
-<title>Muhammad Ansyar Rafi Putra — Software Engineer | DevOps & Data</title>
-<meta
-  name="description"
-  content="Interactive Windows XP-themed portfolio for a Software Engineer specializing in DevOps and Data Engineering."
-/>
+```astro
+---
+// Implemented via src/components/desktop/MetaTags.astro — reusable, zero-JS component
+import MetaTags from '../components/desktop/MetaTags.astro';
+---
 
-<!-- Open Graph -->
-<meta property="og:title" content="Luna OS — Muhammad Ansyar's Portfolio" />
-<meta
-  property="og:description"
-  content="Explore projects through a nostalgic Windows XP interface."
-/>
-<meta property="og:image" content="/og-preview.png" />
-<meta property="og:type" content="website" />
-
-<!-- Structured Data: Person -->
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Muhammad Ansyar Rafi Putra",
-    "jobTitle": "Software Engineer",
-    "url": "https://mansyar.dev"
-  }
-</script>
+<!-- MetaTags injects: title, description, OG tags, and JSON-LD -->
+<MetaTags title={title} description={description} />
 ```
 
-- `og-preview.png`: Screenshot of the desktop with windows open (generated as a static asset)
+- **MetaTags.astro:** Astro component (`src/components/desktop/MetaTags.astro`) with props `title`, `description`, and optional `ogImage` (defaults to `/og-preview.png`). Zero JS.
+- **OG Tags:** `og:title`, `og:description`, `og:image="/og-preview.png"`, `og:type="website"`
+- **Structured Data:** JSON-LD Person schema — `@type: "Person"`, `name: "Muhammad Ansyar Rafi Putra"`, `jobTitle: "Software Engineer"`, `url: "https://mansyar.dev"`
+- **apple-touch-icon:** SVG favicon referenced via `<link rel="apple-touch-icon" href="/favicon.svg" />`
+- `og-preview.png`: Static asset in `/public/og-preview.png` for social media preview cards
 - Since it's a single-page app, all SEO is on the index page
 - Content inside windows is server-rendered by Astro (crawlable)
 

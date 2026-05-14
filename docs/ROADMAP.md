@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio
 
 **Parent Docs:** [PRD.md](./PRD.md) · [TDD.md](./TDD.md)  
-**Version:** 2.2 · **Updated:** 2026-05-14  
+**Version:** 2.3 · **Updated:** 2026-05-14  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -36,10 +36,62 @@ gantt
     section Phase 4
     Track 4A – Mobile Safe Mode   :done, p4a, after p2b, 4d
     Track 4B – Accessibility      :done, p4b, after p4a, 2d
-    Track 4C – SEO & Performance  :p4c, after p4b, 2d
+    Track 4C – SEO & Performance  :done, p4c, after p4b, 2d
 
     section Phase 5
     Track 5A – CI/CD & Deploy     :p5a, after p4c, 2d
+```
+
+### Track 4C — SEO & Performance ✅ _(Completed 2026-05-14)_
+
+> Meta tags, Open Graph, structured data, 404 BSOD page, asset optimization, Lighthouse performance tuning, and noscript fallback.
+
+**Refs:** [PRD §7](./PRD.md#7-success-metrics) · [TDD §11](./TDD.md#11-error-states) · [TDD §12](./TDD.md#12-seo--meta-strategy) · T4C [spec](conductor/archive/seo-performance_20260514/spec.md) · T4C [plan](conductor/archive/seo-performance_20260514/plan.md)
+
+#### Tasks
+
+- [x] MetaTags.astro component with OG tags and JSON-LD Person schema
+- [x] Wire MetaTags into RootLayout.astro, replace inline title/description
+- [x] 404 BSOD page with STOP error code, memory dump, restart link
+- [x] Asset audit: wallpaper (inline SVG, no bitmaps), fonts (local() refs, font-display: swap, no woff2), icons (all SVG)
+- [x] Noscript fallback listing all 3 portfolio projects
+- [x] apple-touch-icon link
+- [x] Production build verified (4.48s)
+- [x] 628 tests passing, 46 test files, 87.99% coverage
+
+#### Acceptance Criteria
+
+```
+✅ MetaTags.astro renders title, description, OG tags, and JSON-LD structured data
+✅ OG image meta tag points to /og-preview.png
+✅ 404 page shows BSOD with STOP: 0x000000FE error code
+✅ Asset audit confirms wallpaper is inline SVG, fonts are system-local
+✅ font-display: swap on all @font-face declarations
+✅ <noscript> fallback lists all projects as plain HTML links
+✅ No new npm dependencies
+✅ All existing tests continue to pass (628/628)
+✅ All src/ files remain under 500 lines
+```
+
+#### Key Files Created
+
+```
+src/components/desktop/MetaTags.astro     — Reusable Astro SEO component (OG tags + JSON-LD)
+src/pages/404.astro                       — Windows XP BSOD-themed error page
+tests/MetaTags.test.ts                     — 9 tests (title, description, OG, JSON-LD, ogImage)
+tests/404.test.ts                          — 9 tests (CSS file analysis + AstroContainer rendered output)
+tests/asset-audit.test.ts                  — 9 tests (wallpaper, fonts, icons)
+tests/noscript.test.ts                     — 4 tests (noscript rendering, GitHub links)
+```
+
+#### Commits (shas tracked in plan.md)
+
+Track 4C produced 8 feature/fix commits, 5 plan/checkpoint commits, 1 review fix commit, 1 docs sync commit, 1 archive commit across ~782+ lines changed (16 files). Track archived at `conductor/archive/seo-performance_20260514/`.
+
+---
+
+<!-- Keep trailing mermaid backtick -->
+
 ```
 
 ---
@@ -70,6 +122,7 @@ gantt
 ### Acceptance Criteria
 
 ```
+
 ✅ Project builds and serves locally without errors (build: 2.4s)
 ✅ Code quality tools (ESLint, Prettier, TypeScript, Vitest) are fully configured
 ✅ Git hooks enforce pre-commit (lint, modularity) and pre-push (typecheck, coverage >= 80%) rules
@@ -78,26 +131,29 @@ gantt
 ✅ Tahoma font loads correctly (via `@font-face` system reference)
 ✅ Directory structure matches TDD §1 (verified with 17 test assertions)
 ✅ 36 unit/integration tests passing, 0 type errors
+
 ```
 
 ### Key Files Created
 
 ```
-src/styles/xp-theme.css          — Full Luna design token system (colors, borders, typography, animations)
-src/styles/global.css             — Tailwind v4 @theme integration with XP tokens
-src/layouts/DesktopLayout.astro   — XP-themed layout shell
-src/pages/index.astro             — Entry point with placeholder mount points
-astro.config.mjs                  — Astro 6 config with React, MDX, Tailwind
-eslint.config.mjs                 — ESLint with TypeScript + React rules
-vitest.config.ts                  — Vitest with 80% coverage thresholds
-tsconfig.json                     — Strict TypeScript with @/ path aliases
-scripts/check-modularity.js       — 500-line file size limiter
-.husky/pre-commit                 — lint-staged + modularity check
-.husky/pre-push                   — typecheck + coverage
-tests/directory-structure.test.ts  — 17 directory existence tests
-tests/xp-theme.test.ts             — 12 CSS token verification tests
-tests/check-modularity.test.ts     — 2 modularity script tests
-tests/pages/index.test.ts          — 5 integration tests
+
+src/styles/xp-theme.css — Full Luna design token system (colors, borders, typography, animations)
+src/styles/global.css — Tailwind v4 @theme integration with XP tokens
+src/layouts/DesktopLayout.astro — XP-themed layout shell
+src/pages/index.astro — Entry point with placeholder mount points
+astro.config.mjs — Astro 6 config with React, MDX, Tailwind
+eslint.config.mjs — ESLint with TypeScript + React rules
+vitest.config.ts — Vitest with 80% coverage thresholds
+tsconfig.json — Strict TypeScript with @/ path aliases
+scripts/check-modularity.js — 500-line file size limiter
+.husky/pre-commit — lint-staged + modularity check
+.husky/pre-push — typecheck + coverage
+tests/directory-structure.test.ts — 17 directory existence tests
+tests/xp-theme.test.ts — 12 CSS token verification tests
+tests/check-modularity.test.ts — 2 modularity script tests
+tests/pages/index.test.ts — 5 integration tests
+
 ```
 
 ### Commits (shas tracked in plan.md)
@@ -128,6 +184,7 @@ Phase 0 produced 15 commits across ~8,400 lines changed (42 files). Track archiv
 #### Acceptance Criteria
 
 ```
+
 ✅ Desktop shows custom CSS/SVG Bliss-style wallpaper filling the full viewport
 ✅ Wallpaper.astro accepts optional imageSrc prop for future bitmap fallback
 ✅ 5 desktop icons render in a left-aligned vertical column (top-left)
@@ -141,25 +198,28 @@ Phase 0 produced 15 commits across ~8,400 lines changed (42 files). Track archiv
 ✅ Zero-JS for wallpaper and icons (Astro static components; Taskbar & Clock = React client:load)
 ✅ --xp-taskbar-bg and --xp-start-btn-green CSS tokens added to xp-theme.css
 ✅ Looks authentically XP at a glance
+
 ```
 
 #### Key Files Created
 
 ```
-public/icons/*.svg                        — 5 custom 48×48 XP-inspired desktop icons
-src/components/desktop/Wallpaper.astro     — CSS/SVG Bliss-style rolling hills wallpaper
-src/components/desktop/DesktopIcon.astro   — Reusable icon component with XP hover highlight
-src/components/taskbar/Clock.tsx           — React clock (HH:MM, 60s update)
-src/components/taskbar/Taskbar.tsx         — React taskbar island with Start button + system tray
-src/styles/xp-theme.css (modified)         — Added --xp-taskbar-bg, --xp-start-btn-green, .xp-taskbar-border
-src/pages/index.astro (modified)           — Mounted Wallpaper, Icons, Taskbar
-vitest.config.ts (modified)               — jsdom env, @testing-library/react, @/ alias
-tests/setup.ts                            — jest-dom vitest matchers
-tests/wallpaper.test.ts                   — 5 unit tests (Pattern B: source file read)
-tests/desktop-icon.test.ts                — 7 unit tests (Pattern B: source file read)
-tests/clock.test.tsx                      — 3 React component tests (@testing-library/react)
-tests/taskbar.test.tsx                    — 4 React component tests (@testing-library/react)
-tests/pages/index.test.ts (modified)      — 4 new integration tests (9 total)
+
+public/icons/\*.svg — 5 custom 48×48 XP-inspired desktop icons
+src/components/desktop/Wallpaper.astro — CSS/SVG Bliss-style rolling hills wallpaper
+src/components/desktop/DesktopIcon.astro — Reusable icon component with XP hover highlight
+src/components/taskbar/Clock.tsx — React clock (HH:MM, 60s update)
+src/components/taskbar/Taskbar.tsx — React taskbar island with Start button + system tray
+src/styles/xp-theme.css (modified) — Added --xp-taskbar-bg, --xp-start-btn-green, .xp-taskbar-border
+src/pages/index.astro (modified) — Mounted Wallpaper, Icons, Taskbar
+vitest.config.ts (modified) — jsdom env, @testing-library/react, @/ alias
+tests/setup.ts — jest-dom vitest matchers
+tests/wallpaper.test.ts — 5 unit tests (Pattern B: source file read)
+tests/desktop-icon.test.ts — 7 unit tests (Pattern B: source file read)
+tests/clock.test.tsx — 3 React component tests (@testing-library/react)
+tests/taskbar.test.tsx — 4 React component tests (@testing-library/react)
+tests/pages/index.test.ts (modified) — 4 new integration tests (9 total)
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -193,6 +253,7 @@ Track 1A produced 11 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Double-clicking a desktop icon opens a window with placeholder content
 ✅ Windows can be dragged by title bar (viewport-constrained)
 ✅ Windows can be resized from edges/corners (min size enforced)
@@ -206,20 +267,23 @@ Track 1A produced 11 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 ✅ Maximize fills viewport minus 40px taskbar height
 ✅ All animations respect prefers-reduced-motion: reduce
 ✅ Window system uses pointer-events layering for click-through when no windows open
+
 ```
 
 #### Key Files Created
 
 ```
-src/stores/windows.ts                  — Nano Stores: $windows, $zCounter, $activeWindow, all 8 actions
-src/components/window/TitleBar.tsx     — XP-style title bar with active/inactive gradient
-src/components/window/WindowFrame.tsx  — 3D chrome border, 8 resize handles, CSS animations
-src/components/window/WindowLayer.tsx  — Store subscriber, drag/resize logic, event listener
-src/lib/useStore.ts                    — Custom React hook (useState/useEffect) to subscribe to Nano Stores
+
+src/stores/windows.ts — Nano Stores: $windows, $zCounter, $activeWindow, all 8 actions
+src/components/window/TitleBar.tsx — XP-style title bar with active/inactive gradient
+src/components/window/WindowFrame.tsx — 3D chrome border, 8 resize handles, CSS animations
+src/components/window/WindowLayer.tsx — Store subscriber, drag/resize logic, event listener
+src/lib/useStore.ts — Custom React hook (useState/useEffect) to subscribe to Nano Stores
 src/components/desktop/DesktopIcon.astro (modified) — onclick/ondblclick handlers for window opening
-src/components/taskbar/Taskbar.tsx (modified)       — Window buttons with toggle behavior
-src/pages/index.astro (modified)                    — WindowLayer mount + pointer-events fix
-src/styles/global.css (modified)                    — Animation keyframes + prefers-reduced-motion
+src/components/taskbar/Taskbar.tsx (modified) — Window buttons with toggle behavior
+src/pages/index.astro (modified) — WindowLayer mount + pointer-events fix
+src/styles/global.css (modified) — Animation keyframes + prefers-reduced-motion
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -254,6 +318,7 @@ Track 1B produced 17 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Clicking Start button opens the two-column menu with slide-up animation (150ms ease-out)
 ✅ Menu shows blue header with "MARP" initials avatar and "Muhammad Ansyar Rafi Putra" name
 ✅ Left column: Resume, Explorer, Task Manager, Command Prompt
@@ -264,26 +329,29 @@ Track 1B produced 17 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 ✅ "Shut Down..." shows an XP "Windows is shutting down" screen — NOT a BSOD (reserved for 404)
 ✅ After shutdown sequence completes (~6s), desktop is restored (auto-reboot)
 ✅ Start button shows pressed state when menu is open
-✅ All --xp-start-* CSS tokens from xp-theme.css are used for styling
+✅ All --xp-start-\* CSS tokens from xp-theme.css are used for styling
 ✅ All animations respect prefers-reduced-motion: reduce
 ✅ 201 tests passing, 95%+ coverage
+
 ```
 
 #### Key Files Created
 
 ```
-src/stores/desktop.ts                    — Nano Stores: $startMenuOpen, $shuttingDown, 5 action functions
-src/components/taskbar/StartMenu.tsx     — Two-column menu, keyboard nav, click-outside, animations
+
+src/stores/desktop.ts — Nano Stores: $startMenuOpen, $shuttingDown, 5 action functions
+src/components/taskbar/StartMenu.tsx — Two-column menu, keyboard nav, click-outside, animations
 src/components/taskbar/ShutdownOverlay.tsx — 3-phase shutdown sequence with progress bar
 src/components/taskbar/Taskbar.tsx (modified) — Start button wiring, StartMenu mount, Fragment wrapper
-src/styles/xp-theme.css (modified)       — Added --xp-start-* CSS tokens, .startmenu-icon class
-src/styles/global.css (modified)         — Added @keyframes for start-menu-open/close and shutdownProgress
-public/icons/task-manager.svg            — New icon asset (was missing from 5-icon set)
-tests/stores/desktop.test.ts             — 10 store tests (start menu + shutdown state)
-tests/start-menu.test.tsx                — 29 component tests (rendering, actions, keyboard, icons)
-tests/shutdown-overlay.test.tsx          — 5 shutdown overlay tests (render, timers, cleanup)
-tests/taskbar.test.tsx (modified)         — 2 new Start button wiring tests
-tests/setup.ts (modified)                — window.matchMedia mock for jsdom
+src/styles/xp-theme.css (modified) — Added --xp-start-\* CSS tokens, .startmenu-icon class
+src/styles/global.css (modified) — Added @keyframes for start-menu-open/close and shutdownProgress
+public/icons/task-manager.svg — New icon asset (was missing from 5-icon set)
+tests/stores/desktop.test.ts — 10 store tests (start menu + shutdown state)
+tests/start-menu.test.tsx — 29 component tests (rendering, actions, keyboard, icons)
+tests/shutdown-overlay.test.tsx — 5 shutdown overlay tests (render, timers, cleanup)
+tests/taskbar.test.tsx (modified) — 2 new Start button wiring tests
+tests/setup.ts (modified) — window.matchMedia mock for jsdom
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -332,6 +400,7 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 #### Acceptance Criteria
 
 ```
+
 ✅ Double-click My Computer → Explorer opens showing C: drive contents (Software_Engineering folder)
 ✅ Navigate into C:\Software_Engineering → see project files listed (Icon, Name, Size, Type, Date)
 ✅ Click a project → detail pane shows title, description, tech stack badges, repo link
@@ -343,38 +412,43 @@ Track 1C produced 14 code/feature/test commits, 11 plan/checkpoint commits, 1 re
 ✅ 281 tests passing, 81.17% branch coverage, 91.2% statement coverage
 ✅ All src/ files under 500 lines (modularity check passes)
 ✅ Type assertions cleaned up during review (filesystem.ts, useCallback simplification)
+
 ```
 
 #### Key Files Created
 
 ```
-src/content.config.ts                 — Astro 6 content collections with glob loaders
-src/lib/content-schemas.ts            — Zod schemas for projects + devopsAcademy (testable without astro:content; to be broadened in Track 2D)
-src/lib/constants.ts                  — FSNode discriminated union types + static FILE_SYSTEM tree
-src/lib/filesystem.ts                 — Navigation helpers (getChildren, resolvePath, getParent, splitPath)
-src/lib/projects-data.ts              — Static metadata for all projects and academy articles
-src/content/projects/*.mdx            — 3 project MDX files (icarus-server-manager, chasing-chapters, tubular-bexus-osw)
-src/content/devops-academy/*.mdx      — 3 academy stub MDX files (docker-basics, linux-essentials, ci-cd-pipeline)
-src/stores/windows.ts (modified)      — Added explorerPath to WindowState, defaults to C:\
-src/components/apps/Explorer.tsx      — Parent shell: navigation state, history stack, store integration
-src/components/apps/ExplorerToolbar.tsx  — Back/Up buttons with disabled state
+
+src/content.config.ts — Astro 6 content collections with glob loaders
+src/lib/content-schemas.ts — Zod schemas for projects + devopsAcademy (testable without astro:content; to be broadened in Track 2D)
+src/lib/constants.ts — FSNode discriminated union types + static FILE_SYSTEM tree
+src/lib/filesystem.ts — Navigation helpers (getChildren, resolvePath, getParent, splitPath)
+src/lib/projects-data.ts — Static metadata for all projects and academy articles
+src/content/projects/_.mdx — 3 project MDX files (icarus-server-manager, chasing-chapters, tubular-bexus-osw)
+src/content/devops-academy/_.mdx — 3 academy stub MDX files (docker-basics, linux-essentials, ci-cd-pipeline)
+src/stores/windows.ts (modified) — Added explorerPath to WindowState, defaults to C:\
+src/components/apps/Explorer.tsx — Parent shell: navigation state, history stack, store integration
+src/components/apps/ExplorerToolbar.tsx — Back/Up buttons with disabled state
 src/components/apps/ExplorerBreadcrumb.tsx — Clickable path segments (address bar + breadcrumb)
-src/components/apps/ExplorerFileList.tsx  — XP Detail View columns + empty state + folder navigation
+src/components/apps/ExplorerFileList.tsx — XP Detail View columns + empty state + folder navigation
 src/components/apps/ExplorerDetailPane.tsx — Split-pane detail view (title, description, badges, GitHub link)
 src/components/window/WindowLayer.tsx (modified) — Mounts Explorer component
-public/icons/drive-{c,d,e}.svg        — 3 drive icons (32×32, hard disk with label)
+public/icons/drive-{c,d,e}.svg — 3 drive icons (32×32, hard disk with label)
 public/icons/{file,folder,folder-open}.svg — 3 list icons (16×16)
+
 ```
 
 #### Test Files Created
 
 ```
-tests/content-schemas.test.ts         — 12 Zod schema validation tests
-tests/content-files.test.ts           — 15 MDX frontmatter parsing tests
-tests/filesystem.test.ts              — 19 FSNode + navigation helper tests
-tests/icons.test.ts                   — 12 SVG icon existence tests
-tests/explorer.test.tsx               — 19 React component + detail pane + integration tests
+
+tests/content-schemas.test.ts — 12 Zod schema validation tests
+tests/content-files.test.ts — 15 MDX frontmatter parsing tests
+tests/filesystem.test.ts — 19 FSNode + navigation helper tests
+tests/icons.test.ts — 12 SVG icon existence tests
+tests/explorer.test.tsx — 19 React component + detail pane + integration tests
 tests/stores/windows.test.ts (modified) — 3 explorerPath tests (43 total)
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -412,6 +486,7 @@ Track 2A produced 12 feature/commits, 7 plan/checkpoint commits, 1 review fix co
 #### Acceptance Criteria
 
 ```
+
 ✅ CMD opens with "C:\ [MANSYAR]>" prompt and blinking block cursor on black background
 ✅ `help` lists all 9 commands with descriptions
 ✅ `ls`/`dir` lists drives/folders/files with [DRIVE], [DIR], [FILE] type indicators
@@ -430,19 +505,22 @@ Track 2A produced 12 feature/commits, 7 plan/checkpoint commits, 1 review fix co
 ✅ Output auto-scrolls to bottom
 ✅ Coexists with Explorer and other windows in multi-window context
 ✅ 342 tests passing, all pre-commit hooks clean
+
 ```
 
 #### Key Files Created
 
 ```
-src/lib/commands.ts                  — Command registry, parser, all 9 command handlers, CmdOutput/CmdContext types
-src/components/apps/CmdPrompt.tsx     — Terminal shell: hidden input, visible text+cursor overlay, history, tab completion
-src/styles/global.css (modified)      — cmd-cursor-blink animation keyframes + prefers-reduced-motion support
+
+src/lib/commands.ts — Command registry, parser, all 9 command handlers, CmdOutput/CmdContext types
+src/components/apps/CmdPrompt.tsx — Terminal shell: hidden input, visible text+cursor overlay, history, tab completion
+src/styles/global.css (modified) — cmd-cursor-blink animation keyframes + prefers-reduced-motion support
 src/components/window/WindowLayer.tsx (modified) — Wired CmdPrompt component for 'cmd' window ID
-src/stores/windows.ts (modified)      — Added cmdPath to WindowState
-tests/lib/commands.test.ts           — 49 command unit tests (all 9 commands + aliases + parsing + edge cases)
-tests/CmdPrompt.test.tsx             — 9 React component tests (rendering, accessibility, command execution, cursor, clear)
+src/stores/windows.ts (modified) — Added cmdPath to WindowState
+tests/lib/commands.test.ts — 49 command unit tests (all 9 commands + aliases + parsing + edge cases)
+tests/CmdPrompt.test.tsx — 9 React component tests (rendering, accessibility, command execution, cursor, clear)
 tests/stores/windows.test.ts (modified) — 3 cmdPath store tests
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -477,6 +555,7 @@ Track 2B produced 11 feature/fix commits, 7 plan/checkpoint/review commits, plus
 #### Acceptance Criteria
 
 ```
+
 ✅ Task Manager opens at 500×550, position (200, 60), min size 400×450
 ✅ Two tabs visible: "Processes" and "Performance" with XP-style raised/pressed appearance
 ✅ Processes tab shows 8 entries with all 5 columns (Image Name, PID, CPU, Mem, Description)
@@ -490,18 +569,21 @@ Track 2B produced 11 feature/fix commits, 7 plan/checkpoint/review commits, plus
 ✅ Coexists with other open windows (Explorer, CMD)
 ✅ Visually matches XP Task Manager aesthetic
 ✅ 382 tests passing, all pre-commit hooks clean
+
 ```
 
 #### Key Files Created
 
 ```
-src/components/apps/TaskManager.tsx     — 438-line XP Task Manager with tabs, processes, dialog, canvas
-src/components/apps/CanvasGraph.tsx     — Reusable canvas graph component (green-on-black, grid, Y-labels)
-src/lib/task-manager-data.ts           — Process data constants, CPU/MEM performance base values
+
+src/components/apps/TaskManager.tsx — 438-line XP Task Manager with tabs, processes, dialog, canvas
+src/components/apps/CanvasGraph.tsx — Reusable canvas graph component (green-on-black, grid, Y-labels)
+src/lib/task-manager-data.ts — Process data constants, CPU/MEM performance base values
 src/components/window/WindowLayer.tsx (modified) — Wired TaskManager component for 'taskmanager' window ID
-tests/taskmanager.test.tsx             — 26 tests (tabs, process table, CPU animation, End Process, Canvas)
+tests/taskmanager.test.tsx — 26 tests (tabs, process table, CPU animation, End Process, Canvas)
 tests/window/windowlayer.test.tsx (modified) — 1 new TaskManager integration test
-tests/canvas-graph.test.tsx            — 5 CanvasGraph unit tests
+tests/canvas-graph.test.tsx — 5 CanvasGraph unit tests
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -532,6 +614,7 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ Content collection renamed from devopsAcademy to articles with broadened categories
 ✅ 5 articles across 3 categories: DevOps (3), Software Engineering (1), AI (1)
 ✅ scripts/compile-articles.mjs compiles 5 articles → articles-content.json (1.6KB)
@@ -546,30 +629,33 @@ Track 2C produced 10 feature/fix commits, 9 plan/checkpoint commits, 1 review fi
 ✅ CMD cat command still works with ARTICLES_METADATA
 ✅ 412 tests passing, all pre-commit hooks clean
 ✅ All src/ files under 500 lines (modularity check passes)
+
 ```
 
 #### Key Files Created/Modified
 
 ```
-src/components/apps/KnowledgeBase.tsx     — React island: sidebar, search, article list, HTML detail pane (159 lines)
-scripts/compile-articles.mjs             — Standalone build script: manual YAML parsing + marked rendering
-src/lib/generated/articles-content.json  — Pre-compiled article data (metadata + HTML, 1.6KB)
-src/lib/content-schemas.ts (modified)    — devopsAcademySchema → articleSchema, z.string() for category
-src/lib/projects-data.ts (modified)      — DEVOPS_METADATA → ARTICLES_METADATA, 5 entries
-src/lib/constants.ts (modified)          — E:\Knowledge_Base with DevOps/Software_Engineering/AI subfolders
-src/lib/commands.ts (modified)           — ARTICLES_METADATA import, cat handler updated
+
+src/components/apps/KnowledgeBase.tsx — React island: sidebar, search, article list, HTML detail pane (159 lines)
+scripts/compile-articles.mjs — Standalone build script: manual YAML parsing + marked rendering
+src/lib/generated/articles-content.json — Pre-compiled article data (metadata + HTML, 1.6KB)
+src/lib/content-schemas.ts (modified) — devopsAcademySchema → articleSchema, z.string() for category
+src/lib/projects-data.ts (modified) — DEVOPS_METADATA → ARTICLES_METADATA, 5 entries
+src/lib/constants.ts (modified) — E:\Knowledge_Base with DevOps/Software_Engineering/AI subfolders
+src/lib/commands.ts (modified) — ARTICLES_METADATA import, cat handler updated
 src/components/apps/ExplorerDetailPane.tsx (modified) — Updated type references
-src/content.config.ts (modified)         — devopsAcademy → articles collection
+src/content.config.ts (modified) — devopsAcademy → articles collection
 src/components/window/WindowLayer.tsx (modified) — KnowledgeBase wired at 'help' window ID
 src/components/taskbar/StartMenu.tsx (mod.) — "Help & Support" → "Knowledge Base"
-src/stores/windows.ts (modified)         — Window title: "Help & Support" → "Knowledge Base"
-src/pages/index.astro (modified)         — Desktop icon label: "Help & Support" → "Knowledge Base"
-tests/KnowledgeBase.test.tsx             — 15 component + integration tests
-tests/compile-articles.test.ts           — 8 script output validation tests
-package.json (modified)                  — Added marked dependency, updated build script
-.gitignore (modified)                    — Added src/lib/generated/* with !articles-content.json exception
-eslint.config.mjs (modified)             — Added scripts/ to ignores
-conductor/tech-stack.md (modified)       — Added marked to core stack, updated build pipeline, added changelog
+src/stores/windows.ts (modified) — Window title: "Help & Support" → "Knowledge Base"
+src/pages/index.astro (modified) — Desktop icon label: "Help & Support" → "Knowledge Base"
+tests/KnowledgeBase.test.tsx — 15 component + integration tests
+tests/compile-articles.test.ts — 8 script output validation tests
+package.json (modified) — Added marked dependency, updated build script
+.gitignore (modified) — Added src/lib/generated/\* with !articles-content.json exception
+eslint.config.mjs (modified) — Added scripts/ to ignores
+conductor/tech-stack.md (modified) — Added marked to core stack, updated build pipeline, added changelog
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -612,6 +698,7 @@ Track 2D produced 11 feature/fix commits, 5 plan/checkpoint commits, 1 review fi
 #### Acceptance Criteria
 
 ```
+
 ✅ `pnpm build` fetches live GitHub data and injects into project content
 ✅ `GITHUB_TOKEN` env var is respected when set
 ✅ FILE_SYSTEM is dynamically built from compiled JSON at build time (no redundant MDX re-parsing)
@@ -626,34 +713,39 @@ Track 2D produced 11 feature/fix commits, 5 plan/checkpoint commits, 1 review fi
 ✅ `conductor/tech-stack.md` updated with new build pipeline
 ✅ `pnpm build` completes successfully (~3.44s)
 ✅ 462 tests passing, 31 test files, all pre-commit hooks clean
+
 ```
 
 #### Key Files Created/Modified
 
 ```
-src/lib/github.ts                       — GitHub API fetch module (fetchRepoStats, fetchRepoCommitCount)
-scripts/fetch-github-stats.mjs          — Build-time fetch script with cache fallback
-scripts/compile-projects.mjs            — Project MDX → HTML + GitHub data merge
-scripts/generate-filesystem.mjs         — Dynamic FILE_SYSTEM tree from compiled JSON
-scripts/prebuild.mjs                    — Orchestrator (4 sub-scripts in sequence)
+
+src/lib/github.ts — GitHub API fetch module (fetchRepoStats, fetchRepoCommitCount)
+scripts/fetch-github-stats.mjs — Build-time fetch script with cache fallback
+scripts/compile-projects.mjs — Project MDX → HTML + GitHub data merge
+scripts/generate-filesystem.mjs — Dynamic FILE_SYSTEM tree from compiled JSON
+scripts/prebuild.mjs — Orchestrator (4 sub-scripts in sequence)
 src/components/apps/ExplorerDetailPane.tsx — Body HTML rendering, commits display, live GitHub data
-src/lib/constants.ts                    — Updated comments, static tree preserved as fallback
-src/lib/projects-data.ts                — GitHub username fix
-src/content/projects/*.mdx              — GitHub username fix
-package.json                            — Build command: prebuild.mjs → astro build
-.gitignore                              — Added projects-content.json exception
-conductor/tech-stack.md                 — Updated build pipeline diagram + changelog
+src/lib/constants.ts — Updated comments, static tree preserved as fallback
+src/lib/projects-data.ts — GitHub username fix
+src/content/projects/\*.mdx — GitHub username fix
+package.json — Build command: prebuild.mjs → astro build
+.gitignore — Added projects-content.json exception
+conductor/tech-stack.md — Updated build pipeline diagram + changelog
+
 ```
 
 #### Test Files Created
 
 ```
-tests/lib/github.test.ts                — 15 tests (auth, timeout, Link header, error handling)
-tests/fetch-github-stats.test.ts        — 8 tests (URL parsing, cache read/write, repo extraction)
-tests/compile-projects.test.ts          — 9 tests (output schema, frontmatter, bodyHtml, GitHub merge)
-tests/generate-filesystem.test.ts       — 8 tests (drive structure, folder hierarchy, type shape)
-tests/prebuild.test.ts                  — 4 tests (script existence, sub-script references, error handling)
-tests/explorer.test.tsx (modified)      — 1 new body HTML rendering test
+
+tests/lib/github.test.ts — 15 tests (auth, timeout, Link header, error handling)
+tests/fetch-github-stats.test.ts — 8 tests (URL parsing, cache read/write, repo extraction)
+tests/compile-projects.test.ts — 9 tests (output schema, frontmatter, bodyHtml, GitHub merge)
+tests/generate-filesystem.test.ts — 8 tests (drive structure, folder hierarchy, type shape)
+tests/prebuild.test.ts — 4 tests (script existence, sub-script references, error handling)
+tests/explorer.test.tsx (modified) — 1 new body HTML rendering test
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -830,28 +922,32 @@ Track 3A produced 17 feature/plan/checkpoint commits, 1 review fix commit, 1 arc
 #### Key Files Created
 
 ```
-src/styles/xp-safe-mode.css                — Safe Mode CSS tokens (--safe-mode-*) + CRT utility classes
-src/layouts/SafeModeShell.astro            — Full-screen black/green terminal layout with CRT overlay
-src/components/mobile/BiosBoot.tsx         — 2-second typewriter boot animation component
-src/components/mobile/TerminalNav.tsx      — Numbered menu, content views, passive keyboard listener
-src/components/mobile/SafeModeManager.tsx  — Orchestrator: boot → menu → restart cycle
-src/components/desktop/ModeContainer.tsx   — Desktop override wrapper (force-desktop class)
-src/stores/safe-mode.ts                    — Nano Store: $safeModeView, $safeModeSlug
-src/stores/url-sync.ts (modified)          — Safe mode URL params (?safe=, ?slug=) + desktop state sandbox
-src/stores/desktop.ts (modified)           — Added $forceDesktop atom
-src/pages/index.astro (modified)           — Responsive toggling between Desktop/Safe Mode
+
+src/styles/xp-safe-mode.css — Safe Mode CSS tokens (--safe-mode-\*) + CRT utility classes
+src/layouts/SafeModeShell.astro — Full-screen black/green terminal layout with CRT overlay
+src/components/mobile/BiosBoot.tsx — 2-second typewriter boot animation component
+src/components/mobile/TerminalNav.tsx — Numbered menu, content views, passive keyboard listener
+src/components/mobile/SafeModeManager.tsx — Orchestrator: boot → menu → restart cycle
+src/components/desktop/ModeContainer.tsx — Desktop override wrapper (force-desktop class)
+src/stores/safe-mode.ts — Nano Store: $safeModeView, $safeModeSlug
+src/stores/url-sync.ts (modified) — Safe mode URL params (?safe=, ?slug=) + desktop state sandbox
+src/stores/desktop.ts (modified) — Added $forceDesktop atom
+src/pages/index.astro (modified) — Responsive toggling between Desktop/Safe Mode
 src/layouts/DesktopLayout.astro (modified) — Added RootLayout wrapper
+
 ```
 
 #### Test Files Created/Modified
 
 ```
-tests/safe-mode-shell.test.ts              — 1 SafeModeShell rendering test (Astro container)
-tests/safe-mode-visuals.test.ts            — 3 CSS token + CRT class verification tests
-tests/safe-mode-url.test.ts                — 5 URL sync + sandbox tests
-tests/BiosBoot.test.tsx                    — 3 BIOS animation tests (order, timing, reduced motion)
-tests/TerminalNav.test.tsx                 — 7 TerminalNav tests (menu, touch, keyboard)
-tests/ModeContainer.test.tsx               — 2 force-desktop store integration tests
+
+tests/safe-mode-shell.test.ts — 1 SafeModeShell rendering test (Astro container)
+tests/safe-mode-visuals.test.ts — 3 CSS token + CRT class verification tests
+tests/safe-mode-url.test.ts — 5 URL sync + sandbox tests
+tests/BiosBoot.test.tsx — 3 BIOS animation tests (order, timing, reduced motion)
+tests/TerminalNav.test.tsx — 7 TerminalNav tests (menu, touch, keyboard)
+tests/ModeContainer.test.tsx — 2 force-desktop store integration tests
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -948,30 +1044,34 @@ Track 4A produced 14 feature/fix commits, 6 plan/checkpoint commits, 1 review fi
 #### Key Files Modified
 
 ```
+
 Accessibility attributes implemented across 13 components:
-src/layouts/DesktopLayout.astro      — role="group", aria-label, skip-link target
+src/layouts/DesktopLayout.astro — role="group", aria-label, skip-link target
 src/components/desktop/DesktopIcon.astro — role="button", aria-label, tabindex, key handler
-src/components/taskbar/Taskbar.tsx   — aria-haspopup, aria-expanded on Start Button
-src/components/taskbar/Clock.tsx     — role="timer", aria-live, aria-label
+src/components/taskbar/Taskbar.tsx — aria-haspopup, aria-expanded on Start Button
+src/components/taskbar/Clock.tsx — role="timer", aria-live, aria-label
 src/components/window/WindowFrame.tsx — aria-modal, aria-hidden on resize handles
 src/components/taskbar/ShutdownOverlay.tsx — aria-live="polite"
 src/components/window/WindowLayer.tsx — Escape key handler, focus-on-open, focus-return-on-close
-src/components/apps/Explorer.tsx      — role="region", aria-label
-src/components/apps/CmdPrompt.tsx     — role="log", aria-live on output
+src/components/apps/Explorer.tsx — role="region", aria-label
+src/components/apps/CmdPrompt.tsx — role="log", aria-live on output
 src/components/apps/KnowledgeBase.tsx — region, searchbox, navigation roles
-src/components/mobile/BiosBoot.tsx    — role="status", aria-live
-src/layouts/SafeModeShell.astro       — role="group", aria-label
-src/layouts/RootLayout.astro          — skip-to-content link
-src/styles/global.css                 — focus-visible styling, reduced-motion overrides, link hover fix
+src/components/mobile/BiosBoot.tsx — role="status", aria-live
+src/layouts/SafeModeShell.astro — role="group", aria-label
+src/layouts/RootLayout.astro — skip-to-content link
+src/styles/global.css — focus-visible styling, reduced-motion overrides, link hover fix
+
 ```
 
 #### Test Files Created
 
 ```
-tests/aria-helpers.ts              — 16 ARIA test utility helpers
-tests/aria-desktop-shell.test.tsx  — 6 desktop shell ARIA tests (Astro)
-tests/aria-apps-safe-mode.test.tsx  — 7 app + safe mode ARIA tests (React)
-tests/aria-contrast.test.ts        — 9 WCAG AA contrast ratio tests
+
+tests/aria-helpers.ts — 16 ARIA test utility helpers
+tests/aria-desktop-shell.test.tsx — 6 desktop shell ARIA tests (Astro)
+tests/aria-apps-safe-mode.test.tsx — 7 app + safe mode ARIA tests (React)
+tests/aria-contrast.test.ts — 9 WCAG AA contrast ratio tests
+
 ```
 
 #### Commits (shas tracked in plan.md)
@@ -1036,7 +1136,7 @@ Track 4B produced 13 feature/fix commits, 6 plan/checkpoint commits, 1 archive c
 ✅ CRON job triggers daily build to refresh GitHub data
 ✅ Build completes in under 60 seconds
 
-```
+````
 
 ---
 
@@ -1074,7 +1174,7 @@ graph TD
     style T4B fill:#e74c3c,color:#fff
     style T4C fill:#e74c3c,color:#fff
     style T5A fill:#1abc9c,color:#fff
-```
+````
 
 ### Parallel Work Opportunities
 

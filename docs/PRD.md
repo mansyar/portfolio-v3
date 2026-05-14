@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 1.9  
+**Version:** 2.0  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -37,6 +37,9 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
   - `Command Prompt` (Opens CLI)
   - `Shut Down...` (Triggers BIOS/Goodbye overlay)
 - **Window Manager:** State-driven dragging, minimizing, and focusing using Nano Stores.
+- **MetaTags Component:** Reusable Astro component injecting `<title>`, `<meta name="description">`, Open Graph tags (og:title, og:description, og:image, og:type), and JSON-LD Person schema into `<head>`.
+- **404 Error Page:** Windows XP BSOD-themed page with `*** STOP: 0x000000FE (PORTFOLIO_NOT_FOUND)`, fake memory dump indicator, and "Press any key to restart" link to homepage.
+- **Noscript Fallback:** Plain HTML links to all portfolio projects for users with JavaScript disabled.
 
 ### 3.2 The Mobile Experience (Safe Mode)
 
@@ -141,7 +144,9 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ## 7. Success Metrics
 
-- **Performance:** < 100ms TBT (Total Blocking Time).
+- **Performance:** < 100ms TBT (Total Blocking Time). Production build < 5s.
+- **SEO:** Full Open Graph support, JSON-LD structured data (Person schema), crawlable static content.
 - **Authenticity:** Design mirrors 2001-era Windows XP pixel-for-pixel (3D borders, blue gradients).
 - **Utility:** Mobile "Safe Mode" must be fully navigable in under 1.5 seconds.
 - **Accessibility:** Full keyboard navigability, WCAG AA color contrast, screen reader support with ARIA roles, reduced motion support. All animations disabled under `@media (prefers-reduced-motion: reduce)`.
+- **Resilience:** Error states for every failure mode (API offline, 404 page, JS disabled via `<noscript>`).
