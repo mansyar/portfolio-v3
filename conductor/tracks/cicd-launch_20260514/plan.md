@@ -8,18 +8,18 @@
 
 ## Phase 0 — Prerequisites: package.json & .gitignore Fixes
 
-- [ ] Task 0.1: Add `packageManager` field to `package.json`
-  - [ ] Add `"packageManager": "pnpm@10.29.3"` to `package.json` (after `engines` block)
-  - [ ] Verify `pnpm install` still works with the added field
-- [ ] Task 0.2: Fix `.gitignore` generated-files tracking
-  - [ ] Un-comment `!src/lib/generated/articles-content.json` (remove leading `# `)
-  - [ ] Un-comment `!src/lib/generated/projects-content.json` (remove leading `# `)
-  - [ ] Run `git add -f src/lib/generated/*.json` to track the files
-  - [ ] Verify `pnpm dev` works on a clean state (simulates fresh clone)
-- [ ] Task 0.3: Verify pre-commit hooks still pass
-  - [ ] Run `pnpm test` — confirm no regressions
-  - [ ] Run `pnpm typecheck` — confirm zero errors
-  - [ ] Commit: `chore(config): Add packageManager field and fix .gitignore generated files tracking`
+- [x] Task 0.1: Add `packageManager` field to `package.json` `80de8d4`
+  - [x] Add `"packageManager": "pnpm@10.29.3"` to `package.json` (after `engines` block)
+  - [x] Verify `pnpm install` still works with the added field
+- [x] Task 0.2: Fix `.gitignore` generated-files tracking `80de8d4`
+  - [x] Un-comment `!src/lib/generated/articles-content.json` (remove leading `# `)
+  - [x] Un-comment `!src/lib/generated/projects-content.json` (remove leading `# `)
+  - [x] Run `git add -f src/lib/generated/*.json` to track the files
+  - [x] Verify `pnpm dev` works on a clean state (simulates fresh clone)
+- [x] Task 0.3: Verify pre-commit hooks still pass `80de8d4`
+  - [x] Run `pnpm test` — confirm no regressions
+  - [x] Run `pnpm typecheck` — confirm zero errors
+  - [x] Commit: `chore(config): Add packageManager field and fix .gitignore generated files tracking`
 - [ ] Task: Conductor - User Manual Verification 'Phase 0: Prerequisites' (Protocol in workflow.md)
 
 ## Phase 1 — GitHub Actions Workflow
