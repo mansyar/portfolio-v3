@@ -79,7 +79,7 @@ portfolio-v3/
 ### URL Schema
 
 ```
-https://mansyar.dev/?w=cmd,taskmanager&focus=cmd&start=0
+https://portfolio-os.ansyar-world.top/?w=cmd,taskmanager&focus=cmd&start=0
 ```
 
 | Param   | Type           | Description                                                                       |
@@ -724,17 +724,24 @@ import MetaTags from '../components/desktop/MetaTags.astro';
 
 ```mermaid
 graph LR
-    A[git push to main] --> B[GitHub Actions]
-    B --> C[pnpm install]
-    C --> D[node scripts/prebuild.mjs]
-    D --> D1[1. fetch-github-stats.mjs]
-    D1 --> D2[2. compile-articles.mjs]
-    D2 --> D3[3. compile-projects.mjs]
-    D3 --> D4[4. generate-filesystem.mjs]
-    D4 --> E[astro build]
-    E --> F[Deploy to Cloudflare Pages]
+    A[git push to main] -->|Cloudflare native CI| C
+    G[CRON 00:00 UTC] -->|GitHub Actions| B
 
-    G[CRON 00:00 UTC] --> B
+    subgraph Build
+        C[pnpm install]
+        C --> D[node scripts/prebuild.mjs]
+        D --> D1[1. fetch-github-stats.mjs]
+        D1 --> D2[2. compile-articles.mjs]
+        D2 --> D3[3. compile-projects.mjs]
+        D3 --> D4[4. generate-filesystem.mjs]
+        D4 --> E[astro build]
+    end
+
+    E --> F[dist/ folder]
+
+    F --> H[Cloudflare Pages native deploy]
+    B --> C
+    B --> I[curl deploy hook → triggers Cloudflare rebuild]
 ```
 
 ### Pre-Build Scripts
@@ -750,16 +757,32 @@ graph LR
 
 `pnpm dev` (astro dev) does **not** run `prebuild.mjs`. To ensure dev mode works:
 
-- `projects-content.json` is checked into git (`.gitignore` exception `!src/lib/generated/projects-content.json`)
+- `projects-content.json` and `articles-content.json` are checked into git (`.gitignore` exceptions `!src/lib/generated/projects-content.json` and `!src/lib/generated/articles-content.json`)
+- `filesystem.json` is also tracked in git for dev mode
 - `constants.ts` keeps a static `FILE_SYSTEM` tree as fallback for development without build
 - `github-cache.json` is gitignored — first `pnpm build` creates it
+
+### Pre-Deploy Verification
+
+Before pushing to `main`, the pre-push hook runs:
+
+1. `astro check` — TypeScript typechecking across all Astro/TS/TSX files
+2. `vitest run --coverage` — Full test suite with ≥80% coverage threshold
+
+Push is rejected if either step fails. This acts as the sole staging gate (no separate staging environment).
 
 ### Key Details
 
 - **Orchestrator:** `scripts/prebuild.mjs` runs all 4 scripts in strict sequence via `execSync`
 - **GitHub Auth:** Reads `GITHUB_TOKEN` env var for authenticated requests (higher rate limit); unauthenticated fallback (60 req/hr)
 - **Cache:** Last-good GitHub API response stored in `src/lib/generated/github-cache.json`
-- **Build trigger:** Push to `main` OR daily CRON
-- **Output:** Static site (`output: 'static'` in astro.config) — no SSR needed at runtime
-- **Cache:** Cloudflare CDN caches all assets with immutable hashes
+- **Push to main:** Cloudflare Pages native CI detects push, runs `pnpm build`, deploys `dist/` automatically. No custom deploy command needed.
+- **CRON (00:00 UTC):** GitHub Actions workflow (`deploy.yml`) runs `pnpm build` to refresh GitHub data, then curls `CLOUDFLARE_DEPLOY_HOOK_URL` secret to trigger a Cloudflare rebuild via deploy hook.
+- **Pre-push quality gate:** Husky `pre-push` hook runs `astro check` (typecheck) + `vitest run --coverage` (≥80% threshold). Push rejected if either fails.
+- **Concurrency guard:** `concurrency: deploy-${{ github.ref }}` prevents overlapping workflow runs.
+- **Output:** Static site — `@astrojs/cloudflare` adapter loaded conditionally (present in production, skipped during vitest via `VITEST=true` env check)
+- **Live URL:** `https://portfolio-os.ansyar-world.top` via Cloudflare-managed custom domain with automatic SSL
+- **Fallback URL:** `https://portfolio-v3.m-ansyarafi.workers.dev`
+- **Smoke test:** `node scripts/smoke-test.mjs` — validates HTTP 200, content-type, HSTS header, and title tag
+- **Cloudflare CDN** caches all assets with immutable hashes
 - **Build time:** ~3.44s (including prebuild)

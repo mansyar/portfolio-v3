@@ -135,9 +135,12 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
     - Cache fallback: on GitHub API failure, reads `github-cache.json`. Warning on cache hit, error + exit on cache miss.
 2.  **Asset Pipeline:** Images are converted to WebP; icons remain high-quality SVGs.
 3.  **Deployment:**
-    - Automatic deploy on `git push`.
-    - CRON Job via GitHub Actions triggers a build at 00:00 UTC daily to update commit counts/repo data.
-    - Build command: `node scripts/prebuild.mjs && astro build`.
+    - **Push to `main`:** Cloudflare Pages native CI automatically detects the push, runs `pnpm build`, and deploys the static `dist/` folder. No wrangler-action or custom deploy command needed.
+    - **CRON (00:00 UTC daily):** GitHub Actions workflow runs `pnpm build` to refresh GitHub data, then curls a Cloudflare deploy hook URL (`CLOUDFLARE_DEPLOY_HOOK_URL`) to trigger a new deployment.
+    - **Pre-push quality gate:** Husky hook runs `astro check` (typecheck) + `vitest run --coverage` (≥80% threshold) before allowing push to remote.
+    - **Live URL:** `https://portfolio-os.ansyar-world.top` via custom domain with automatic Cloudflare SSL.
+    - **Fallback URL:** `https://portfolio-v3.m-ansyarafi.workers.dev` (Cloudflare Pages default).
+    - **Build command:** `pnpm build` — runs `node scripts/prebuild.mjs && astro build`.
 4.  **State Persistence:** URL search params (`?w=`, `?focus=`, `?start=`, `?path=`) are handled entirely client-side via Nano Stores syncing to `history.replaceState()`/`pushState()`. No Cloudflare Functions or edge logic needed — the static site serves the same HTML regardless of URL params, and hydration happens in the browser on load.
 
 ---

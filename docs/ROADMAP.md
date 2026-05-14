@@ -39,7 +39,7 @@ gantt
     Track 4C – SEO & Performance  :done, p4c, after p4b, 2d
 
     section Phase 5
-    Track 5A – CI/CD & Deploy     :p5a, after p4c, 2d
+    Track 5A – CI/CD & Deploy     :done, p5a, after p4c, 2d
 ```
 
 ## Phase 0 — Foundation & Scaffold ✅
@@ -1076,29 +1076,51 @@ Track 4C produced 8 feature/fix commits, 5 plan/checkpoint commits, 1 review fix
 
 ## Phase 5 — Deploy
 
-### Track 5A — CI/CD & Launch
+### Track 5A — CI/CD & Launch ✅ _(Completed 2026-05-15)_
 
-> GitHub Actions pipeline with CRON-triggered rebuilds, Cloudflare Pages deployment.
+> GitHub Actions pipeline with CRON-triggered rebuilds, Cloudflare Pages native deployment, custom domain with SSL, and post-deploy smoke test.
 
-**Refs:** [PRD §6](./PRD.md#6-devops--deployment-strategy) · [TDD §14](./TDD.md#14-build--deploy-pipeline)
+**Refs:** [PRD §6](./PRD.md#6-devops--deployment-strategy) · [TDD §14](./TDD.md#14-build--deploy-pipeline) · T5A [spec](conductor/tracks/cicd-launch_20260514/spec.md) · T5A [plan](conductor/tracks/cicd-launch_20260514/plan.md)
 
-#### Tasks
+#### Implementation
 
-- [ ] Create `.github/workflows/deploy.yml` ([TDD §14](./TDD.md#14-build--deploy-pipeline))
-- [ ] Configure build steps: `pnpm install` → fetch GitHub data → `astro build` → deploy
-- [ ] Add CRON trigger: `0 0 * * *` (daily at 00:00 UTC) ([PRD §6](./PRD.md#6-devops--deployment-strategy))
-- [ ] Configure Cloudflare Pages project
-- [ ] Set up custom domain (`os-portfolio.ansyar-world.top`) with SSL (note: i have existing domain in Hostinger)
-- [ ] Smoke test: push to main → site live within 2 minutes
+- Deploy via Cloudflare Pages native CI on push to `main` (no wrangler-action needed)
+- CRON daily rebuilds at 00:00 UTC via GitHub Actions → Cloudflare deploy hook
+- Pre-push quality gates (typecheck + coverage ≥80%) act as the sole staging gate
+- Custom domain `portfolio-os.ansyar-world.top` with automatic SSL via Cloudflare
+- `@astrojs/cloudflare` adapter loaded conditionally: present in production, skipped during vitest
+- Post-deploy smoke test: `node scripts/smoke-test.mjs` validates HTTP 200, content-type, HSTS, and title tag
+
+#### Key Files Created
+
+```
+
+.github/workflows/deploy.yml           — Push + CRON triggers, native Cloudflare deploy
+scripts/smoke-test.mjs                  — Post-deploy smoke test script
+tests/workflow.test.ts                  — 15 workflow validation tests
+tests/deploy-prerequisites.test.ts      — 6 deploy prerequisite tests
+tests/smoke-test.test.ts                — 8 smoke test script tests
+
+```
+
+#### Environment Secrets Configured
+
+| Secret                       | Purpose                           |
+| :--------------------------- | :-------------------------------- |
+| `GITHUB_TOKEN`               | GitHub API auth for data fetching |
+| `CLOUDFLARE_API_TOKEN`       | Cloudflare API token (Pages Edit) |
+| `CLOUDFLARE_DEPLOY_HOOK_URL` | CRON trigger deploy hook URL      |
 
 #### Acceptance Criteria
 
 ```
 
-✅ Push to main triggers automatic build and deploy
-✅ Site is live on mansyar.dev with SSL
-✅ CRON job triggers daily build to refresh GitHub data
-✅ Build completes in under 60 seconds
+✅ Push to main triggers automatic Cloudflare Pages native build and deploy
+✅ Site is live at https://portfolio-os.ansyar-world.top with valid SSL
+✅ CRON job triggers daily build at 00:00 UTC to refresh GitHub data
+✅ Build + deploy completes in under 60 seconds
+✅ 657 tests passing, 49 test files, 87.99% coverage, all pre-commit hooks clean
+✅ Deployment URL: https://portfolio-v3.m-ansyarafi.workers.dev (Cloudflare) / https://portfolio-os.ansyar-world.top (custom domain)
 
 ```
 
