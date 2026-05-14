@@ -1,22 +1,8 @@
 ---
-// Safe Mode Layout — High-contrast BIOS/Terminal shell
-import '../styles/global.css';
+// Safe Mode Layout Wrapper — High-contrast BIOS/Terminal shell
 ---
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Safe Mode — Luna OS. A high-contrast, terminal-based view of the Luna OS Portfolio, optimized for mobile devices." />
-    <title>Luna OS - Safe Mode</title>
-  </head>
-  <body
-    class="safe-mode-container bg-black text-[#00ff41] font-mono m-0 p-0 overflow-hidden min-h-screen crt-effects crt-scanlines crt-curvature"
-  >
-    <div class="relative z-20 p-4 md:p-8">
-      <slot />
-    </div>
-  </body>
-</html>
+<div class="safe-mode-container bg-black text-[#00ff41] font-mono h-screen w-screen min-h-screen crt-effects crt-scanlines crt-curvature relative overflow-hidden">
+  <div class="relative z-20 p-4 md:p-8 h-full overflow-y-auto">
+    <slot />
+  </div>
+</div>

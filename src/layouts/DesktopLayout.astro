@@ -1,20 +1,6 @@
 ---
-// Desktop Layout — Windows XP Luna themed shell
-// Provides the full-viewport desktop container with XP blue background
-import '../styles/global.css';
+// Desktop Layout Wrapper — Windows XP Luna themed
 ---
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#245edc" />
-    <meta name="description" content="Luna OS Portfolio — A nostalgic Windows XP-themed portfolio experience. Exploring projects and knowledge in a classic OS environment." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Luna OS Portfolio</title>
-  </head>
-  <body class="xp-desktop m-0 p-0">
-    <slot />
-  </body>
-</html>
+<div class="xp-desktop h-screen w-screen relative overflow-hidden">
+  <slot />
+</div>
