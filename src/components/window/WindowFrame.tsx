@@ -101,6 +101,7 @@ export function WindowFrame({
         <div
           key={dir}
           data-resize={dir}
+          aria-hidden="true"
           style={{
             position: 'absolute',
             ...style,
