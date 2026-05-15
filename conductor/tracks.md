@@ -29,7 +29,4 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 <!-- CI/CD & Launch (Track 5A) archived to conductor/archive/cicd-launch_20260514/ -->
 
----
-
-- [x] **Track: Safe Mode Mobile Enhancement — Cross-fade transitions, swipe gesture, content dimming**
-      _Link: [./tracks/safe-mode-mobile_20260515/](./tracks/safe-mode-mobile_20260515/)_
+<!-- Safe Mode Mobile Enhancement (Track 6A) archived to conductor/archive/safe-mode-mobile_20260515/ -->
