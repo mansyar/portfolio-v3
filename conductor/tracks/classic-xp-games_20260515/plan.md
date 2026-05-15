@@ -116,6 +116,10 @@
 - `src/components/apps/Minesweeper.tsx` — Canvas component referencing engine, < 300 lines
   - If Minesweeper.tsx exceeds 350 lines, extract canvas rendering helpers into a separate utility
 
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions — remove dead code [b6c3e78]
+
 ## Docs Updated
 
 - [ ] **PRD.md** — Add §5.4 Pong and §5.5 Minesweeper app specs; update §3.1 Start Menu description to mention games; update §4 Desktop Icons table with Pong + Minesweeper entries
