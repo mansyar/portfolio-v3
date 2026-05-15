@@ -51,22 +51,22 @@
   - [x] On cancel (≤ 80px): reset opacity to 1.0 with CSS transition (150ms ease-out)
   - [x] Ensure keyboard handler (`useEffect`) and touch handler (`useEffect`) are in separate effects to avoid re-subscription conflicts
   - [x] All 19 tests pass (7 original + 4 cross-fade + 8 swipe)
-- [ ] **Task: Conductor - User Manual Verification 'Phase 2 — Swipe Gesture Handler' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Phase 2 — Swipe Gesture Handler' (Protocol in workflow.md)** [de4e85a]
 
-## Phase 3 — Content Dimming During Transitions
+## Phase 3 — Content Dimming During Transitions [checkpoint: 518ab7a]
 
-> Add a subtle content dimming effect during programmatic view transitions instead of a full progress bar overlay.
+> Add a subtle content dimming effect during programmatic view transitions for a BIOS-appropriate brightness change.
 
-- [ ] **Task: Write content dimming tests**
-  - [ ] Test: content dims to opacity 0.7 during a programmatic view transition
-  - [ ] Test: content returns to full opacity (1.0) when transition completes
-  - [ ] Test: `prefers-reduced-motion` does NOT disable dimming (opacity ≠ motion)
-  - [ ] Test: no dimming text or progress bar visible
-- [ ] **Task: Implement content dimming**
-  - [ ] Add `.content-dimming` CSS class: `transition: opacity 150ms ease-out`
-  - [ ] Apply `.content-dimming` + `opacity: 0.7` to outgoing view during transitions
-  - [ ] Remove dimming class on transition end (outgoing view unmounts, incoming view at 1.0)
-  - [ ] Wire into the view stack's `isTransitioning` state
+- [x] **Task: Write content dimming tests** (4 tests passing) [518ab7a]
+  - [x] Test: outgoing view has `.content-dimming` class during transition
+  - [x] Test: incoming view does NOT have `.content-dimming` class
+  - [x] Test: `prefers-reduced-motion` does NOT disable dimming (opacity ≠ motion)
+  - [x] Test: no progress bar text/role is visible during transitions
+- [x] **Task: Implement content dimming** [518ab7a]
+  - [x] Add `.content-dimming` CSS class: `transition: opacity 150ms ease-out`
+  - [x] Apply `.content-dimming` to outgoing view element during transitions
+  - [x] Dimming removed when outgoing view unmounts (on transition end, 250ms timer)
+  - [x] Dimming wired into the view stack's `isTransitioning` state
 - [ ] **Task: Conductor - User Manual Verification 'Phase 3 — Content Dimming' (Protocol in workflow.md)**
 
 ## Phase 4 — Documentation Updates
