@@ -31,5 +31,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Safe Mode Mobile Enhancement — Swipe gestures, slide transitions, XP loading bar**
+- [x] **Track: Safe Mode Mobile Enhancement — Cross-fade transitions, swipe gesture, content dimming**
       _Link: [./tracks/safe-mode-mobile_20260515/](./tracks/safe-mode-mobile_20260515/)_
