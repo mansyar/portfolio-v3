@@ -598,6 +598,17 @@ Left column = pinned apps. Right column = system folders. Bottom = Shut Down tri
 
 ## 8. Mobile "Safe Mode" Specification
 
+### Technical Implementation
+
+The Safe Mode uses a **view stack architecture** in `TerminalNav.tsx`:
+
+- **View Stack:** Both outgoing and incoming views render simultaneously during transitions. Outgoing view is wrapped in `.view-outgoing` (with `aria-hidden="true"`), incoming in `.view-incoming`. Both are overlaid using CSS Grid (`grid-area: 1 / 1`) to prevent vertical stacking.
+- **State:** `previousView`, `currentView` (from Nano Store), `isTransitioning` flag. After 250ms timeout, outgoing view unmounts.
+- **Cross-Fade Transition:** Uniform cross-fade for all programmatic navigation (forward and back use the same animation). Outgoing view animates opacity 1→0 (`fadeOut`, 200ms ease-out), incoming animates 0→1 (`fadeIn`, 200ms ease-out). Both animate simultaneously during the cross-fade.
+- **Content Dimming:** Outgoing view gets `.content-dimming` CSS class during transitions (`transition: opacity 150ms ease-out`). Subtle brightness change without text or progress bar. Works even under `prefers-reduced-motion: reduce`.
+- **Swipe-to-Go-Back:** Touch gesture handler in dedicated `useEffect` (separate from keyboard handler). Touch start within 40px of left edge triggers gesture. Opacity fade (1→0 by drag distance / viewport width) provides visual feedback. >80px drag commits instantly (no transition), ≤80px cancels with 150ms ease-out snap-back. Vertical drag (scrolling) is ignored. Uses `useRef` for touch state to avoid re-renders. Mouse events are ignored (touch-only).
+- **Keyboard Navigation:** `1-5` for main menu items, `0` for back. Uses `navigateTo()` helper which sets `isTransitioning=true`, calls `setPendingPushState()` for URL sync, then `setSafeModeView()`. Keyboard and touch effects are in separate `useEffect` blocks to prevent subscription conflicts.
+
 ### Boot Sequence (on first load, < 768px)
 
 ```
@@ -631,18 +642,22 @@ C:\MANSYAR>_
 
 ## 9. Animations & Transitions
 
-| Animation               | Duration  | Easing     | Description                             |
-| :---------------------- | :-------- | :--------- | :-------------------------------------- |
-| Window open             | 150ms     | `ease-out` | Scale from 0.95 → 1.0, opacity 0 → 1    |
-| Window close            | 120ms     | `ease-in`  | Scale 1.0 → 0.95, opacity 1 → 0         |
-| Window minimize         | 200ms     | `ease-in`  | Shrinks toward taskbar button position  |
-| Window restore          | 200ms     | `ease-out` | Expands from taskbar to cached position |
-| Start Menu open         | 150ms     | `ease-out` | Slide up from taskbar                   |
-| Start Menu close        | 100ms     | `ease-in`  | Slide down                              |
-| Desktop icon hover      | 100ms     | `linear`   | Blue selection highlight                |
-| Desktop icon dblclick   | —         | —          | Icon briefly inverts colors (XP-style)  |
-| Boot sequence (desktop) | 2s        | —          | Optional: XP logo fade-in, then desktop |
-| Safe Mode boot text     | 50ms/line | `linear`   | Text appears line by line               |
+| Animation                            | Duration  | Easing     | Description                                          |
+| :----------------------------------- | :-------- | :--------- | :--------------------------------------------------- |
+| Window open                          | 150ms     | `ease-out` | Scale from 0.95 → 1.0, opacity 0 → 1                 |
+| Window close                         | 120ms     | `ease-in`  | Scale 1.0 → 0.95, opacity 1 → 0                      |
+| Window minimize                      | 200ms     | `ease-in`  | Shrinks toward taskbar button position               |
+| Window restore                       | 200ms     | `ease-out` | Expands from taskbar to cached position              |
+| Start Menu open                      | 150ms     | `ease-out` | Slide up from taskbar                                |
+| Start Menu close                     | 100ms     | `ease-in`  | Slide down                                           |
+| Desktop icon hover                   | 100ms     | `linear`   | Blue selection highlight                             |
+| Desktop icon dblclick                | —         | —          | Icon briefly inverts colors (XP-style)               |
+| Boot sequence (desktop)              | 2s        | —          | Optional: XP logo fade-in, then desktop              |
+| Safe Mode boot text                  | 50ms/line | `linear`   | Text appears line by line                            |
+| Safe Mode view cross-fade (outgoing) | 200ms     | `ease-out` | Outgoing view fades 1→0 (CSS `@keyframes fadeOut`)   |
+| Safe Mode view cross-fade (incoming) | 200ms     | `ease-out` | Incoming view fades 0→1 (CSS `@keyframes fadeIn`)    |
+| Safe Mode content dimming            | 150ms     | `ease-out` | Outgoing view dims to opacity 0.7 during transitions |
+| Swipe cancel snap-back               | 150ms     | `ease-out` | Opacity snaps 0→1 when swipe drag < 80px threshold   |
 
 ---
 

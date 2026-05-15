@@ -67,16 +67,16 @@
   - [x] Apply `.content-dimming` to outgoing view element during transitions
   - [x] Dimming removed when outgoing view unmounts (on transition end, 250ms timer)
   - [x] Dimming wired into the view stack's `isTransitioning` state
-- [ ] **Task: Conductor - User Manual Verification 'Phase 3 — Content Dimming' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Phase 3 — Content Dimming' (Protocol in workflow.md)** [7a02421]
 
 ## Phase 4 — Documentation Updates
 
 > Synchronize PRD and TDD with the new mobile enhancement specifications.
 
-- [ ] **Update PRD §3.2 (Mobile Experience)** — add swipe gesture, slide transitions, content dimming
-- [ ] **Update TDD §8 (Mobile Safe Mode)** — add swipe gesture spec, view stack architecture, dimming behavior, navigation direction tracking
-- [ ] **Update TDD §9 (Animations & Transitions)** — add slide transition entries (slide-in-right, slide-out-right, slide-in-left, slide-out-left) and content dimming to the animation table
-- [ ] **Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)**
+- [x] **Update PRD §3.2 (Mobile Experience)** — add swipe gesture, cross-fade transitions, content dimming, accessibility notes [7e0f38b]
+- [x] **Update TDD §8 (Mobile Safe Mode)** — add view stack architecture, cross-fade, swipe gesture, content dimming, keyboard/touch separation [7e0f38b]
+- [x] **Update TDD §9 (Animations & Transitions)** — add cross-fade, content dimming, and swipe cancel entries to the animation table [7e0f38b]
+- [x] **Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)** [7e0f38b]
 
 ---
 
