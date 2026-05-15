@@ -74,6 +74,20 @@
 
 /* === Slide Transition Animations (Track: Safe Mode Mobile Enhancement) === */
 
+/* View stack positioning — overlay outgoing/incoming views during transitions */
+.slide-in-right,
+.slide-out-right.slide-in-left {
+  display: grid;
+  overflow: hidden;
+}
+
+.slide-in-right > .view-outgoing,
+.slide-in-right > .view-incoming,
+.slide-out-right.slide-in-left > .view-outgoing,
+.slide-out-right.slide-in-left > .view-incoming {
+  grid-area: 1 / 1;
+}
+
 /* Forward navigation: incoming view slides in from the right (200ms ease-out) */
 .slide-in-right > .view-incoming {
   animation: slideInRight 200ms ease-out;
