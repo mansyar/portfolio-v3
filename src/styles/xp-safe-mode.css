@@ -104,7 +104,12 @@
   to { opacity: 1; }
 }
 
-/* Reduced motion: disable cross-fade */
+/* Content dimming class (applied to outgoing view during transitions) */
+.content-dimming {
+  transition: opacity 150ms ease-out;
+}
+
+/* Reduced motion: disable cross-fade (but dimming still applies) */
 @media (prefers-reduced-motion: reduce) {
   .crossfade > .view-outgoing,
   .crossfade > .view-incoming {

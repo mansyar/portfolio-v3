@@ -430,7 +430,11 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
       data-testid="view-stack"
     >
       {isTransitioning && previousView && (
-        <div key={`outgoing-${previousView}`} className="view-outgoing" aria-hidden="true">
+        <div
+          key={`outgoing-${previousView}`}
+          className="view-outgoing content-dimming"
+          aria-hidden="true"
+        >
           {renderView(previousView)}
         </div>
       )}
