@@ -7,10 +7,10 @@
 
 ## Phase 1 — Pong (VS AI)
 
-- [x] **Task: Create shared canvas test infrastructure**
+- [x] **Task: Create shared canvas test infrastructure** [9b903bf]
   - [x] Create `tests/canvas-helpers.ts` — `mockCanvasContext()` utility that stubs `HTMLCanvasElement.prototype.getContext` for jsdom (following `canvas-graph.test.tsx` precedent)
   - [x] Export a reusable `mockCtx` object with all needed canvas methods (beginPath, moveTo, lineTo, stroke, fillRect, fillText, arc, etc.)
-- [x] **Task: Extract Pong physics engine**
+- [x] **Task: Extract Pong physics engine** [9b903bf]
   - [x] Create `src/lib/pong-physics.ts` with pure functions:
     - [x] `checkBallWallCollision(ball, canvasHeight)` — top/bottom bounce detection
     - [x] `checkBallPaddleCollision(ball, paddle)` — angle reflection, no canvas dependency
