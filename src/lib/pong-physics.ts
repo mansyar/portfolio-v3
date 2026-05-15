@@ -196,8 +196,9 @@ export function updateAIPaddle(
 
   // AI paddle speed: difficulty-dependent multiplier of ball speed
   // Higher multiplier = faster tracking = harder to beat
+  // Capped at ball's maximum speed so AI is never faster than the fastest ball
   const aiSpeedMultiplier = difficulty === 'easy' ? 0.7 : difficulty === 'medium' ? 1.0 : 1.4;
-  const aiSpeed = ball.speed * aiSpeedMultiplier;
+  const aiSpeed = Math.min(ball.speed * aiSpeedMultiplier, BALL_MAX_SPEED);
   const maxMove = aiSpeed * deltaTime;
 
   const newY = (() => {
