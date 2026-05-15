@@ -81,7 +81,7 @@ export function Minesweeper(props: MinesweeperProps) {
     ctx.fillStyle = '#000000';
     ctx.fillRect(CANVAS_WIDTH - 60, 8, 50, 30);
     ctx.fillStyle = '#ff0000';
-    ctx.fillText(String(timerRef.current).padStart(3, '0'), CANVAS_WIDTH - 56, 23);
+    ctx.fillText(String(timerSecondsRef.current).padStart(3, '0'), CANVAS_WIDTH - 56, 23);
 
     // Smiley face button (center)
     drawSmiley(ctx, CANVAS_WIDTH / 2 - 13, 6);
@@ -249,19 +249,19 @@ export function Minesweeper(props: MinesweeperProps) {
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      if (gameOverRef.current) return;
-
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      // Check smiley face click
+      // Check smiley face click — must work even when game is over
       const smileyX = CANVAS_WIDTH / 2 - 13;
       const smileyY = 6;
       if (x >= smileyX && x <= smileyX + 26 && y >= smileyY && y <= smileyY + 26) {
         resetGame();
         return;
       }
+
+      if (gameOverRef.current) return;
 
       // Check grid click
       if (y < GRID_OFFSET_Y) return;
