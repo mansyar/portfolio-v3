@@ -39,7 +39,6 @@ export function Pong(props: PongProps) {
     y: CANVAS_HEIGHT / 2 - PADDLE_HEIGHT / 2,
     width: PADDLE_WIDTH,
     height: PADDLE_HEIGHT,
-    reactionDelay: 150,
     errorMargin: 30,
   });
   const scoresRef = useRef({ player: 0, ai: 0 });
@@ -48,7 +47,6 @@ export function Pong(props: PongProps) {
   const keysPressedRef = useRef<Set<string>>(new Set());
   const rafRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
-  const lastAIMoveRef = useRef<number>(0);
   const scoredTimerRef = useRef<number>(0);
   const prefersReducedMotionRef = useRef<boolean>(false);
 
@@ -264,22 +262,17 @@ export function Pong(props: PongProps) {
             ball.speed = aiHit.speed;
           }
 
-          // Update AI paddle position
+          // Update AI paddle position (every frame for smooth tracking)
           const aiResult = updateAIPaddle(
             aiPaddleRef.current,
             ball,
             difficultyRef.current,
             deltaTime,
-            lastAIMoveRef.current,
-            timestamp / 1000,
           );
-          if (aiResult) {
-            aiPaddleRef.current = {
-              ...aiResult,
-              y: clampPaddleY(aiResult.y, CANVAS_HEIGHT, PADDLE_HEIGHT),
-            };
-            lastAIMoveRef.current = timestamp / 1000;
-          }
+          aiPaddleRef.current = {
+            ...aiResult,
+            y: clampPaddleY(aiResult.y, CANVAS_HEIGHT, PADDLE_HEIGHT),
+          };
 
           // Check scoring
           const scored = checkScored(ball, CANVAS_WIDTH);
@@ -386,7 +379,6 @@ export function Pong(props: PongProps) {
       y: CANVAS_HEIGHT / 2 - PADDLE_HEIGHT / 2,
       width: PADDLE_WIDTH,
       height: PADDLE_HEIGHT,
-      reactionDelay: getDifficultyConfig(difficultyRef.current).reactionDelay,
       errorMargin: getDifficultyConfig(difficultyRef.current).errorMargin,
     };
     scoresRef.current = { player: 0, ai: 0 };
@@ -437,7 +429,6 @@ export function Pong(props: PongProps) {
         const config = getDifficultyConfig(diff);
         aiPaddleRef.current = {
           ...aiPaddleRef.current,
-          reactionDelay: config.reactionDelay,
           errorMargin: config.errorMargin,
         };
       }

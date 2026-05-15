@@ -28,7 +28,6 @@ export interface Paddle {
 }
 
 export interface AIPaddle extends Paddle {
-  reactionDelay: number; // ms before AI reacts to ball direction change
   errorMargin: number; // px random offset from perfect tracking
 }
 
@@ -175,36 +174,28 @@ export function checkScored(ball: Ball, canvasWidth: number): ScoredSide | null 
 
 /**
  * Update the AI paddle position based on the ball's position.
- * The AI tracks the ball with configurable reaction delay and error margin.
+ * The AI tracks the ball every frame, with difficulty controlling speed and accuracy.
  *
  * @param aiPaddle - The AI paddle state
  * @param ball - Current ball state
  * @param difficulty - Difficulty preset
  * @param deltaTime - Time since last frame in seconds
- * @param lastAIMoveTime - Timestamp of last AI move (for reaction delay)
- * @param currentTime - Current timestamp
- * @returns Updated AI paddle or null if no update needed (reaction delay)
+ * @returns Updated AI paddle (always returns a new paddle every frame for smooth tracking)
  */
 export function updateAIPaddle(
   aiPaddle: AIPaddle,
   ball: Ball,
   difficulty: Difficulty,
   deltaTime: number,
-  lastAIMoveTime: number,
-  currentTime: number,
-): AIPaddle | null {
+): AIPaddle {
   const config = getDifficultyConfig(difficulty);
-
-  // Check reaction delay
-  if (currentTime - lastAIMoveTime < config.reactionDelay / 1000) {
-    return null;
-  }
 
   // Calculate target Y: ball Y + random error margin
   const error = (Math.random() * 2 - 1) * config.errorMargin;
   const targetY = ball.pos.y + error - aiPaddle.height / 2;
 
   // AI paddle speed: difficulty-dependent multiplier of ball speed
+  // Higher multiplier = faster tracking = harder to beat
   const aiSpeedMultiplier = difficulty === 'easy' ? 0.7 : difficulty === 'medium' ? 1.0 : 1.4;
   const aiSpeed = ball.speed * aiSpeedMultiplier;
   const maxMove = aiSpeed * deltaTime;
@@ -221,7 +212,6 @@ export function updateAIPaddle(
   return {
     ...aiPaddle,
     y: newY,
-    reactionDelay: config.reactionDelay,
     errorMargin: config.errorMargin,
   };
 }

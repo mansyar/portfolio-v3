@@ -233,15 +233,13 @@ describe('updateAIPaddle', () => {
       y: 100,
       width: PADDLE_WIDTH,
       height: PADDLE_HEIGHT,
-      reactionDelay: 0,
       errorMargin: 0,
     };
     const ball = createBall(600, 400);
     ball.pos.y = 300; // Ball is below paddle
 
-    const result = updateAIPaddle(aiPaddle, ball, 'medium', 1 / 60, 0, 1);
-    expect(result).not.toBeNull();
-    expect(result!.y).toBeGreaterThan(100); // Moved down
+    const result = updateAIPaddle(aiPaddle, ball, 'medium', 1 / 60);
+    expect(result.y).toBeGreaterThan(100); // Moved down
   });
 
   it('should move AI paddle up when ball is above', () => {
@@ -250,47 +248,32 @@ describe('updateAIPaddle', () => {
       y: 300,
       width: PADDLE_WIDTH,
       height: PADDLE_HEIGHT,
-      reactionDelay: 0,
       errorMargin: 0,
     };
     const ball = createBall(600, 400);
     ball.pos.y = 100; // Ball is above paddle
 
-    const result = updateAIPaddle(aiPaddle, ball, 'medium', 1 / 60, 0, 1);
-    expect(result).not.toBeNull();
-    expect(result!.y).toBeLessThan(300); // Moved up
+    const result = updateAIPaddle(aiPaddle, ball, 'medium', 1 / 60);
+    expect(result.y).toBeLessThan(300); // Moved up
   });
 
-  it('should respect reaction delay (return null when delay not met)', () => {
+  it('should move AI faster on Hard difficulty than Easy', () => {
     const aiPaddle = {
       x: 570,
-      y: 100,
+      y: 0,
       width: PADDLE_WIDTH,
       height: PADDLE_HEIGHT,
-      reactionDelay: 300,
       errorMargin: 0,
     };
     const ball = createBall(600, 400);
+    ball.pos.y = 350; // Ball at bottom
+    ball.speed = 300;
 
-    // Only 0.05 seconds passed — less than 300ms reaction delay
-    const result = updateAIPaddle(aiPaddle, ball, 'medium', 1 / 60, 0, 0.05);
-    expect(result).toBeNull();
-  });
+    const easyResult = updateAIPaddle(aiPaddle, ball, 'easy', 1 / 60);
+    const hardResult = updateAIPaddle(aiPaddle, ball, 'hard', 1 / 60);
 
-  it('should proceed after reaction delay has passed', () => {
-    const aiPaddle = {
-      x: 570,
-      y: 100,
-      width: PADDLE_WIDTH,
-      height: PADDLE_HEIGHT,
-      reactionDelay: 300,
-      errorMargin: 0,
-    };
-    const ball = createBall(600, 400);
-
-    // 0.5 seconds passed — more than 300ms reaction delay
-    const result = updateAIPaddle(aiPaddle, ball, 'medium', 1 / 60, 0, 0.5);
-    expect(result).not.toBeNull();
+    // Hard AI should move more pixels per frame (1.4x vs 0.7x speed)
+    expect(hardResult.y).toBeGreaterThan(easyResult.y);
   });
 
   it('should apply error margin to tracking', () => {
@@ -299,7 +282,6 @@ describe('updateAIPaddle', () => {
       y: 100,
       width: PADDLE_WIDTH,
       height: PADDLE_HEIGHT,
-      reactionDelay: 0,
       errorMargin: 60,
     };
     const ball = createBall(600, 400);
@@ -308,13 +290,10 @@ describe('updateAIPaddle', () => {
     // Run multiple times to check that error margin affects tracking
     const yPositions = new Set<number>();
     for (let i = 0; i < 20; i++) {
-      const result = updateAIPaddle(aiPaddle, ball, 'easy', 1 / 60, 0, 1);
-      if (result) {
-        yPositions.add(result.y);
-      }
+      const result = updateAIPaddle(aiPaddle, ball, 'easy', 1 / 60);
+      yPositions.add(result.y);
     }
     // Multiple runs should give different Y positions due to random error
-    // Note: this is probabilistic, but 20 runs should usually produce variation
     expect(yPositions.size).toBeGreaterThanOrEqual(1);
   });
 });
