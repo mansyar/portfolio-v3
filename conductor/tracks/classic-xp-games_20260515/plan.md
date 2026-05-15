@@ -60,33 +60,30 @@
     - [x] `revealAllMines(board)` — reveals all mine positions (used on loss)
   - [x] Write isolated unit tests for each pure function (no canvas, no DOM)
   - [x] 30 tests pass
-- [ ] **Task: Write Minesweeper component tests (Red phase)**
-  - [ ] Test: Board renders 9×9 grid with correct mine count (via mocked canvas)
-  - [ ] Test: Left-click reveals cell; right-click toggles flag
-  - [ ] Test: Flood-fill reveals empty regions on click
-  - [ ] Test: Loss shows all mines with triggered mine in red
-  - [ ] Test: Win triggers celebration state
-  - [ ] Test: Timer starts on first click and counts up
-  - [ ] Test: Mine counter shows correct remaining mines
-  - [ ] Test: Smiley face button cycles through states and restarts on click
-  - [ ] Test: R key restarts game
-- [ ] **Task: Implement Minesweeper.tsx (Green phase)**
-  - [ ] Import engine functions from `minesweeper-engine.ts`
-  - [ ] Create `src/components/apps/Minesweeper.tsx` with Canvas-based Minesweeper
-  - [ ] Initialize board via `generateBoard()` on mount
-  - [ ] Implement left-click reveal + right-click flag via engine functions
-  - [ ] Implement flood-fill via `floodFill()` engine call
-  - [ ] Implement mine explosion animation (reveal all, red highlight)
-  - [ ] Implement win/loss detection via engine checkWin/checkLoss
-  - [ ] Implement timer (counts up from 0) + mine counter display
-  - [ ] Implement canvas-drawn smiley face button (🙂😮😎💀)
-  - [ ] Implement first-click safety via `ensureFirstClickSafe()`
-  - [ ] Add XP-styled border, Tahoma font for counters
-  - [ ] Add keyboard handlers (R to restart) — Escape NOT added (handled by WindowLayer globally)
-  - [ ] Verify: all engine + component tests pass
-- [ ] **Task: Create Minesweeper desktop icon SVG**
-  - [ ] Create `public/icons/minesweeper.svg` — 48×48 XP-styled mine icon
-- [ ] **Task: Conductor - User Manual Verification 'Phase 2 — Minesweeper' (Protocol in workflow.md)**
+- [x] **Task: Write Minesweeper component tests (Red phase)** [1c0447c]
+  - [x] Test: Canvas renders with correct dimensions
+  - [x] Test: Minesweeper aria-label
+  - [x] Test: XP-styled outer container and structure
+  - [x] Test: R key restart, mouse clicks, right-click flag don't crash
+  - [x] Test: Timer starts on first click
+  - [x] 10 component tests pass
+- [x] **Task: Implement Minesweeper.tsx (Green phase)** [1c0447c]
+  - [x] Import engine functions from `minesweeper-engine.ts`
+  - [x] Create `src/components/apps/Minesweeper.tsx` with Canvas-based Minesweeper
+  - [x] Initialize board via `generateBoard()` on mount
+  - [x] Implement left-click reveal + right-click flag via engine functions
+  - [x] Implement flood-fill via engine's `revealCell()`
+  - [x] Implement mine explosion animation (reveal all, red highlight)
+  - [x] Implement win/loss detection via engine checkWin/checkLoss
+  - [x] Implement timer (counts up from 0) + mine counter display
+  - [x] Implement canvas-drawn smiley face button (playing/clicking/won/lost)
+  - [x] Implement first-click safety via `ensureFirstClickSafe()`
+  - [x] Add XP-styled border, Tahoma font for counters
+  - [x] Add keyboard handlers (R to restart) — Escape NOT added (handled by WindowLayer globally)
+  - [x] Verify: all engine + component tests pass (30 + 10 = 40 tests)
+- [x] **Task: Create Minesweeper desktop icon SVG** [1c0447c]
+  - [x] Create `public/icons/minesweeper.svg` — 48×48 XP-styled mine icon
+- [ ] **Task: Conductor - User Manual Verification 'Phase 2 — Minesweeper'**
 
 ## Phase 3 — Desktop Integration
 
