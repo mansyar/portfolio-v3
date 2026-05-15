@@ -104,9 +104,12 @@
   to { opacity: 1; }
 }
 
-/* Content dimming class (applied to outgoing view during transitions) */
+/* Content dimming class (applied to outgoing view during transitions)
+   Opacity is applied as a baseline — during cross-fade the animation overrides it,
+   under reduced-motion (no animation) the dimming takes effect independently. */
 .content-dimming {
   transition: opacity 150ms ease-out;
+  opacity: 0.7;
 }
 
 /* Reduced motion: disable cross-fade (but dimming still applies) */

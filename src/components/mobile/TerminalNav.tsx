@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { useStore } from '@nanostores/react';
 import { CONTACT_METADATA } from '@/lib/projects-data';
 import { toggleForceDesktop } from '@/stores/desktop';
@@ -59,9 +59,13 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
     bodyHtml: (articlesData as { content: Record<string, string> }).content[slug],
   }));
 
-  // Determine if user prefers reduced motion
-  const prefersReducedMotion =
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Determine if user prefers reduced motion (cached via useMemo, unchanged during session)
+  const prefersReducedMotion = useMemo(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
+  );
 
   const navigateTo = useCallback(
     (view: SafeModeView) => {
