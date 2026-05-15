@@ -25,6 +25,9 @@ export function createMockCanvasContext() {
     save: vi.fn(),
     restore: vi.fn(),
     fill: vi.fn(),
+    strokeRect: vi.fn(),
+    setLineDash: vi.fn(),
+    textBaseline: '',
   };
 
   return mockCtx;

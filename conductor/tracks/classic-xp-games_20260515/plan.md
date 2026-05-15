@@ -49,16 +49,17 @@
 
 ## Phase 2 — Minesweeper (9×9 Beginner)
 
-- [ ] **Task: Extract Minesweeper engine**
-  - [ ] Create `src/lib/minesweeper-engine.ts` with pure functions:
-    - [ ] `generateBoard(rows, cols, mines, firstClick?)` — creates grid, places mines, counts adjacency
-    - [ ] `floodFill(board, row, col)` — reveals all connected empty cells (BFS/DFS, no canvas)
-    - [ ] `checkWin(board)` — returns boolean: all non-mine cells revealed?
-    - [ ] `checkLoss(board, row, col)` — returns boolean: clicked a mine?
-    - [ ] `toggleFlag(board, row, col)` — places/removes flag
-    - [ ] `ensureFirstClickSafe(board, row, col)` — re-generates if mine, guarantee not on first click
-    - [ ] `revealAllMines(board)` — reveals all mine positions (used on loss)
-  - [ ] Write isolated unit tests for each pure function (no canvas, no DOM)
+- [x] **Task: Extract Minesweeper engine** [04416d8]
+  - [x] Create `src/lib/minesweeper-engine.ts` with pure functions:
+    - [x] `generateBoard(rows, cols, mines, firstClick?)` — creates grid, places mines, counts adjacency
+    - [x] `floodFill(board, row, col)` — reveals all connected empty cells (BFS/DFS, no canvas)
+    - [x] `checkWin(board)` — returns boolean: all non-mine cells revealed?
+    - [x] `checkLoss(board, row, col)` — returns boolean: clicked a mine?
+    - [x] `toggleFlag(board, row, col)` — places/removes flag
+    - [x] `ensureFirstClickSafe(board, row, col)` — re-generates if mine, guarantee not on first click
+    - [x] `revealAllMines(board)` — reveals all mine positions (used on loss)
+  - [x] Write isolated unit tests for each pure function (no canvas, no DOM)
+  - [x] 30 tests pass
 - [ ] **Task: Write Minesweeper component tests (Red phase)**
   - [ ] Test: Board renders 9×9 grid with correct mine count (via mocked canvas)
   - [ ] Test: Left-click reveals cell; right-click toggles flag
