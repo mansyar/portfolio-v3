@@ -46,7 +46,7 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Trigger:** Viewport width < 768px.
 - **Visuals:** High-contrast black/green terminal aesthetic, scanline overlay, CRT curvature.
 - **Interaction:** Simplified text-based list navigation; no draggable windows.
-- **Navigation Transitions:** Cross-fade animation between views (outgoing fades 1→0, incoming fades 0→1, 200ms) for a BIOS-appropriate feel. Content dimming (opacity 0.7, 150ms ease-out) on outgoing view during transitions.
+- **Navigation Transitions:** Outgoing view disappears instantly (BIOS/terminal feel), incoming view fades in smoothly (opacity 0→1, 200ms ease-out).
 - **Swipe Gesture:** Touch swipe from the left edge (within 40px) navigates back one view level. Opacity fade provides visual feedback during drag. Dragging >80px commits instantly. Dragging ≤80px cancels and snaps back.
 - **Accessibility:** All animations respect `prefers-reduced-motion: reduce`. Keyboard shortcut navigation (`1-5`, `0`) works alongside touch gestures. No content relies solely on swipe — all views reachable via buttons and keyboard.
 

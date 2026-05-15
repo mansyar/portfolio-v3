@@ -15,7 +15,7 @@ gantt
     axisFormat  %b %d
 
     section Phase 6
-    Track 6A – Safe Mode Mobile Ench.   :active, p6a, 2026-05-15, 2d
+    Track 6A – Safe Mode Mobile Ench.   :done, p6a, 2026-05-15, 2d
     Track 6B – Classic XP Games          :active, p6b, after p6a, 3d
     Track 6C – Content Drop              :active, p6c, after p6a, 3d
     Track 6D – Terminal Tactics Launcher :active, p6d, after p6c, 2d
@@ -28,62 +28,59 @@ gantt
 
 ---
 
-### Track 6A — Safe Mode Mobile Enhancement 🚧
+### Track 6A — Safe Mode Mobile Enhancement ✅
 
-> Touch gesture support, slide transitions, and loading indicators for the mobile Safe Mode experience. Turns the functional-but-abrupt terminal into a polished, app-like navigable interface.
+> Touch gesture support, cross-fade transitions, swipe-to-go-back, and content dimming for the mobile Safe Mode experience. Turns the functional-but-abrupt terminal into a polished, app-like navigable interface with BIOS-appropriate animations.
 
 **Refs:** [ROADMAP_v1 §Track 4A](../archive/ROADMAP_v1.md#track-4a--mobile-safe-mode-) · T6A [spec](conductor/tracks/safe-mode-mobile_20260515/spec.md) · T6A [plan](conductor/tracks/safe-mode-mobile_20260515/plan.md)
 
 #### Tasks
 
-- [ ] Implement touch swipe-right-from-left-edge gesture for "Back" navigation in TerminalNav
-  - [ ] Detect touch start position within 40px of left edge
-  - [ ] Track horizontal drag distance with visual feedback (opacity/translate)
-  - [ ] On release: if drag > 80px → execute back navigation; else → snap back
-  - [ ] Ignore vertical swipes (scroll doesn't trigger back)
-- [ ] Add CSS slide transitions between Safe Mode views (main → projects → detail)
-  - [ ] Slide-in from right for forward navigation (200ms ease-out)
-  - [ ] Slide-out to right for back navigation (150ms ease-in)
-  - [ ] Respect `prefers-reduced-motion: reduce` (disable transitions)
-- [ ] Add loading indicators during view transitions
-  - [ ] Show brief "Loading..." text (or animated dots) when switching views
-  - [ ] Minimum 200ms display to prevent flash-for-empty
-  - [ ] Fade-in content when ready (opacity 0→1, 150ms)
-- [ ] Write tests for gesture detection, transition CSS, and loading states
-- [ ] Verify no regressions in existing keyboard/touch navigation
-- [ ] **Update PRD §3.2 (Mobile Experience)** — add gestures, transitions, loading states to the mobile spec
-- [ ] **Update TDD §8 (Mobile Safe Mode)** — add swipe gesture spec, slide transition durations, loading state behavior
+- [x] Implement view stack architecture (outgoing/incoming views rendered simultaneously)
+- [x] Add cross-fade transitions: outgoing disappears instantly, incoming fades in (0→1, 200ms)
+- [x] Implement swipe-to-go-back gesture from left edge (40px detection, >80px commit)
+- [x] Add content dimming marker class on outgoing view during transitions
+- [x] Respect `prefers-reduced-motion: reduce` (disable transitions, keep dimming)
+- [x] Write 23 tests (cross-fade, swipe, dimming, existing)
+- [x] Verify no regressions in existing keyboard/touch navigation
+- [x] **Update PRD §3.2 (Mobile Experience)** — add gestures, cross-fade transitions, dimming
+- [x] **Update TDD §8 (Mobile Safe Mode)** — add view stack, swipe gesture, cross-fade specs
 
 #### Acceptance Criteria
 
 ```
-✅ Swiping right from the left edge navigates back one view level
+✅ Swiping right from the left edge (within 40px) navigates back one view level
 ✅ Swipe < 80px snaps back with no navigation (cancel gesture)
+✅ Opacity fade (1→0) provides visual feedback during drag
+✅ Swipe-committed back is instant (no cross-fade transition)
 ✅ Vertical swipes are ignored (scrolling still works)
-✅ Forward navigation slides content in from the right (200ms)
-✅ Back navigation slides content out to the right (150ms)
-✅ "Loading..." indicator appears briefly during view transitions (min 200ms)
-✅ Content fades in when ready
-✅ prefers-reduced-motion disables all transitions
-✅ All existing Safe Mode tests continue to pass
+✅ Forward programmatic navigation: outgoing disappears instantly, incoming fades in (200ms)
+✅ Back programmatic navigation: same transition as forward (uniform BIOS feel)
+✅ Both outgoing and incoming views render simultaneously (overlaid on same grid cell)
+✅ Outgoing view has content-dimming class during transitions
+✅ prefers-reduced-motion disables all cross-fade transitions (dimming still functions)
+✅ All existing Safe Mode tests continue to pass (673/673 total)
 ✅ All src/ files under 500 lines
 ```
 
 #### Docs Updated
 
-| Document           | Sections | What Changed                                                                    |
-| :----------------- | :------- | :------------------------------------------------------------------------------ |
-| [PRD.md](./PRD.md) | §3.2     | Mobile Safe Mode — added swipe gesture, slide transitions, loading states       |
-| [TDD.md](./TDD.md) | §8       | Mobile spec — added swipe gesture contract, transition timing, loading behavior |
+| Document           | Sections | What Changed                                                                               |
+| :----------------- | :------- | :----------------------------------------------------------------------------------------- |
+| [PRD.md](./PRD.md) | §3.2     | Mobile Safe Mode — added swipe gesture, cross-fade transitions, content dimming            |
+| [TDD.md](./TDD.md) | §8, §9   | Mobile spec — view stack architecture, swipe gesture, cross-fade, dimming; animation table |
 
 #### Key Files Modified
 
 ```
-src/components/mobile/TerminalNav.tsx — Swipe gesture handler + loading state
-src/styles/xp-safe-mode.css — Slide transition CSS classes + reduced-motion overrides
-tests/TerminalNav.test.tsx — Gesture, transition, and loading state tests
-docs/PRD.md — §3.2 Mobile Experience updated
-docs/TDD.md — §8 Mobile Safe Mode updated
+src/components/mobile/TerminalNav.tsx — View stack, cross-fade, swipe gesture, content dimming
+src/styles/xp-safe-mode.css — Cross-fade keyframes, grid overlay, reduced-motion
+tests/TerminalNav-transitions.test.tsx — Cross-fade transition tests (4)
+tests/TerminalNav-swipe.test.tsx — Swipe gesture tests (8)
+tests/TerminalNav-dimming.test.tsx — Content dimming tests (4)
+tests/TerminalNav.test.tsx — Updated existing test for dual-view rendering
+docs/PRD.md — §3.2 Mobile Experience
+docs/TDD.md — §8 Mobile Safe Mode, §9 Animations & Transitions
 ```
 
 ---

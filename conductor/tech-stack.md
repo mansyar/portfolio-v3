@@ -114,6 +114,14 @@ prebuild.mjs
 
 ## Change Log
 
+### 2026-05-15 — Track 6A: Safe Mode Mobile Enhancement
+
+- **Reason:** Enhance the mobile Safe Mode experience with smooth cross-fade transitions, swipe-to-go-back gesture, and content dimming — turning the functional-but-abrupt terminal into a polished, app-like interface while maintaining the BIOS aesthetic.
+- **Impact:** TerminalNav refactored from conditional rendering to view stack architecture (outgoing/incoming views rendered simultaneously, overlaid via CSS Grid). Outgoing view disappears instantly (0ms), incoming fades in (200ms ease-out). Swipe gesture from left edge (40px detection, >80px commit threshold, opacity-fade feedback). `.content-dimming` marker class for testing. All animations respect `prefers-reduced-motion: reduce`. No new packages added.
+- **Packages added:** None (pure CSS + React state changes).
+- **Files affected:** `src/components/mobile/TerminalNav.tsx`, `src/styles/xp-safe-mode.css`, `tests/TerminalNav-transitions.test.tsx`, `tests/TerminalNav-swipe.test.tsx`, `tests/TerminalNav-dimming.test.tsx`, `tests/TerminalNav.test.tsx`, `docs/PRD.md`, `docs/TDD.md`
+- **Tests added:** 16 new tests (4 cross-fade + 8 swipe + 4 dimming), 7 existing updated. Total: 673 tests.
+
 ### 2026-05-15 — Track 5A: CI/CD & Launch
 
 - **Reason:** Track 5A establishes the CI/CD pipeline, Cloudflare Pages deployment, custom domain setup with SSL, and deploy hook for CRON-triggered daily rebuilds.
