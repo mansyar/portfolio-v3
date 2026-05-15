@@ -204,8 +204,9 @@ export function updateAIPaddle(
   const error = (Math.random() * 2 - 1) * config.errorMargin;
   const targetY = ball.pos.y + error - aiPaddle.height / 2;
 
-  // AI paddle speed: proportional to ball speed
-  const aiSpeed = ball.speed * 0.6;
+  // AI paddle speed: difficulty-dependent multiplier of ball speed
+  const aiSpeedMultiplier = difficulty === 'easy' ? 0.7 : difficulty === 'medium' ? 1.0 : 1.4;
+  const aiSpeed = ball.speed * aiSpeedMultiplier;
   const maxMove = aiSpeed * deltaTime;
 
   const newY = (() => {
