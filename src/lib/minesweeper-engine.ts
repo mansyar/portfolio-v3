@@ -283,15 +283,7 @@ export function revealAllMines(board: Board, triggeredRow: number, triggeredCol:
   return { ...board, cells: newCells };
 }
 
-/**
- * Get the display number for a cell (1-8) or 0 for unnumbered.
- * Classic Minesweeper color scheme:
- *   1: blue, 2: green, 3: red, 4: dark blue, 5: dark red, 6: teal, 7: black, 8: gray
- */
-export function getCellDisplayNumber(adjacentMines: number): number {
-  return adjacentMines;
-}
-
+/** Classic Minesweeper cell number colors */
 export const CELL_NUMBER_COLORS: Record<number, string> = {
   1: '#0000ff',
   2: '#008000',
