@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useStore } from '@nanostores/react';
 import { CONTACT_METADATA } from '@/lib/projects-data';
 import { toggleForceDesktop } from '@/stores/desktop';
@@ -91,6 +91,105 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
     if (!isTransitioning || prefersReducedMotion) return '';
     return 'crossfade';
   };
+
+  // Swipe gesture state (refs to avoid re-renders)
+  const viewStackRef = useRef<HTMLDivElement>(null);
+  const touchState = useRef({
+    startX: 0,
+    startY: 0,
+    currentX: 0,
+    isSwiping: false,
+    lastOpacity: '',
+  });
+
+  // Swipe gesture handler (separate effect from keyboard for clean subscriptions)
+  useEffect(() => {
+    const el = viewStackRef.current;
+    if (!el) return;
+
+    // Compute the "back" view for the current view
+    const getBackView = (): SafeModeView => {
+      switch (currentView) {
+        case 'projects':
+        case 'contact':
+          return 'main';
+        case 'knowledge-base':
+          return 'main';
+        case 'project-detail':
+          return 'projects';
+        case 'article-detail':
+          return 'knowledge-base';
+        default:
+          return 'main';
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      touchState.current.startX = touch.clientX;
+      touchState.current.startY = touch.clientY;
+      touchState.current.currentX = touch.clientX;
+      // Only detect gesture if touch starts within 40px of the left edge
+      touchState.current.isSwiping = touch.clientX <= 40;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchState.current.isSwiping) return;
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - touchState.current.startX;
+      const deltaY = touch.clientY - touchState.current.startY;
+
+      // If mostly vertical, cancel the swipe (scrolling)
+      if (Math.abs(deltaY) > Math.abs(deltaX) * 1.5) {
+        touchState.current.isSwiping = false;
+        el.style.opacity = touchState.current.lastOpacity;
+        return;
+      }
+
+      // Only track rightward drag
+      if (deltaX <= 0) return;
+
+      touchState.current.currentX = touch.clientX;
+      // Compute opacity: linear decrease from 1.0 at 0px drag to 0 at viewport width
+      const maxDrag = window.innerWidth || 375;
+      const opacity = Math.max(0, Math.min(1, 1 - deltaX / maxDrag));
+      touchState.current.lastOpacity = el.style.opacity;
+      el.style.opacity = String(opacity);
+    };
+
+    const handleTouchEnd = () => {
+      if (!touchState.current.isSwiping) return;
+      const deltaX = touchState.current.currentX - touchState.current.startX;
+
+      if (deltaX > 80) {
+        // Commit: navigate back instantly (no crossfade transition)
+        touchState.current.isSwiping = false;
+        el.style.opacity = '';
+        const backView = getBackView();
+        setPendingPushState();
+        setSafeModeView(backView);
+      } else {
+        // Cancel: snap opacity back to 1.0
+        touchState.current.isSwiping = false;
+        el.style.transition = 'opacity 150ms ease-out';
+        el.style.opacity = '1';
+        // Clean up the transition after animation
+        setTimeout(() => {
+          el.style.transition = '';
+        }, 160);
+      }
+    };
+
+    el.addEventListener('touchstart', handleTouchStart, { passive: true });
+    el.addEventListener('touchmove', handleTouchMove, { passive: true });
+    el.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      el.removeEventListener('touchstart', handleTouchStart);
+      el.removeEventListener('touchmove', handleTouchMove);
+      el.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [currentView]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -326,6 +425,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
 
   return (
     <div
+      ref={viewStackRef}
       className={`terminal-text p-2 max-w-3xl mx-auto h-full overflow-y-auto ${transitionClass}`}
       data-testid="view-stack"
     >
