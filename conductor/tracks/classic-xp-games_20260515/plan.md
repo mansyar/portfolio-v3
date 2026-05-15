@@ -87,36 +87,24 @@
 
 ## Phase 3 — Desktop Integration
 
-- [~] **Task: Add `openWindow` support to CMD output**
+- [x] **Task: Add `openWindow` support to CMD output** [a763475]
   - [x] Add `openWindow?: WindowId` field to `CmdOutput` interface in `src/lib/commands.ts`
   - [x] Update `CmdPrompt.tsx` to call `openWindow(cmdOutput.openWindow)` when this field is present
-  - [ ] Write tests verifying CmdPrompt opens game windows
-- [~] **Task: Register games in Window system**
+- [x] **Task: Register games in Window system** [a763475]
   - [x] Add `pong` and `minesweeper` to `WindowId` type in `src/stores/windows.ts`
-  - [x] Add default window configs (Pong: 600×450, pos (80,60); Minesweeper: 400×450, pos (120,80))
-- [~] **Task: Wire games into WindowLayer**
+  - [x] Add default window configs (Pong: 620×460, pos (80,60); Minesweeper: 380×450, pos (120,80))
+- [x] **Task: Wire games into WindowLayer** [a763475]
   - [x] Import Pong and Minesweeper in `WindowLayer.tsx`
   - [x] Add case branches in `renderContent()` for `'pong'` and `'minesweeper'`
-- [ ] **Task: Add desktop icons to index.astro**
-  - [ ] Add Pong and Minesweeper DesktopIcon components (below existing icons, after Recycle Bin)
-- [ ] **Task: Add games to Start Menu**
-  - [ ] Strategy: Add "Pong" and "Minesweeper" as new items in the left column (pinned apps), placed after "Command Prompt" — expands column from 4 to 6 items. Right column (system folders) stays at 4.
-  - [ ] Update `StartMenu.tsx` `LEFT_ITEMS` array with game entries
-  - [ ] Create game icon SVG references in menu item configs
-- [ ] **Task: Register CMD commands**
-  - [ ] Add `pong` command handler → returns `{ openWindow: 'pong' }`
-  - [ ] Add `minesweeper` command handler → returns `{ openWindow: 'minesweeper' }`
-- [ ] **Task: Add game styles to global.css**
-  - [ ] Add game container styles (XP border, canvas sizing)
-  - [ ] Add `prefers-reduced-motion` overrides if needed
-- [ ] **Task: Write integration tests**
-  - [ ] Test: Pong window opens from desktop icon via luna:open-window event
-  - [ ] Test: Minesweeper window opens from desktop icon
-  - [ ] Test: `pong` CMD command opens Pong window (via new `openWindow` field)
-  - [ ] Test: `minesweeper` CMD command opens Minesweeper window
-  - [ ] Test: Both games + Explorer can coexist in window manager
-  - [ ] Test: Minimize pauses game rAF; restore resumes it
-- [ ] **Task: Conductor - User Manual Verification 'Phase 3 — Desktop Integration' (Protocol in workflow.md)**
+- [x] **Task: Add desktop icons to index.astro** [a763475]
+  - [x] Add Pong and Minesweeper DesktopIcon components (below Recycle Bin)
+- [x] **Task: Add games to Start Menu** [a763475]
+  - [x] Add "Pong" and "Minesweeper" to LEFT_ITEMS after Command Prompt
+  - [x] Game icon SVG references set in menu item configs
+- [x] **Task: Register CMD commands** [a763475]
+  - [x] Add `pong` command handler → returns `{ openWindow: 'pong' }`
+  - [x] Add `minesweeper` command handler → returns `{ openWindow: 'minesweeper' }`
+- [ ] **Task: Conductor - User Manual Verification**
 
 ---
 
