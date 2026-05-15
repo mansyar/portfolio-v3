@@ -5,30 +5,29 @@
 
 ---
 
-## Phase 1 — View Stack Refactoring + CSS Slide Transitions [checkpoint: f40cfb0]
+## Phase 1 — View Stack Refactoring + Cross-Fade Transitions [checkpoint: cfae6ea]
 
-> Refactor TerminalNav from instant conditional rendering to a view stack that supports simultaneous outgoing/incoming animations. Add CSS slide transition classes.
+> Refactor TerminalNav from instant conditional rendering to a view stack that supports simultaneous outgoing/incoming cross-fade animations. Replaced original slide transition design with BIOS-style cross-fade per user preference.
 
-- [x] **Task: Write slide transition test suite** ([12 tests written and passing](./tests/TerminalNav-transitions.test.tsx)) [f40cfb0]
-  - [x] Test: forward navigation renders with `slide-in-right` on incoming view (200ms)
-  - [x] Test: back navigation renders with `slide-out-right` on outgoing + `slide-in-left` on incoming (150ms)
-  - [x] Test: `prefers-reduced-motion: reduce` disables transition classes (instant swap)
-  - [x] Test: `navigatingForward` state is `true` for parent→child navigation
-  - [x] Test: `navigatingForward` state is `false` for child→parent (back) navigation
+- [x] **Task: Write cross-fade transition test suite** (4 tests passing) [cfae6ea]
+  - [x] Test: forward navigation applies `crossfade` class
+  - [x] Test: back navigation applies `crossfade` class
+  - [x] Test: `prefers-reduced-motion: reduce` disables crossfade (instant swap)
+  - [x] Test: both outgoing and incoming views rendered simultaneously during crossfade
 - [x] **Task: Refactor to view stack architecture in TerminalNav.tsx** [f40cfb0]
   - [x] Replace `{currentView === 'x' && renderX()}` with a view stack that keeps the previous view mounted during its out-animation
   - [x] Track `previousView` and `currentView` — render both during transitions
   - [x] Add `isTransitioning` state flag to control animation phase
-  - [x] On `transitionend` or timeout (250ms), unmount the outgoing view
-  - [x] Add `navigatingForward: boolean` local state variable, set before every `setSafeModeView()` call
-  - [x] Apply transition CSS classes to outgoing/incoming view containers based on direction
-- [x] **Task: Implement slide transition CSS in `xp-safe-mode.css`** [f40cfb0]
-  - [x] Add `.slide-in-right`: `translateX(100%) → translateX(0)`, 200ms `ease-out`
-  - [x] Add `.slide-out-right`: `translateX(0) → translateX(100%)`, 150ms `ease-in`
-  - [x] Add `.slide-in-left`: `translateX(-100%) → translateX(0)`, 150ms `ease-out`
-  - [x] Add `.slide-out-left`: `translateX(0) → translateX(-100%)`, 200ms `ease-in` (for forward nav outgoing)
-  - [x] Add `@media (prefers-reduced-motion: reduce)` overrides: set `transition-duration: 0ms`
-- [ ] **Task: Conductor - User Manual Verification 'Phase 1 — View Stack + Slide Transitions' (Protocol in workflow.md)**
+  - [x] On timeout (250ms), unmount the outgoing view
+  - [x] Apply `crossfade` CSS class to container during transitions
+  - [x] ALL navigation directions use the same cross-fade (BIOS feel)
+- [x] **Task: Implement cross-fade CSS in `xp-safe-mode.css`** [f40cfb0]
+  - [x] Add `.crossfade` container class with `display: grid` for view overlay
+  - [x] Add `fadeOut` keyframe: opacity 1→0 (outgoing view, 200ms ease-out)
+  - [x] Add `fadeIn` keyframe: opacity 0→1 (incoming view, 200ms ease-out)
+  - [x] Both views stacked in same grid cell (`grid-area: 1 / 1`) during transition
+  - [x] Add `@media (prefers-reduced-motion: reduce)` override: 0ms duration
+- [x] **Task: Conductor - User Manual Verification 'Phase 1 — View Stack + Cross-Fade Transitions' (Protocol in workflow.md)** [67f8423]
 
 ## Phase 2 — Swipe Gesture Handler
 
