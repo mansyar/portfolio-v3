@@ -78,6 +78,10 @@
 - [x] **Update TDD §9 (Animations & Transitions)** — add cross-fade, content dimming, and swipe cancel entries to the animation table [7e0f38b]
 - [x] **Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)** [7e0f38b]
 
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions [138c273]
+
 ---
 
 ## Modularity Contingency
