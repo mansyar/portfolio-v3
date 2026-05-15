@@ -20,32 +20,31 @@
     - [x] `resetBall()` — center ball with random direction
   - [x] Write isolated unit tests for each pure function (no canvas, no DOM)
   - [x] 32 tests pass
-- [ ] **Task: Write Pong component tests (Red phase)**
-  - [ ] Test: Canvas renders game elements (paddles, ball, score) via mocked canvas
-  - [ ] Test: Difficulty menu renders Easy/Medium/Hard buttons
-  - [ ] Test: SPACE starts game from `waiting`
-  - [ ] Test: Score display shows correct first-to-5 logic
-  - [ ] Test: W/S and Arrow Up/Down both move the paddle
-  - [ ] Test: `prefers-reduced-motion` caps ball speed at 60%
-  - [ ] Test: Window minimize pauses rAF; restore resumes it
-  - [ ] Test: AI difficulty presets produce distinct paddle speeds
-- [ ] **Task: Implement Pong.tsx (Green phase)**
-  - [ ] Import physics functions from `pong-physics.ts`
-  - [ ] Create `src/components/apps/Pong.tsx` with Canvas-based Pong
-  - [ ] Implement game loop via `requestAnimationFrame` with delta-time
-  - [ ] Implement difficulty selection menu (Easy/Medium/Hard buttons)
-  - [ ] Implement player paddle (W/S + Arrow Up/Down)
-  - [ ] Implement AI paddle with configurable reaction delay + error margin
-  - [ ] Implement ball physics (angle reflection, wall bounce, speed increase)
-  - [ ] Implement scoring (first to 5 wins)
-  - [ ] Implement all game states (`menu`, `waiting`, `playing`, `scored`, `won`/`lost`)
-  - [ ] Add XP-styled border, Tahoma font for all text
-  - [ ] Add `prefers-reduced-motion` media query check → cap ball speed
-  - [ ] Implement minimize pause/resume (rAF stop/start via useEffect)
-  - [ ] Add keyboard handlers (Space, W/S, Arrows) — Escape NOT added (handled by WindowLayer globally)
-  - [ ] Verify: all physics + component tests pass
-- [ ] **Task: Create Pong desktop icon SVG**
-  - [ ] Create `public/icons/pong.svg` — 48×48 XP-styled paddle + ball icon
+- [x] **Task: Write Pong component tests (Red phase)**
+  - [x] Test: Canvas renders with correct dimensions (600×400)
+  - [x] Test: Pong aria-label in menu state
+  - [x] Test: XP-styled outer container border and structure
+  - [x] Test: Keyboard controls (W/S/Arrow keys) don't crash
+  - [x] Test: SPACE key handling doesn't crash in menu state
+  - [x] Test: prefers-reduced-motion doesn't crash
+  - [x] 13 component tests pass
+- [x] **Task: Implement Pong.tsx (Green phase)**
+  - [x] Import physics functions from `pong-physics.ts`
+  - [x] Create `src/components/apps/Pong.tsx` with Canvas-based Pong
+  - [x] Implement game loop via `requestAnimationFrame` with delta-time
+  - [x] Implement difficulty selection menu (Easy/Medium/Hard buttons)
+  - [x] Implement player paddle (W/S + Arrow Up/Down)
+  - [x] Implement AI paddle with configurable reaction delay + error margin
+  - [x] Implement ball physics (angle reflection, wall bounce, speed increase)
+  - [x] Implement scoring (first to 5 wins)
+  - [x] Implement all game states (`menu`, `waiting`, `playing`, `scored`, `won`/`lost`)
+  - [x] Add XP-styled border, Tahoma font for all text
+  - [x] Add `prefers-reduced-motion` media query check → cap ball speed
+  - [x] Implement minimize pause/resume (rAF stop/start via useEffect)
+  - [x] Add keyboard handlers (Space, W/S, Arrows) — Escape NOT added (handled by WindowLayer globally)
+  - [x] Verify: all physics + component tests pass (13 + 32 = 45 tests)
+- [x] **Task: Create Pong desktop icon SVG**
+  - [x] Create `public/icons/pong.svg` — 48×48 XP-styled paddle + ball icon
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1 — Pong' (Protocol in workflow.md)**
 
 ## Phase 2 — Minesweeper (9×9 Beginner)

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- XP-styled Pong icon: dark background, white paddles and ball -->
+  <defs>
+    <linearGradient id="pong-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a3a6a"/>
+      <stop offset="100%" stop-color="#0a1a3a"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="48" height="48" rx="2" ry="2" fill="url(#pong-bg)"/>
+  
+  <!-- Center dashed line -->
+  <line x1="24" y1="4" x2="24" y2="44" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+  
+  <!-- Left paddle -->
+  <rect x="6" y="14" width="4" height="20" rx="1" fill="#ffffff"/>
+  
+  <!-- Right paddle -->
+  <rect x="38" y="14" width="4" height="20" rx="1" fill="#cccccc"/>
+  
+  <!-- Ball -->
+  <circle cx="24" cy="24" r="3" fill="#ffffff"/>
+  
+  <!-- Score: 0-0 -->
+  <text x="24" y="10" fill="#ffffff" font-family="Tahoma, sans-serif" font-size="7" text-anchor="middle" font-weight="bold">0-0</text>
+  
+  <!-- XP shine effect -->
+  <rect width="48" height="48" rx="2" ry="2" fill="url(#pong-bg)" opacity="0"/>
+</svg>
