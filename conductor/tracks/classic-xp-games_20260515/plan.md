@@ -7,18 +7,19 @@
 
 ## Phase 1 — Pong (VS AI)
 
-- [ ] **Task: Create shared canvas test infrastructure**
-  - [ ] Create `tests/canvas-helpers.ts` — `mockCanvasContext()` utility that stubs `HTMLCanvasElement.prototype.getContext` for jsdom (following `canvas-graph.test.tsx` precedent)
-  - [ ] Export a reusable `mockCtx` object with all needed canvas methods (beginPath, moveTo, lineTo, stroke, fillRect, fillText, arc, etc.)
-- [ ] **Task: Extract Pong physics engine**
-  - [ ] Create `src/lib/pong-physics.ts` with pure functions:
-    - [ ] `checkBallWallCollision(ball, canvasHeight)` — top/bottom bounce detection
-    - [ ] `checkBallPaddleCollision(ball, paddle)` — angle reflection, no canvas dependency
-    - [ ] `updateAIPaddle(aiPaddle, ball, difficulty, deltaTime)` — tracking with delay + error margin
-    - [ ] `getDifficultyConfig(difficulty: 'easy'|'medium'|'hard')` — returns delay/error values
-    - [ ] `checkScored(ball, canvasWidth)` — returns 'left' | 'right' | null
-    - [ ] `resetBall()` — center ball with random direction
-  - [ ] Write isolated unit tests for each pure function (no canvas, no DOM)
+- [x] **Task: Create shared canvas test infrastructure**
+  - [x] Create `tests/canvas-helpers.ts` — `mockCanvasContext()` utility that stubs `HTMLCanvasElement.prototype.getContext` for jsdom (following `canvas-graph.test.tsx` precedent)
+  - [x] Export a reusable `mockCtx` object with all needed canvas methods (beginPath, moveTo, lineTo, stroke, fillRect, fillText, arc, etc.)
+- [x] **Task: Extract Pong physics engine**
+  - [x] Create `src/lib/pong-physics.ts` with pure functions:
+    - [x] `checkBallWallCollision(ball, canvasHeight)` — top/bottom bounce detection
+    - [x] `checkBallPaddleCollision(ball, paddle)` — angle reflection, no canvas dependency
+    - [x] `updateAIPaddle(aiPaddle, ball, difficulty, deltaTime)` — tracking with delay + error margin
+    - [x] `getDifficultyConfig(difficulty: 'easy'|'medium'|'hard')` — returns delay/error values
+    - [x] `checkScored(ball, canvasWidth)` — returns 'left' | 'right' | null
+    - [x] `resetBall()` — center ball with random direction
+  - [x] Write isolated unit tests for each pure function (no canvas, no DOM)
+  - [x] 32 tests pass
 - [ ] **Task: Write Pong component tests (Red phase)**
   - [ ] Test: Canvas renders game elements (paddles, ball, score) via mocked canvas
   - [ ] Test: Difficulty menu renders Easy/Medium/Hard buttons
