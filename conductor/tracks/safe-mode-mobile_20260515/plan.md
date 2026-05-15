@@ -1,83 +1,106 @@
 # Implementation Plan: Safe Mode Mobile Enhancement
 
 **Track ID:** `safe-mode-mobile_20260515`
-**Status:** Draft
+**Status:** Approved
 
 ---
 
-## Phase 1 — Swipe Gesture Handler
+## Phase 1 — View Stack Refactoring + CSS Slide Transitions
 
-> Implement touch swipe detection, opacity-fade visual feedback, and back-navigation commit logic in `TerminalNav.tsx`.
+> Refactor TerminalNav from instant conditional rendering to a view stack that supports simultaneous outgoing/incoming animations. Add CSS slide transition classes.
+
+- [ ] **Task: Write slide transition test suite**
+  - [ ] Test: forward navigation renders with `slide-in-right` on incoming view (200ms)
+  - [ ] Test: back navigation renders with `slide-out-right` on outgoing + `slide-in-left` on incoming (150ms)
+  - [ ] Test: `prefers-reduced-motion: reduce` disables transition classes (instant swap)
+  - [ ] Test: `navigatingForward` state is `true` for parent→child navigation
+  - [ ] Test: `navigatingForward` state is `false` for child→parent (back) navigation
+- [ ] **Task: Refactor to view stack architecture in TerminalNav.tsx**
+  - [ ] Replace `{currentView === 'x' && renderX()}` with a view stack that keeps the previous view mounted during its out-animation
+  - [ ] Track `previousView` and `currentView` — render both during transitions
+  - [ ] Add `isTransitioning` state flag to control animation phase
+  - [ ] On `transitionend` or timeout (250ms), unmount the outgoing view
+  - [ ] Add `navigatingForward: boolean` local state variable, set before every `setSafeModeView()` call
+  - [ ] Apply transition CSS classes to outgoing/incoming view containers based on direction
+- [ ] **Task: Implement slide transition CSS in `xp-safe-mode.css`**
+  - [ ] Add `.slide-in-right`: `translateX(100%) → translateX(0)`, 200ms `ease-out`
+  - [ ] Add `.slide-out-right`: `translateX(0) → translateX(100%)`, 150ms `ease-in`
+  - [ ] Add `.slide-in-left`: `translateX(-100%) → translateX(0)`, 150ms `ease-out`
+  - [ ] Add `.slide-out-left`: `translateX(0) → translateX(-100%)`, 200ms `ease-in` (for forward nav outgoing)
+  - [ ] Add `@media (prefers-reduced-motion: reduce)` overrides: set `transition-duration: 0ms`
+- [ ] **Task: Conductor - User Manual Verification 'Phase 1 — View Stack + Slide Transitions' (Protocol in workflow.md)**
+
+## Phase 2 — Swipe Gesture Handler
+
+> Implement touch swipe detection with opacity-fade visual feedback and instant-commit back navigation in TerminalNav.tsx.
 
 - [ ] **Task: Write swipe gesture test suite**
   - [ ] Test: touch start within 40px of left edge triggers gesture detection
   - [ ] Test: touch start beyond 40px does NOT trigger gesture
-  - [ ] Test: dragging right > 80px commits back navigation
-  - [ ] Test: dragging right ≤ 80px snaps back (no navigation)
-  - [ ] Test: vertical drag (scroll) is ignored
+  - [ ] Test: dragging right > 80px commits back navigation instantly
+  - [ ] Test: dragging right ≤ 80px snaps back with opacity restore (150ms ease-out)
+  - [ ] Test: vertical drag (scroll) is ignored — no opacity change, no navigation
   - [ ] Test: opacity decreases proportionally with drag distance
+  - [ ] Test: swipe-committed back does NOT fire a slide transition (instant swap)
   - [ ] Test: gestures do NOT fire on non-touch devices (pointer events)
 - [ ] **Task: Implement swipe gesture handler in TerminalNav.tsx**
-  - [ ] Add `touchstart`, `touchmove`, `touchend` event listeners
-  - [ ] Track `startX`, `currentX`, `startY` for horizontal-only detection
+  - [ ] Add `touchstart`, `touchmove`, `touchend` event listeners in a dedicated `useEffect`
+  - [ ] Use `useRef` for touch state (`startX`, `currentX`, `startY`, `opacity`) to avoid stale closures and unnecessary re-renders
   - [ ] Compute opacity = `clamp(1 - dragDistance / viewportWidth, 0, 1)`
-  - [ ] On commit: call existing `navigateTo(view)` for back navigation
-  - [ ] On cancel: reset opacity to 1.0 with 150ms ease-out
+  - [ ] Apply opacity via `ref.current.style.opacity` on the view container (ref-based DOM write, no re-render)
+  - [ ] On commit (> 80px): call `setSafeModeView(previousView)` instantly — no slide, no delay
+  - [ ] On cancel (≤ 80px): reset opacity to 1.0 with CSS transition (150ms ease-out)
+  - [ ] Ensure keyboard handler (`useEffect`) and touch handler (`useEffect`) are in separate effects to avoid re-subscription conflicts
   - [ ] Verify keyboard/touch navigation no regression
-- [ ] **Task: Conductor - User Manual Verification 'Phase 1 — Swipe Gesture Handler' (Protocol in workflow.md)**
+- [ ] **Task: Conductor - User Manual Verification 'Phase 2 — Swipe Gesture Handler' (Protocol in workflow.md)**
 
-## Phase 2 — CSS Slide Transitions
+## Phase 3 — Content Dimming During Transitions
 
-> Add forward/back slide animations to Safe Mode view transitions in `xp-safe-mode.css`, respecting reduced motion.
+> Add a subtle content dimming effect during programmatic view transitions instead of a full progress bar overlay.
 
-- [ ] **Task: Write slide transition tests**
-  - [ ] Test: forward navigation renders with `slide-in-right` class (200ms)
-  - [ ] Test: back navigation renders with `slide-out-right` class (150ms)
-  - [ ] Test: `prefers-reduced-motion: reduce` disables transition classes
-- [ ] **Task: Implement slide transition CSS**
-  - [ ] Add `.slide-in-right` class: `transform: translateX(100%) → translateX(0)`, 200ms `ease-out`
-  - [ ] Add `.slide-out-right` class: `transform: translateX(0) → translateX(100%)`, 150ms `ease-in`
-  - [ ] Add `.slide-in-left` (back navigation incoming view): `translateX(-100%) → translateX(0)`, 150ms `ease-out`
-  - [ ] Add `@media (prefers-reduced-motion: reduce)` overrides to disable all slide transitions
-  - [ ] Wire transition classes into `TerminalNav.tsx` view container based on navigation direction
-- [ ] **Task: Conductor - User Manual Verification 'Phase 2 — CSS Slide Transitions' (Protocol in workflow.md)**
-
-## Phase 3 — Loading Indicator (XP Progress Bar)
-
-> Add XP-styled indeterminate progress bar overlay during view transitions.
-
-- [ ] **Task: Write loading indicator tests**
-  - [ ] Test: loading overlay renders on view transition
-  - [ ] Test: loading overlay shows XP progress bar + "Loading..." text
-  - [ ] Test: minimum 200ms display before content shows
-  - [ ] Test: progress bar fades out (150ms), content fades in (150ms)
-  - [ ] Test: `prefers-reduced-motion` disables progress bar animation (static bar)
-- [ ] **Task: Implement loading indicator component and CSS**
-  - [ ] Add loading overlay HTML: full overlay with `rgba(0,0,0,0.7)` background
-  - [ ] Add XP-styled indeterminate progress bar CSS (marquee blue blocks animation)
-  - [ ] Add "Loading..." text below progress bar in `--safe-mode-text` green
-  - [ ] Add `isLoading` state with `setTimeout(200ms)` minimum display
-  - [ ] Add content fade-in (opacity 0→1, 150ms) when loading completes
-  - [ ] Add progress bar fade-out (opacity 1→0, 150ms) before content fade-in
-  - [ ] Add `@media (prefers-reduced-motion: reduce)` override to show static bar
-- [ ] **Task: Conductor - User Manual Verification 'Phase 3 — Loading Indicator' (Protocol in workflow.md)**
+- [ ] **Task: Write content dimming tests**
+  - [ ] Test: content dims to opacity 0.7 during a programmatic view transition
+  - [ ] Test: content returns to full opacity (1.0) when transition completes
+  - [ ] Test: `prefers-reduced-motion` does NOT disable dimming (opacity ≠ motion)
+  - [ ] Test: no dimming text or progress bar visible
+- [ ] **Task: Implement content dimming**
+  - [ ] Add `.content-dimming` CSS class: `transition: opacity 150ms ease-out`
+  - [ ] Apply `.content-dimming` + `opacity: 0.7` to outgoing view during transitions
+  - [ ] Remove dimming class on transition end (outgoing view unmounts, incoming view at 1.0)
+  - [ ] Wire into the view stack's `isTransitioning` state
+- [ ] **Task: Conductor - User Manual Verification 'Phase 3 — Content Dimming' (Protocol in workflow.md)**
 
 ## Phase 4 — Documentation Updates
 
 > Synchronize PRD and TDD with the new mobile enhancement specifications.
 
-- [ ] **Update PRD §3.2 (Mobile Experience)** — add swipe gesture, slide transitions, loading states
-- [ ] **Update TDD §8 (Mobile Safe Mode)** — add swipe gesture spec, transition timing, loading behavior
+- [ ] **Update PRD §3.2 (Mobile Experience)** — add swipe gesture, slide transitions, content dimming
+- [ ] **Update TDD §8 (Mobile Safe Mode)** — add swipe gesture spec, view stack architecture, dimming behavior, navigation direction tracking
+- [ ] **Update TDD §9 (Animations & Transitions)** — add slide transition entries (slide-in-right, slide-out-right, slide-in-left, slide-out-left) and content dimming to the animation table
 - [ ] **Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)**
+
+---
+
+## Modularity Contingency
+
+`TerminalNav.tsx` is currently 311 lines. Estimated additions:
+
+- View stack refactoring: ~30 lines
+- Navigation direction tracking: ~8 lines
+- Swipe gesture handler: ~45 lines
+- Touch refs and effects: ~20 lines
+- Content dimming integration: ~10 lines
+
+**Estimated total: ~424 lines.** If during Phase 1 the view stack refactoring causes the component to exceed 460 lines, extract the view renderers + transition wrapper into a separate `SafeModeViewport.tsx` component in `src/components/mobile/`. The export should accept `view`, `slug`, `isTransitioning`, and `navigatingForward` as props.
 
 ---
 
 ## Key Files Modified
 
 ```
-src/components/mobile/TerminalNav.tsx — Swipe gesture handler + loading state
+src/components/mobile/TerminalNav.tsx — View stack, swipe gesture, dimming, direction tracking
 src/styles/xp-safe-mode.css — Slide transition CSS classes + reduced-motion overrides
-tests/TerminalNav.test.tsx — Gesture, transition, and loading state tests
+tests/TerminalNav.test.tsx — Gesture, transition, dimming, and direction tracking tests
 docs/PRD.md — §3.2 Mobile Experience updated
-docs/TDD.md — §8 Mobile Safe Mode updated
+docs/TDD.md — §8 Mobile Safe Mode, §9 Animations & Transitions updated
 ```
