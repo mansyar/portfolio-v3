@@ -85,9 +85,9 @@
   grid-area: 1 / 1;
 }
 
-/* Cross-fade: outgoing fades out (1→0), incoming fades in (0→1) (200ms ease-out) */
+/* Cross-fade: outgoing disappears instantly, incoming fades in (200ms ease-out) */
 .crossfade > .view-outgoing {
-  animation: fadeOut 200ms ease-out;
+  animation: fadeOut 0ms ease-out;
 }
 
 .crossfade > .view-incoming {
