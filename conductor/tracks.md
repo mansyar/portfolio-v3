@@ -33,5 +33,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Classic XP Games — Pong (VS AI) + Minesweeper (9×9) Canvas games**
-  _Link: [./tracks/classic-xp-games_20260515/](./tracks/classic-xp-games_20260515/)_
+- [x] **Track: Classic XP Games — Pong (VS AI) + Minesweeper (9×9) Canvas games**
+      _Link: [./tracks/classic-xp-games_20260515/](./tracks/classic-xp-games_20260515/)_
