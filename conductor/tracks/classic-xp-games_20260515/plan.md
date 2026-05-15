@@ -20,7 +20,7 @@
     - [x] `resetBall()` — center ball with random direction
   - [x] Write isolated unit tests for each pure function (no canvas, no DOM)
   - [x] 32 tests pass
-- [x] **Task: Write Pong component tests (Red phase)**
+- [x] **Task: Write Pong component tests (Red phase)** [fdb45fa]
   - [x] Test: Canvas renders with correct dimensions (600×400)
   - [x] Test: Pong aria-label in menu state
   - [x] Test: XP-styled outer container border and structure
@@ -28,7 +28,7 @@
   - [x] Test: SPACE key handling doesn't crash in menu state
   - [x] Test: prefers-reduced-motion doesn't crash
   - [x] 13 component tests pass
-- [x] **Task: Implement Pong.tsx (Green phase)**
+- [x] **Task: Implement Pong.tsx (Green phase)** [fdb45fa]
   - [x] Import physics functions from `pong-physics.ts`
   - [x] Create `src/components/apps/Pong.tsx` with Canvas-based Pong
   - [x] Implement game loop via `requestAnimationFrame` with delta-time
@@ -43,7 +43,7 @@
   - [x] Implement minimize pause/resume (rAF stop/start via useEffect)
   - [x] Add keyboard handlers (Space, W/S, Arrows) — Escape NOT added (handled by WindowLayer globally)
   - [x] Verify: all physics + component tests pass (13 + 32 = 45 tests)
-- [x] **Task: Create Pong desktop icon SVG**
+- [x] **Task: Create Pong desktop icon SVG** [fdb45fa]
   - [x] Create `public/icons/pong.svg` — 48×48 XP-styled paddle + ball icon
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1 — Pong' (Protocol in workflow.md)**
 
