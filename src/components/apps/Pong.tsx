@@ -120,7 +120,8 @@ export function Pong(props: PongProps) {
       ctx.textBaseline = 'alphabetic';
       ctx.font = '12px Tahoma, sans-serif';
       ctx.fillStyle = '#888888';
-      ctx.fillText('W/S or Arrow Up/Down to move paddle', CANVAS_WIDTH / 2, 270);
+      ctx.fillText('W/S or Arrow Up/Down to move paddle', CANVAS_WIDTH / 2, 265);
+      ctx.fillText('R to restart | ESC to close', CANVAS_WIDTH / 2, 285);
       if (selectedDifficultyRef.current) {
         ctx.fillStyle = '#ffffff';
         ctx.fillText('Press SPACE to play', CANVAS_WIDTH / 2, 300);
@@ -341,6 +342,13 @@ export function Pong(props: PongProps) {
           // Reset game
           resetGame();
         }
+        return;
+      }
+
+      // R key to restart from any state
+      if (key === 'r') {
+        e.preventDefault();
+        resetGame();
         return;
       }
 
