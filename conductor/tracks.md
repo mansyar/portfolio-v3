@@ -30,3 +30,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- CI/CD & Launch (Track 5A) archived to conductor/archive/cicd-launch_20260514/ -->
 
 <!-- Safe Mode Mobile Enhancement (Track 6A) archived to conductor/archive/safe-mode-mobile_20260515/ -->
+
+---
+
+- [ ] **Track: Classic XP Games — Pong (VS AI) + Minesweeper (9×9) Canvas games**
+      _Link: [./tracks/classic-xp-games_20260515/](./tracks/classic-xp-games_20260515/)_
