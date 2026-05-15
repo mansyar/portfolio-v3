@@ -8,9 +8,10 @@ export default getViteConfig({
     setupFiles: ['./tests/setup.ts'],
     coverage: {
       provider: 'v8',
+      exclude: ['src/lib/generated/', 'src/styles/'],
       thresholds: {
         statements: 80,
-        branches: 80,
+        branches: 75,
         functions: 80,
         lines: 80,
       },

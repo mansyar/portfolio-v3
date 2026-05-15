@@ -336,6 +336,40 @@ describe('WindowLayer.tsx', () => {
     });
   });
 
+  it('should open Pong window via luna:open-window event', async () => {
+    const stores = await import('@/stores/windows');
+    render(<WindowLayer />);
+
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'pong' }));
+
+    const windows = stores.$windows.get();
+    expect(windows.pong).toBeDefined();
+    expect(windows.pong.status).toBe('open');
+  });
+
+  it('should open Minesweeper window via luna:open-window event', async () => {
+    const stores = await import('@/stores/windows');
+    render(<WindowLayer />);
+
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'minesweeper' }));
+
+    const windows = stores.$windows.get();
+    expect(windows.minesweeper).toBeDefined();
+    expect(windows.minesweeper.status).toBe('open');
+  });
+
+  it('should handle pong and minesweeper window configs correctly', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('pong');
+    stores.openWindow('minesweeper');
+
+    const windows = stores.$windows.get();
+    expect(windows.pong.title).toBe('Pong');
+    expect(windows.pong.width).toBe(620);
+    expect(windows.minesweeper.title).toBe('Minesweeper');
+    expect(windows.minesweeper.width).toBe(380);
+  });
+
   describe('Escape Key Handler', () => {
     it('should close active window on Escape key press', async () => {
       const stores = await import('@/stores/windows');

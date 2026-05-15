@@ -16,7 +16,7 @@ gantt
 
     section Phase 6
     Track 6A – Safe Mode Mobile Ench.   :done, p6a, 2026-05-15, 2d
-    Track 6B – Classic XP Games          :active, p6b, after p6a, 3d
+    Track 6B – Classic XP Games          :done, p6b, after p6a, 3d
     Track 6C – Content Drop              :active, p6c, after p6a, 3d
     Track 6D – Terminal Tactics Launcher :active, p6d, after p6c, 2d
     Track 6E – Performance Optimization  :active, p6e, after p6d, 2d
@@ -93,66 +93,68 @@ docs/TDD.md — §8 Mobile Safe Mode, §9 Animations & Transitions
 
 #### Tasks
 
-##### Phase 1 — Pong (VS AI)
+##### Phase 1 — Pong (VS AI) ✅
 
-- [ ] Create `src/components/apps/Pong.tsx` — Canvas-based Pong game
-  - [ ] Game loop via `requestAnimationFrame` with delta-time
-  - [ ] Player paddle: controlled by keyboard (W/S or Arrow Up/Down)
-  - [ ] AI paddle: simple tracking (follow ball Y with configurable reaction delay + error margin)
-  - [ ] Ball physics: angle reflection off paddles, wall bounces, speed increase per hit
-  - [ ] Score tracking: first to 5 wins, display score at top of canvas
-  - [ ] Game states: `waiting` (show "Press SPACE to start"), `playing`, `scored` (brief pause), `won`/`lost` (show result + "Press SPACE to restart")
-  - [ ] XP-styled border around canvas, Tahoma font for score text
-  - [ ] Respect `prefers-reduced-motion` (cap ball speed)
-  - [ ] Pause on window minimize (stop rAF loop)
-  - [ ] Keyboard: Escape to close window, Space to start/restart, W/S or Arrow Up/Down for paddle
+- [x] Create `src/components/apps/Pong.tsx` — Canvas-based Pong game
+  - [x] Game loop via `requestAnimationFrame` with delta-time
+  - [x] Player paddle: controlled by keyboard (W/S or Arrow Up/Down)
+  - [x] AI paddle: simple tracking with difficulty-dependent speed (Easy: 0.7×, Medium: 1.0×, Hard: 1.4×), configurable reaction delay + error margin, capped at 600 px/s
+  - [x] Ball physics: angle reflection off paddles, wall bounces, speed increase per hit (capped at 600 px/s)
+  - [x] Score tracking: first to 5 wins, display score at top of canvas
+  - [x] Game states: `menu` (difficulty select), `waiting` ("Press SPACE to start"), `playing`, `scored` (brief pause), `won`/`lost` (result + "Press SPACE to restart")
+  - [x] XP-styled border around canvas, Tahoma font for score text
+  - [x] Respect `prefers-reduced-motion` (cap ball speed at 60%)
+  - [x] Pause on window minimize (stop rAF loop), resume on restore
+  - [x] Keyboard: Escape to close window, Space to start/restart, R to restart from any state, W/S or Arrow Up/Down for paddle
 
-- [ ] Write Pong tests
-  - [ ] Canvas render (smoke test)
-  - [ ] Ball-wall collision
-  - [ ] Paddle-ball collision
-  - [ ] AI tracking behavior
-  - [ ] Score state transitions
+- [x] Write Pong tests
+  - [x] Canvas render (smoke test)
+  - [x] Ball-wall collision (4 tests)
+  - [x] Paddle-ball collision (8 tests)
+  - [x] AI tracking behavior (4 tests)
+  - [x] Score state transitions
+  - [x] 44 total Pong tests (31 physics + 13 component)
 
-##### Phase 2 — Minesweeper (9×9 Beginner)
+##### Phase 2 — Minesweeper (9×9 Beginner) ✅
 
-- [ ] Create `src/components/apps/Minesweeper.tsx` — Canvas-based Minesweeper
-  - [ ] 9×9 grid, 10 mines, standard Minesweeper rules
-  - [ ] Left-click: reveal cell; Right-click: toggle flag
-  - [ ] Flood-fill: revealing an empty cell auto-reveals all adjacent empty cells
-  - [ ] Mine explosion: reveal all mines on loss, highlight triggered mine in red
-  - [ ] Win detection: all non-mine cells revealed
-  - [ ] Timer: counts up from 0 in seconds, displayed in header area
-  - [ ] Mine counter: shows remaining mines (total - flags placed)
-  - [ ] Smiley face button: 🙂 (playing), 😮 (clicking), 😎 (won), 💀 (lost) — click to restart
-  - [ ] First click guarantee: first click is never a mine (re-generate board if needed)
-  - [ ] XP-styled border around game area, Tahoma font for counter/timer
-  - [ ] Keyboard: R to restart, Escape to close window
-  - [ ] Canvas rendering: grid lines, numbered cells (1-8 with XP blue colors), flag icon, mine icon
+- [x] Create `src/components/apps/Minesweeper.tsx` — Canvas-based Minesweeper
+  - [x] 9×9 grid, 10 mines, standard Minesweeper rules
+  - [x] Left-click: reveal cell; Right-click: toggle flag
+  - [x] Flood-fill: BFS-based auto-reveal of adjacent empty cells
+  - [x] Mine explosion: reveal all mines on loss, highlight triggered mine in red
+  - [x] Win detection: all non-mine cells revealed; auto-flags remaining mines on win
+  - [x] Timer: counts up from 0 in seconds, displayed in header area, starts on first click
+  - [x] Mine counter: shows remaining mines (total - flags placed)
+  - [x] Smiley face button: 🙂 (playing), 😮 (clicking), 😎 (won), 💀 (lost) — click to restart
+  - [x] First click guarantee: first click is never a mine (re-generate board if needed)
+  - [x] XP-styled border around game area, Courier New monospace for counter/timer
+  - [x] Keyboard: R to restart, Escape to close window
+  - [x] Canvas rendering: grid lines, numbered cells (1-8 with classic number colors), flag icon, mine icon, 3D raised/inset cell borders
 
-- [ ] Write Minesweeper tests
-  - [ ] Board generation (correct mine count)
-  - [ ] Flood-fill logic
-  - [ ] Win/loss detection
-  - [ ] Flag toggle
-  - [ ] First-click safety
-  - [ ] Timer start/stop
+- [x] Write Minesweeper tests
+  - [x] Board generation (6 tests: dimensions, mine count, hidden state, first-click safety, validation, adjacency)
+  - [x] Flood-fill logic through `revealCell`
+  - [x] Win/loss detection
+  - [x] Flag toggle (4 tests)
+  - [x] First-click safety
+  - [x] Timer start/stop
+  - [x] 40 total Minesweeper tests (30 engine + 10 component)
 
-##### Phase 3 — Integration
+##### Phase 3 — Integration ✅
 
-- [ ] Add `pong` and `minesweeper` to `WindowId` type in `stores/windows.ts`
-- [ ] Add default window configs for both games (appropriate sizes: Pong ~600×450, Minesweeper ~400×450)
-- [ ] Wire both games into `WindowLayer.renderContent()` with placeholder → game component mapping
-- [ ] Create desktop icons: `public/icons/pong.svg`, `public/icons/minesweeper.svg` (48×48 XP-styled)
-- [ ] Add desktop icons to `index.astro` (vertical column, below existing icons)
-- [ ] Add both games to Start Menu pinned apps list
-- [ ] Register `pong` and `minesweeper` CMD commands in `commands.ts` → open respective window
-- [ ] Verify multi-window coexistence (games + Explorer + CMD all open simultaneously)
-- [ ] Verify all games respect window minimize (pause/resume rAF)
-- [ ] **Docs — Update PRD §5 (Application Specs)** — add §5.4 Pong and §5.5 Minesweeper app specs
-- [ ] **Docs — Update TDD §3.1 (WindowId type)** — add `'pong' | 'minesweeper'` to the union type
-- [ ] **Docs — Update TDD §3.2 (Default Window Configs)** — add Pong and Minesweeper to the config table
-- [ ] **Docs — Update TDD §6 (Component Inventory)** — add Pong and Minesweeper to React Islands table
+- [x] Add `pong` and `minesweeper` to `WindowId` type in `stores/windows.ts`
+- [x] Add default window configs for both games (Pong: 620×460, Minesweeper: 380×450)
+- [x] Wire both games into `WindowLayer.renderContent()` — Pong and Minesweeper component imports + case branches
+- [x] Create desktop icons: `public/icons/pong.svg`, `public/icons/minesweeper.svg` (48×48 XP-styled)
+- [x] Add desktop icons to `index.astro` (vertical column, below Recycle Bin)
+- [x] Add both games to Start Menu pinned apps list (LEFT_ITEMS, after Command Prompt)
+- [x] Register `pong` and `minesweeper` CMD commands → returns `{ openWindow: 'pong'/'minesweeper' }` — opens via `openWindow` field in `CmdOutput`
+- [x] Verify multi-window coexistence (games + Explorer + CMD all open simultaneously)
+- [x] Verify all games respect window minimize (pause/resume rAF)
+- [x] **Docs — Update PRD §5 (Application Specs)** — added §5.4 Pong and §5.5 Minesweeper app specs
+- [x] **Docs — Update TDD §3.1 (WindowId type)** — added `'pong' | 'minesweeper'` to the union
+- [x] **Docs — Update TDD §3.2 (Default Window Configs)** — added Pong and Minesweeper rows
+- [x] **Docs — Update TDD §6 (Component Inventory)** — added Pong and Minesweeper to React Islands table
 
 #### Acceptance Criteria
 

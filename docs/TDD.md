@@ -21,7 +21,7 @@ portfolio-v3/
 │   │   ├── desktop/              # Astro: Desktop, DesktopIcon, Wallpaper
 │   │   ├── taskbar/              # React: Taskbar, StartMenu, SystemTray, Clock
 │   │   ├── window/               # React: WindowFrame, TitleBar, WindowContent
-│   │   ├── apps/                 # React: CmdPrompt, TaskManager, KnowledgeBase, Explorer
+│   │   ├── apps/                 # React: CmdPrompt, TaskManager, KnowledgeBase, Explorer, Pong, Minesweeper
 │   │   └── mobile/               # Astro: SafeModeShell, BiosScreen, TerminalNav
 │   ├── content/
 │   │   ├── projects/             # MDX: one file per project
@@ -82,12 +82,12 @@ portfolio-v3/
 https://portfolio-os.ansyar-world.top/?w=cmd,taskmanager&focus=cmd&start=0
 ```
 
-| Param   | Type           | Description                                                                       |
-| :------ | :------------- | :-------------------------------------------------------------------------------- |
-| `w`     | `string` (CSV) | Open window IDs: `cmd`, `explorer`, `taskmanager`, `help`, `mydocs`, `recyclebin` |
-| `focus` | `string`       | Currently focused (topmost) window ID                                             |
-| `start` | `0 \| 1`       | Whether Start Menu is open                                                        |
-| `path`  | `string`       | Current Explorer path, e.g., `C:/Software_Engineering/icarus`                     |
+| Param   | Type           | Description                                                                                              |
+| :------ | :------------- | :------------------------------------------------------------------------------------------------------- |
+| `w`     | `string` (CSV) | Open window IDs: `cmd`, `explorer`, `taskmanager`, `help`, `mydocs`, `recyclebin`, `pong`, `minesweeper` |
+| `focus` | `string`       | Currently focused (topmost) window ID                                                                    |
+| `start` | `0 \| 1`       | Whether Start Menu is open                                                                               |
+| `path`  | `string`       | Current Explorer path, e.g., `C:/Software_Engineering/icarus`                                            |
 
 ### Deep-Link Examples
 
@@ -119,7 +119,15 @@ https://portfolio-os.ansyar-world.top/?w=cmd,taskmanager&focus=cmd&start=0
 // src/stores/windows.ts
 import { map, atom, computed } from 'nanostores';
 
-export type WindowId = 'explorer' | 'mydocs' | 'help' | 'cmd' | 'recyclebin' | 'taskmanager';
+export type WindowId =
+  | 'explorer'
+  | 'mydocs'
+  | 'help'
+  | 'cmd'
+  | 'recyclebin'
+  | 'taskmanager'
+  | 'pong'
+  | 'minesweeper';
 
 export interface WindowState {
   id: WindowId;
@@ -132,7 +140,7 @@ export interface WindowState {
   minWidth: number; // minimum resize width
   minHeight: number; // minimum resize height
   zIndex: number;
-  status: 'open' | 'minimized' | 'maximized';
+  status: 'open' | 'minimized' | 'maximized' | 'closing';
   // App-specific state
   explorerPath?: string; // for Explorer windows
   cmdHistory?: string[]; // for Command Prompt
@@ -158,6 +166,8 @@ export const $taskbarWindows = computed($windows, (wins) =>
 | Command Prompt | 680×420      | 100, 100         | 450×250  |
 | Task Manager   | 500×550      | 200, 60          | 400×450  |
 | Recycle Bin    | 550×400      | 150, 90          | 350×250  |
+| Pong           | 620×460      | 80, 60           | 450×320  |
+| Minesweeper    | 380×450      | 120, 80          | 315×380  |
 
 ### 3.3 Window Actions
 
@@ -473,6 +483,8 @@ export const FILE_SYSTEM: FSNode = {
 | `TaskManager`   | `windowId`                   | Tabs: Processes (table, CPU animation, End Process), Performance (Canvas graphs) |
 | `CanvasGraph`   | `label, width, height, data` | Reusable green-on-black line graph with grid, 60-point buffer                    |
 | `KnowledgeBase` | `windowId`                   | Search bar, sidebar categories, article renderer                                 |
+| `Pong`          | `windowId`                   | Canvas Pong VS AI with difficulty menu, AI tracking, first-to-5 scoring          |
+| `Minesweeper`   | `windowId`                   | Canvas Minesweeper 9×9 with flood-fill, timer, mine counter, smiley face restart |
 
 ### Astro Components (Static)
 
@@ -522,6 +534,8 @@ export const FILE_SYSTEM: FSNode = {
 | `open <slug>` | —       | Opens Explorer at file's parent folder; `open resume.pdf` opens new tab                         |
 | `whoami`      | —       | Prints `mansyar\administrator`                                                                  |
 | `echo <text>` | —       | Prints text back verbatim                                                                       |
+| `pong`        | —       | Opens Pong game window with AI opponent                                                         |
+| `minesweeper` | —       | Opens Minesweeper 9×9 game window                                                               |
 | _unknown_     | —       | `'<cmd>' is not recognized as an internal or external command, operable program or batch file.` |
 
 **Features:**

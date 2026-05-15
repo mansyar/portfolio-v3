@@ -35,6 +35,8 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
   - `Resume.exe` (Opens My Documents)
   - `Control Panel` (Opens Task Manager)
   - `Command Prompt` (Opens CLI)
+  - `Pong` (Opens Pong game VS AI)
+  - `Minesweeper` (Opens Minesweeper 9×9)
   - `Shut Down...` (Triggers BIOS/Goodbye overlay)
 - **Window Manager:** State-driven dragging, minimizing, and focusing using Nano Stores.
 - **MetaTags Component:** Reusable Astro component injecting `<title>`, `<meta name="description">`, Open Graph tags (og:title, og:description, og:image, og:type), and JSON-LD Person schema into `<head>`.
@@ -63,6 +65,8 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 | **Knowledge Base** | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).                                                                                                      |
 | **Command Prompt** | App     | Functional React terminal for CLI navigation.                                                                                                                        |
 | **Recycle Bin**    | Archive | `\Recycle_Bin` virtual folder with deleted/archived item (`chasing-chapters (v1)`). Grayed-out icon, strikethrough name, disabled Restore button.                    |
+| **Pong**           | Game    | Canvas-based Pong VS AI with difficulty selection (Easy/Medium/Hard). First-to-5 scoring, W/S or Arrow keys, rAF game loop.                                          |
+| **Minesweeper**    | Game    | Canvas-based Minesweeper 9×9 with 10 mines. Left-click reveal, right-click flag, flood-fill, timer, mine counter, smiley face restart button.                        |
 
 ### 📂 Directory Details
 
@@ -125,6 +129,45 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Build Integration:** `"build": "node scripts/prebuild.mjs && astro build"` — the prebuild orchestrator runs all 4 pre-processing scripts (fetch-github-stats, compile-articles, compile-projects, generate-filesystem) before Astro, total ~3.44s.
 - **Articles:** 5 articles across 3 categories: DevOps (Docker Basics, Linux Essentials, CI/CD Pipeline), Software Engineering (Microservices Patterns), AI (LLM Fine-Tuning Guide).
 - **Accessibility:** Full WCAG AA compliance across all components. ARIA roles include `role="region"` + `aria-label="Knowledge Base"` on outer container, `role="searchbox"` on search input, `role="navigation"` + `aria-label="Article categories"` on category sidebar.
+
+### 5.4 Pong
+
+- **React Island:** `Pong.tsx` — Canvas-based Pong game with AI opponent.
+- **Difficulty Selection:** Pre-game screen with Easy / Medium / Hard buttons. User selects difficulty, then presses SPACE to play.
+  - **Easy:** AI reaction delay ~300ms, error margin ±60px, 0.7× ball speed
+  - **Medium:** AI reaction delay ~150ms, error margin ±30px, 1.0× ball speed
+  - **Hard:** AI reaction delay ~50ms, error margin ±10px, 1.4× ball speed (capped at 600 px/s)
+- **Game Loop:** `requestAnimationFrame` with delta-time for frame-independent physics.
+- **Controls:** W/S or Arrow Up/Down for paddle movement. SPACE to start/restart. R to restart from any state. Escape handled by WindowLayer globally.
+- **AI Paddle:** Tracks ball Y position every frame with difficulty-dependent speed multiplier and random error margin for natural gameplay.
+- **Ball Physics:** Angle reflection off paddles (based on hit position on paddle). Wall bounces. Speed increases 15 px/s per paddle hit (capped at 600 px/s).
+- **Scoring:** First to 5 wins. Score displayed at canvas top in Tahoma font (32px).
+- **Game States:** `menu` (difficulty select), `waiting` ("Press SPACE to start"), `playing`, `scored` (brief pause, yellow "SCORE!" text), `won`/`lost` (result in green/red + "Press SPACE to restart").
+- **Visual Style:** Black background, white paddles and ball, dark center dashed line, XP-styled 3D border. Tahoma font throughout.
+- **prefers-reduced-motion:** Caps ball speed at 60% of normal max.
+- **Minimize Behavior:** Pause rAF loop on window minimize; resume on restore.
+- **Pure Logic Module:** `src/lib/pong-physics.ts` — all physics, collision detection, AI logic as pure functions with no DOM dependencies. 31 isolated unit tests.
+- **Window Config:** 620×460 default size, `minWidth: 450`, `minHeight: 320`.
+- **Desktop icon:** `public/icons/pong.svg` (48×48, paddle + ball).
+
+### 5.5 Minesweeper
+
+- **React Island:** `Minesweeper.tsx` — Canvas-based Minesweeper (Beginner 9×9).
+- **Board:** 9×9 grid with 10 mines. Standard Minesweeper rules.
+- **Controls:** Left-click to reveal cell. Right-click to toggle flag. R key to restart. Smiley face button (canvas-drawn) to restart. Escape handled by WindowLayer globally.
+- **Flood-fill:** Revealing an empty cell (0 adjacent mines) auto-reveals all connected empty cells via iterative BFS.
+- **First-click Guarantee:** First click is never a mine — board is regenerated if needed via `ensureFirstClickSafe()`.
+- **Loss Detection:** Clicking a mine reveals all mines on the board. The triggered mine is highlighted in red.
+- **Win Detection:** All 71 non-mine cells revealed. Auto-flags remaining mines on win.
+- **Timer:** Counts up from 0 in seconds, displayed in header red LED-style digits. Starts on first click. Stops on win/loss.
+- **Mine Counter:** Shows remaining mines (total − flags placed) in red LED-style digits. Goes negative if more flags than mines.
+- **Smiley Face Button:** Canvas-drawn 🙂 (playing), 😮 (clicking), 😎 (won), 💀 (lost). Click to restart.
+- **Visual Style:** Gray (`#c0c0c0`) game area, XP-styled 3D borders around cells with raised/inset appearance, classic Minesweeper number colors (1: blue, 2: green, 3: red, 4: dark blue, 5: dark red, 6: teal, 7: black, 8: gray). Courier New monospace for counters.
+- **Canvas Rendering:** Grid lines, numbered cells, flag icon (red triangle + pole), mine icon (black circle with spokes).
+- **Pure Logic Module:** `src/lib/minesweeper-engine.ts` — board generation, flood-fill, win/loss detection, flag toggle, first-click safety as pure functions with no DOM dependencies. 30 isolated unit tests.
+- **Window Config:** 380×450 default size, `minWidth: 315`, `minHeight: 380`.
+- **Desktop icon:** `public/icons/minesweeper.svg` (48×48, mine with spokes).
+- **Desktop only** — not available in mobile Safe Mode.
 
 ---
 

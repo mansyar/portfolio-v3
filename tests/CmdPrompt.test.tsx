@@ -274,6 +274,38 @@ describe('CmdPrompt component', () => {
     expect(input.value).toBe('zzz');
   });
 
+  it('should open Pong window when pong command is entered', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'pong' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Pong window should be opened
+    const state = stores.$windows.get();
+    expect(state.pong).toBeDefined();
+    expect(state.pong.status).toBe('open');
+  });
+
+  it('should open Minesweeper window when minesweeper command is entered', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('cmd');
+
+    render(<CmdPrompt windowId="cmd" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'minesweeper' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Minesweeper window should be opened
+    const state = stores.$windows.get();
+    expect(state.minesweeper).toBeDefined();
+    expect(state.minesweeper.status).toBe('open');
+  });
+
   it('should use /? alias for help', async () => {
     const stores = await import('@/stores/windows');
     stores.openWindow('cmd');

@@ -129,6 +129,88 @@ describe('Pong.tsx — Keyboard Controls', () => {
   });
 });
 
+describe('Pong.tsx — Game State Transitions', () => {
+  it('should transition from menu to waiting when difficulty selected and SPACE pressed', () => {
+    const { container } = render(<Pong windowId="pong" />);
+    const canvas = container.querySelector('canvas')!;
+
+    // Click the Easy difficulty button area on canvas
+    // Easy button is at: startX + 0 * (120 + 20) = (600 - 3*120 - 2*20)/2 = 110, y from 170 to 210
+    fireEvent.click(canvas, { clientX: 170, clientY: 190 });
+
+    // After selecting difficulty, pressing SPACE should move to waiting state
+    fireEvent.keyDown(document, { key: ' ' });
+
+    // Canvas should still be rendered (game is in waiting state)
+    expect(container.querySelector('canvas')).not.toBeNull();
+  });
+
+  it('should handle R key restart from playing state without crashing', () => {
+    render(<Pong windowId="pong" />);
+
+    // Press R key to reset (even from menu state)
+    fireEvent.keyDown(document, { key: 'r' });
+
+    // Should be back in menu state — canvas still renders with Select difficulty label
+    const canvas = document.querySelector('canvas')!;
+    expect(canvas.getAttribute('aria-label')).toContain('Select difficulty');
+  });
+
+  it('should go back to menu after R key restart', () => {
+    const { container } = render(<Pong windowId="pong" />);
+    const canvas = container.querySelector('canvas')!;
+
+    // Select difficulty, start game, then restart
+    fireEvent.click(canvas, { clientX: 170, clientY: 190 });
+    fireEvent.keyDown(document, { key: ' ' });
+    fireEvent.keyDown(document, { key: 'r' });
+
+    expect(canvas.getAttribute('aria-label')).toContain('Select difficulty');
+  });
+});
+
+describe('Pong.tsx — Canvas Interaction', () => {
+  it('should handle canvas click for difficulty selection without crashing', () => {
+    const { container } = render(<Pong windowId="pong" />);
+    const canvas = container.querySelector('canvas')!;
+
+    // Click at Easy button position
+    fireEvent.click(canvas, { clientX: 170, clientY: 190 });
+
+    // Canvas should still render after click
+    expect(canvas.getAttribute('aria-label')).toContain('Select difficulty');
+  });
+
+  it('should handle SPACE then R restart sequence correctly', () => {
+    const { container } = render(<Pong windowId="pong" />);
+    const canvas = container.querySelector('canvas')!;
+
+    // Select difficulty
+    fireEvent.click(canvas, { clientX: 170, clientY: 190 });
+    // Start game
+    fireEvent.keyDown(document, { key: ' ' });
+    // Restart via R
+    fireEvent.keyDown(document, { key: 'r' });
+
+    expect(canvas.getAttribute('aria-label')).toContain('Select difficulty');
+  });
+
+  it('should cycle through difficulty selection with canvas clicks', () => {
+    const { container } = render(<Pong windowId="pong" />);
+    const canvas = container.querySelector('canvas')!;
+
+    // Click Easy (first button)
+    fireEvent.click(canvas, { clientX: 170, clientY: 190 });
+    // Re-select Medium (second button: 170 + 140 = 310)
+    fireEvent.click(canvas, { clientX: 310, clientY: 190 });
+    // Start and restart
+    fireEvent.keyDown(document, { key: ' ' });
+    fireEvent.keyDown(document, { key: 'r' });
+
+    expect(canvas.getAttribute('aria-label')).toContain('Select difficulty');
+  });
+});
+
 describe('Pong.tsx — prefers-reduced-motion', () => {
   it('should render without crashing when prefers-reduced-motion is set', () => {
     render(<Pong windowId="pong" />);
