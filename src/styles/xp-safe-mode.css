@@ -105,11 +105,10 @@
 }
 
 /* Content dimming class (applied to outgoing view during transitions)
-   Opacity is applied as a baseline — during cross-fade the animation overrides it,
-   under reduced-motion (no animation) the dimming takes effect independently. */
+   Marker class for testing — actual dimming is handled by the cross-fade
+   animation keyframes (fadeOut: 1->0 over 200ms). */
 .content-dimming {
-  transition: opacity 150ms ease-out;
-  opacity: 0.7;
+  /* Visual dimming is handled by the cross-fade animation */
 }
 
 /* Reduced motion: disable cross-fade (but dimming still applies) */
