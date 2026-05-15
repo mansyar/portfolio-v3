@@ -29,28 +29,28 @@
   - [x] Add `@media (prefers-reduced-motion: reduce)` override: 0ms duration
 - [x] **Task: Conductor - User Manual Verification 'Phase 1 — View Stack + Cross-Fade Transitions' (Protocol in workflow.md)** [67f8423]
 
-## Phase 2 — Swipe Gesture Handler
+## Phase 2 — Swipe Gesture Handler [checkpoint: 2b9d1b2]
 
 > Implement touch swipe detection with opacity-fade visual feedback and instant-commit back navigation in TerminalNav.tsx.
 
-- [ ] **Task: Write swipe gesture test suite**
-  - [ ] Test: touch start within 40px of left edge triggers gesture detection
-  - [ ] Test: touch start beyond 40px does NOT trigger gesture
-  - [ ] Test: dragging right > 80px commits back navigation instantly
-  - [ ] Test: dragging right ≤ 80px snaps back with opacity restore (150ms ease-out)
-  - [ ] Test: vertical drag (scroll) is ignored — no opacity change, no navigation
-  - [ ] Test: opacity decreases proportionally with drag distance
-  - [ ] Test: swipe-committed back does NOT fire a slide transition (instant swap)
-  - [ ] Test: gestures do NOT fire on non-touch devices (pointer events)
-- [ ] **Task: Implement swipe gesture handler in TerminalNav.tsx**
-  - [ ] Add `touchstart`, `touchmove`, `touchend` event listeners in a dedicated `useEffect`
-  - [ ] Use `useRef` for touch state (`startX`, `currentX`, `startY`, `opacity`) to avoid stale closures and unnecessary re-renders
-  - [ ] Compute opacity = `clamp(1 - dragDistance / viewportWidth, 0, 1)`
-  - [ ] Apply opacity via `ref.current.style.opacity` on the view container (ref-based DOM write, no re-render)
-  - [ ] On commit (> 80px): call `setSafeModeView(previousView)` instantly — no slide, no delay
-  - [ ] On cancel (≤ 80px): reset opacity to 1.0 with CSS transition (150ms ease-out)
-  - [ ] Ensure keyboard handler (`useEffect`) and touch handler (`useEffect`) are in separate effects to avoid re-subscription conflicts
-  - [ ] Verify keyboard/touch navigation no regression
+- [x] **Task: Write swipe gesture test suite** (8 tests passing) [2b9d1b2]
+  - [x] Test: touch start within 40px of left edge triggers gesture detection
+  - [x] Test: touch start beyond 40px does NOT trigger gesture
+  - [x] Test: dragging right > 80px commits back navigation instantly
+  - [x] Test: dragging right ≤ 80px snaps back with opacity restore (150ms ease-out)
+  - [x] Test: vertical drag (scroll) is ignored — no opacity change, no navigation
+  - [x] Test: opacity decreases proportionally with drag distance
+  - [x] Test: swipe-committed back does NOT fire a cross-fade transition (instant swap)
+  - [x] Test: gestures do NOT fire on non-touch devices (pointer events)
+- [x] **Task: Implement swipe gesture handler in TerminalNav.tsx** [2b9d1b2]
+  - [x] Add `touchstart`, `touchmove`, `touchend` event listeners in a dedicated `useEffect`
+  - [x] Use `useRef` for touch state (`startX`, `currentX`, `startY`, `opacity`) to avoid stale closures and unnecessary re-renders
+  - [x] Compute opacity = `clamp(1 - dragDistance / viewportWidth, 0, 1)`
+  - [x] Apply opacity via `ref.current.style.opacity` on the view container (ref-based DOM write, no re-render)
+  - [x] On commit (> 80px): navigate back instantly — no cross-fade, no delay
+  - [x] On cancel (≤ 80px): reset opacity to 1.0 with CSS transition (150ms ease-out)
+  - [x] Ensure keyboard handler (`useEffect`) and touch handler (`useEffect`) are in separate effects to avoid re-subscription conflicts
+  - [x] All 19 tests pass (7 original + 4 cross-fade + 8 swipe)
 - [ ] **Task: Conductor - User Manual Verification 'Phase 2 — Swipe Gesture Handler' (Protocol in workflow.md)**
 
 ## Phase 3 — Content Dimming During Transitions
