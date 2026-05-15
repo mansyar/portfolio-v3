@@ -24,6 +24,13 @@ const LEFT_ITEMS: MenuItem[] = [
     windowId: 'taskmanager',
   },
   { id: 'cmd', label: 'Command Prompt', icon: '/icons/command-prompt.svg', windowId: 'cmd' },
+  { id: 'pong', label: 'Pong', icon: '/icons/pong.svg', windowId: 'pong' },
+  {
+    id: 'minesweeper',
+    label: 'Minesweeper',
+    icon: '/icons/minesweeper.svg',
+    windowId: 'minesweeper',
+  },
 ];
 
 const RIGHT_ITEMS: MenuItem[] = [

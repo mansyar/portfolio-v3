@@ -87,16 +87,16 @@
 
 ## Phase 3 — Desktop Integration
 
-- [ ] **Task: Add `openWindow` support to CMD output**
-  - [ ] Add `openWindow?: WindowId` field to `CmdOutput` interface in `src/lib/commands.ts`
-  - [ ] Update `CmdPrompt.tsx` to call `openWindow(cmdOutput.openWindow)` when this field is present
+- [~] **Task: Add `openWindow` support to CMD output**
+  - [x] Add `openWindow?: WindowId` field to `CmdOutput` interface in `src/lib/commands.ts`
+  - [x] Update `CmdPrompt.tsx` to call `openWindow(cmdOutput.openWindow)` when this field is present
   - [ ] Write tests verifying CmdPrompt opens game windows
-- [ ] **Task: Register games in Window system**
-  - [ ] Add `pong` and `minesweeper` to `WindowId` type in `src/stores/windows.ts`
-  - [ ] Add default window configs (Pong: 600×450, pos (80,60); Minesweeper: 400×450, pos (120,80))
-- [ ] **Task: Wire games into WindowLayer**
-  - [ ] Import Pong and Minesweeper in `WindowLayer.tsx`
-  - [ ] Add case branches in `renderContent()` for `'pong'` and `'minesweeper'`
+- [~] **Task: Register games in Window system**
+  - [x] Add `pong` and `minesweeper` to `WindowId` type in `src/stores/windows.ts`
+  - [x] Add default window configs (Pong: 600×450, pos (80,60); Minesweeper: 400×450, pos (120,80))
+- [~] **Task: Wire games into WindowLayer**
+  - [x] Import Pong and Minesweeper in `WindowLayer.tsx`
+  - [x] Add case branches in `renderContent()` for `'pong'` and `'minesweeper'`
 - [ ] **Task: Add desktop icons to index.astro**
   - [ ] Add Pong and Minesweeper DesktopIcon components (below existing icons, after Recycle Bin)
 - [ ] **Task: Add games to Start Menu**

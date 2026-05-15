@@ -8,6 +8,7 @@
 import { getChildren, resolvePath, getParent } from '@/lib/filesystem';
 import { PROJECTS_METADATA, ARTICLES_METADATA } from '@/lib/projects-data';
 import { FILE_SYSTEM, type FSNode } from '@/lib/constants';
+import type { WindowId } from '@/stores/windows';
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -22,6 +23,8 @@ export interface CmdOutput {
   openUrl?: string;
   /** If set, update the cmdPath for this window (used by cd) */
   newCmdPath?: string;
+  /** If set, open a game/app window (used by pong, minesweeper commands) */
+  openWindow?: WindowId;
 }
 
 export interface CmdContext {
@@ -48,6 +51,8 @@ export const COMMANDS: Record<string, string> = {
   whoami: 'Displays the current user name',
   echo: 'Outputs the provided text',
   '/?': 'Shows available commands (alias for help)',
+  pong: 'Starts a game of Pong (VS AI)',
+  minesweeper: 'Starts a game of Minesweeper (9x9)',
 };
 
 // ── Parsing ────────────────────────────────────────────────────────
@@ -290,6 +295,14 @@ const handlerOpen: CommandHandler = (args) => {
   return { lines: ['The system cannot find the file specified.'] };
 };
 
+const handlerPong: CommandHandler = () => {
+  return { lines: ['Starting Pong...'], openWindow: 'pong' };
+};
+
+const handlerMinesweeper: CommandHandler = () => {
+  return { lines: ['Starting Minesweeper...'], openWindow: 'minesweeper' };
+};
+
 // ── Registry ────────────────────────────────────────────────────────
 
 export const COMMAND_REGISTRY: Record<string, CommandHandler> = {
@@ -307,4 +320,6 @@ export const COMMAND_REGISTRY: Record<string, CommandHandler> = {
   open: handlerOpen,
   whoami: handlerWhoami,
   echo: handlerEcho,
+  pong: handlerPong,
+  minesweeper: handlerMinesweeper,
 };

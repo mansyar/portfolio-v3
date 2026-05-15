@@ -1,6 +1,14 @@
 import { atom, map, computed } from 'nanostores';
 
-export type WindowId = 'explorer' | 'mydocs' | 'help' | 'cmd' | 'taskmanager' | 'recyclebin';
+export type WindowId =
+  | 'explorer'
+  | 'mydocs'
+  | 'help'
+  | 'cmd'
+  | 'taskmanager'
+  | 'recyclebin'
+  | 'pong'
+  | 'minesweeper';
 
 export type WindowStatus = 'open' | 'minimized' | 'maximized' | 'closing';
 
@@ -93,6 +101,26 @@ export const DEFAULT_WINDOW_CONFIGS: Record<WindowId, WindowConfig> = {
     y: 90,
     minWidth: 350,
     minHeight: 250,
+  },
+  pong: {
+    title: 'Pong',
+    icon: '/icons/pong.svg',
+    width: 620,
+    height: 460,
+    x: 80,
+    y: 60,
+    minWidth: 450,
+    minHeight: 320,
+  },
+  minesweeper: {
+    title: 'Minesweeper',
+    icon: '/icons/minesweeper.svg',
+    width: 380,
+    height: 450,
+    x: 120,
+    y: 80,
+    minWidth: 315,
+    minHeight: 380,
   },
 };
 

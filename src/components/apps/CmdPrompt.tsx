@@ -188,6 +188,11 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
         window.open(result.openUrl, '_blank');
       }
 
+      // Handle openWindow - open a game/app window
+      if (result.openWindow) {
+        openWindow(result.openWindow);
+      }
+
       setOutputLines((prev) => [...prev, ...newLines]);
     },
     [cmdPath, windowId],
