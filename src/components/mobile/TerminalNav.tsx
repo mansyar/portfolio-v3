@@ -35,20 +35,6 @@ interface ArticleMetadataEntry {
   [key: string]: unknown;
 }
 
-type NavigationDirection = 'forward' | 'back';
-
-/**
- * Determines whether a view transition is forward (parent → child) or back (child → parent).
- */
-function getNavigationDirection(from: SafeModeView, to: SafeModeView): NavigationDirection {
-  const parentChildMap: Partial<Record<SafeModeView, SafeModeView[]>> = {
-    main: ['projects', 'knowledge-base', 'contact'],
-    projects: ['project-detail'],
-    'knowledge-base': ['article-detail'],
-  };
-  return (parentChildMap[from] ?? []).includes(to) ? 'forward' : 'back';
-}
-
 const TRANSITION_DURATION_MS = 250;
 
 const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
@@ -57,8 +43,6 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
 
   const [previousView, setPreviousView] = useState<SafeModeView | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [navigatingForward, setNavigatingForward] = useState<boolean>(true);
-
   const projects = Object.entries(projectsData as Record<string, ProjectDataEntry>).map(
     ([slug, data]) => ({
       slug,
@@ -81,9 +65,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
 
   const navigateTo = useCallback(
     (view: SafeModeView) => {
-      const direction = getNavigationDirection(currentView, view);
       setPreviousView(currentView);
-      setNavigatingForward(direction === 'forward');
       setIsTransitioning(true);
       setPendingPushState();
       setSafeModeView(view);
@@ -107,8 +89,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
   // Compute CSS transition classes
   const getTransitionClass = (): string => {
     if (!isTransitioning || prefersReducedMotion) return '';
-    if (navigatingForward) return 'slide-in-right';
-    return 'slide-out-right slide-in-left';
+    return 'crossfade';
   };
 
   useEffect(() => {

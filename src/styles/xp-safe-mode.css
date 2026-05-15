@@ -72,57 +72,42 @@
   text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
 }
 
-/* === Slide Transition Animations (Track: Safe Mode Mobile Enhancement) === */
+/* === Cross-Fade Transitions (Safe Mode Mobile Enhancement) === */
 
-/* View stack positioning — overlay outgoing/incoming views during transitions */
-.slide-in-right,
-.slide-out-right.slide-in-left {
+/* View stack positioning — overlay outgoing/incoming views during cross-fade */
+.crossfade {
   display: grid;
   overflow: hidden;
 }
 
-.slide-in-right > .view-outgoing,
-.slide-in-right > .view-incoming,
-.slide-out-right.slide-in-left > .view-outgoing,
-.slide-out-right.slide-in-left > .view-incoming {
+.crossfade > .view-outgoing,
+.crossfade > .view-incoming {
   grid-area: 1 / 1;
 }
 
-/* Forward navigation: incoming view slides in from the right (200ms ease-out) */
-.slide-in-right > .view-incoming {
-  animation: slideInRight 200ms ease-out;
+/* Cross-fade: outgoing fades out (1→0), incoming fades in (0→1) (200ms ease-out) */
+.crossfade > .view-outgoing {
+  animation: fadeOut 200ms ease-out;
 }
 
-/* Back navigation: outgoing view slides out to the right (150ms ease-in) */
-.slide-out-right > .view-outgoing {
-  animation: slideOutRight 150ms ease-in;
+.crossfade > .view-incoming {
+  animation: fadeIn 200ms ease-out;
 }
 
-/* Back navigation: incoming view slides in from the left (150ms ease-out) */
-.slide-in-left > .view-incoming {
-  animation: slideInLeft 150ms ease-out;
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@keyframes slideOutRight {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
-}
-
-@keyframes slideInLeft {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-
-/* Reduced motion: disable all slide transitions */
+/* Reduced motion: disable cross-fade */
 @media (prefers-reduced-motion: reduce) {
-  .slide-in-right > .view-incoming,
-  .slide-out-right > .view-outgoing,
-  .slide-in-left > .view-incoming {
+  .crossfade > .view-outgoing,
+  .crossfade > .view-incoming {
     animation-duration: 0ms;
   }
 }

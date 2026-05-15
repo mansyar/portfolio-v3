@@ -26,15 +26,15 @@ Touch gesture support, CSS slide transitions, and a content-dimming loading indi
 - **No slide animation on swipe commit:** The swipe gesture uses opacity fade as its sole visual language. Slide transitions (FR2) are reserved for programmatic navigation only.
 - **Haptic Feedback:** No haptic feedback (keeps it simple).
 
-### FR2 — CSS Slide Transitions (Programmatic Navigation Only)
+### FR2 — Cross-Fade Transitions (Programmatic Navigation Only) (Updated: per user preference, replaced slides with fades for BIOS feel)
 
-- **Scope:** Slide transitions apply to **programmatic navigation** only — keyboard shortcuts (`1-5`, `0`), button clicks, and `onRestart`. They do NOT fire on swipe-committed back (FR1).
-- **Forward navigation** (e.g., Project Detail from Project List): New content slides in from the right edge over 200ms `ease-out`.
-- **Back navigation** (e.g., Project List from Project Detail):
-  - Outgoing view slides out to the right edge over 150ms `ease-in`.
-  - Incoming view simultaneously slides in from the left edge over 150ms `ease-out`.
-- **View stack requirement:** Both outgoing and incoming views must be rendered simultaneously during the transition. This requires refactoring from the current conditional rendering pattern (`{currentView === 'x' && renderX()}`) to a view stack that keeps the previous view mounted during its out-animation.
-- **Reduced Motion:** When `prefers-reduced-motion: reduce` is active, all slide transitions are disabled (0ms duration, instant swap).
+- **Scope:** Cross-fade transitions apply to **programmatic navigation** only — keyboard shortcuts (`1-5`, `0`), button clicks, and `onRestart`. They do NOT fire on swipe-committed back (FR1).
+- **Both forward and back navigation** use a uniform cross-fade:
+  - Outgoing view fades from opacity 1 → 0 over 200ms `ease-out`.
+  - Incoming view simultaneously fades from opacity 0 → 1 over 200ms `ease-out`.
+- **No directional distinction:** Unlike the original slide design, forward and back navigation use the same cross-fade animation, maintaining the safe BIOS/terminal aesthetic.
+- **View stack requirement:** Both outgoing and incoming views must be rendered simultaneously during the transition, overlaid on the same grid cell (`grid-area: 1 / 1`).
+- **Reduced Motion:** When `prefers-reduced-motion: reduce` is active, all cross-fade transitions are disabled (0ms duration, instant swap).
 
 ### FR3 — Content Dimming During Transitions
 
@@ -66,7 +66,7 @@ Touch gesture support, CSS slide transitions, and a content-dimming loading indi
 
 ### FR6 — Reduced Motion Compliance
 
-- Slide transitions (FR2) are disabled entirely under `prefers-reduced-motion: reduce`.
+- Cross-fade transitions (FR2) are disabled entirely under `prefers-reduced-motion: reduce`.
 - Swipe gesture visual feedback (opacity fade) still functions — opacity changes are not "motion" per WCAG guidelines.
 - Content dimming (FR3) still functions for the same reason.
 - Existing keyboard/touch navigation must not regress.
@@ -88,14 +88,14 @@ Touch gesture support, CSS slide transitions, and a content-dimming loading indi
 ✅ Swiping right from the left edge (within 40px) navigates back one view level
 ✅ Swipe < 80px snaps back with no navigation (cancel gesture)
 ✅ Opacity fade (1→0) provides visual feedback during drag
-✅ Swipe-committed back navigation is instant (no slide animation)
+✅ Swipe-committed back navigation is instant (no cross-fade animation)
 ✅ Vertical swipes are ignored (scrolling still works)
-✅ Forward programmatic navigation: content slides in from the right (200ms ease-out)
-✅ Back programmatic navigation: content slides out to the right, previous view slides in from left (150ms)
-✅ Both outgoing and incoming views render simultaneously during slide transitions
+✅ Forward programmatic navigation: cross-fade transition (fade out 1→0, fade in 0→1, 200ms)
+✅ Back programmatic navigation: same cross-fade transition as forward (uniform BIOS feel)
+✅ Both outgoing and incoming views render simultaneously, overlaid on same grid cell
 ✅ Content dims briefly during transitions (opacity 0.7, no text/progress bar)
-✅ navigatingForward state correctly determines transition direction
-✅ prefers-reduced-motion disables all slide transitions
+✅ Previously slide-based navigation now uses cross-fade per user preference
+✅ prefers-reduced-motion disables all cross-fade transitions
 ✅ All existing Safe Mode tests continue to pass
 ✅ All src/ files under 500 lines
 ```
@@ -107,6 +107,7 @@ Touch gesture support, CSS slide transitions, and a content-dimming loading indi
 - Haptic feedback (vibration API)
 - Swipe-to-go-forward (only back gesture)
 - Swipe from right edge
+- Slide animations (replaced by cross-fade per user preference)
 - Pull-to-refresh
 - Touch gesture anywhere other than left edge
 - Nano Store changes for swipe state (local state only)
