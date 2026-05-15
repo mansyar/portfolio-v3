@@ -71,3 +71,44 @@
 .safe-mode-container .terminal-text {
   text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
 }
+
+/* === Slide Transition Animations (Track: Safe Mode Mobile Enhancement) === */
+
+/* Forward navigation: incoming view slides in from the right (200ms ease-out) */
+.slide-in-right > .view-incoming {
+  animation: slideInRight 200ms ease-out;
+}
+
+/* Back navigation: outgoing view slides out to the right (150ms ease-in) */
+.slide-out-right > .view-outgoing {
+  animation: slideOutRight 150ms ease-in;
+}
+
+/* Back navigation: incoming view slides in from the left (150ms ease-out) */
+.slide-in-left > .view-incoming {
+  animation: slideInLeft 150ms ease-out;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* Reduced motion: disable all slide transitions */
+@media (prefers-reduced-motion: reduce) {
+  .slide-in-right > .view-incoming,
+  .slide-out-right > .view-outgoing,
+  .slide-in-left > .view-incoming {
+    animation-duration: 0ms;
+  }
+}

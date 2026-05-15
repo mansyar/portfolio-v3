@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useStore } from '@nanostores/react';
 import { CONTACT_METADATA } from '@/lib/projects-data';
 import { toggleForceDesktop } from '@/stores/desktop';
-import { $safeModeView, $safeModeSlug, setSafeModeView, setSafeModeSlug } from '@/stores/safe-mode';
+import {
+  $safeModeView,
+  $safeModeSlug,
+  setSafeModeView,
+  setSafeModeSlug,
+  type SafeModeView,
+} from '@/stores/safe-mode';
 import { setPendingPushState } from '@/stores/url-sync';
 import projectsData from '@/lib/generated/projects-content.json';
 import articlesData from '@/lib/generated/articles-content.json';
@@ -29,9 +35,29 @@ interface ArticleMetadataEntry {
   [key: string]: unknown;
 }
 
+type NavigationDirection = 'forward' | 'back';
+
+/**
+ * Determines whether a view transition is forward (parent → child) or back (child → parent).
+ */
+function getNavigationDirection(from: SafeModeView, to: SafeModeView): NavigationDirection {
+  const parentChildMap: Partial<Record<SafeModeView, SafeModeView[]>> = {
+    main: ['projects', 'knowledge-base', 'contact'],
+    projects: ['project-detail'],
+    'knowledge-base': ['article-detail'],
+  };
+  return (parentChildMap[from] ?? []).includes(to) ? 'forward' : 'back';
+}
+
+const TRANSITION_DURATION_MS = 250;
+
 const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
   const currentView = useStore($safeModeView);
   const selectedId = useStore($safeModeSlug);
+
+  const [previousView, setPreviousView] = useState<SafeModeView | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [navigatingForward, setNavigatingForward] = useState<boolean>(true);
 
   const projects = Object.entries(projectsData as Record<string, ProjectDataEntry>).map(
     ([slug, data]) => ({
@@ -49,36 +75,62 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
     bodyHtml: (articlesData as { content: Record<string, string> }).content[slug],
   }));
 
+  // Determine if user prefers reduced motion
+  const prefersReducedMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const navigateTo = useCallback(
+    (view: SafeModeView) => {
+      const direction = getNavigationDirection(currentView, view);
+      setPreviousView(currentView);
+      setNavigatingForward(direction === 'forward');
+      setIsTransitioning(true);
+      setPendingPushState();
+      setSafeModeView(view);
+    },
+    [currentView],
+  );
+
+  // Clean up transition after animation completes
+  useEffect(() => {
+    if (!isTransitioning) return;
+    const timer = setTimeout(
+      () => {
+        setIsTransitioning(false);
+        setPreviousView(null);
+      },
+      prefersReducedMotion ? 0 : TRANSITION_DURATION_MS,
+    );
+    return () => clearTimeout(timer);
+  }, [currentView, isTransitioning, prefersReducedMotion]);
+
+  // Compute CSS transition classes
+  const getTransitionClass = (): string => {
+    if (!isTransitioning || prefersReducedMotion) return '';
+    if (navigatingForward) return 'slide-in-right';
+    return 'slide-out-right slide-in-left';
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (currentView === 'main') {
-        if (e.key === '1') {
-          setPendingPushState();
-          setSafeModeView('projects');
-        }
-        if (e.key === '2') {
-          setPendingPushState();
-          setSafeModeView('knowledge-base');
-        }
-        if (e.key === '3') {
-          setPendingPushState();
-          setSafeModeView('contact');
-        }
+        if (e.key === '1') navigateTo('projects');
+        if (e.key === '2') navigateTo('knowledge-base');
+        if (e.key === '3') navigateTo('contact');
         if (e.key === '4') toggleForceDesktop();
         if (e.key === '5' && onRestart) onRestart();
       } else {
         if (e.key === '0') {
-          setPendingPushState();
-          if (currentView === 'project-detail') setSafeModeView('projects');
-          else if (currentView === 'article-detail') setSafeModeView('knowledge-base');
-          else setSafeModeView('main');
+          if (currentView === 'project-detail') navigateTo('projects');
+          else if (currentView === 'article-detail') navigateTo('knowledge-base');
+          else navigateTo('main');
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentView, onRestart]);
+  }, [currentView, onRestart, navigateTo]);
 
   const renderMain = () => (
     <div className="space-y-4">
@@ -86,10 +138,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
       <ul className="space-y-2">
         <li>
           <button
-            onClick={() => {
-              setPendingPushState();
-              setSafeModeView('projects');
-            }}
+            onClick={() => navigateTo('projects')}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [1] Projects
@@ -97,10 +146,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </li>
         <li>
           <button
-            onClick={() => {
-              setPendingPushState();
-              setSafeModeView('knowledge-base');
-            }}
+            onClick={() => navigateTo('knowledge-base')}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [2] Knowledge Base
@@ -108,10 +154,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </li>
         <li>
           <button
-            onClick={() => {
-              setPendingPushState();
-              setSafeModeView('contact');
-            }}
+            onClick={() => navigateTo('contact')}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [3] Contact
@@ -145,9 +188,8 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
           <li key={p.slug}>
             <button
               onClick={() => {
-                setPendingPushState();
                 setSafeModeSlug(p.slug);
-                setSafeModeView('project-detail');
+                navigateTo('project-detail');
               }}
               className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
             >
@@ -157,10 +199,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         ))}
         <li className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => {
-              setPendingPushState();
-              setSafeModeView('main');
-            }}
+            onClick={() => navigateTo('main')}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
@@ -178,9 +217,8 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
           <li key={a.slug}>
             <button
               onClick={() => {
-                setPendingPushState();
                 setSafeModeSlug(a.slug);
-                setSafeModeView('article-detail');
+                navigateTo('article-detail');
               }}
               className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
             >
@@ -190,10 +228,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         ))}
         <li className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => {
-              setPendingPushState();
-              setSafeModeView('main');
-            }}
+            onClick={() => navigateTo('main')}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
@@ -216,10 +251,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
       </div>
       <div className="mt-4 pt-4 border-t border-[#00ff41]">
         <button
-          onClick={() => {
-            setPendingPushState();
-            setSafeModeView('main');
-          }}
+          onClick={() => navigateTo('main')}
           className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
         >
           [0] Back
@@ -250,10 +282,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </div>
         <div className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => {
-              setPendingPushState();
-              setSafeModeView('projects');
-            }}
+            onClick={() => navigateTo('projects')}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
@@ -283,10 +312,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
         </div>
         <div className="mt-4 pt-4 border-t border-[#00ff41]">
           <button
-            onClick={() => {
-              setPendingPushState();
-              setSafeModeView('knowledge-base');
-            }}
+            onClick={() => navigateTo('knowledge-base')}
             className="hover:bg-[#00ff41] hover:text-black px-2 py-1 block w-full text-left"
           >
             [0] Back
@@ -296,14 +322,40 @@ const TerminalNav: React.FC<TerminalNavProps> = ({ onRestart }) => {
     );
   };
 
+  const renderView = (view: SafeModeView) => {
+    switch (view) {
+      case 'main':
+        return renderMain();
+      case 'projects':
+        return renderProjects();
+      case 'knowledge-base':
+        return renderKB();
+      case 'contact':
+        return renderContact();
+      case 'project-detail':
+        return renderProjectDetail();
+      case 'article-detail':
+        return renderArticleDetail();
+      default:
+        return null;
+    }
+  };
+
+  const transitionClass = getTransitionClass();
+
   return (
-    <div className="terminal-text p-2 max-w-3xl mx-auto h-full overflow-y-auto">
-      {currentView === 'main' && renderMain()}
-      {currentView === 'projects' && renderProjects()}
-      {currentView === 'knowledge-base' && renderKB()}
-      {currentView === 'contact' && renderContact()}
-      {currentView === 'project-detail' && renderProjectDetail()}
-      {currentView === 'article-detail' && renderArticleDetail()}
+    <div
+      className={`terminal-text p-2 max-w-3xl mx-auto h-full overflow-y-auto ${transitionClass}`}
+      data-testid="view-stack"
+    >
+      {isTransitioning && previousView && (
+        <div key={`outgoing-${previousView}`} className="view-outgoing" aria-hidden="true">
+          {renderView(previousView)}
+        </div>
+      )}
+      <div key={`incoming-${currentView}`} className="view-incoming">
+        {renderView(currentView)}
+      </div>
     </div>
   );
 };

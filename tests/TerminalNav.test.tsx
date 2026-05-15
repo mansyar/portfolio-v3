@@ -57,7 +57,8 @@ describe('TerminalNav Component', () => {
 
     fireEvent.keyDown(window, { key: '1' });
 
-    expect(screen.getByText(/Projects/i)).toBeInTheDocument();
+    // During transition, both views render simultaneously
+    expect(screen.getAllByText(/Projects/i).length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText(/\[0\] Back/i)).toBeInTheDocument();
   });
 
