@@ -31,7 +31,4 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 <!-- Safe Mode Mobile Enhancement (Track 6A) archived to conductor/archive/safe-mode-mobile_20260515/ -->
 
----
-
-- [x] **Track: Classic XP Games — Pong (VS AI) + Minesweeper (9×9) Canvas games**
-      _Link: [./tracks/classic-xp-games_20260515/](./tracks/classic-xp-games_20260515/)_
+<!-- Classic XP Games track archived to conductor/archive/classic-xp-games_20260515/ -->
