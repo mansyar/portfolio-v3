@@ -29,6 +29,8 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 - **Task Manager:** Processes tab showing skill entries + Performance tab with live-animated skill graphs
 - **Knowledge Base:** MDX article browser styled as the classic XP Knowledge Base pane
 - **Start Menu:** Two-column layout with pinned apps, system folders, and Shut Down button
+- **Pong:** Canvas-based Pong game with difficulty selection (Easy/Medium/Hard), AI opponent with configurable speed/accuracy, first-to-5 scoring, W/S or Arrow keys controls, and rAF-powered game loop
+- **Minesweeper:** Canvas-based 9×9 Minesweeper with 10 mines, left-click reveal, right-click flag, flood-fill, timer, mine counter, and canvas-drawn smiley face button
 
 ### Mobile Safe Mode (< 768px viewport)
 
@@ -75,6 +77,6 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 
 ## Constraints & Boundaries
 
-- **Out of Scope:** Tab-completion in CLI (v1), real-time collaboration, custom window themes
+- **Out of Scope:** Two-player Pong, larger Minesweeper boards, sound effects, leaderboards, touch/mobile support, state persistence, tab-completion in CLI (v1), real-time collaboration, custom window themes
 - **Platform:** Cloudflare Pages (free tier) — no backend server, purely static + edge
 - **Performance Budget:** All JS bundles must be under 100KB total gzipped

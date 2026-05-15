@@ -114,6 +114,15 @@ prebuild.mjs
 
 ## Change Log
 
+### 2026-05-15 — Track 6B: Classic XP Games — Pong + Minesweeper
+
+- **Reason:** Two native canvas-based games running inside the XP window system as first-class apps. Pong features difficulty selection with AI opponent, first-to-5 scoring, and rAF-powered physics. Minesweeper has 9×9 board with 10 mines, flood-fill, timer, and smiley face button.
+- **Impact:** New game components (Pong.tsx, Minesweeper.tsx) with separate pure-logic modules (pong-physics.ts, minesweeper-engine.ts) for independent testability. WindowId type expanded with 'pong' and 'minesweeper'. CmdOutput interface updated with openWindow field for launching games from CMD. Desktop icons, Start Menu entries, and CMD commands added.
+- **Packages added:** None (pure React + HTML5 Canvas).
+- **Files created:** `src/components/apps/Pong.tsx`, `src/components/apps/Minesweeper.tsx`, `src/lib/pong-physics.ts`, `src/lib/minesweeper-engine.ts`, `public/icons/pong.svg`, `public/icons/minesweeper.svg`
+- **Files modified:** `src/stores/windows.ts`, `src/components/window/WindowLayer.tsx`, `src/lib/commands.ts`, `src/components/apps/CmdPrompt.tsx`, `src/pages/index.astro`, `src/components/taskbar/StartMenu.tsx`
+- **Tests added:** 44 Pong tests (32 physics + 12 component), 40 Minesweeper tests (30 engine + 10 component). Total: 758 tests.
+
 ### 2026-05-15 — Track 6A: Safe Mode Mobile Enhancement
 
 - **Reason:** Enhance the mobile Safe Mode experience with smooth cross-fade transitions, swipe-to-go-back gesture, and content dimming — turning the functional-but-abrupt terminal into a polished, app-like interface while maintaining the BIOS aesthetic.
