@@ -34,8 +34,3 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Classic XP Games track archived to conductor/archive/classic-xp-games_20260515/ -->
 
 <!-- Content Drop track archived to conductor/archive/content-drop_20260516/ -->
-
----
-
-- [x] **Track: Improve Vitest Performance**
-      _Link: [./tracks/vitest-perf_20260516/](./tracks/vitest-perf_20260516/)_
