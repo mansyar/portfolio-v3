@@ -45,6 +45,28 @@ export const PROJECTS_METADATA: Record<string, ProjectMetadata> = {
     lastCommit: '2026-03-28',
     status: 'active',
   },
+  'terminal-tactics': {
+    title: 'Terminal Tactics',
+    description:
+      'A turn-based tactical strategy game played entirely in the terminal, featuring AI opponents, procedural maps, and a robust plugin system for custom game modes.',
+    repoUrl: 'https://github.com/mansyar/terminal-tactics',
+    language: 'TypeScript',
+    techStack: ['TypeScript', 'Node.js', 'Ink', 'React', 'Vitest', 'GitHub Actions'],
+    stars: 0,
+    lastCommit: '2026-05-01',
+    status: 'active',
+  },
+  simulacra: {
+    title: 'Simulacra',
+    description:
+      'An experimental data simulation and synthesis framework for generating realistic synthetic datasets, with a focus on preserving statistical properties while ensuring privacy compliance.',
+    repoUrl: 'https://github.com/mansyar/simulacra',
+    language: 'Python',
+    techStack: ['Python', 'PyTorch', 'FastAPI', 'PostgreSQL', 'Docker', 'Apache Arrow'],
+    stars: 0,
+    lastCommit: '2026-04-15',
+    status: 'wip',
+  },
   'tubular-bexus-osw': {
     title: 'Tubular Bexus OSW',
     description:

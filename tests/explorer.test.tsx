@@ -140,6 +140,8 @@ describe('ExplorerFileList', () => {
     );
     expect(screen.getByText('icarus-server-manager.mdx')).toBeInTheDocument();
     expect(screen.getByText('chasing-chapters.mdx')).toBeInTheDocument();
+    expect(screen.getByText('terminal-tactics.mdx')).toBeInTheDocument();
+    expect(screen.getByText('simulacra.mdx')).toBeInTheDocument();
   });
 
   it('should show empty state for empty directory', () => {
@@ -197,12 +199,14 @@ describe('ExplorerDetailPane', () => {
 });
 
 describe('Projects Metadata', () => {
-  it('should have metadata for all 3 projects', async () => {
+  it('should have metadata for all 5 projects', async () => {
     const { PROJECTS_METADATA } = await import('@/lib/projects-data');
-    expect(Object.keys(PROJECTS_METADATA)).toHaveLength(3);
+    expect(Object.keys(PROJECTS_METADATA)).toHaveLength(5);
     expect(PROJECTS_METADATA['icarus-server-manager']).toBeDefined();
     expect(PROJECTS_METADATA['chasing-chapters']).toBeDefined();
     expect(PROJECTS_METADATA['tubular-bexus-osw']).toBeDefined();
+    expect(PROJECTS_METADATA['terminal-tactics']).toBeDefined();
+    expect(PROJECTS_METADATA['simulacra']).toBeDefined();
   });
 
   it('should have metadata for all 5 articles (renamed from DEVOPS_METADATA)', async () => {

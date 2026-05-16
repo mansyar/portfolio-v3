@@ -72,9 +72,9 @@ describe('getChildren (core)', () => {
     expect(children).toHaveLength(4);
   });
 
-  it('should return 2 project files for C:\\Software_Engineering', () => {
+  it('should return 4 project files for C:\\Software_Engineering', () => {
     const children = getChildren('C:\\Software_Engineering');
-    expect(children).toHaveLength(2);
+    expect(children).toHaveLength(4);
   });
 
   it('should return empty array for a file path', () => {
