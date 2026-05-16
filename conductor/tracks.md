@@ -37,7 +37,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Terminal Tactics Launcher**
+- [x] **Track: Terminal Tactics Launcher**
   - **Description:** Embed the published Terminal Tactics game from itch.io inside an XP-styled game launcher window. Desktop icon, iframe window, and CMD play command.
   - **Type:** feature
   - **Status:** new
