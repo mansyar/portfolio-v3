@@ -42,7 +42,7 @@
   - [x] Pass embed URL via src prop: `GAME_LAUNCHER_URLS['terminal-tactics']`
 - [ ] Task: Conductor - User Manual Verification 'Phase 2 — Window System Integration & URL Deep-Linking' (Protocol in workflow.md)
 
-## Phase 3 — Desktop Icon, Start Menu & CMD Command
+## Phase 3 — Desktop Icon, Start Menu & CMD Command [checkpoint: 1c37f0a]
 
 - [x] Task: Write unit test for CMD command handler [2a0934a]
   - [x] Test in `tests/lib/commands.test.ts`: `COMMAND_REGISTRY['terminal-tactics']` returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
@@ -63,13 +63,13 @@
 
 ## Phase 4 — Documentation Updates
 
-- [ ] Task: Update PRD.md
-  - [ ] §5 — Add §5.6 Game Launcher spec (Terminal Tactics iframe with loading/error states)
-  - [ ] §4 — Add "Terminal Tactics" to desktop icons table
-- [ ] Task: Update TDD.md
-  - [ ] §2 (URL Strategy) — Document `VALID_WINDOW_IDS` whitelist; note that new WindowIds must be added to it for deep-linking support
-  - [ ] §3.1 — Add `'terminal-tactics'` to WindowId union type
-  - [ ] §3.2 — Add Terminal Tactics entry to default window configs (800×600, x:160, y:60, min 600×400)
-  - [ ] §6 — Add `GameLauncher` to React Islands component inventory table
-  - [ ] §7.1 — Add `terminal-tactics` to supported commands table
-- [ ] Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)
+- [x] Task: Update PRD.md
+  - [x] §5 — Add §5.6 Game Launcher spec (Terminal Tactics iframe with loading/error states)
+  - [x] §4 — Add "Terminal Tactics" to desktop icons table
+- [x] Task: Update TDD.md
+  - [x] §2 (URL Strategy) — Document `VALID_WINDOW_IDS` whitelist; note that new WindowIds must be added to it for deep-linking support
+  - [x] §3.1 — Add `'terminal-tactics'` to WindowId union type
+  - [x] §3.2 — Add Terminal Tactics entry to default window configs (800×600, x:160, y:60, min 600×400)
+  - [x] §6 — Add `GameLauncher` to React Islands component inventory table
+  - [x] §7.1 — Add `terminal-tactics` to supported commands table
+- [x] Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)

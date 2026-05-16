@@ -82,12 +82,14 @@ portfolio-v3/
 https://portfolio-os.ansyar-world.top/?w=cmd,taskmanager&focus=cmd&start=0
 ```
 
-| Param   | Type           | Description                                                                                              |
-| :------ | :------------- | :------------------------------------------------------------------------------------------------------- |
-| `w`     | `string` (CSV) | Open window IDs: `cmd`, `explorer`, `taskmanager`, `help`, `mydocs`, `recyclebin`, `pong`, `minesweeper` |
-| `focus` | `string`       | Currently focused (topmost) window ID                                                                    |
-| `start` | `0 \| 1`       | Whether Start Menu is open                                                                               |
-| `path`  | `string`       | Current Explorer path, e.g., `C:/Software_Engineering/icarus`                                            |
+| Param   | Type           | Description                                                                                                                  |
+| :------ | :------------- | :--------------------------------------------------------------------------------------------------------------------------- |
+| `w`     | `string` (CSV) | Open window IDs: `cmd`, `explorer`, `taskmanager`, `help`, `mydocs`, `recyclebin`, `pong`, `minesweeper`, `terminal-tactics` |
+| `focus` | `string`       | Currently focused (topmost) window ID                                                                                        |
+| `start` | `0 \| 1`       | Whether Start Menu is open                                                                                                   |
+| `path`  | `string`       | Current Explorer path, e.g., `C:/Software_Engineering/icarus`                                                                |
+
+> **Note:** All valid `WindowId` values must be added to the `VALID_WINDOW_IDS` set in `src/stores/url-sync.ts` for deep-linking to work. New game or app window types must be registered there.
 
 ### Deep-Link Examples
 
@@ -127,7 +129,8 @@ export type WindowId =
   | 'recyclebin'
   | 'taskmanager'
   | 'pong'
-  | 'minesweeper';
+  | 'minesweeper'
+  | 'terminal-tactics';
 
 export interface WindowState {
   id: WindowId;
@@ -158,16 +161,17 @@ export const $taskbarWindows = computed($windows, (wins) =>
 
 ### 3.2 Default Window Configs
 
-| Window         | Default Size | Default Position | Min Size |
-| :------------- | :----------- | :--------------- | :------- |
-| Explorer       | 700×500      | 80, 60           | 400×300  |
-| My Documents   | 600×450      | 120, 80          | 350×250  |
-| Knowledge Base | 750×550      | 60, 40           | 500×400  |
-| Command Prompt | 680×420      | 100, 100         | 450×250  |
-| Task Manager   | 500×550      | 200, 60          | 400×450  |
-| Recycle Bin    | 550×400      | 150, 90          | 350×250  |
-| Pong           | 620×460      | 80, 60           | 450×320  |
-| Minesweeper    | 380×450      | 120, 80          | 315×380  |
+| Window           | Default Size | Default Position | Min Size |
+| :--------------- | :----------- | :--------------- | :------- |
+| Explorer         | 700×500      | 80, 60           | 400×300  |
+| My Documents     | 600×450      | 120, 80          | 350×250  |
+| Knowledge Base   | 750×550      | 60, 40           | 500×400  |
+| Command Prompt   | 680×420      | 100, 100         | 450×250  |
+| Task Manager     | 500×550      | 200, 60          | 400×450  |
+| Recycle Bin      | 550×400      | 150, 90          | 350×250  |
+| Pong             | 620×460      | 80, 60           | 450×320  |
+| Minesweeper      | 380×450      | 120, 80          | 315×380  |
+| Terminal Tactics | 800×600      | 160, 60          | 600×400  |
 
 ### 3.3 Window Actions
 
@@ -473,20 +477,21 @@ export const FILE_SYSTEM: FSNode = {
 
 ### React Islands (Interactive)
 
-| Component       | Props                        | Responsibility                                                                   |
-| :-------------- | :--------------------------- | :------------------------------------------------------------------------------- |
-| `WindowLayer`   | —                            | Renders all open windows from `$windows` store                                   |
-| `WindowFrame`   | `windowId`                   | Chrome (title bar, borders, resize handles), drag logic                          |
-| `TitleBar`      | `windowId`                   | Title text, icon, min/max/close buttons                                          |
-| `Taskbar`       | —                            | Start button, open window buttons, system tray, clock                            |
-| `StartMenu`     | —                            | Two-column menu, user avatar, program list                                       |
-| `Explorer`      | `windowId`                   | File/folder list, breadcrumb nav, address bar                                    |
-| `CmdPrompt`     | `windowId`                   | Terminal emulator with command parsing                                           |
-| `TaskManager`   | `windowId`                   | Tabs: Processes (table, CPU animation, End Process), Performance (Canvas graphs) |
-| `CanvasGraph`   | `label, width, height, data` | Reusable green-on-black line graph with grid, 60-point buffer                    |
-| `KnowledgeBase` | `windowId`                   | Search bar, sidebar categories, article renderer                                 |
-| `Pong`          | `windowId`                   | Canvas Pong VS AI with difficulty menu, AI tracking, first-to-5 scoring          |
-| `Minesweeper`   | `windowId`                   | Canvas Minesweeper 9×9 with flood-fill, timer, mine counter, smiley face restart |
+| Component       | Props                        | Responsibility                                                                                                         |
+| :-------------- | :--------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| `WindowLayer`   | —                            | Renders all open windows from `$windows` store                                                                         |
+| `WindowFrame`   | `windowId`                   | Chrome (title bar, borders, resize handles), drag logic                                                                |
+| `TitleBar`      | `windowId`                   | Title text, icon, min/max/close buttons                                                                                |
+| `Taskbar`       | —                            | Start button, open window buttons, system tray, clock                                                                  |
+| `StartMenu`     | —                            | Two-column menu, user avatar, program list                                                                             |
+| `Explorer`      | `windowId`                   | File/folder list, breadcrumb nav, address bar                                                                          |
+| `CmdPrompt`     | `windowId`                   | Terminal emulator with command parsing                                                                                 |
+| `TaskManager`   | `windowId`                   | Tabs: Processes (table, CPU animation, End Process), Performance (Canvas graphs)                                       |
+| `CanvasGraph`   | `label, width, height, data` | Reusable green-on-black line graph with grid, 60-point buffer                                                          |
+| `KnowledgeBase` | `windowId`                   | Search bar, sidebar categories, article renderer                                                                       |
+| `Pong`          | `windowId`                   | Canvas Pong VS AI with difficulty menu, AI tracking, first-to-5 scoring                                                |
+| `Minesweeper`   | `windowId`                   | Canvas Minesweeper 9×9 with flood-fill, timer, mine counter, smiley face restart                                       |
+| `GameLauncher`  | `src`                        | Iframe wrapper for embedded itch.io games. Loading state with XP progress bar, 15-second error timeout, fallback link. |
 
 ### Astro Components (Static)
 
@@ -525,20 +530,21 @@ export const FILE_SYSTEM: FSNode = {
 
 **Supported Commands:**
 
-| Command       | Aliases | Behavior                                                                                        |
-| :------------ | :------ | :---------------------------------------------------------------------------------------------- |
-| `help`        | `/?`    | Lists all 9 commands with descriptions (filters out alias entries)                              |
-| `ls`          | `dir`   | Lists drives/folders/files with `[DRIVE]`, `[DIR]`, `[FILE]` type indicators                    |
-| `cd <path>`   | `chdir` | Change directory (supports `.`, `..`, `\`, `C:\`, absolute paths)                               |
-| `cat <file>`  | `type`  | Shows project/article metadata from `PROJECTS_METADATA`/`ARTICLES_METADATA`                     |
-| `clear`       | `cls`   | Clears output buffer, re-shows MARP welcome banner                                              |
-| `neofetch`    | —       | Tux ASCII art (12-line penguin) + system info (OS, Shell, Resolution, etc.)                     |
-| `open <slug>` | —       | Opens Explorer at file's parent folder; `open resume.pdf` opens new tab                         |
-| `whoami`      | —       | Prints `mansyar\administrator`                                                                  |
-| `echo <text>` | —       | Prints text back verbatim                                                                       |
-| `pong`        | —       | Opens Pong game window with AI opponent                                                         |
-| `minesweeper` | —       | Opens Minesweeper 9×9 game window                                                               |
-| _unknown_     | —       | `'<cmd>' is not recognized as an internal or external command, operable program or batch file.` |
+| Command            | Aliases | Behavior                                                                                        |
+| :----------------- | :------ | :---------------------------------------------------------------------------------------------- |
+| `help`             | `/?`    | Lists all 9 commands with descriptions (filters out alias entries)                              |
+| `ls`               | `dir`   | Lists drives/folders/files with `[DRIVE]`, `[DIR]`, `[FILE]` type indicators                    |
+| `cd <path>`        | `chdir` | Change directory (supports `.`, `..`, `\`, `C:\`, absolute paths)                               |
+| `cat <file>`       | `type`  | Shows project/article metadata from `PROJECTS_METADATA`/`ARTICLES_METADATA`                     |
+| `clear`            | `cls`   | Clears output buffer, re-shows MARP welcome banner                                              |
+| `neofetch`         | —       | Tux ASCII art (12-line penguin) + system info (OS, Shell, Resolution, etc.)                     |
+| `open <slug>`      | —       | Opens Explorer at file's parent folder; `open resume.pdf` opens new tab                         |
+| `whoami`           | —       | Prints `mansyar\administrator`                                                                  |
+| `echo <text>`      | —       | Prints text back verbatim                                                                       |
+| `pong`             | —       | Opens Pong game window with AI opponent                                                         |
+| `minesweeper`      | —       | Opens Minesweeper 9×9 game window                                                               |
+| `terminal-tactics` | —       | Opens Terminal Tactics game window via GameLauncher iframe                                      |
+| _unknown_          | —       | `'<cmd>' is not recognized as an internal or external command, operable program or batch file.` |
 
 **Features:**
 

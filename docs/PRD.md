@@ -58,15 +58,16 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ### 🖥️ Desktop Icons
 
-| Icon               | Type    | Content / Action                                                                                                                                                                           |
-| :----------------- | :------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **My Computer**    | Folder  | Opens Explorer for `C:\Software_Engineering` and `D:\Systems_Data`.                                                                                                                        |
-| **My Documents**   | Folder  | `D:\My_Documents` Explorer view with `Resume.pdf` (opens in new tab), `Certs/` (Alibaba Cloud certifications — ACP, ACA), and `Contact.txt` (formatted contact card with clickable links). |
-| **Knowledge Base** | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).                                                                                                                            |
-| **Command Prompt** | App     | Functional React terminal for CLI navigation.                                                                                                                                              |
-| **Recycle Bin**    | Archive | `\Recycle_Bin` virtual folder with deleted/archived item (`chasing-chapters (v1)`). Grayed-out icon, strikethrough name, disabled Restore button.                                          |
-| **Pong**           | Game    | Canvas-based Pong VS AI with difficulty selection (Easy/Medium/Hard). First-to-5 scoring, W/S or Arrow keys, rAF game loop.                                                                |
-| **Minesweeper**    | Game    | Canvas-based Minesweeper 9×9 with 10 mines. Left-click reveal, right-click flag, flood-fill, timer, mine counter, smiley face restart button.                                              |
+| Icon                 | Type    | Content / Action                                                                                                                                                                           |
+| :------------------- | :------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **My Computer**      | Folder  | Opens Explorer for `C:\Software_Engineering` and `D:\Systems_Data`.                                                                                                                        |
+| **My Documents**     | Folder  | `D:\My_Documents` Explorer view with `Resume.pdf` (opens in new tab), `Certs/` (Alibaba Cloud certifications — ACP, ACA), and `Contact.txt` (formatted contact card with clickable links). |
+| **Knowledge Base**   | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).                                                                                                                            |
+| **Command Prompt**   | App     | Functional React terminal for CLI navigation.                                                                                                                                              |
+| **Recycle Bin**      | Archive | `\Recycle_Bin` virtual folder with deleted/archived item (`chasing-chapters (v1)`). Grayed-out icon, strikethrough name, disabled Restore button.                                          |
+| **Pong**             | Game    | Canvas-based Pong VS AI with difficulty selection (Easy/Medium/Hard). First-to-5 scoring, W/S or Arrow keys, rAF game loop.                                                                |
+| **Minesweeper**      | Game    | Canvas-based Minesweeper 9×9 with 10 mines. Left-click reveal, right-click flag, flood-fill, timer, mine counter, smiley face restart button.                                              |
+| **Terminal Tactics** | Game    | Iframe-based game launcher for embedded Terminal Tactics from itch.io. Loading state with XP progress bar, 15-second error timeout with fallback link.                                     |
 
 ### 📂 Directory Details
 
@@ -167,6 +168,17 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Pure Logic Module:** `src/lib/minesweeper-engine.ts` — board generation, flood-fill, win/loss detection, flag toggle, first-click safety as pure functions with no DOM dependencies. 30 isolated unit tests.
 - **Window Config:** 380×450 default size, `minWidth: 315`, `minHeight: 380`.
 - **Desktop icon:** `public/icons/minesweeper.svg` (48×48, mine with spokes).
+- **Desktop only** — not available in mobile Safe Mode.
+
+### 5.6 Game Launcher (Terminal Tactics)
+
+- **React Island:** `GameLauncher.tsx` — iframe wrapper component, accepts `src` prop for the itch.io embed URL
+- **Loading State:** "Loading Terminal Tactics..." with animated XP-style progress bar until iframe fires `onLoad`
+- **Error State:** 15-second timeout. If iframe doesn't load, shows "Game failed to load." with "Open in new tab" fallback link to `https://mansyar.itch.io/terminal-tactics`
+- **Iframe Attributes:** `title="Terminal Tactics"`, `allow="fullscreen"`, `sandbox="allow-scripts allow-same-origin"`
+- **Window Config:** 800×600 default size, `minWidth: 600`, `minHeight: 400`
+- **URL Config:** `GAME_LAUNCHER_URLS` registry in `src/lib/game-launcher-config.ts`
+- **Accessibility:** `aria-live="polite"` on loading/error state containers, iframe `title` attribute for screen readers
 - **Desktop only** — not available in mobile Safe Mode.
 
 ---
