@@ -18,7 +18,7 @@
   - [x] Implement error state with 15-second timeout: fallback link to `https://mansyar.itch.io/terminal-tactics`
   - [x] Implement iframe `onLoad` event → clear timeout, transition from loading → ready
   - [x] Fill full window content area (no scrollbars on wrapper)
-- [ ] Task: Conductor - User Manual Verification 'Phase 1 — GameLauncher Component & Config' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1 — GameLauncher Component & Config' (Protocol in workflow.md)
 
 ## Phase 2 — Window System Integration & URL Deep-Linking
 
