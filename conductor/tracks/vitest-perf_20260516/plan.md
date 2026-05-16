@@ -4,7 +4,7 @@
 
 **Goal:** Establish a reproducible baseline of current test execution times.
 
-- [ ] Task: 1.1 — Create benchmark helper script
+- [x] Task: 1.1 — Create benchmark helper script (d274749)
   - [ ] Write `tests/helpers/benchmark.ts` — a utility that measures `vitest run` execution time (wall clock via `performance.now()` or similar)
   - [ ] Write unit test for the benchmark helper (`tests/helpers/benchmark.test.ts`)
   - [ ] Confirm the test fails initially (Red phase)
