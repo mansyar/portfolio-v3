@@ -1,0 +1,54 @@
+---
+title: Terminal Tactics
+slug: terminal-tactics
+drive: C
+description: A turn-based tactical strategy game played entirely in the terminal, featuring AI opponents, procedural maps, and a robust plugin system for custom game modes.
+repoUrl: https://github.com/mansyar/terminal-tactics
+language: TypeScript
+techStack:
+  - TypeScript
+  - Node.js
+  - Ink
+  - React
+  - Vitest
+  - GitHub Actions
+stars: 0
+lastCommit: '2026-05-01'
+commits: 120
+status: active
+icon: game
+---
+
+## Terminal Tactics
+
+A turn-based tactical strategy game that brings the depth of grid-based combat to the terminal. Built with a focus on extensibility, testability, and a rich command-line experience.
+
+### Gameplay Features
+
+- **Grid-Based Combat**: Units move and attack on a hexagonal grid with line-of-sight, elevation, and cover mechanics
+- **AI Opponent**: Configurable AI with multiple difficulty levels — from random moves to strategic positioning and target prioritization
+- **Procedural Maps**: Maps are generated at runtime with configurable size, terrain types, and obstacle density
+- **Save/Load System**: Full game state serialization allows saving and resuming campaigns across sessions
+
+### Architecture
+
+The game follows a strict Entity-Component-System (ECS) architecture with clear separation between game logic and presentation:
+
+```
+src/
+├── core/         # ECS engine — entities, components, systems
+├── ai/           # Opponent AI strategies and evaluation
+├── maps/         # Procedural map generation and terrain
+├── ui/           # Terminal rendering (Ink/React components)
+└── data/         # Unit definitions, balance tables, config
+```
+
+### Tech Stack
+
+Written entirely in TypeScript with Ink providing React-based terminal rendering. The ECS core is fully decoupled from the UI layer, making both the AI and game logic independently testable. The test suite covers AI decision-making, map generation fairness, combat resolution, and save/load integrity — achieving over 90% line coverage on the core engine.
+
+### Development Journey
+
+Terminal Tactics began as an experiment in procedural generation and evolved into a full-featured game framework. The ECS architecture emerged from the need to support multiple game modes without duplicating core systems. Unit validation and attack resolution are modeled as composable systems that can be mixed and matched for different game types.
+
+The plugin system allows third-party game modes to be loaded as Node.js modules, registering custom components, systems, and UI renderers through a well-defined API.

@@ -5,7 +5,12 @@ import { resolve } from 'path';
 const projectsDir = resolve(__dirname, '..', 'src', 'content', 'projects');
 const articlesDir = resolve(__dirname, '..', 'src', 'content', 'articles');
 
-const projectFiles = ['icarus-server-manager.mdx', 'chasing-chapters.mdx', 'tubular-bexus-osw.mdx'];
+const projectFiles = [
+  'icarus-server-manager.mdx',
+  'chasing-chapters.mdx',
+  'tubular-bexus-osw.mdx',
+  'terminal-tactics.mdx',
+];
 
 const articleFiles = [
   'docker-basics.mdx',
