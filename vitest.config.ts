@@ -12,7 +12,7 @@ export default getViteConfig({
         singleFork: false,
       },
     },
-    maxWorkers: 12,
+    maxWorkers: 8,
     minWorkers: 4,
     fileParallelism: true,
     cache: {
