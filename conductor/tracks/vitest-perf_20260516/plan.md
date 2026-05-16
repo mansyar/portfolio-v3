@@ -22,23 +22,22 @@
 
 **Goal:** Apply config changes to `vitest.config.ts` to reduce execution time.
 
-- [ ] Task: 2.1 — Optimize pool and parallelism settings
-  - [ ] Research optimal `poolOptions.forks` settings for current hardware (CPU cores, RAM)
-  - [ ] Adjust `maxWorkers`/`minWorkers` in `vitest.config.ts`
-  - [ ] Run `CI=true pnpm test` to verify all tests still pass
-- [ ] Task: 2.2 — Enable and configure test cache
-  - [ ] Add `cache.dir` to `vitest.config.ts` pointing to `.vitest-cache`
-  - [ ] Configure `cache` options for optimal warm-run speed
-  - [ ] Run `CI=true pnpm test` to verify all tests still pass
-- [ ] Task: 2.3 — Optimize dependency pre-bundling
-  - [ ] Add `deps` config with pre-bundled known dependencies (`react`, `react-dom`, `@testing-library/react`, etc.)
-  - [ ] Run `CI=true pnpm test` to verify all tests still pass
-- [ ] Task: 2.4 — Expand coverage exclusions
-  - [ ] Add `coverage.exclude` patterns for non-essential directories (e.g., `tests/helpers/`, generated test fixtures)
-  - [ ] Run `CI=true pnpm test -- --coverage` to verify coverage thresholds still met
-- [ ] Task: 2.5 — Optimize test sequence and isolation
-  - [ ] Review and configure `sequence` options (hooks, setup files)
-  - [ ] Run full test suite to verify all tests still pass
+- [x] Task: 2.1 — Optimize pool and parallelism settings
+  - [x] Hardware: 20 cores, 32GB RAM. Optimal maxWorkers=12, minWorkers=4 with forks pool
+  - [x] Adjusted `vitest.config.ts` with pool, maxWorkers, minWorkers, fileParallelism
+  - [x] Run `pnpm test` — 57 files, 800 tests passed
+- [x] Task: 2.2 — Enable and configure test cache
+  - [x] Added `cache.dir: './node_modules/.vitest-cache'` for persistent cache
+  - [x] Run `pnpm test` — 57 files, 800 tests passed
+- [x] Task: 2.3 — Optimize dependency pre-bundling
+  - [x] Tested `deps.optimizer.web.include` but it added first-run overhead without clear benefit on this Astro project — reverted
+  - [x] Run `pnpm test` — 57 files, 800 tests passed
+- [x] Task: 2.4 — Expand coverage exclusions
+  - [x] Added `tests/helpers/` and `src/__test_modularity__/` to coverage exclude
+  - [x] Run `pnpm test --coverage` — coverage thresholds met (>80%)
+- [x] Task: 2.5 — Optimize test sequence and isolation
+  - [x] Reviewed sequence options — default behavior is optimal for this project
+  - [x] Run `pnpm test` — 57 files, 800 tests passed
 - [ ] Task: Conductor — User Manual Verification 'Phase 2: Optimize Vitest Configuration' (Protocol in workflow.md)
 
 ## Phase 3: Verify Improvements & Document
