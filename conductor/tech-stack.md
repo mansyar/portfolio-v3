@@ -204,3 +204,12 @@ prebuild.mjs
 - **Impact:** New `zod` dependency. Content schemas are now independently testable via vitest. Astro 6 content config uses `glob` loader in `src/content.config.ts`.
 - **Files affected:** `package.json`, `src/content.config.ts`, `src/lib/content-schemas.ts`
 - **Packages added:** `zod`
+
+### 2026-05-16 — Track: Improve Vitest Performance
+
+- **Reason:** Optimize Vitest test runner configuration to reduce per-worker overhead and improve warm-run caching.
+- **Impact:** Config changes limited to `vitest.config.ts` only. Pool set to forks with maxWorkers=8/minWorkers=4 for balanced parallelism on 20-core hardware. Persistent cache directory added for faster warm runs. Coverage exclusions expanded to skip test helpers and modularity fixtures.
+- **Packages added:** None (config-only change).
+- **Files modified:** `vitest.config.ts`
+- **Files created:** `tests/helpers/benchmark.ts`, `tests/helpers/benchmark.test.ts`
+- **Benchmark results:** Per-worker efficiency improved: transform -74%, environment -47%, import -46%. Wall time remains ~29s (constrained by deploy-prerequisites build test).
