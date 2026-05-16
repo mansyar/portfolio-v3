@@ -145,6 +145,10 @@
   100% { transform: translateX(350%); }
 }
 
+.game-launcher-progress {
+  animation: game-launcher-progress 1.5s ease-in-out infinite;
+}
+
 /* === CMD Prompt Cursor Blink === */
 
 @keyframes cmdCursorBlink {

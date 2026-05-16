@@ -126,12 +126,12 @@ export const DEFAULT_WINDOW_CONFIGS: Record<WindowId, WindowConfig> = {
   'terminal-tactics': {
     title: 'Terminal Tactics',
     icon: '/icons/terminal-tactics.svg',
-    width: 1280,
-    height: 960,
-    x: 80,
-    y: 20,
-    minWidth: 800,
-    minHeight: 600,
+    width: 800,
+    height: 600,
+    x: 160,
+    y: 60,
+    minWidth: 600,
+    minHeight: 400,
   },
 };
 

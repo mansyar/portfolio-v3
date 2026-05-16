@@ -73,11 +73,11 @@ export const GameLauncher: FC<GameLauncherProps> = ({ src }) => {
             }}
           >
             <div
+              className="game-launcher-progress"
               style={{
                 width: '40%',
                 height: '100%',
                 background: '#0a246a',
-                animation: 'game-launcher-progress 1.5s ease-in-out infinite',
               }}
             />
           </div>
