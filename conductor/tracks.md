@@ -34,3 +34,13 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Classic XP Games track archived to conductor/archive/classic-xp-games_20260515/ -->
 
 <!-- Content Drop track archived to conductor/archive/content-drop_20260516/ -->
+
+---
+
+- [ ] **Track: Terminal Tactics Launcher**
+  - **Description:** Embed the published Terminal Tactics game from itch.io inside an XP-styled game launcher window. Desktop icon, iframe window, and CMD play command.
+  - **Type:** feature
+  - **Status:** new
+  - **Created:** 2026-05-17
+  - **Branch:** `tracks/terminal-tactics-launcher_20260517/`
+  - [Spec & Plan](./tracks/terminal-tactics-launcher_20260517/index.md)
