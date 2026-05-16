@@ -32,3 +32,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Safe Mode Mobile Enhancement (Track 6A) archived to conductor/archive/safe-mode-mobile_20260515/ -->
 
 <!-- Classic XP Games track archived to conductor/archive/classic-xp-games_20260515/ -->
+
+---
+
+- [ ] **Track: Content Drop — New projects, articles, resume, and certifications**
+      _Link: [./tracks/content-drop_20260516/](./tracks/content-drop_20260516/)_
