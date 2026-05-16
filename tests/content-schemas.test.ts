@@ -87,6 +87,63 @@ describe('Article Schema (renamed from DevOps Academy)', () => {
     expect(() => articleSchema.parse(without(validArticle, 'description'))).toThrow();
   });
 
+  describe('New Projects (Terminal Tactics, Simulacra)', () => {
+    it('should validate terminal-tactics project with drive: C and status: active', () => {
+      const result = projectSchema.parse({
+        title: 'Terminal Tactics',
+        slug: 'terminal-tactics',
+        drive: 'C',
+        description: 'A terminal-based tactics game with AI opponents.',
+        repoUrl: 'https://github.com/mansyar/terminal-tactics',
+        language: 'TypeScript',
+        techStack: ['TypeScript', 'React', 'Node.js'],
+        stars: 0,
+        lastCommit: '2026-05-01',
+        commits: 50,
+        status: 'active',
+      });
+      expect(result.title).toBe('Terminal Tactics');
+      expect(result.drive).toBe('C');
+      expect(result.status).toBe('active');
+    });
+
+    it('should validate simulacra project with drive: C and status: wip', () => {
+      const result = projectSchema.parse({
+        title: 'Simulacra',
+        slug: 'simulacra',
+        drive: 'C',
+        description: 'An in-development simulation project.',
+        repoUrl: 'https://github.com/mansyar/simulacra',
+        language: 'Python',
+        techStack: ['Python', 'PyTorch', 'FastAPI'],
+        stars: 0,
+        lastCommit: '2026-04-15',
+        commits: 25,
+        status: 'wip',
+      });
+      expect(result.title).toBe('Simulacra');
+      expect(result.drive).toBe('C');
+      expect(result.status).toBe('wip');
+    });
+
+    it('should accept "wip" as a valid status value', () => {
+      const result = projectSchema.parse({
+        title: 'WIP Project',
+        slug: 'wip-project',
+        drive: 'C',
+        description: 'A work in progress.',
+        repoUrl: 'https://github.com/user/wip-project',
+        language: 'Go',
+        techStack: ['Go'],
+        stars: 0,
+        lastCommit: '2026-04-01',
+        commits: 10,
+        status: 'wip',
+      });
+      expect(result.status).toBe('wip');
+    });
+  });
+
   it('should accept any string category value (not just Docker, Linux, CI/CD)', () => {
     expect(
       articleSchema.parse({ ...validArticle, category: 'Software Engineering' }).category,

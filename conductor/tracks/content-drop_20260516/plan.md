@@ -2,7 +2,7 @@
 
 ## Phase 1: Project MDX Files — Terminal Tactics & Simulacra
 
-- [ ] Task: Write tests for new project frontmatter schema
+- [~] Task: Write tests for new project frontmatter schema
   - [ ] Write tests verifying terminal-tactics.mdx has valid frontmatter (title, slug, drive: 'C', description, repoUrl, techStack, status: 'active')
   - [ ] Write tests verifying simulacra.mdx has valid frontmatter (title, slug, drive: 'C', description, repoUrl, techStack, status: 'wip')
   - [ ] Run tests and confirm they pass (schema validation)
