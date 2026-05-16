@@ -8,11 +8,11 @@
   - [x] Run tests and confirm they pass (schema validation)
   - [x] Verify coverage: `CI=true pnpm test:coverage`
   - [x] Commit: `test(projects): Add schema validation tests for new project MDX files`
-- [ ] Task: Create terminal-tactics.mdx project file
-  - [ ] Write failing test: assert project content renders in Explorer and CMD `cat` output
-  - [ ] Create `src/content/projects/terminal-tactics.mdx` with full frontmatter and substantive body content
-  - [ ] Run tests to pass; verify coverage
-  - [ ] Commit: `feat(projects): Add Terminal Tactics project MDX entry`
+- [x] Task: Create terminal-tactics.mdx project file `78c01db`
+  - [x] Write failing test: assert project content renders in Explorer and CMD `cat` output
+  - [x] Create `src/content/projects/terminal-tactics.mdx` with full frontmatter and substantive body content
+  - [x] Run tests to pass; verify coverage
+  - [x] Commit: `feat(projects): Add Terminal Tactics project MDX entry`
 - [ ] Task: Create simulacra.mdx project file
   - [ ] Create `src/content/projects/simulacra.mdx` with full frontmatter and substantive body content
   - [ ] Run tests; verify coverage

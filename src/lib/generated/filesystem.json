@@ -22,6 +22,13 @@
             "icon": "/icons/file.svg",
             "slug": "icarus-server-manager",
             "size": "6.0 KB"
+          },
+          {
+            "type": "file",
+            "name": "terminal-tactics.mdx",
+            "icon": "/icons/file.svg",
+            "slug": "terminal-tactics",
+            "size": "5.0 KB"
           }
         ]
       }

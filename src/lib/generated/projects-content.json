@@ -25,7 +25,7 @@
       ],
       "stars": 0,
       "lastCommit": "2026-01-19",
-      "commits": 0,
+      "commits": 90,
       "status": "active",
       "icon": "book"
     },
@@ -47,6 +47,23 @@
       "icon": "server"
     },
     "bodyHtml": "<h2>Icarus Sentinel (Server Manager)</h2>\n<p>A lightweight, Python-based desktop application designed to simplify the deployment and maintenance of a dedicated Icarus server. The goal is to offload game logic from the client to a dedicated process to improve FPS and stability, while automating weekly updates, save-game security, and memory optimization.</p>\n<h3>Key Features</h3>\n<ul>\n<li><strong>Safe Launch</strong>: Pre-flight RAM checks and optional auto-update on launch ensure the server is always up-to-date with sufficient system resources</li>\n<li><strong>Smart Backup</strong>: Automated, timestamped ZIP backups of world saves every 30 minutes and upon shutdown, with configurable retention policy to manage disk space</li>\n<li><strong>Save Sync</strong>: Bidirectional synchronization of world saves between local single-player and the dedicated server using a &quot;Keep Newest&quot; conflict policy</li>\n<li><strong>Player Tracking</strong>: Real-time monitoring of connected players, playtime, and server metrics via the Valve A2S protocol with integrated Windows desktop notifications</li>\n<li><strong>Automated CI/CD</strong>: GitHub Actions pipeline for automated Windows executable builds and semantic versioning</li>\n</ul>\n<h3>Tech Stack</h3>\n<p>Written in Python 3.11+ with PySide6 providing a high-fidelity industrial dashboard UI. System monitoring uses psutil, server discovery uses the python-a2s library (Valve A2S protocol), and native Windows notifications are powered by winotify.</p>\n<h3>Architecture</h3>\n<p>The application follows a modular Controller-View pattern — business logic is fully decoupled from UI components. No single source file exceeds 500 lines. The core workflows (Safe Launch, Smart Backup, Save Sync, Player Tracking) operate as independent modules orchestrated by a central controller, making the system maintainable and extensible.</p>\n"
+  },
+  "terminal-tactics": {
+    "frontmatter": {
+      "title": "Terminal Tactics",
+      "slug": "terminal-tactics",
+      "drive": "C",
+      "description": "A turn-based tactical strategy game played entirely in the terminal, featuring AI opponents, procedural maps, and a robust plugin system for custom game modes.",
+      "repoUrl": "https://github.com/mansyar/terminal-tactics",
+      "language": "TypeScript",
+      "techStack": ["TypeScript", "Node.js", "Ink", "React", "Vitest", "GitHub Actions"],
+      "stars": 0,
+      "lastCommit": "2026-05-16",
+      "commits": 242,
+      "status": "active",
+      "icon": "game"
+    },
+    "bodyHtml": "<h2>Terminal Tactics</h2>\n<p>A turn-based tactical strategy game that brings the depth of grid-based combat to the terminal. Built with a focus on extensibility, testability, and a rich command-line experience.</p>\n<h3>Gameplay Features</h3>\n<ul>\n<li><strong>Grid-Based Combat</strong>: Units move and attack on a hexagonal grid with line-of-sight, elevation, and cover mechanics</li>\n<li><strong>AI Opponent</strong>: Configurable AI with multiple difficulty levels — from random moves to strategic positioning and target prioritization</li>\n<li><strong>Procedural Maps</strong>: Maps are generated at runtime with configurable size, terrain types, and obstacle density</li>\n<li><strong>Save/Load System</strong>: Full game state serialization allows saving and resuming campaigns across sessions</li>\n</ul>\n<h3>Architecture</h3>\n<p>The game follows a strict Entity-Component-System (ECS) architecture with clear separation between game logic and presentation:</p>\n<pre><code>src/\n├── core/         # ECS engine — entities, components, systems\n├── ai/           # Opponent AI strategies and evaluation\n├── maps/         # Procedural map generation and terrain\n├── ui/           # Terminal rendering (Ink/React components)\n└── data/         # Unit definitions, balance tables, config\n</code></pre>\n<h3>Tech Stack</h3>\n<p>Written entirely in TypeScript with Ink providing React-based terminal rendering. The ECS core is fully decoupled from the UI layer, making both the AI and game logic independently testable. The test suite covers AI decision-making, map generation fairness, combat resolution, and save/load integrity — achieving over 90% line coverage on the core engine.</p>\n<h3>Development Journey</h3>\n<p>Terminal Tactics began as an experiment in procedural generation and evolved into a full-featured game framework. The ECS architecture emerged from the need to support multiple game modes without duplicating core systems. Unit validation and attack resolution are modeled as composable systems that can be mixed and matched for different game types.</p>\n<p>The plugin system allows third-party game modes to be loaded as Node.js modules, registering custom components, systems, and UI renderers through a well-defined API.</p>\n"
   },
   "tubular-bexus-osw": {
     "frontmatter": {
