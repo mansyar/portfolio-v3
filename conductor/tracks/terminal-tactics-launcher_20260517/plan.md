@@ -73,3 +73,7 @@
   - [x] §6 — Add `GameLauncher` to React Islands component inventory table
   - [x] §7.1 — Add `terminal-tactics` to supported commands table
 - [x] Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions [68f9eb0]
