@@ -40,7 +40,7 @@
   - [x] Run `pnpm test` — 57 files, 800 tests passed
 - [x] Task: Conductor — User Manual Verification 'Phase 2: Optimize Vitest Configuration' (Protocol in workflow.md)
 
-## Phase 3: Verify Improvements & Document
+## Phase 3: Verify Improvements & Document [checkpoint: a69115a]
 
 **Goal:** Measure post-optimization performance and document all changes.
 
