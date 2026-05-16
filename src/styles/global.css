@@ -138,6 +138,13 @@
   100% { background-position: -200% 0; }
 }
 
+/* === Game Launcher Progress Bar === */
+
+@keyframes game-launcher-progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
 /* === CMD Prompt Cursor Blink === */
 
 @keyframes cmdCursorBlink {
@@ -230,6 +237,12 @@ button:focus-visible,
   .shutdown-progress-bar {
     animation: none !important;
     background-position: 0 0 !important;
+  }
+
+  /* Game Launcher progress bar — stop animation */
+  .game-launcher-progress {
+    animation: none !important;
+    width: 100% !important;
   }
 
   /* DesktopIcon hover — remove transition, keep final state */
