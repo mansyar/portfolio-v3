@@ -2,22 +2,22 @@
 
 ## Phase 1 — GameLauncher Component & Config
 
-- [ ] Task: Write tests for the GameLauncher component
-  - [ ] Test: iframe renders with correct `src` prop and attributes (`title`, `allow`, `sandbox`)
-  - [ ] Test: Loading state displays "Loading Terminal Tactics..." before iframe load event
-  - [ ] Test: Error state renders fallback "Open in new tab" link after 15-second timeout
-  - [ ] Test: Timeout clears on successful iframe `onLoad` (no error state shown)
-  - [ ] Test: `aria-live="polite"` is present on loading/error state containers
-- [ ] Task: Create `src/lib/game-launcher-config.ts`
-  - [ ] Export `GAME_LAUNCHER_URLS: Record<string, string>` with `terminal-tactics` → itch.io embed URL
-  - [ ] This keeps iframe URLs in a single, easy-to-update location separate from `constants.ts`
-- [ ] Task: Implement GameLauncher.tsx
-  - [ ] Create `src/components/apps/GameLauncher.tsx` with `src` prop
-  - [ ] Render `<iframe>` with `title="Terminal Tactics"`, `allow="fullscreen"`, `sandbox="allow-scripts allow-same-origin"`
-  - [ ] Implement loading state: "Loading Terminal Tactics..." with XP-style progress bar
-  - [ ] Implement error state with 15-second timeout: fallback link to `https://mansyar.itch.io/terminal-tactics`
-  - [ ] Implement iframe `onLoad` event → clear timeout, transition from loading → ready
-  - [ ] Fill full window content area (no scrollbars on wrapper)
+- [x] Task: Write tests for the GameLauncher component [5d18e97]
+  - [x] Test: iframe renders with correct `src` prop and attributes (`title`, `allow`, `sandbox`)
+  - [x] Test: Loading state displays "Loading Terminal Tactics..." before iframe load event
+  - [x] Test: Error state renders fallback "Open in new tab" link after 15-second timeout
+  - [x] Test: Timeout clears on successful iframe `onLoad` (no error state shown)
+  - [x] Test: `aria-live="polite"` is present on loading/error state containers
+- [x] Task: Create `src/lib/game-launcher-config.ts` [5d18e97]
+  - [x] Export `GAME_LAUNCHER_URLS: Record<string, string>` with `terminal-tactics` → itch.io embed URL
+  - [x] This keeps iframe URLs in a single, easy-to-update location separate from `constants.ts`
+- [x] Task: Implement GameLauncher.tsx [5d18e97]
+  - [x] Create `src/components/apps/GameLauncher.tsx` with `src` prop
+  - [x] Render `<iframe>` with `title="Terminal Tactics"`, `allow="fullscreen"`, `sandbox="allow-scripts allow-same-origin"`
+  - [x] Implement loading state: "Loading Terminal Tactics..." with XP-style progress bar
+  - [x] Implement error state with 15-second timeout: fallback link to `https://mansyar.itch.io/terminal-tactics`
+  - [x] Implement iframe `onLoad` event → clear timeout, transition from loading → ready
+  - [x] Fill full window content area (no scrollbars on wrapper)
 - [ ] Task: Conductor - User Manual Verification 'Phase 1 — GameLauncher Component & Config' (Protocol in workflow.md)
 
 ## Phase 2 — Window System Integration & URL Deep-Linking
