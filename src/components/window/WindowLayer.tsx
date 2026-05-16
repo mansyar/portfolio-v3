@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import { useStore } from '@/lib/useStore';
 import {
   $windows,
@@ -17,14 +17,52 @@ import { $startMenuOpen, closeStartMenu, $shuttingDown } from '@/stores/desktop'
 import { WindowFrame } from './WindowFrame';
 import type { WindowId } from '@/stores/windows';
 import type { MouseEvent } from 'react';
-import { Explorer } from '@/components/apps/Explorer';
-import { CmdPrompt } from '@/components/apps/CmdPrompt';
-import { TaskManager } from '@/components/apps/TaskManager';
-import { KnowledgeBase } from '@/components/apps/KnowledgeBase';
-import { Pong } from '@/components/apps/Pong';
-import { Minesweeper } from '@/components/apps/Minesweeper';
-import { GameLauncher } from '@/components/apps/GameLauncher';
 import { GAME_LAUNCHER_URLS } from '@/lib/game-launcher-config';
+
+// Lazy-loaded window app components — each loads only when its window first opens
+const Explorer = lazy(() =>
+  import('@/components/apps/Explorer').then((m) => ({ default: m.Explorer })),
+);
+const CmdPrompt = lazy(() =>
+  import('@/components/apps/CmdPrompt').then((m) => ({ default: m.CmdPrompt })),
+);
+const TaskManager = lazy(() =>
+  import('@/components/apps/TaskManager').then((m) => ({ default: m.TaskManager })),
+);
+const KnowledgeBase = lazy(() =>
+  import('@/components/apps/KnowledgeBase').then((m) => ({ default: m.KnowledgeBase })),
+);
+const Pong = lazy(() => import('@/components/apps/Pong').then((m) => ({ default: m.Pong })));
+const Minesweeper = lazy(() =>
+  import('@/components/apps/Minesweeper').then((m) => ({ default: m.Minesweeper })),
+);
+const GameLauncher = lazy(() =>
+  import('@/components/apps/GameLauncher').then((m) => ({ default: m.GameLauncher })),
+);
+
+/** XP-styled loading fallback shown while a lazy app chunk loads */
+function AppLoadingFallback({ label }: { label: string }) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        background: '#ece9d8',
+        fontFamily: '"Tahoma", sans-serif',
+        fontSize: 12,
+        color: '#666',
+        userSelect: 'none',
+      }}
+      aria-busy="true"
+      aria-label={`Loading ${label}`}
+      role="status"
+    >
+      <span>Loading {label}...</span>
+    </div>
+  );
+}
 
 // Reserved for future window types that don't have a component yet
 const PLACEHOLDER_CONTENT: Record<string, string> = {};
@@ -175,31 +213,59 @@ export function WindowLayer() {
 
 function renderContent(id: WindowId) {
   if (id === 'explorer' || id === 'mydocs' || id === 'recyclebin') {
-    return <Explorer windowId={id} />;
+    return (
+      <Suspense fallback={<AppLoadingFallback label="File Explorer" />}>
+        <Explorer windowId={id} />
+      </Suspense>
+    );
   }
 
   if (id === 'cmd') {
-    return <CmdPrompt windowId={id} />;
+    return (
+      <Suspense fallback={<AppLoadingFallback label="Command Prompt" />}>
+        <CmdPrompt windowId={id} />
+      </Suspense>
+    );
   }
 
   if (id === 'taskmanager') {
-    return <TaskManager windowId={id} />;
+    return (
+      <Suspense fallback={<AppLoadingFallback label="Task Manager" />}>
+        <TaskManager windowId={id} />
+      </Suspense>
+    );
   }
 
   if (id === 'help') {
-    return <KnowledgeBase windowId={id} />;
+    return (
+      <Suspense fallback={<AppLoadingFallback label="Help Center" />}>
+        <KnowledgeBase windowId={id} />
+      </Suspense>
+    );
   }
 
   if (id === 'pong') {
-    return <Pong windowId={id} />;
+    return (
+      <Suspense fallback={<AppLoadingFallback label="Pong" />}>
+        <Pong windowId={id} />
+      </Suspense>
+    );
   }
 
   if (id === 'minesweeper') {
-    return <Minesweeper windowId={id} />;
+    return (
+      <Suspense fallback={<AppLoadingFallback label="Minesweeper" />}>
+        <Minesweeper windowId={id} />
+      </Suspense>
+    );
   }
 
   if (id === 'terminal-tactics') {
-    return <GameLauncher src={GAME_LAUNCHER_URLS['terminal-tactics']} />;
+    return (
+      <Suspense fallback={<AppLoadingFallback label="Game Launcher" />}>
+        <GameLauncher src={GAME_LAUNCHER_URLS['terminal-tactics']} />
+      </Suspense>
+    );
   }
 
   const placeholder = PLACEHOLDER_CONTENT[id];

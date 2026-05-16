@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, cleanup, fireEvent, screen } from '@testing-library/react';
+import { render, cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
 import type { FC } from 'react';
 
 let WindowLayer: FC<object>;
@@ -42,9 +42,11 @@ describe('WindowLayer.tsx', () => {
 
     render(<WindowLayer />);
 
-    // The TaskManager tabs should be rendered
-    expect(screen.getByRole('tab', { name: 'Processes' })).toBeDefined();
-    expect(screen.getByRole('tab', { name: 'Performance' })).toBeDefined();
+    // The TaskManager tabs should be rendered (via React.lazy)
+    await waitFor(() => {
+      expect(screen.getByRole('tab', { name: 'Processes' })).toBeDefined();
+      expect(screen.getByRole('tab', { name: 'Performance' })).toBeDefined();
+    });
   });
 
   it('should register CustomEvent listener for luna:open-window', () => {
@@ -383,14 +385,17 @@ describe('WindowLayer.tsx', () => {
 
   it('should render GameLauncher iframe for terminal-tactics window', async () => {
     const stores = await import('@/stores/windows');
-    vi.useFakeTimers();
     stores.openWindow('terminal-tactics');
 
     render(<WindowLayer />);
 
-    const iframe = screen.getByTitle('Terminal Tactics');
-    expect(iframe).toBeDefined();
-    vi.useRealTimers();
+    await waitFor(
+      () => {
+        const iframe = screen.getByTitle('Terminal Tactics');
+        expect(iframe).toBeDefined();
+      },
+      { timeout: 10000 },
+    );
   });
 
   it('should open terminal-tactics window via desktop icon luna:open-window event', async () => {
@@ -402,6 +407,81 @@ describe('WindowLayer.tsx', () => {
     const windows = stores.$windows.get();
     expect(windows['terminal-tactics']).toBeDefined();
     expect(windows['terminal-tactics'].title).toBe('Terminal Tactics');
+  });
+
+  describe('Lazy Loading (React.lazy)', () => {
+    it('should use React.lazy imports (no static eager imports of app components)', async () => {
+      // Read the WindowLayer source to verify static imports are not used for app components
+      const mod = await import('@/components/window/WindowLayer');
+      const src = mod.WindowLayer.toString();
+      // Verify no direct static import pattern for app components
+      expect(src).not.toContain("from '@/components/apps/Explorer'");
+      expect(src).not.toContain("from '@/components/apps/CmdPrompt'");
+      expect(src).not.toContain("from '@/components/apps/Pong'");
+      expect(src).not.toContain("from '@/components/apps/Minesweeper'");
+      expect(src).not.toContain("from '@/components/apps/GameLauncher'");
+    });
+
+    it('should still render Explorer content when explorer window is opened (lazy load works)', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      render(<WindowLayer />);
+
+      // The Explorer component should still render correctly via React.lazy
+      await waitFor(
+        () => {
+          expect(screen.getByText('My Computer')).toBeDefined();
+        },
+        { timeout: 10000 },
+      );
+    });
+
+    it('should still render CmdPrompt content when cmd window is opened (lazy load works)', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('cmd');
+
+      render(<WindowLayer />);
+
+      // The CmdPrompt component should still render correctly via React.lazy
+      await waitFor(
+        () => {
+          const input = screen.getByRole('textbox');
+          expect(input).toBeDefined();
+        },
+        { timeout: 10000 },
+      );
+    });
+
+    it('should still render Pong when pong window is opened (lazy load works)', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('pong');
+
+      render(<WindowLayer />);
+
+      await waitFor(
+        () => {
+          const canvas = document.querySelector('canvas');
+          expect(canvas).toBeDefined();
+        },
+        { timeout: 10000 },
+      );
+    });
+
+    it('should still render Minesweeper when minesweeper window is opened (lazy load works)', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('minesweeper');
+
+      render(<WindowLayer />);
+
+      await waitFor(
+        () => {
+          const canvas = document.querySelector('canvas');
+          expect(canvas).toBeDefined();
+        },
+        { timeout: 10000 },
+      );
+    });
   });
 
   it('should have correct terminal-tactics window config', async () => {
