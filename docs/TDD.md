@@ -242,6 +242,8 @@ const articles = defineCollection({
 export const collections = { projects, articles };
 ```
 
+**Content counts (v2.1):** 5 projects, 8 articles across 3 categories (DevOps: 3, Software Engineering: 4, AI: 1).
+
 ### 4.2 GitHub API Data Shape
 
 ```typescript

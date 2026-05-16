@@ -1,7 +1,7 @@
 # PRD: Windows XP DevOps Portfolio (Luna OS)
 
 **Author:** @mansyar  
-**Version:** 2.0  
+**Version:** 2.1  
 **Target Platform:** Cloudflare Pages (Free Tier)  
 **Tech Stack:** Astro (Hybrid), React, Tailwind CSS, Nano Stores, MDX.
 
@@ -58,23 +58,23 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 
 ### 🖥️ Desktop Icons
 
-| Icon               | Type    | Content / Action                                                                                                                                                     |
-| :----------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **My Computer**    | Folder  | Opens Explorer for `C:\Software_Engineering` and `D:\Systems_Data`.                                                                                                  |
-| **My Documents**   | Folder  | `D:\My_Documents` Explorer view with `Resume.pdf` (opens in new tab), `Certs/` (empty placeholder), and `Contact.txt` (formatted contact card with clickable links). |
-| **Knowledge Base** | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).                                                                                                      |
-| **Command Prompt** | App     | Functional React terminal for CLI navigation.                                                                                                                        |
-| **Recycle Bin**    | Archive | `\Recycle_Bin` virtual folder with deleted/archived item (`chasing-chapters (v1)`). Grayed-out icon, strikethrough name, disabled Restore button.                    |
-| **Pong**           | Game    | Canvas-based Pong VS AI with difficulty selection (Easy/Medium/Hard). First-to-5 scoring, W/S or Arrow keys, rAF game loop.                                          |
-| **Minesweeper**    | Game    | Canvas-based Minesweeper 9×9 with 10 mines. Left-click reveal, right-click flag, flood-fill, timer, mine counter, smiley face restart button.                        |
+| Icon               | Type    | Content / Action                                                                                                                                                                           |
+| :----------------- | :------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **My Computer**    | Folder  | Opens Explorer for `C:\Software_Engineering` and `D:\Systems_Data`.                                                                                                                        |
+| **My Documents**   | Folder  | `D:\My_Documents` Explorer view with `Resume.pdf` (opens in new tab), `Certs/` (Alibaba Cloud certifications — ACP, ACA), and `Contact.txt` (formatted contact card with clickable links). |
+| **Knowledge Base** | App     | `E:\Knowledge_Base` (Variative articles: SE, AI, DevOps, etc.).                                                                                                                            |
+| **Command Prompt** | App     | Functional React terminal for CLI navigation.                                                                                                                                              |
+| **Recycle Bin**    | Archive | `\Recycle_Bin` virtual folder with deleted/archived item (`chasing-chapters (v1)`). Grayed-out icon, strikethrough name, disabled Restore button.                                          |
+| **Pong**           | Game    | Canvas-based Pong VS AI with difficulty selection (Easy/Medium/Hard). First-to-5 scoring, W/S or Arrow keys, rAF game loop.                                                                |
+| **Minesweeper**    | Game    | Canvas-based Minesweeper 9×9 with 10 mines. Left-click reveal, right-click flag, flood-fill, timer, mine counter, smiley face restart button.                                              |
 
 ### 📂 Directory Details
 
-- **C:\Software_Engineering:** Features `icarus-server-manager` and `chasing-chapters`.
+- **C:\Software_Engineering:** Features `icarus-server-manager`, `chasing-chapters`, `terminal-tactics` (turn-based tactical strategy game), and `simulacra` (autonomous AI ant farm).
 - **D:\Systems_Data:** Features `tubular-bexus-osw` and data-heavy system logs.
-- **D:\My_Documents:** Portfolio documents — `Resume.pdf` (opens in new tab), `Certs/` (empty placeholder for future certificates), `Contact.txt` (contact info card).
+- **D:\My_Documents:** Portfolio documents — `Resume.pdf` (opens in new tab), `Certs/` (populated with Alibaba Cloud certifications — ACP Cloud Computing Professional, ACA Cloud Computing Associate), `Contact.txt` (contact info card).
 - **\Recycle_Bin:** Virtual root-level folder (not a drive) containing archived/deleted items — `chasing-chapters (v1)` with grayed-out styling.
-- **E:\Knowledge_Base:** MDX articles spanning Software Engineering, AI, DevOps, and more, browsed through the Knowledge Base application.
+- **E:\Knowledge_Base:** MDX articles spanning Software Engineering, AI, DevOps, and more, browsed through the Knowledge Base application. Software Engineering category expanded with Agent-Assisted Coding (Spec-Driven Dev), TDD, and Database Design Patterns.
 
 ---
 
@@ -127,7 +127,7 @@ A high-performance, retro-themed portfolio for a Software Engineer specializing 
 - **Search:** Text input at top of sidebar. Real-time filtering by title or description (case-insensitive). Crosses category boundaries — shows matches from all categories regardless of active category filter.
 - **Content Pipeline:** Articles stored as MDX in `src/content/articles/`. At build time, `scripts/compile-articles.mjs` parses frontmatter (manual YAML, no `gray-matter`) and renders body to HTML via `marked` (1-package lightweight approach). Output: `src/lib/generated/articles-content.json` (~1.6KB for 5 articles).
 - **Build Integration:** `"build": "node scripts/prebuild.mjs && astro build"` — the prebuild orchestrator runs all 4 pre-processing scripts (fetch-github-stats, compile-articles, compile-projects, generate-filesystem) before Astro, total ~3.44s.
-- **Articles:** 5 articles across 3 categories: DevOps (Docker Basics, Linux Essentials, CI/CD Pipeline), Software Engineering (Microservices Patterns), AI (LLM Fine-Tuning Guide).
+- **Articles:** 8 articles across 3 categories: DevOps (Docker Basics, Linux Essentials, CI/CD Pipeline), Software Engineering (Microservices Patterns, Agent-Assisted Coding, TDD, Database Design Patterns), AI (LLM Fine-Tuning Guide).
 - **Accessibility:** Full WCAG AA compliance across all components. ARIA roles include `role="region"` + `aria-label="Knowledge Base"` on outer container, `role="searchbox"` on search input, `role="navigation"` + `aria-label="Article categories"` on category sidebar.
 
 ### 5.4 Pong
