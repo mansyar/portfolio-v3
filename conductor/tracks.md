@@ -36,3 +36,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 <!-- Content Drop track archived to conductor/archive/content-drop_20260516/ -->
 
 <!-- Terminal Tactics Launcher track archived to conductor/archive/terminal-tactics-launcher_20260517/ -->
+
+---
+
+- [ ] **Track: Performance Optimization (Track 6E)**
+      _Link: [./tracks/performance-optimization_20260517/](./tracks/performance-optimization_20260517/)_
