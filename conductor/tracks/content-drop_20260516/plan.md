@@ -17,12 +17,12 @@
   - [x] Create `src/content/projects/simulacra.mdx` with full frontmatter and substantive body content
   - [x] Run tests; verify coverage
   - [x] Commit: `feat(projects): Add Simulacra project MDX entry`
-- [ ] Task: Update static and dynamic filesystem + metadata
-  - [ ] Update `src/lib/constants.ts` — add terminal-tactics and simulacra to C:\Software_Engineering folder
-  - [ ] Update `src/lib/projects-data.ts` — add metadata entries for both projects
-  - [ ] Update `scripts/generate-filesystem.mjs` — verify both projects are auto-discovered
-  - [ ] Run tests passing; verify no regressions
-  - [ ] Commit: `feat(filesystem): Register new projects in filesystem tree and metadata`
+- [x] Task: Update static and dynamic filesystem + metadata `87f95c4`
+  - [x] Update `src/lib/constants.ts` — add terminal-tactics and simulacra to C:\Software_Engineering folder
+  - [x] Update `src/lib/projects-data.ts` — add metadata entries for both projects
+  - [x] Update `scripts/generate-filesystem.mjs` — verify both projects are auto-discovered (dynamic generator auto-discovers from compiled JSON)
+  - [x] Run tests passing; verify no regressions
+  - [x] Commit: `feat(filesystem): Register new projects in filesystem tree and metadata`
 - [ ] Task: Update existing test fixtures and assertions for new project count
   - [ ] `tests/content-files.test.ts` — add new project files to the `projectFiles` array
   - [ ] `tests/compile-projects.test.ts` — update `toHaveLength(3)` → `toHaveLength(5)`; add GitHub cache fixture entries for terminal-tactics and simulacra repos
