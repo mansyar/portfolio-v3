@@ -34,10 +34,10 @@
 
 ## Phase 2: Knowledge Base Articles
 
-- [ ] Task: Write tests for new article frontmatter schema
-  - [ ] Write tests verifying all 3 new articles have valid frontmatter (title, slug, category: 'Software Engineering', order, description, lastUpdated)
-  - [ ] Verify coverage: `CI=true pnpm test:coverage`
-  - [ ] Commit: `test(articles): Add schema validation tests for new article MDX files`
+- [x] Task: Write tests for new article frontmatter schema `9c82e1e`
+  - [x] Write tests verifying all 3 new articles have valid frontmatter (title, slug, category: 'Software Engineering', order, description, lastUpdated)
+  - [x] Verify coverage: `CI=true pnpm test:coverage`
+  - [x] Commit: `test(articles): Add schema validation tests for new article MDX files`
 - [ ] Task: Create agent-assisted-coding.mdx article
   - [ ] Write failing test: assert article appears in Knowledge Base under Software Engineering category
   - [ ] Create `src/content/articles/agent-assisted-coding.mdx` with frontmatter and substantive body
