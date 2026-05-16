@@ -152,6 +152,50 @@ describe('Article Schema (renamed from DevOps Academy)', () => {
     expect(articleSchema.parse({ ...validArticle, category: 'DevOps' }).category).toBe('DevOps');
   });
 
+  describe('New Articles (Agent-Assisted Coding, TDD, Database Design Patterns)', () => {
+    it('should validate agent-assisted-coding article with Software Engineering category', () => {
+      const result = articleSchema.parse({
+        title: 'Agent-Assisted Coding (Spec-Driven Development)',
+        slug: 'agent-assisted-coding',
+        category: 'Software Engineering',
+        order: 2,
+        description: 'Conductor methodology, spec-first development, and AI-assisted workflows.',
+        lastUpdated: '2026-05-16',
+      });
+      expect(result.title).toBe('Agent-Assisted Coding (Spec-Driven Development)');
+      expect(result.category).toBe('Software Engineering');
+      expect(result.order).toBe(2);
+    });
+
+    it('should validate tdd article with Software Engineering category', () => {
+      const result = articleSchema.parse({
+        title: 'Test-Driven Development (TDD)',
+        slug: 'tdd',
+        category: 'Software Engineering',
+        order: 3,
+        description: 'Red-Green-Refactor cycle, testing best practices, and coverage thresholds.',
+        lastUpdated: '2026-05-16',
+      });
+      expect(result.title).toBe('Test-Driven Development (TDD)');
+      expect(result.category).toBe('Software Engineering');
+      expect(result.order).toBe(3);
+    });
+
+    it('should validate database-design-patterns article with Software Engineering category', () => {
+      const result = articleSchema.parse({
+        title: 'Database Design Patterns',
+        slug: 'database-design-patterns',
+        category: 'Software Engineering',
+        order: 4,
+        description: 'SQL vs NoSQL trade-offs, indexing strategies, and normalization forms.',
+        lastUpdated: '2026-05-16',
+      });
+      expect(result.title).toBe('Database Design Patterns');
+      expect(result.category).toBe('Software Engineering');
+      expect(result.order).toBe(4);
+    });
+  });
+
   it('should export articleSchema (not devopsAcademySchema)', () => {
     // This test verifies the rename
     expect(articleSchema).toBeDefined();
