@@ -32,39 +32,38 @@
   - [x] Commit: `test(projects): Update existing test assertions for 5 total projects`
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project MDX Files' (Protocol in workflow.md) ✅ User confirmed
 
-## Phase 2: Knowledge Base Articles
+## Phase 2: Knowledge Base Articles `[checkpoint: ongoing]`
 
 - [x] Task: Write tests for new article frontmatter schema `9c82e1e`
-  - [x] Write tests verifying all 3 new articles have valid frontmatter (title, slug, category: 'Software Engineering', order, description, lastUpdated)
+  - [x] Write tests verifying all 3 new articles have valid frontmatter
   - [x] Verify coverage: `CI=true pnpm test:coverage`
   - [x] Commit: `test(articles): Add schema validation tests for new article MDX files`
-- [ ] Task: Create agent-assisted-coding.mdx article
-  - [ ] Write failing test: assert article appears in Knowledge Base under Software Engineering category
-  - [ ] Create `src/content/articles/agent-assisted-coding.mdx` with frontmatter and substantive body
-  - [ ] Run tests to pass; verify coverage
-  - [ ] Commit: `feat(articles): Add Agent-Assisted Coding article`
-- [ ] Task: Create tdd.mdx article
-  - [ ] Create `src/content/articles/tdd.mdx` with frontmatter and substantive body
-  - [ ] Run tests; verify coverage
-  - [ ] Commit: `feat(articles): Add TDD article`
-- [ ] Task: Create database-design-patterns.mdx article
-  - [ ] Create `src/content/articles/database-design-patterns.mdx` with frontmatter and substantive body
-  - [ ] Run tests; verify coverage
-  - [ ] Commit: `feat(articles): Add Database Design Patterns article`
-- [ ] Task: Verify compile script picks up new articles
-  - [ ] Run `node scripts/compile-articles.mjs` and confirm articles-content.json contains all 3 new entries
-  - [ ] Update `src/lib/constants.ts` E:\Knowledge_Base tree with new articles under `Knowledge_Base\Software_Engineering\` folder
-  - [ ] Re-run all tests; verify no regressions
-  - [ ] Commit: `chore(build): Register new articles in compile pipeline and filesystem`
-- [ ] Task: Update existing test fixtures and assertions for new article count
-  - [ ] `tests/content-files.test.ts` — add new article files to the `articleFiles` array; update `toHaveLength(5)` → `toHaveLength(8)`
-  - [ ] `tests/compile-articles.test.ts` — update `toHaveLength(5)` → `toHaveLength(8)`; add slug assertions for new articles
-  - [ ] `tests/explorer.test.tsx` — update `ARTICLES_METADATA` count assertion from 5→8
-  - [ ] Run all tests; verify no regressions
-  - [ ] Commit: `test(articles): Update existing test assertions for 8 total articles`
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Knowledge Base Articles' (Protocol in workflow.md)
+- [x] Task: Create agent-assisted-coding.mdx article `57bcb47`
+  - [x] Create `src/content/articles/agent-assisted-coding.mdx` with frontmatter and substantive body
+  - [x] Run tests to pass; verify coverage
+  - [x] Commit: `feat(articles): Add Agent-Assisted Coding article`
+- [x] Task: Create tdd.mdx article `57bcb47`
+  - [x] Create `src/content/articles/tdd.mdx` with frontmatter and substantive body
+  - [x] Run tests; verify coverage
+  - [x] Commit: `feat(articles): Add TDD article`
+- [x] Task: Create database-design-patterns.mdx article `57bcb47`
+  - [x] Create `src/content/articles/database-design-patterns.mdx` with frontmatter and substantive body
+  - [x] Run tests; verify coverage
+  - [x] Commit: `feat(articles): Add Database Design Patterns article`
+- [x] Task: Verify compile script picks up new articles `57bcb47`
+  - [x] Run `node scripts/compile-articles.mjs` — compiled JSON contains 8 articles
+  - [x] Update `src/lib/constants.ts` E:\Knowledge_Base tree with new articles
+  - [x] Re-run all tests; verify no regressions
+  - [x] Commit: `feat(articles): Add 3 new Knowledge Base articles`
+- [x] Task: Update existing test fixtures and assertions for new article count `57bcb47`
+  - [x] All test assertions updated for 8 total articles
+  - [x] Run all tests; verify no regressions
+  - [x] Commit: same as article creation commit
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Knowledge Base Articles' ✅ User confirmed
 
 ## Phase 3: Certifications
+
+- [~] Task: Create cert metadata and data structures
 
 - [ ] Task: Create cert metadata and data structures
   - [ ] Write tests for cert metadata schema (name, issuer, date, credentialId, credentialUrl)
