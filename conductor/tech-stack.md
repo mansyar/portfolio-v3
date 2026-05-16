@@ -205,6 +205,15 @@ prebuild.mjs
 - **Files affected:** `package.json`, `src/content.config.ts`, `src/lib/content-schemas.ts`
 - **Packages added:** `zod`
 
+### 2026-05-17 — Track 6D: Terminal Tactics Launcher — Game Launcher window
+
+- **Reason:** Embed the published Terminal Tactics game from itch.io inside an XP-styled game launcher window. The game runs as a first-class application within the XP window system — accessible via desktop icon, Start Menu entry, and CMD `terminal-tactics` command.
+- **Impact:** New GameLauncher.tsx component with iframe wrapper, loading state (XP progress bar), 15-second error timeout with fallback link, and `aria-live="polite"` accessibility. WindowId type expanded with `'terminal-tactics'`. VALID_WINDOW_IDS set fixed to include `pong`, `minesweeper`, and `terminal-tactics` for deep-linking. New game-launcher-config.ts URL registry. Desktop icon, Start Menu entry, and CMD command added.
+- **Packages added:** None (pure React + HTML5 Canvas iframe).
+- **Files created:** `src/components/apps/GameLauncher.tsx`, `src/lib/game-launcher-config.ts`, `public/icons/terminal-tactics.svg`, `tests/GameLauncher.test.tsx`
+- **Files modified:** `src/stores/windows.ts`, `src/stores/url-sync.ts`, `src/components/window/WindowLayer.tsx`, `src/lib/commands.ts`, `src/pages/index.astro`, `src/components/taskbar/StartMenu.tsx`, `src/styles/global.css`, `docs/PRD.md`, `docs/TDD.md`, `conductor/product.md`
+- **Tests added:** 11 new tests (8 GameLauncher + 2 commands + 1 windowlayer). Total: 824 tests.
+
 ### 2026-05-16 — Track: Improve Vitest Performance
 
 - **Reason:** Optimize Vitest test runner configuration to reduce per-worker overhead and improve warm-run caching.
