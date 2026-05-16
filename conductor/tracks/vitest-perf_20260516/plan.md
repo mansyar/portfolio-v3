@@ -64,4 +64,4 @@
     2. `fileParallelism: true` — ensures parallel execution
     3. `cache.dir: './node_modules/.vitest-cache'` — persistent transform cache for warm runs
     4. Coverage exclusions: added `tests/helpers/`, `src/__test_modularity__/`
-- [ ] Task: Conductor — User Manual Verification 'Phase 3: Verify Improvements & Document' (Protocol in workflow.md)
+- [x] Task: Conductor — User Manual Verification 'Phase 3: Verify Improvements & Document' (Protocol in workflow.md)
