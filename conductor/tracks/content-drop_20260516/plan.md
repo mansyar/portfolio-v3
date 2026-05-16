@@ -1,6 +1,6 @@
 # Implementation Plan: Content Drop (Track 6C)
 
-## Phase 1: Project MDX Files — Terminal Tactics & Simulacra
+## Phase 1: Project MDX Files — Terminal Tactics & Simulacra `[checkpoint: 792540b]`
 
 - [x] Task: Write tests for new project frontmatter schema `6c3e34b`
   - [x] Write tests verifying terminal-tactics.mdx has valid frontmatter (title, slug, drive: 'C', description, repoUrl, techStack, status: 'active')
@@ -23,13 +23,14 @@
   - [x] Update `scripts/generate-filesystem.mjs` — verify both projects are auto-discovered (dynamic generator auto-discovers from compiled JSON)
   - [x] Run tests passing; verify no regressions
   - [x] Commit: `feat(filesystem): Register new projects in filesystem tree and metadata`
-- [ ] Task: Update existing test fixtures and assertions for new project count
-  - [ ] `tests/content-files.test.ts` — add new project files to the `projectFiles` array
-  - [ ] `tests/compile-projects.test.ts` — update `toHaveLength(3)` → `toHaveLength(5)`; add GitHub cache fixture entries for terminal-tactics and simulacra repos
-  - [ ] `tests/explorer.test.tsx` — update `PROJECTS_METADATA` count assertion from 3→5; add new project file assertions in ExplorerFileList test
-  - [ ] Run all tests; verify no regressions
-  - [ ] Commit: `test(projects): Update existing test assertions for 5 total projects`
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Project MDX Files' (Protocol in workflow.md)
+- [x] Task: Update existing test fixtures and assertions for new project count
+  - [x] `tests/content-files.test.ts` — add new project files to the `projectFiles` array
+  - [x] `tests/compile-projects.test.ts` — update `toHaveLength(3)` → `toHaveLength(5)`; add GitHub cache fixture entries for terminal-tactics and simulacra repos
+  - [x] `tests/explorer.test.tsx` — update `PROJECTS_METADATA` count assertion from 3→5; add new project file assertions in ExplorerFileList test
+  - [x] `tests/filesystem.test.ts` — update `should return 2 project files` → `4` for C:\Software_Engineering
+  - [x] Run all tests; verify no regressions
+  - [x] Commit: `test(projects): Update existing test assertions for 5 total projects`
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Project MDX Files' (Protocol in workflow.md) ✅ User confirmed
 
 ## Phase 2: Knowledge Base Articles
 
