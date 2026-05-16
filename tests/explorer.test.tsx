@@ -196,6 +196,21 @@ describe('ExplorerDetailPane', () => {
     const { container } = render(<ExplorerDetailPane slug="nonexistent" />);
     expect(container.firstChild).toBeNull();
   });
+
+  it('should render certification details for acp-cloud-computing', () => {
+    render(<ExplorerDetailPane slug="acp-cloud-computing" />);
+    expect(screen.getByText('ACP Cloud Computing Professional')).toBeInTheDocument();
+    expect(screen.getByText('Alibaba Cloud')).toBeInTheDocument();
+    expect(screen.getByText('IACP01240300114319')).toBeInTheDocument();
+    expect(screen.getByText('Mar 2024')).toBeInTheDocument();
+  });
+
+  it('should render certification details for aca-cloud-computing', () => {
+    render(<ExplorerDetailPane slug="aca-cloud-computing" />);
+    expect(screen.getByText('ACA Cloud Computing Associate')).toBeInTheDocument();
+    expect(screen.getByText('Alibaba Cloud')).toBeInTheDocument();
+    expect(screen.getByText('IACA01240200111019L')).toBeInTheDocument();
+  });
 });
 
 describe('Projects Metadata', () => {
@@ -269,13 +284,14 @@ describe('My Documents view', () => {
     expect(screen.getByText('Contact.txt')).toBeInTheDocument();
   });
 
-  it('should show "This folder is empty" when navigating into Certs/', async () => {
+  it('should show cert entries when navigating into Certs/', async () => {
     const stores = await import('@/stores/windows');
     stores.openWindow('mydocs');
     render(<Explorer windowId="mydocs" />);
     // Click on Certs folder
     fireEvent.click(screen.getByText('Certs'));
-    expect(screen.getByText('This folder is empty.')).toBeInTheDocument();
+    expect(screen.getByText('acp-cloud-computing.cert')).toBeInTheDocument();
+    expect(screen.getByText('aca-cloud-computing.cert')).toBeInTheDocument();
   });
 
   it('should show contact metadata when clicking Contact.txt', async () => {

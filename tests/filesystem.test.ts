@@ -112,12 +112,15 @@ describe('FILE_SYSTEM — My_Documents folder', () => {
     expect(childNames).toContain('Certs');
     expect(childNames).toContain('Contact.txt');
 
-    // Certs/ is an empty folder
+    // Certs/ contains 2 certification entries
     const certs = myDocs!.children.find((c) => c.name === 'Certs');
     expect(certs).toBeDefined();
     expect(certs!.type).toBe('folder');
     if (certs!.type === 'folder') {
-      expect(certs!.children).toHaveLength(0);
+      const certNames = certs!.children.map((c) => c.name);
+      expect(certNames).toContain('acp-cloud-computing.cert');
+      expect(certNames).toContain('aca-cloud-computing.cert');
+      expect(certs!.children).toHaveLength(2);
     }
 
     // Resume.pdf is a file

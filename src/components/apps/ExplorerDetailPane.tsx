@@ -1,6 +1,11 @@
 import projectsContent from '@/lib/generated/projects-content.json';
-import { ARTICLES_METADATA, CONTACT_METADATA, RECYCLE_BIN_METADATA } from '@/lib/projects-data';
-import type { ArticleMetadata } from '@/lib/projects-data';
+import {
+  ARTICLES_METADATA,
+  CONTACT_METADATA,
+  RECYCLE_BIN_METADATA,
+  CERTIFICATIONS_METADATA,
+} from '@/lib/projects-data';
+import type { ArticleMetadata, CertificationMetadata } from '@/lib/projects-data';
 
 interface ExplorerDetailPaneProps {
   slug: string | null;
@@ -115,6 +120,47 @@ export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
         >
           Restore
         </button>
+      </div>
+    );
+  }
+
+  // ── Certification detail view ────────────────────────────────
+  const certData: CertificationMetadata | undefined = CERTIFICATIONS_METADATA[slug];
+  if (certData) {
+    return (
+      <div className="xp-detail-pane" role="region" aria-label="Certification details">
+        <h2 className="xp-detail-title">{certData.name}</h2>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">Issuer:</span>
+          <span className="xp-detail-value">{certData.issuer}</span>
+        </div>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">Issued:</span>
+          <span className="xp-detail-value">{certData.issued}</span>
+        </div>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">Expires:</span>
+          <span className="xp-detail-value">{certData.expires}</span>
+        </div>
+
+        <div className="xp-detail-section">
+          <span className="xp-detail-label">Credential ID:</span>
+          <span className="xp-detail-value">{certData.credentialId}</span>
+        </div>
+
+        <div className="xp-detail-section">
+          <a
+            href={certData.credentialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="xp-button xp-button-repo"
+          >
+            View Credential
+          </a>
+        </div>
       </div>
     );
   }

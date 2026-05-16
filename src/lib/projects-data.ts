@@ -156,6 +156,36 @@ export const ARTICLES_METADATA: Record<string, ArticleMetadata> = {
   },
 };
 
+// ── Certifications Metadata ───────────────────────────────────────
+
+export interface CertificationMetadata {
+  name: string;
+  issuer: string;
+  issued: string;
+  expires: string;
+  credentialId: string;
+  credentialUrl: string;
+}
+
+export const CERTIFICATIONS_METADATA: Record<string, CertificationMetadata> = {
+  'acp-cloud-computing': {
+    name: 'ACP Cloud Computing Professional',
+    issuer: 'Alibaba Cloud',
+    issued: 'Mar 2024',
+    expires: 'Mar 2026',
+    credentialId: 'IACP01240300114319',
+    credentialUrl: 'https://www.alibabacloud.com/',
+  },
+  'aca-cloud-computing': {
+    name: 'ACA Cloud Computing Associate',
+    issuer: 'Alibaba Cloud',
+    issued: 'Feb 2024',
+    expires: 'Feb 2026',
+    credentialId: 'IACA01240200111019L',
+    credentialUrl: 'https://www.alibabacloud.com/',
+  },
+};
+
 // ── Contact Metadata ──────────────────────────────────────────────
 
 export interface ContactMetadata {

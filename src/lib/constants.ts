@@ -116,7 +116,22 @@ export const FILE_SYSTEM: FSDrive[] = [
             type: 'folder',
             name: 'Certs',
             icon: '/icons/folder.svg',
-            children: [],
+            children: [
+              {
+                type: 'file',
+                name: 'acp-cloud-computing.cert',
+                icon: '/icons/file.svg',
+                slug: 'acp-cloud-computing',
+                size: '1.2 KB',
+              },
+              {
+                type: 'file',
+                name: 'aca-cloud-computing.cert',
+                icon: '/icons/file.svg',
+                slug: 'aca-cloud-computing',
+                size: '1.2 KB',
+              },
+            ],
           },
           {
             type: 'file',
