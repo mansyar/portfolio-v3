@@ -13,10 +13,10 @@
   - [x] Create `src/content/projects/terminal-tactics.mdx` with full frontmatter and substantive body content
   - [x] Run tests to pass; verify coverage
   - [x] Commit: `feat(projects): Add Terminal Tactics project MDX entry`
-- [ ] Task: Create simulacra.mdx project file
-  - [ ] Create `src/content/projects/simulacra.mdx` with full frontmatter and substantive body content
-  - [ ] Run tests; verify coverage
-  - [ ] Commit: `feat(projects): Add Simulacra project MDX entry`
+- [x] Task: Create simulacra.mdx project file `2518327`
+  - [x] Create `src/content/projects/simulacra.mdx` with full frontmatter and substantive body content
+  - [x] Run tests; verify coverage
+  - [x] Commit: `feat(projects): Add Simulacra project MDX entry`
 - [ ] Task: Update static and dynamic filesystem + metadata
   - [ ] Update `src/lib/constants.ts` — add terminal-tactics and simulacra to C:\Software_Engineering folder
   - [ ] Update `src/lib/projects-data.ts` — add metadata entries for both projects

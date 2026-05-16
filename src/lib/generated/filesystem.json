@@ -25,6 +25,13 @@
           },
           {
             "type": "file",
+            "name": "simulacra.mdx",
+            "icon": "/icons/file.svg",
+            "slug": "simulacra",
+            "size": "3.0 KB"
+          },
+          {
+            "type": "file",
             "name": "terminal-tactics.mdx",
             "icon": "/icons/file.svg",
             "slug": "terminal-tactics",
