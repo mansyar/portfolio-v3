@@ -370,6 +370,29 @@ describe('WindowLayer.tsx', () => {
     expect(windows.minesweeper.width).toBe(380);
   });
 
+  it('should open Terminal Tactics window via luna:open-window event', async () => {
+    const stores = await import('@/stores/windows');
+    render(<WindowLayer />);
+
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'terminal-tactics' }));
+
+    const windows = stores.$windows.get();
+    expect(windows['terminal-tactics']).toBeDefined();
+    expect(windows['terminal-tactics'].status).toBe('open');
+  });
+
+  it('should render GameLauncher iframe for terminal-tactics window', async () => {
+    const stores = await import('@/stores/windows');
+    vi.useFakeTimers();
+    stores.openWindow('terminal-tactics');
+
+    render(<WindowLayer />);
+
+    const iframe = screen.getByTitle('Terminal Tactics');
+    expect(iframe).toBeDefined();
+    vi.useRealTimers();
+  });
+
   describe('Escape Key Handler', () => {
     it('should close active window on Escape key press', async () => {
       const stores = await import('@/stores/windows');

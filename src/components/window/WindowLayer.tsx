@@ -23,6 +23,8 @@ import { TaskManager } from '@/components/apps/TaskManager';
 import { KnowledgeBase } from '@/components/apps/KnowledgeBase';
 import { Pong } from '@/components/apps/Pong';
 import { Minesweeper } from '@/components/apps/Minesweeper';
+import { GameLauncher } from '@/components/apps/GameLauncher';
+import { GAME_LAUNCHER_URLS } from '@/lib/game-launcher-config';
 
 // Reserved for future window types that don't have a component yet
 const PLACEHOLDER_CONTENT: Record<string, string> = {};
@@ -194,6 +196,10 @@ function renderContent(id: WindowId) {
 
   if (id === 'minesweeper') {
     return <Minesweeper windowId={id} />;
+  }
+
+  if (id === 'terminal-tactics') {
+    return <GameLauncher src={GAME_LAUNCHER_URLS['terminal-tactics']} />;
   }
 
   const placeholder = PLACEHOLDER_CONTENT[id];

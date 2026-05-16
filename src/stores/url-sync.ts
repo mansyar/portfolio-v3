@@ -42,6 +42,9 @@ const VALID_WINDOW_IDS = new Set<WindowId>([
   'cmd',
   'taskmanager',
   'recyclebin',
+  'pong',
+  'minesweeper',
+  'terminal-tactics',
 ]);
 
 // ─── Path Conversion Utilities ──────────────────────────────────────────────

@@ -8,7 +8,8 @@ export type WindowId =
   | 'taskmanager'
   | 'recyclebin'
   | 'pong'
-  | 'minesweeper';
+  | 'minesweeper'
+  | 'terminal-tactics';
 
 export type WindowStatus = 'open' | 'minimized' | 'maximized' | 'closing';
 
@@ -121,6 +122,16 @@ export const DEFAULT_WINDOW_CONFIGS: Record<WindowId, WindowConfig> = {
     y: 80,
     minWidth: 315,
     minHeight: 380,
+  },
+  'terminal-tactics': {
+    title: 'Terminal Tactics',
+    icon: '/icons/terminal-tactics.svg',
+    width: 800,
+    height: 600,
+    x: 160,
+    y: 60,
+    minWidth: 600,
+    minHeight: 400,
   },
 };
 

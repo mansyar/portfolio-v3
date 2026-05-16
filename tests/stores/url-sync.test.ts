@@ -95,6 +95,16 @@ describe('url-sync — parseParams', () => {
     warnSpy.mockRestore();
   });
 
+  it('should include terminal-tactics in parseParams when w param contains it', async () => {
+    const result = await parseParams('w=terminal-tactics');
+    expect(result.w).toEqual(['terminal-tactics']);
+  });
+
+  it('should include pong and minesweeper in parseParams when w param contains them', async () => {
+    const result = await parseParams('w=pong,minesweeper');
+    expect(result.w).toEqual(['pong', 'minesweeper']);
+  });
+
   it('should extract start=1 as true', async () => {
     const result = await parseParams('start=1');
     expect(result.start).toBe(true);

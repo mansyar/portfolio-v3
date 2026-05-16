@@ -100,6 +100,20 @@ describe('Window Types & Default Configs', () => {
     });
   });
 
+  it('should have a default config for terminal-tactics', async () => {
+    const mod = await import('@/stores/windows');
+    const cfg = mod.DEFAULT_WINDOW_CONFIGS['terminal-tactics'];
+    expect(cfg).toMatchObject({
+      title: 'Terminal Tactics',
+      width: 800,
+      height: 600,
+      x: 160,
+      y: 60,
+      minWidth: 600,
+      minHeight: 400,
+    });
+  });
+
   it('should export $windows, $zCounter, $activeWindow, and $taskbarWindows stores', async () => {
     const mod = await import('@/stores/windows');
     expect(mod.$windows).toBeDefined();
