@@ -12,7 +12,7 @@
   - [x] Run bundle visualization — `dist/` inspected manually; largest chunk is `client.DqygQINC.js` (186KB vendor bundle), second is `WindowLayer.D9av-0wX.js` (55KB containing all apps)
 - [x] Task: Conductor — User Manual Verification "Performance Baseline" ✅ — Baseline confirmed by user
 
-## Phase 2 — Bundle-Split Window Apps
+## Phase 2 — Bundle-Split Window Apps [checkpoint: 5e1344c]
 
 - [x] Task: Write tests for lazy loading behavior [0889c5a]
   - [x] Write test verifying `React.lazy()` components are lazy (not eagerly imported)
@@ -28,7 +28,7 @@
   - [x] Add `aria-busy="true"` on loading containers
   - [x] Add `aria-label` describing what is loading (e.g., "Loading Command Prompt")
   - [x] Ensure `prefers-reduced-motion: reduce` disables any loading animations (N/A — no animations in fallback)
-- [ ] Task: Conductor — User Manual Verification "Bundle-Split Window Apps" (Protocol in workflow.md)
+- [x] Task: Conductor — User Manual Verification "Bundle-Split Window Apps" ✅ — Checkpoint complete (822/822 tests passing)
 
 ## Phase 3 — Component-Level Optimizations
 
