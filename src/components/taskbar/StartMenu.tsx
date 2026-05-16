@@ -31,6 +31,12 @@ const LEFT_ITEMS: MenuItem[] = [
     icon: '/icons/minesweeper.svg',
     windowId: 'minesweeper',
   },
+  {
+    id: 'terminal-tactics',
+    label: 'Terminal Tactics',
+    icon: '/icons/terminal-tactics.svg',
+    windowId: 'terminal-tactics',
+  },
 ];
 
 const RIGHT_ITEMS: MenuItem[] = [

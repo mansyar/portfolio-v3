@@ -53,6 +53,7 @@ export const COMMANDS: Record<string, string> = {
   '/?': 'Shows available commands (alias for help)',
   pong: 'Starts a game of Pong (VS AI)',
   minesweeper: 'Starts a game of Minesweeper (9x9)',
+  'terminal-tactics': 'Starts the Terminal Tactics game',
 };
 
 // ── Parsing ────────────────────────────────────────────────────────
@@ -303,6 +304,10 @@ const handlerMinesweeper: CommandHandler = () => {
   return { lines: ['Starting Minesweeper...'], openWindow: 'minesweeper' };
 };
 
+const handlerTerminalTactics: CommandHandler = () => {
+  return { lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' };
+};
+
 // ── Registry ────────────────────────────────────────────────────────
 
 export const COMMAND_REGISTRY: Record<string, CommandHandler> = {
@@ -322,4 +327,5 @@ export const COMMAND_REGISTRY: Record<string, CommandHandler> = {
   echo: handlerEcho,
   pong: handlerPong,
   minesweeper: handlerMinesweeper,
+  'terminal-tactics': handlerTerminalTactics,
 };

@@ -301,6 +301,18 @@ describe('Open command', () => {
   });
 });
 
+describe('Terminal Tactics command', () => {
+  it('should have terminal-tactics in COMMANDS metadata', () => {
+    expect(COMMANDS['terminal-tactics']).toBeDefined();
+  });
+
+  it('should return lines with openWindow terminal-tactics', () => {
+    const output = COMMAND_REGISTRY['terminal-tactics']([], { cmdPath: 'C:\\' });
+    expect(output.lines).toEqual(['Starting Terminal Tactics...']);
+    expect(output.openWindow).toBe('terminal-tactics');
+  });
+});
+
 describe('CmdOutput type', () => {
   it('should allow creating an output with lines', () => {
     const output: CmdOutput = { lines: ['Hello', 'World'] };

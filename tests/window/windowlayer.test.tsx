@@ -393,6 +393,28 @@ describe('WindowLayer.tsx', () => {
     vi.useRealTimers();
   });
 
+  it('should open terminal-tactics window via desktop icon luna:open-window event', async () => {
+    const stores = await import('@/stores/windows');
+    render(<WindowLayer />);
+
+    window.dispatchEvent(new CustomEvent('luna:open-window', { detail: 'terminal-tactics' }));
+
+    const windows = stores.$windows.get();
+    expect(windows['terminal-tactics']).toBeDefined();
+    expect(windows['terminal-tactics'].title).toBe('Terminal Tactics');
+  });
+
+  it('should have correct terminal-tactics window config', async () => {
+    const stores = await import('@/stores/windows');
+    stores.openWindow('terminal-tactics');
+    const windows = stores.$windows.get();
+    expect(windows['terminal-tactics'].width).toBe(800);
+    expect(windows['terminal-tactics'].height).toBe(600);
+    expect(windows['terminal-tactics'].minWidth).toBe(600);
+    expect(windows['terminal-tactics'].minHeight).toBe(400);
+    expect(windows['terminal-tactics'].icon).toBe('/icons/terminal-tactics.svg');
+  });
+
   describe('Escape Key Handler', () => {
     it('should close active window on Escape key press', async () => {
       const stores = await import('@/stores/windows');

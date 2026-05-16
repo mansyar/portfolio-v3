@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Terminal shield background -->
+  <rect x="4" y="4" width="40" height="40" rx="3" fill="#1a3a5c" stroke="#0a246a" stroke-width="2"/>
+  <!-- Terminal screen -->
+  <rect x="8" y="8" width="32" height="24" rx="2" fill="#0d1b2a" stroke="#4a7db5" stroke-width="1"/>
+  <!-- CRT scanline hint -->
+  <line x1="8" y1="16" x2="40" y2="16" stroke="#1a3a5c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="8" y1="20" x2="40" y2="20" stroke="#1a3a5c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="8" y1="24" x2="40" y2="24" stroke="#1a3a5c" stroke-width="0.5" opacity="0.5"/>
+  <!-- Prompt character -->
+  <text x="12" y="22" font-family="Courier New, monospace" font-size="8" font-weight="bold" fill="#33ff33">&gt;</text>
+  <!-- Crosshair/target reticle -->
+  <circle cx="28" cy="22" r="6" fill="none" stroke="#ff3333" stroke-width="1.5"/>
+  <line x1="22" y1="22" x2="34" y2="22" stroke="#ff3333" stroke-width="0.8"/>
+  <line x1="28" y1="16" x2="28" y2="28" stroke="#ff3333" stroke-width="0.8"/>
+  <!-- Bottom bar - tactical stripes -->
+  <rect x="8" y="34" width="32" height="10" rx="1" fill="#2a5a8c"/>
+  <rect x="8" y="34" width="32" height="3" fill="#4a7db5"/>
+  <text x="14" y="41" font-family="Tahoma, sans-serif" font-size="6" font-weight="bold" fill="#ffffff">TACTICAL</text>
+</svg>
