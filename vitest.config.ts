@@ -7,17 +7,7 @@ export default getViteConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     pool: 'forks',
-    poolOptions: {
-      forks: {
-        singleFork: false,
-      },
-    },
-    maxWorkers: 8,
-    minWorkers: 4,
     fileParallelism: true,
-    cache: {
-      dir: './node_modules/.vitest-cache',
-    },
     coverage: {
       provider: 'v8',
       exclude: ['src/lib/generated/', 'src/styles/', 'tests/helpers/', 'src/__test_modularity__/'],
