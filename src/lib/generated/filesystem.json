@@ -76,7 +76,22 @@
             "type": "folder",
             "name": "Certs",
             "icon": "/icons/folder.svg",
-            "children": []
+            "children": [
+              {
+                "type": "file",
+                "name": "acp-cloud-computing.cert",
+                "icon": "/icons/file.svg",
+                "slug": "acp-cloud-computing",
+                "size": "1.2 KB"
+              },
+              {
+                "type": "file",
+                "name": "aca-cloud-computing.cert",
+                "icon": "/icons/file.svg",
+                "slug": "aca-cloud-computing",
+                "size": "1.2 KB"
+              }
+            ]
           },
           {
             "type": "file",
@@ -99,6 +114,41 @@
         "name": "Knowledge_Base",
         "icon": "/icons/folder.svg",
         "children": [
+          {
+            "type": "folder",
+            "name": "Software_Engineering",
+            "icon": "/icons/folder.svg",
+            "children": [
+              {
+                "type": "file",
+                "name": "agent-assisted-coding.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "agent-assisted-coding",
+                "size": "6.0 KB"
+              },
+              {
+                "type": "file",
+                "name": "database-design-patterns.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "database-design-patterns",
+                "size": "7.0 KB"
+              },
+              {
+                "type": "file",
+                "name": "microservices-patterns.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "microservices-patterns",
+                "size": "7.0 KB"
+              },
+              {
+                "type": "file",
+                "name": "tdd.mdx",
+                "icon": "/icons/file.svg",
+                "slug": "tdd",
+                "size": "1.0 KB"
+              }
+            ]
+          },
           {
             "type": "folder",
             "name": "DevOps",
@@ -138,20 +188,6 @@
                 "icon": "/icons/file.svg",
                 "slug": "llm-fine-tuning",
                 "size": "5.0 KB"
-              }
-            ]
-          },
-          {
-            "type": "folder",
-            "name": "Software_Engineering",
-            "icon": "/icons/folder.svg",
-            "children": [
-              {
-                "type": "file",
-                "name": "microservices-patterns.mdx",
-                "icon": "/icons/file.svg",
-                "slug": "microservices-patterns",
-                "size": "7.0 KB"
               }
             ]
           }
