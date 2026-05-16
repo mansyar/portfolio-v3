@@ -37,5 +37,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Improve Vitest Performance**
+- [x] **Track: Improve Vitest Performance**
       _Link: [./tracks/vitest-perf_20260516/](./tracks/vitest-perf_20260516/)_
