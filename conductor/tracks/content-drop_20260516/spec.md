@@ -82,34 +82,34 @@ Create three new article MDX files under the **Software Engineering** category o
 
 ### FR4 — Certifications
 
-Add certification entries to `D:\My_Documents\Certs\` folder:
+Add certification entries to `D:\My_Documents\Certs\` folder. Each cert is represented as a file entry in the filesystem with a unique slug that routes to a cert detail view in ExplorerDetailPane.
 
-1. **ACP Cloud Computing Professional** — Alibaba Cloud
-   - Issued: March 2024 | Expires: March 2026
-   - Credential ID: IACP01240300114319
+| Slug                  | Name                             | Issuer        | Issued   | Expires  | Credential ID       |
+| --------------------- | -------------------------------- | ------------- | -------- | -------- | ------------------- |
+| `acp-cloud-computing` | ACP Cloud Computing Professional | Alibaba Cloud | Mar 2024 | Mar 2026 | IACP01240300114319  |
+| `aca-cloud-computing` | ACA Cloud Computing Associate    | Alibaba Cloud | Feb 2024 | Feb 2026 | IACA01240200111019L |
 
-2. **ACA Cloud Computing Associate** — Alibaba Cloud
-   - Issued: February 2024 | Expires: February 2026
-   - Credential ID: IACA01240200111019L
+**Slug Routing Convention:** ExplorerDetailPane will route cert slugs (`acp-cloud-computing`, `aca-cloud-computing`) via special-cased lookup against `CERTIFICATIONS_METADATA` — following the same pattern as Contact.txt (`CONTACT_METADATA`) and Recycle Bin items (`RECYCLE_BIN_METADATA`).
 
 **Updates required:**
 
-- Add cert data exports to `src/lib/projects-data.ts` (`CERTIFICATIONS_METADATA`)
-- Populate `D:\My_Documents\Certs\` folder entries in `src/lib/constants.ts`
+- Add cert data exports to `src/lib/projects-data.ts` (`CERTIFICATIONS_METADATA` keyed by slug)
+- Populate `D:\My_Documents\Certs\` folder entries in `src/lib/constants.ts` with file-type entries using these slugs
 - Update `scripts/generate-filesystem.mjs` with static Certs folder population
-- Create cert detail view in ExplorerDetailPane for cert items showing issuer, date, credential URL
+- Create cert detail view in ExplorerDetailPane for cert items showing name, issuer, date, credential URL (special-cased by slug)
+- **Update existing test** `tests/explorer.test.tsx` — the "This folder is empty" assertion for Certs must be replaced with assertions for the new cert entries
 
 ### FR5 — Build Pipeline & Documentation
 
 - Re-run `scripts/prebuild.mjs` to regenerate all content JSON files
 - Verify `pnpm build` completes with zero errors
 - Update docs:
-  - **PRD.md §4** — File System & Content Mapping: add new projects (C: drive), articles (E: drive), certs (D:\My_Documents\Certs)
-  - **TDD.md §4.1** — Content Collection Schemas: reflect new article count (8 total) and categories
+  - **PRD.md §4** — File System & Content Mapping: add new projects (C: drive), articles (E: drive), certs (D:\My_Documents\Certs); update Certs description from "empty placeholder" to populated entries
+  - **PRD.md §7** — Success Metrics: bump version to v2.1, add content volume metrics (8 articles, 5 projects, 2 certs)
+  - **TDD.md §4.1** — Content Collection Schemas: reflect new article count (8 total) and categories; fix pre-existing `lastUpdated` type mismatch if applicable
 
 ## Out of Scope
 
-- OG Preview Image (user will provide and add later)
 - Additional projects beyond Terminal Tactics and Simulacra
 - Additional articles beyond the 3 specified
 
