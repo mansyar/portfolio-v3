@@ -112,13 +112,13 @@ describe('Article Schema (renamed from DevOps Academy)', () => {
         title: 'Simulacra',
         slug: 'simulacra',
         drive: 'C',
-        description: 'An in-development simulation project.',
+        description: 'An autonomous AI "Ant Farm" built with TanStack Start, PixiJS, and Convex.',
         repoUrl: 'https://github.com/mansyar/simulacra',
-        language: 'Python',
-        techStack: ['Python', 'PyTorch', 'FastAPI'],
+        language: 'TypeScript',
+        techStack: ['TanStack Start', 'React', 'TypeScript', 'PixiJS v8', 'Convex', 'Groq API'],
         stars: 0,
         lastCommit: '2026-04-15',
-        commits: 25,
+        commits: 89,
         status: 'wip',
       });
       expect(result.title).toBe('Simulacra');
