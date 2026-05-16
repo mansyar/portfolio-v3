@@ -33,7 +33,4 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 <!-- Classic XP Games track archived to conductor/archive/classic-xp-games_20260515/ -->
 
----
-
-- [x] **Track: Content Drop — New projects, articles, resume, and certifications**
-      _Link: [./tracks/content-drop_20260516/](./tracks/content-drop_20260516/)_
+<!-- Content Drop track archived to conductor/archive/content-drop_20260516/ -->
