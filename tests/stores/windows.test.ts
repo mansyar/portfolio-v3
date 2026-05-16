@@ -6,11 +6,21 @@ function getTestWindowId(): WindowId {
 }
 
 describe('Window Types & Default Configs', () => {
-  it('should export DEFAULT_WINDOW_CONFIGS with all 6 window types', async () => {
+  it('should export DEFAULT_WINDOW_CONFIGS with all window types', async () => {
     const mod = await import('@/stores/windows');
     expect(mod.DEFAULT_WINDOW_CONFIGS).toBeDefined();
     const configs = mod.DEFAULT_WINDOW_CONFIGS;
-    const expectedIds = ['explorer', 'mydocs', 'help', 'cmd', 'taskmanager', 'recyclebin'];
+    const expectedIds = [
+      'explorer',
+      'mydocs',
+      'help',
+      'cmd',
+      'taskmanager',
+      'recyclebin',
+      'pong',
+      'minesweeper',
+      'terminal-tactics',
+    ];
     expectedIds.forEach((id) => {
       expect(configs).toHaveProperty(id);
     });

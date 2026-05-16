@@ -1,6 +1,6 @@
 # Implementation Plan: Track 6D — Terminal Tactics Launcher
 
-## Phase 1 — GameLauncher Component & Config
+## Phase 1 — GameLauncher Component & Config [checkpoint: f1ca8ab]
 
 - [x] Task: Write tests for the GameLauncher component [5d18e97]
   - [x] Test: iframe renders with correct `src` prop and attributes (`title`, `allow`, `sandbox`)
@@ -22,24 +22,24 @@
 
 ## Phase 2 — Window System Integration & URL Deep-Linking
 
-- [ ] Task: Write tests for window integration
-  - [ ] Test: WindowId type includes 'terminal-tactics'
-  - [ ] Test: Default window config exists for 'terminal-tactics' (800×600, x:160, y:60, min 600×400)
-  - [ ] Test: `VALID_WINDOW_IDS` in url-sync.ts includes 'terminal-tactics'
-  - [ ] Test: `VALID_WINDOW_IDS` includes 'pong' and 'minesweeper' (fix pre-existing gap)
-  - [ ] Test: WindowLayer renders GameLauncher when windowId === 'terminal-tactics'
-  - [ ] Test: URL serialization includes 'terminal-tactics' in `w` param when window is open
-  - [ ] Test: URL deserialization opens 'terminal-tactics' from `?w=terminal-tactics`
-- [ ] Task: Add 'terminal-tactics' to WindowId type in `src/stores/windows.ts`
-- [ ] Task: Add default window config in `src/stores/windows.ts`
-  - [ ] Size: 800×600, x:160, y:60, minWidth: 600, minHeight: 400
-- [ ] Task: Fix VALID_WINDOW_IDS in `src/stores/url-sync.ts`
-  - [ ] Add 'terminal-tactics', 'pong', and 'minesweeper' to the whitelist set
-- [ ] Task: Wire GameLauncher into WindowLayer.renderContent()
-  - [ ] Import GameLauncher from `@/components/apps/GameLauncher`
-  - [ ] Import `GAME_LAUNCHER_URLS` from `@/lib/game-launcher-config`
-  - [ ] Add case branch for `windowId === 'terminal-tactics'`
-  - [ ] Pass embed URL via src prop: `GAME_LAUNCHER_URLS['terminal-tactics']`
+- [x] Task: Write tests for window integration [970fac0]
+  - [x] Test: WindowId type includes 'terminal-tactics'
+  - [x] Test: Default window config exists for 'terminal-tactics' (800×600, x:160, y:60, min 600×400)
+  - [x] Test: `VALID_WINDOW_IDS` in url-sync.ts includes 'terminal-tactics'
+  - [x] Test: `VALID_WINDOW_IDS` includes 'pong' and 'minesweeper' (fix pre-existing gap)
+  - [x] Test: WindowLayer renders GameLauncher when windowId === 'terminal-tactics'
+  - [x] Test: URL serialization includes 'terminal-tactics' in `w` param when window is open
+  - [x] Test: URL deserialization opens 'terminal-tactics' from `?w=terminal-tactics`
+- [x] Task: Add 'terminal-tactics' to WindowId type in `src/stores/windows.ts` [970fac0]
+- [x] Task: Add default window config in `src/stores/windows.ts` [970fac0]
+  - [x] Size: 800×600, x:160, y:60, minWidth: 600, minHeight: 400
+- [x] Task: Fix VALID_WINDOW_IDS in `src/stores/url-sync.ts` [970fac0]
+  - [x] Add 'terminal-tactics', 'pong', and 'minesweeper' to the whitelist set
+- [x] Task: Wire GameLauncher into WindowLayer.renderContent() [970fac0]
+  - [x] Import GameLauncher from `@/components/apps/GameLauncher`
+  - [x] Import `GAME_LAUNCHER_URLS` from `@/lib/game-launcher-config`
+  - [x] Add case branch for `windowId === 'terminal-tactics'`
+  - [x] Pass embed URL via src prop: `GAME_LAUNCHER_URLS['terminal-tactics']`
 - [ ] Task: Conductor - User Manual Verification 'Phase 2 — Window System Integration & URL Deep-Linking' (Protocol in workflow.md)
 
 ## Phase 3 — Desktop Icon, Start Menu & CMD Command
