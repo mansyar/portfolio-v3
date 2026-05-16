@@ -19,6 +19,9 @@ const articleFiles = [
   'ci-cd-pipeline.mdx',
   'microservices-patterns.mdx',
   'llm-fine-tuning.mdx',
+  'agent-assisted-coding.mdx',
+  'tdd.mdx',
+  'database-design-patterns.mdx',
 ];
 
 function parseFrontmatter(content: string): Record<string, unknown> {
@@ -133,9 +136,9 @@ describe('Article MDX Files (migrated from devops-academy)', () => {
     },
   );
 
-  it('should have exactly 5 article files', () => {
+  it('should have exactly 8 article files', () => {
     const files = readdirSync(articlesDir).filter((f: string) => f.endsWith('.mdx'));
-    expect(files).toHaveLength(5);
+    expect(files).toHaveLength(8);
   });
 
   it('docker-basics should have category DevOps', () => {

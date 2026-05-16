@@ -1,0 +1,57 @@
+---
+title: Test-Driven Development (TDD)
+slug: tdd
+category: Software Engineering
+order: 3
+description: Master the Red-Green-Refactor cycle, learn testing best practices, understand coverage thresholds, and integrate TDD into modern development workflows.
+lastUpdated: '2026-05-16'
+---
+
+## Test-Driven Development (TDD)
+
+Test-Driven Development is a disciplined software development practice where you write tests before production code. It's not just about testing — it's about driving the design of your code through its testability.
+
+### The Red-Green-Refactor Cycle
+
+```
+Red ──→ Write a failing test that defines the expected behavior
+ │
+Green ──→ Write the minimum code to make the test pass
+ │
+Refactor ──→ Clean up the code while keeping tests green
+```
+
+### Why TDD Works
+
+- **Design Feedback**: Writing the test first forces you to think about the API before the implementation
+- **Regression Safety**: A comprehensive test suite catches unintended side effects immediately
+- **Documentation**: Tests serve as executable documentation — they show exactly how the code is supposed to behave
+- **Confidence**: Refactoring with a good test suite is fearless — if tests pass, the behavior is preserved
+
+### Coverage Thresholds
+
+| Metric       | Minimum Target |
+| ------------ | -------------- |
+| Lines        | > 80%          |
+| Branches     | > 75%          |
+| Functions    | > 80%          |
+| Statements   | > 80%          |
+
+Coverage is a floor, not a ceiling — don't chase arbitrary numbers at the expense of meaningful tests.
+
+### TDD in the Conductor Framework
+
+The Conductor methodology enforces TDD at every task level:
+
+1. **Select Task** from `plan.md`
+2. **Write Failing Test** (Red) — this test defines the acceptance criteria
+3. **Implement** (Green) — write the minimum code to pass
+4. **Verify Coverage** — ensure the new code meets project thresholds
+5. **Commit with Git Note** — attach a task summary to the commit
+
+### Common Pitfalls
+
+- **Testing Implementation Details**: Test behavior, not internal state. Your tests should survive a complete internal rewrite
+- **Brittle Tests**: Avoid coupling tests to UI markup strings, file paths, or other volatile details
+- **Over-Mocking**: Mock external boundaries (network, filesystem), not internal collaborators
+- **The Iceberg**: Don't commit untested code with the intent to "come back later" — it rarely happens

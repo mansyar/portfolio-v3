@@ -130,6 +130,30 @@ export const ARTICLES_METADATA: Record<string, ArticleMetadata> = {
     order: 1,
     lastUpdated: '2026-05-13',
   },
+  'agent-assisted-coding': {
+    title: 'Agent-Assisted Coding (Spec-Driven Development)',
+    description:
+      'A deep dive into the Conductor methodology — spec-first development, AI-assisted workflows, and best practices for agent-driven software development.',
+    category: 'Software Engineering',
+    order: 2,
+    lastUpdated: '2026-05-16',
+  },
+  tdd: {
+    title: 'Test-Driven Development (TDD)',
+    description:
+      'Master the Red-Green-Refactor cycle, learn testing best practices, understand coverage thresholds, and integrate TDD into modern development workflows.',
+    category: 'Software Engineering',
+    order: 3,
+    lastUpdated: '2026-05-16',
+  },
+  'database-design-patterns': {
+    title: 'Database Design Patterns',
+    description:
+      'A comprehensive guide to database design — SQL vs NoSQL trade-offs, indexing strategies, normalization forms, sharding patterns, and real-world design decisions.',
+    category: 'Software Engineering',
+    order: 4,
+    lastUpdated: '2026-05-16',
+  },
 };
 
 // ── Contact Metadata ──────────────────────────────────────────────

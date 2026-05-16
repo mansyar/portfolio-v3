@@ -209,14 +209,17 @@ describe('Projects Metadata', () => {
     expect(PROJECTS_METADATA['simulacra']).toBeDefined();
   });
 
-  it('should have metadata for all 5 articles (renamed from DEVOPS_METADATA)', async () => {
+  it('should have metadata for all 8 articles (renamed from DEVOPS_METADATA)', async () => {
     const { ARTICLES_METADATA } = await import('@/lib/projects-data');
-    expect(Object.keys(ARTICLES_METADATA)).toHaveLength(5);
+    expect(Object.keys(ARTICLES_METADATA)).toHaveLength(8);
     expect(ARTICLES_METADATA['docker-basics']).toBeDefined();
     expect(ARTICLES_METADATA['linux-essentials']).toBeDefined();
     expect(ARTICLES_METADATA['ci-cd-pipeline']).toBeDefined();
     expect(ARTICLES_METADATA['microservices-patterns']).toBeDefined();
     expect(ARTICLES_METADATA['llm-fine-tuning']).toBeDefined();
+    expect(ARTICLES_METADATA['agent-assisted-coding']).toBeDefined();
+    expect(ARTICLES_METADATA['tdd']).toBeDefined();
+    expect(ARTICLES_METADATA['database-design-patterns']).toBeDefined();
   });
 });
 

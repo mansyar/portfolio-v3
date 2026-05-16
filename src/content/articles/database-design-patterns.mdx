@@ -1,0 +1,56 @@
+---
+title: Database Design Patterns
+slug: database-design-patterns
+category: Software Engineering
+order: 4
+description: A comprehensive guide to database design — SQL vs NoSQL trade-offs, indexing strategies, normalization forms, sharding patterns, and real-world design decisions.
+lastUpdated: '2026-05-16'
+---
+
+## Database Design Patterns
+
+Choosing the right database architecture is one of the most consequential decisions in software engineering. This guide covers the fundamental patterns and trade-offs.
+
+### SQL vs NoSQL
+
+| Dimension        | SQL (PostgreSQL, MySQL)       | NoSQL (MongoDB, DynamoDB)         |
+| ---------------- | ----------------------------- | --------------------------------- |
+| **Schema**       | Rigid, predefined             | Flexible, dynamic                 |
+| **Relations**    | First-class (JOINs, FK)       | Denormalized, application-managed |
+| **Consistency**  | Strong (ACID)                 | Eventual (BASE)                   |
+| **Scaling**      | Vertical (read replicas)      | Horizontal (sharding)             |
+| **Use Case**     | Transactions, reporting, ERP  | Real-time feeds, catalogs, IoT    |
+
+### Normalization Forms
+
+- **1NF**: Each cell contains a single value, no repeating groups
+- **2NF**: 1NF + every non-key column depends on the entire primary key
+- **3NF**: 2NF + no transitive dependencies (non-key column depends on another non-key column)
+- **BCNF**: 3NF + every determinant is a candidate key
+
+In practice, most systems stop at 3NF and selectively denormalize for performance.
+
+### Indexing Strategies
+
+- **B-Tree**: Default — good for equality and range queries. Use on columns used in WHERE, JOIN, ORDER BY
+- **Hash Index**: Exact-match lookups only — faster than B-Tree for key-value access
+- **GiST/GIN**: Full-text search, array containment, geospatial queries (PostgreSQL)
+- **Covering Index**: Include all queried columns to avoid table heap lookups
+- **Partial Index**: Index only a subset of rows (`WHERE status = 'active'`) — saves space
+
+### Sharding Patterns
+
+- **Key-Based (Hash)**: Distribute rows by hash of a shard key — even distribution, but range queries cross shards
+- **Range-Based**: Partition by value range (e.g., date ranges) — good for time-series data
+- **Directory-Based**: A lookup service maps keys to shards — flexible but introduces a single point of failure
+- **Consistent Hashing**: Minimizes rebalancing when shards are added or removed — popular in distributed caches
+
+### Real-World Decision Framework
+
+1. **Data Relationships** — are they complex with many-to-many? Use SQL
+2. **Access Patterns** — is it read-heavy, write-heavy, or mixed?
+3. **Consistency Requirements** — do you need immediate consistency or is eventual consistency acceptable?
+4. **Scale Projections** — will you need to scale horizontally in the near future?
+5. **Team Expertise** — what databases does your team already know well?
+
+The most pragmatic answer is often a **polyglot persistence** approach: use the right database for each workload within the same system.

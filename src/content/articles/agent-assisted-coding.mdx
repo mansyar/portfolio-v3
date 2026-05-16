@@ -1,0 +1,50 @@
+---
+title: Agent-Assisted Coding (Spec-Driven Development)
+slug: agent-assisted-coding
+category: Software Engineering
+order: 2
+description: A deep dive into the Conductor methodology — spec-first development, AI-assisted workflows, and best practices for agent-driven software development.
+lastUpdated: '2026-05-16'
+---
+
+## Agent-Assisted Coding (Spec-Driven Development)
+
+The way we write software is changing. Agent-assisted coding shifts the developer's role from writing every line of code to authoring precise specifications that AI agents execute against.
+
+### The Conductor Methodology
+
+- **Spec-First**: Every feature starts with a `spec.md` that defines functional requirements, acceptance criteria, and out-of-scope boundaries
+- **Plan-Driven**: An `implementation plan` (`plan.md`) breaks the spec down into discrete, testable tasks with clear commit patterns
+- **Test-Driven**: Each task follows Red-Green-Refactor — write failing tests first, then implement to pass
+- **Checkpointed**: Phase boundaries create checkpoint commits with attached verification reports (git notes)
+
+### Best Practices
+
+1. **Be Explicit**: Ambiguity in a spec produces incorrect code. Define edge cases, error states, and exact output formats
+2. **Keep Tasks Small**: Each task should be independently testable and committable — if it feels too big, split it
+3. **Review Generated Code**: AI-generated code must be reviewed for correctness, security, and maintainability — treat it like a PR from a junior developer
+4. **Maintain the Loop**: Spec → Implement → Review → Archive. Close the loop completely before starting the next feature
+
+### Workflow Integration
+
+```
+Spec.md ──→ Plan.md ──→ Implement ──→ Review ──→ Archive/Delete
+                 │
+           ┌─────┴─────┐
+      Test-Driven   Checkpoint
+      (Red/Green)   (Git Notes)
+```
+
+### When to Use Agent-Assisted Coding
+
+- **Boilerplate code** — CRUD endpoints, data models, form validation
+- **Well-defined algorithms** — sorting, validation, transformation pipelines
+- **Test generation** — schema validation tests, edge case coverage
+- **Documentation** — README updates, API docs, changelogs
+
+### Limitations
+
+- Novel architecture decisions require human judgment
+- Security-sensitive code needs manual review
+- Cross-cutting concerns (auth, logging, monitoring) benefit from architectural oversight
+- Ambiguous or incomplete specs produce poor results — garbage in, garbage out

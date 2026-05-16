@@ -37,16 +37,19 @@ describe('compile-articles script', () => {
     expect(data).toHaveProperty('content');
   });
 
-  it('should have metadata entries for all 5 articles', () => {
+  it('should have metadata entries for all 8 articles', () => {
     const raw = readFileSync(outputFile, 'utf-8');
     const data = JSON.parse(raw);
     const slugs = Object.keys(data.metadata);
-    expect(slugs).toHaveLength(5);
+    expect(slugs).toHaveLength(8);
     expect(slugs).toContain('docker-basics');
     expect(slugs).toContain('linux-essentials');
     expect(slugs).toContain('ci-cd-pipeline');
     expect(slugs).toContain('microservices-patterns');
     expect(slugs).toContain('llm-fine-tuning');
+    expect(slugs).toContain('agent-assisted-coding');
+    expect(slugs).toContain('tdd');
+    expect(slugs).toContain('database-design-patterns');
   });
 
   it('should have correct metadata structure for each article', () => {

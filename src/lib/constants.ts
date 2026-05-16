@@ -179,6 +179,27 @@ export const FILE_SYSTEM: FSDrive[] = [
                 slug: 'microservices-patterns',
                 size: '2.3 KB',
               },
+              {
+                type: 'file',
+                name: 'agent-assisted-coding.mdx',
+                icon: '/icons/file.svg',
+                slug: 'agent-assisted-coding',
+                size: '1.8 KB',
+              },
+              {
+                type: 'file',
+                name: 'tdd.mdx',
+                icon: '/icons/file.svg',
+                slug: 'tdd',
+                size: '1.5 KB',
+              },
+              {
+                type: 'file',
+                name: 'database-design-patterns.mdx',
+                icon: '/icons/file.svg',
+                slug: 'database-design-patterns',
+                size: '2.0 KB',
+              },
             ],
           },
           {
