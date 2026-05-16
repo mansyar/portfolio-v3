@@ -1,60 +1,75 @@
 # Implementation Plan: Track 6D — Terminal Tactics Launcher
 
-## Phase 1 — GameLauncher Component
+## Phase 1 — GameLauncher Component & Config
 
 - [ ] Task: Write tests for the GameLauncher component
-  - [ ] Test: iframe renders with correct `src` prop and attributes
+  - [ ] Test: iframe renders with correct `src` prop and attributes (`title`, `allow`, `sandbox`)
   - [ ] Test: Loading state displays "Loading Terminal Tactics..." before iframe load event
-  - [ ] Test: Error state renders fallback "Open in new tab" link when iframe fails to load
+  - [ ] Test: Error state renders fallback "Open in new tab" link after 15-second timeout
+  - [ ] Test: Timeout clears on successful iframe `onLoad` (no error state shown)
   - [ ] Test: `aria-live="polite"` is present on loading/error state containers
+- [ ] Task: Create `src/lib/game-launcher-config.ts`
+  - [ ] Export `GAME_LAUNCHER_URLS: Record<string, string>` with `terminal-tactics` → itch.io embed URL
+  - [ ] This keeps iframe URLs in a single, easy-to-update location separate from `constants.ts`
 - [ ] Task: Implement GameLauncher.tsx
   - [ ] Create `src/components/apps/GameLauncher.tsx` with `src` prop
-  - [ ] Render `<iframe>` with `title`, `allow="fullscreen"`, `sandbox="allow-scripts allow-same-origin"`
+  - [ ] Render `<iframe>` with `title="Terminal Tactics"`, `allow="fullscreen"`, `sandbox="allow-scripts allow-same-origin"`
   - [ ] Implement loading state: "Loading Terminal Tactics..." with XP-style progress bar
-  - [ ] Implement error state: fallback link to `https://mansyar.itch.io/terminal-tactics`
-  - [ ] Implement iframe `onLoad` event handling to transition from loading → ready
-  - [ ] Add `GAME_LAUNCHER_URLS` config constant in constants or dedicated config file
-- [ ] Task: Conductor - User Manual Verification 'Phase 1 — GameLauncher Component' (Protocol in workflow.md)
+  - [ ] Implement error state with 15-second timeout: fallback link to `https://mansyar.itch.io/terminal-tactics`
+  - [ ] Implement iframe `onLoad` event → clear timeout, transition from loading → ready
+  - [ ] Fill full window content area (no scrollbars on wrapper)
+- [ ] Task: Conductor - User Manual Verification 'Phase 1 — GameLauncher Component & Config' (Protocol in workflow.md)
 
-## Phase 2 — Window System Integration
+## Phase 2 — Window System Integration & URL Deep-Linking
 
 - [ ] Task: Write tests for window integration
   - [ ] Test: WindowId type includes 'terminal-tactics'
-  - [ ] Test: Default window config exists for 'terminal-tactics' (800×600, centered)
+  - [ ] Test: Default window config exists for 'terminal-tactics' (800×600, x:160, y:60, min 600×400)
+  - [ ] Test: `VALID_WINDOW_IDS` in url-sync.ts includes 'terminal-tactics'
+  - [ ] Test: `VALID_WINDOW_IDS` includes 'pong' and 'minesweeper' (fix pre-existing gap)
   - [ ] Test: WindowLayer renders GameLauncher when windowId === 'terminal-tactics'
+  - [ ] Test: URL serialization includes 'terminal-tactics' in `w` param when window is open
+  - [ ] Test: URL deserialization opens 'terminal-tactics' from `?w=terminal-tactics`
 - [ ] Task: Add 'terminal-tactics' to WindowId type in `src/stores/windows.ts`
 - [ ] Task: Add default window config in `src/stores/windows.ts`
-  - [ ] Size: 800×600, center-calculated x/y, minWidth: 600, minHeight: 400
+  - [ ] Size: 800×600, x:160, y:60, minWidth: 600, minHeight: 400
+- [ ] Task: Fix VALID_WINDOW_IDS in `src/stores/url-sync.ts`
+  - [ ] Add 'terminal-tactics', 'pong', and 'minesweeper' to the whitelist set
 - [ ] Task: Wire GameLauncher into WindowLayer.renderContent()
-  - [ ] Import GameLauncher
+  - [ ] Import GameLauncher from `@/components/apps/GameLauncher`
+  - [ ] Import `GAME_LAUNCHER_URLS` from `@/lib/game-launcher-config`
   - [ ] Add case branch for `windowId === 'terminal-tactics'`
-  - [ ] Pass embed URL via src prop
-- [ ] Task: Conductor - User Manual Verification 'Phase 2 — Window System Integration' (Protocol in workflow.md)
+  - [ ] Pass embed URL via src prop: `GAME_LAUNCHER_URLS['terminal-tactics']`
+- [ ] Task: Conductor - User Manual Verification 'Phase 2 — Window System Integration & URL Deep-Linking' (Protocol in workflow.md)
 
-## Phase 3 — Desktop Icon, Start Menu & CMD Commands
+## Phase 3 — Desktop Icon, Start Menu & CMD Command
 
+- [ ] Task: Write unit test for CMD command handler
+  - [ ] Test in `tests/lib/commands.test.ts`: `COMMAND_REGISTRY['terminal-tactics']` returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
+  - [ ] Test: `COMMANDS` object includes 'terminal-tactics' key with description
 - [ ] Task: Write integration tests
-  - [ ] Test: Desktop icon click opens terminal-tactics window
-  - [ ] Test: CMD `terminal-tactics` command returns `{ openWindow: 'terminal-tactics' }`
-  - [ ] Test: CMD `play terminal-tactics` opens game window
-  - [ ] Test: CMD `play nonexistent` shows error message
-- [ ] Task: Create `public/icons/terminal-tactics.svg` — 48×48 XP-styled icon
-- [ ] Task: Add desktop icon to `index.astro`
-- [ ] Task: Add "Terminal Tactics" to StartMenu.tsx pinned apps
-- [ ] Task: Register CMD commands in `commands.ts`
-  - [ ] Register `terminal-tactics` as standalone command → `{ openWindow: 'terminal-tactics' }`
-  - [ ] Register `play` command with game name argument
-  - [ ] Handle unknown game name error message
-- [ ] Task: Conductor - User Manual Verification 'Phase 3 — Desktop Icon, Start Menu & CMD Commands' (Protocol in workflow.md)
+  - [ ] Test: Desktop icon click opens terminal-tactics window (via `luna:open-window` event)
+  - [ ] Test: CMD `terminal-tactics` command opens game window (via CmdPrompt integration test)
+  - [ ] Test: Start Menu "Terminal Tactics" item opens the correct window
+- [ ] Task: Create `public/icons/terminal-tactics.svg` — 48×48 XP-styled icon (military/terminal aesthetic)
+- [ ] Task: Add desktop icon to `index.astro` in desktop icons list
+- [ ] Task: Add "Terminal Tactics" to StartMenu.tsx LEFT_ITEMS pinned apps
+- [ ] Task: Register CMD command in `commands.ts`
+  - [ ] Add `'terminal-tactics': 'Starts the Terminal Tactics game'` to `COMMANDS` metadata
+  - [ ] Create `handlerTerminalTactics` → returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
+  - [ ] Register `terminal-tactics` → `handlerTerminalTactics` in `COMMAND_REGISTRY`
+  - [ ] Follows exact same pattern as `pong`/`minesweeper` (standalone, no `play` subcommand)
+- [ ] Task: Conductor - User Manual Verification 'Phase 3 — Desktop Icon, Start Menu & CMD Command' (Protocol in workflow.md)
 
 ## Phase 4 — Documentation Updates
 
 - [ ] Task: Update PRD.md
-  - [ ] §5 — Add §5.6 Game Launcher spec
+  - [ ] §5 — Add §5.6 Game Launcher spec (Terminal Tactics iframe with loading/error states)
   - [ ] §4 — Add "Terminal Tactics" to desktop icons table
 - [ ] Task: Update TDD.md
+  - [ ] §2 (URL Strategy) — Document `VALID_WINDOW_IDS` whitelist; note that new WindowIds must be added to it for deep-linking support
   - [ ] §3.1 — Add `'terminal-tactics'` to WindowId union type
-  - [ ] §3.2 — Add Terminal Tactics entry to default window configs
-  - [ ] §6 — Add `GameLauncher` to React Islands component inventory
-  - [ ] §7.1 — Add `play` and `terminal-tactics` to supported commands table
+  - [ ] §3.2 — Add Terminal Tactics entry to default window configs (800×600, x:160, y:60, min 600×400)
+  - [ ] §6 — Add `GameLauncher` to React Islands component inventory table
+  - [ ] §7.1 — Add `terminal-tactics` to supported commands table
 - [ ] Task: Conductor - User Manual Verification 'Phase 4 — Documentation Updates' (Protocol in workflow.md)
