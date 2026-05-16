@@ -35,5 +35,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Content Drop — New projects, articles, resume, and certifications**
-  _Link: [./tracks/content-drop_20260516/](./tracks/content-drop_20260516/)_
+- [x] **Track: Content Drop — New projects, articles, resume, and certifications**
+      _Link: [./tracks/content-drop_20260516/](./tracks/content-drop_20260516/)_
