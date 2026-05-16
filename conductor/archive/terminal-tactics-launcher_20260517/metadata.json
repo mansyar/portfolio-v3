@@ -1,0 +1,8 @@
+{
+  "track_id": "terminal-tactics-launcher_20260517",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-05-17T05:19:00Z",
+  "updated_at": "2026-05-17T05:19:00Z",
+  "description": "Embed the published Terminal Tactics game from itch.io inside an XP-styled game launcher window. Desktop icon, iframe window, and CMD play command."
+}
