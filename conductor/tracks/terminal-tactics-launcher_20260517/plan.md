@@ -32,7 +32,7 @@
   - [x] Test: URL deserialization opens 'terminal-tactics' from `?w=terminal-tactics`
 - [x] Task: Add 'terminal-tactics' to WindowId type in `src/stores/windows.ts` [970fac0]
 - [x] Task: Add default window config in `src/stores/windows.ts` [970fac0]
-  - [x] Size: 800×600, x:160, y:60, minWidth: 600, minHeight: 400
+  - [x] Size: 1280×960, x:80, y:20, minWidth: 800, minHeight: 600
 - [x] Task: Fix VALID_WINDOW_IDS in `src/stores/url-sync.ts` [970fac0]
   - [x] Add 'terminal-tactics', 'pong', and 'minesweeper' to the whitelist set
 - [x] Task: Wire GameLauncher into WindowLayer.renderContent() [970fac0]
@@ -59,7 +59,7 @@
   - [x] Create `handlerTerminalTactics` → returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
   - [x] Register `terminal-tactics` → `handlerTerminalTactics` in `COMMAND_REGISTRY`
   - [x] Follows exact same pattern as `pong`/`minesweeper` (standalone, no `play` subcommand)
-- [ ] Task: Conductor - User Manual Verification 'Phase 3 — Desktop Icon, Start Menu & CMD Command' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 3 — Desktop Icon, Start Menu & CMD Command' (Protocol in workflow.md)
 
 ## Phase 4 — Documentation Updates
 

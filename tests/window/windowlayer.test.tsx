@@ -408,10 +408,10 @@ describe('WindowLayer.tsx', () => {
     const stores = await import('@/stores/windows');
     stores.openWindow('terminal-tactics');
     const windows = stores.$windows.get();
-    expect(windows['terminal-tactics'].width).toBe(800);
-    expect(windows['terminal-tactics'].height).toBe(600);
-    expect(windows['terminal-tactics'].minWidth).toBe(600);
-    expect(windows['terminal-tactics'].minHeight).toBe(400);
+    expect(windows['terminal-tactics'].width).toBe(1280);
+    expect(windows['terminal-tactics'].height).toBe(960);
+    expect(windows['terminal-tactics'].minWidth).toBe(800);
+    expect(windows['terminal-tactics'].minHeight).toBe(600);
     expect(windows['terminal-tactics'].icon).toBe('/icons/terminal-tactics.svg');
   });
 

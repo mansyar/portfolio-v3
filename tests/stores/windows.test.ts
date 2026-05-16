@@ -115,12 +115,12 @@ describe('Window Types & Default Configs', () => {
     const cfg = mod.DEFAULT_WINDOW_CONFIGS['terminal-tactics'];
     expect(cfg).toMatchObject({
       title: 'Terminal Tactics',
-      width: 800,
-      height: 600,
-      x: 160,
-      y: 60,
-      minWidth: 600,
-      minHeight: 400,
+      width: 1280,
+      height: 960,
+      x: 80,
+      y: 20,
+      minWidth: 800,
+      minHeight: 600,
     });
   });
 
