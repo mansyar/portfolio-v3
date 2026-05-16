@@ -2,58 +2,74 @@
 title: Simulacra
 slug: simulacra
 drive: C
-description: An experimental data simulation and synthesis framework for generating realistic synthetic datasets, with a focus on preserving statistical properties while ensuring privacy compliance.
+description: An autonomous AI "Ant Farm" — a persistent virtual world where AI agents live, work, and socialize. Built with TanStack Start, PixiJS, and Convex.
 repoUrl: https://github.com/mansyar/simulacra
-language: Python
+language: TypeScript
 techStack:
-  - Python
-  - PyTorch
-  - FastAPI
-  - PostgreSQL
-  - Docker
-  - Apache Arrow
+  - TanStack Start
+  - React
+  - TypeScript
+  - PixiJS v8
+  - Convex
+  - Groq API
+  - Tailwind CSS
+  - Framer Motion
 stars: 0
 lastCommit: '2026-04-15'
 commits: 89
 status: wip
-icon: data
+icon: game
 ---
 
-## Simulacra — Data Simulation Framework
+## Simulacra — Autonomous AI Ant Farm
 
-Simulacra is an experimental framework for generating high-fidelity synthetic datasets that preserve the statistical properties of real data while ensuring privacy compliance. Currently in active development.
+Simulacra is an autonomous AI "Ant Farm" — a persistent virtual world where AI agents live, work, and socialize. Built with TanStack Start, PixiJS, and Convex. Currently in active development.
 
-### Core Concepts
+### Core Vision
 
-- **Distribution Learning**: Learn the underlying probability distributions of real datasets using a combination of statistical methods and deep learning
-- **Privacy Preservation**: Differential privacy guarantees built into the generation pipeline — configurable epsilon budgets
-- **Schema Fidelity**: Generated data strictly adheres to user-defined schemas with support for relational constraints, referential integrity, and domain-specific validation rules
+- **Real-time Synchronization**: Persistent world state synced across all clients
+- **Autonomous Agents**: AI agents with memory, goals, and social relationships using Groq (Llama 3)
+- **16-bit Aesthetic**: Cozy isometric pixel-art interface inspired by Stardew Valley
+- **God Mode**: Master controls for weather, time, and world resets
 
 ### Architecture
 
-The framework follows a pipeline architecture with discrete, composable stages:
+The project follows a clear separation between game rendering and UI logic:
 
 ```
-Raw Data → Profile → Model → Sample → Validate → Export
+src/
+├── components/game/     # PixiJS rendering (Grid, Camera, Sprites)
+├── components/ui/       # React UI (Header, AdminPanel, ThoughtStream)
+├── convex/functions/    # Backend simulation loop, AI interactions, memory
+└── docs/               # Technical specifications and architecture diagrams
 ```
-
-Each stage is independently implementable as a plugin, allowing users to swap out generators (e.g., GAN-based vs. VAE-based) without affecting downstream stages.
-
-### Current State (WIP)
-
-The project is currently in its second development cycle:
-
-- **Profile Stage**: Functional — detects column types, distributions, correlations, and missing value patterns
-- **Model Stage**: PyTorch-based VAE implementation in active development — basic training pipeline works, generation quality tuning in progress
-- **Sample & Validate**: Basic implementations exist for tabular data — relational data support is next priority
-- **Export**: Supports Parquet, CSV, and JSON output formats
-
-### Use Cases
-
-- **Data Engineering**: Generate realistic test data for pipeline development without accessing production data
-- **Machine Learning**: Create balanced training datasets from imbalanced originals using conditional sampling
-- **Compliance**: Share synthetic datasets with external teams while meeting GDPR/CCPA privacy requirements
 
 ### Tech Stack
 
-The core simulation engine is written in Python with PyTorch for the deep learning components. FastAPI provides the REST API for dataset generation job management, and PostgreSQL stores metadata about generation profiles and job history.
+| Layer             | Technology                          |
+| ----------------- | ----------------------------------- |
+| **Frontend**      | TanStack Start (React + TypeScript) |
+| **Rendering**     | PixiJS v8 (GPU-accelerated 2D)      |
+| **Backend/DB**    | Convex (Real-time sync + Vector Search) |
+| **AI**            | Groq API (llama-3.1-8b-instant)    |
+| **Styling**       | Tailwind CSS + Framer Motion        |
+
+### Development Setup
+
+```bash
+# Install dependencies
+pnpm install
+
+# Configure Convex credentials in .env.local
+# VITE_CONVEX_URL=your_convex_url
+
+# Run development server
+pnpm dev
+
+# Start Convex backend
+npx convex dev
+```
+
+### Current State (WIP)
+
+The project is in active development with the core rendering pipeline and Convex backend integration being the primary focus areas. The PixiJS isometric grid rendering and agent simulation loop are the next milestones.

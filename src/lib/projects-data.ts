@@ -59,10 +59,19 @@ export const PROJECTS_METADATA: Record<string, ProjectMetadata> = {
   simulacra: {
     title: 'Simulacra',
     description:
-      'An experimental data simulation and synthesis framework for generating realistic synthetic datasets, with a focus on preserving statistical properties while ensuring privacy compliance.',
+      'An autonomous AI "Ant Farm" — a persistent virtual world where AI agents live, work, and socialize. Built with TanStack Start, PixiJS, and Convex.',
     repoUrl: 'https://github.com/mansyar/simulacra',
-    language: 'Python',
-    techStack: ['Python', 'PyTorch', 'FastAPI', 'PostgreSQL', 'Docker', 'Apache Arrow'],
+    language: 'TypeScript',
+    techStack: [
+      'TanStack Start',
+      'React',
+      'TypeScript',
+      'PixiJS v8',
+      'Convex',
+      'Groq API',
+      'Tailwind CSS',
+      'Framer Motion',
+    ],
     stars: 0,
     lastCommit: '2026-04-15',
     status: 'wip',
