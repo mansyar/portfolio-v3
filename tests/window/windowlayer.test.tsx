@@ -1,11 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, cleanup, fireEvent, screen, waitFor, act } from '@testing-library/react';
 import type { FC } from 'react';
 
 let WindowLayer: FC<object>;
 
 beforeEach(async () => {
   cleanup();
+  // Clear URL to prevent initUrlSync from opening windows from URL params
+  window.history.replaceState(null, '', '/');
   // Reset stores before each test
   const stores = await import('@/stores/windows');
   // @ts-expect-error - intentionally clearing window store for test isolation
@@ -18,6 +20,8 @@ beforeEach(async () => {
 
 afterEach(() => {
   cleanup();
+  // Clear URL search params to prevent initUrlSync from opening windows
+  window.history.replaceState(null, '', '/');
 });
 
 describe('WindowLayer.tsx', () => {
@@ -498,16 +502,22 @@ describe('WindowLayer.tsx', () => {
   describe('Escape Key Handler', () => {
     it('should close active window on Escape key press', async () => {
       const stores = await import('@/stores/windows');
-      stores.openWindow('explorer');
+      act(() => {
+        stores.openWindow('explorer');
+      });
 
       render(<WindowLayer />);
       expect(stores.$windows.get().explorer).toBeDefined();
 
       // Press Escape key
-      fireEvent.keyDown(document, { key: 'Escape' });
+      await act(async () => {
+        fireEvent.keyDown(document, { key: 'Escape' });
+      });
 
       // Window should be in closing state
-      expect(stores.$windows.get().explorer?.status).toBe('closing');
+      await waitFor(() => {
+        expect(stores.$windows.get().explorer?.status).toBe('closing');
+      });
     });
 
     it('should ignore non-Escape key presses', async () => {
