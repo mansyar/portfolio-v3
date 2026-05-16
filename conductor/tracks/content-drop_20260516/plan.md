@@ -2,12 +2,12 @@
 
 ## Phase 1: Project MDX Files — Terminal Tactics & Simulacra
 
-- [~] Task: Write tests for new project frontmatter schema
-  - [ ] Write tests verifying terminal-tactics.mdx has valid frontmatter (title, slug, drive: 'C', description, repoUrl, techStack, status: 'active')
-  - [ ] Write tests verifying simulacra.mdx has valid frontmatter (title, slug, drive: 'C', description, repoUrl, techStack, status: 'wip')
-  - [ ] Run tests and confirm they pass (schema validation)
-  - [ ] Verify coverage: `CI=true pnpm test:coverage`
-  - [ ] Commit: `test(projects): Add schema validation tests for new project MDX files`
+- [x] Task: Write tests for new project frontmatter schema `6c3e34b`
+  - [x] Write tests verifying terminal-tactics.mdx has valid frontmatter (title, slug, drive: 'C', description, repoUrl, techStack, status: 'active')
+  - [x] Write tests verifying simulacra.mdx has valid frontmatter (title, slug, drive: 'C', description, repoUrl, techStack, status: 'wip')
+  - [x] Run tests and confirm they pass (schema validation)
+  - [x] Verify coverage: `CI=true pnpm test:coverage`
+  - [x] Commit: `test(projects): Add schema validation tests for new project MDX files`
 - [ ] Task: Create terminal-tactics.mdx project file
   - [ ] Write failing test: assert project content renders in Explorer and CMD `cat` output
   - [ ] Create `src/content/projects/terminal-tactics.mdx` with full frontmatter and substantive body content
