@@ -1,7 +1,7 @@
 # Roadmap: Luna OS Portfolio — v1.1
 
 **Parent Docs:** [ROADMAP_v1.md](./archive/ROADMAP_v1.md)  
-**Version:** 1.1 · **Updated:** 2026-05-15  
+**Version:** 1.1 · **Updated:** 2026-05-17  
 **Methodology:** Vertical slicing — each track delivers a testable end-to-end feature.
 
 ---
@@ -18,13 +18,13 @@ gantt
     Track 6A – Safe Mode Mobile Ench.   :done, p6a, 2026-05-15, 2d
     Track 6B – Classic XP Games          :done, p6b, after p6a, 3d
     Track 6C – Content Drop              :done, p6c, after p6a, 3d
-    Track 6D – Terminal Tactics Launcher :active, p6d, after p6c, 2d
+    Track 6D – Terminal Tactics Launcher :done, p6d, after p6c, 2d
     Track 6E – Performance Optimization  :active, p6e, after p6d, 2d
 ```
 
 ## Phase 6 — Quality of Life & Content
 
-> The first post-launch iteration. Delivers mobile UX polish, native XP games (Pong + Minesweeper), content expansion (projects, articles, resume, OG image, certifications), a Terminal Tactics itch.io game launcher, and a full performance optimization pass.
+> The first post-launch iteration. Delivers mobile UX polish, native XP games (Pong + Minesweeper), content expansion (projects, articles, resume, OG image, certifications), a Terminal Tactics itch.io game launcher (✅ complete), and a full performance optimization pass.
 
 ---
 
@@ -288,86 +288,116 @@ tests/ (6 files modified) — All assertions updated for 5 projects / 8 articles
 
 ---
 
-### Track 6D — Terminal Tactics Launcher
+### Track 6D — Terminal Tactics Launcher ✅
 
-> Embed the published **Terminal Tactics** game from itch.io inside an XP-styled game launcher window. Desktop icon, iframe window, and CMD `play` command.
+> Embed the published **Terminal Tactics** game from itch.io inside an XP-styled game launcher window. Desktop icon, iframe window, and CMD `terminal-tactics` command.
 
-**Refs:** T6B (Classic XP Games — same integration patterns) · [PRD §5](./PRD.md#5-interactive-applications) · T6D [spec](conductor/tracks/terminal-tactics-launcher_20260515/spec.md) · T6D [plan](conductor/tracks/terminal-tactics-launcher_20260515/plan.md)
+**Refs:** T6B (Classic XP Games — same integration patterns) · [PRD §5](./PRD.md#5-interactive-applications) · T6D spec · T6D plan
 
 **Prerequisite:** Terminal Tactics published on itch.io as an HTML game with an embed URL.
 
 #### Tasks
 
-- [ ] Create `src/components/apps/GameLauncher.tsx` — iframe wrapper component
-  - [ ] Accept `src` prop for itch.io embed URL (configurable from store/window config)
-  - [ ] Render iframe with `title`, `allow="fullscreen"`, sandbox attributes
-  - [ ] Full-viewport inside window frame (no scrollbars on wrapper)
-  - [ ] Loading state: show "Loading Terminal Tactics..." with XP-style progress bar until iframe loads
-  - [ ] Error state: if iframe fails to load, show "Game failed to load. [Open in new tab]" fallback link
-  - [ ] Escape key: handled by WindowLayer (closes the window) — no keyboard conflicts
+##### Phase 1 — GameLauncher Component & Config ✅
 
-- [ ] Add `terminal-tactics` to `WindowId` type and default window config (800×600, centered)
-- [ ] Wire `GameLauncher` into `WindowLayer.renderContent()` at `windowId === 'terminal-tactics'`
-- [ ] Create desktop icon: `public/icons/terminal-tactics.svg` (48×48, military/terminal aesthetic)
-- [ ] Add desktop icon to `index.astro`
-- [ ] Add "Terminal Tactics" to Start Menu pinned apps
-- [ ] Register `play` CMD command: `play terminal-tactics` → opens game window
-  - [ ] Register `terminal-tactics` as a standalone CMD command (alias to the same)
-  - [ ] Handle unknown game name: `'unknown-game' is not a recognized game`
-- [ ] Write tests
-  - [ ] iframe renders with correct src
-  - [ ] Loading state displays
-  - [ ] Fallback link renders on error
-  - [ ] CMD `play` command integration
-- [ ] Document: user must update the embed URL in config when game is published
-- [ ] **Docs — Update PRD §5 (Application Specs)** — add §5.6 Game Launcher spec (Terminal Tactics iframe)
-- [ ] **Docs — Update PRD §4 (Desktop Icons)** — add "Terminal Tactics" to the desktop icons table
-- [ ] **Docs — Update TDD §3.1 (WindowId type)** — add `'terminal-tactics'` to the union type
-- [ ] **Docs — Update TDD §3.2 (Default Window Configs)** — add Terminal Tactics entry (800×600, centered)
-- [ ] **Docs — Update TDD §6 (Component Inventory)** — add `GameLauncher` to React Islands table
-- [ ] **Docs — Update TDD §7.1 (Command Prompt)** — add `play` command to the supported commands table
+- [x] Create `src/lib/game-launcher-config.ts` — `GAME_LAUNCHER_URLS` registry for embed URLs
+- [x] Create `src/components/apps/GameLauncher.tsx` — iframe wrapper component
+  - [x] Accept `src` prop for itch.io embed URL from config
+  - [x] Render iframe with `title="Terminal Tactics"`, `allow="fullscreen"`, `sandbox="allow-scripts allow-same-origin"`
+  - [x] Full-viewport inside window frame (no scrollbars on wrapper)
+  - [x] Loading state: "Loading Terminal Tactics..." with animated XP-style progress bar
+  - [x] Error state: 15-second timeout, "Game failed to load. [Open in new tab]" fallback to `https://mansyar.itch.io/terminal-tactics`
+  - [x] `aria-live="polite"` on loading/error containers for screen readers
+  - [x] Escape key: handled by WindowLayer (closes the window)
+
+- [x] Write GameLauncher tests (8 tests)
+  - [x] iframe renders with correct `src`, `title`, `allow`, `sandbox` attributes
+  - [x] Loading state displays "Loading Terminal Tactics..." before iframe load event
+  - [x] Error state renders fallback link after 15-second timeout
+  - [x] Timeout clears on successful iframe `onLoad`
+  - [x] `aria-live="polite"` present on loading/error state containers
+
+##### Phase 2 — Window System Integration & URL Deep-Linking ✅
+
+- [x] Add `'terminal-tactics'` to `WindowId` type in `src/stores/windows.ts`
+- [x] Add default window config: 800×600, x:160, y:60, minWidth: 600, minHeight: 400
+- [x] Wire `GameLauncher` into `WindowLayer.renderContent()` at `windowId === 'terminal-tactics'`
+- [x] Fix `VALID_WINDOW_IDS` in `src/stores/url-sync.ts` — add `terminal-tactics`, `pong`, `minesweeper`
+- [x] Write integration tests (7 tests)
+  - [x] WindowId type includes 'terminal-tactics'
+  - [x] Default window config exists with correct dimensions
+  - [x] VALID_WINDOW_IDS includes terminal-tactics, pong, minesweeper
+  - [x] WindowLayer renders GameLauncher for terminal-tactics window
+  - [x] URL serialization/deserialization includes terminal-tactics
+
+##### Phase 3 — Desktop Icon, Start Menu & CMD Command ✅
+
+- [x] Create `public/icons/terminal-tactics.svg` — 48×48 XP-styled icon (military/terminal aesthetic)
+- [x] Add desktop icon to `index.astro` (below Minesweeper in the icon list)
+- [x] Add "Terminal Tactics" to StartMenu.tsx LEFT_ITEMS pinned apps
+- [x] Register `terminal-tactics` CMD command
+  - [x] `'terminal-tactics': 'Starts the Terminal Tactics game'` in `COMMANDS` metadata
+  - [x] `handlerTerminalTactics` → returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
+  - [x] Registered in `COMMAND_REGISTRY` — follows same pattern as `pong`/`minesweeper`
+- [x] Write command tests (2 tests)
+- [x] `play` subcommand system: out of scope (games use existing standalone pattern from Track 6B)
+
+##### Phase 4 — Documentation Updates ✅
+
+- [x] **PRD §5** — Add §5.6 Game Launcher spec
+- [x] **PRD §4** — Add "Terminal Tactics" to desktop icons table
+- [x] **TDD §2** — Document `VALID_WINDOW_IDS` whitelist in URL Strategy section
+- [x] **TDD §3.1** — Add `'terminal-tactics'` to WindowId union type
+- [x] **TDD §3.2** — Add Terminal Tactics entry to default window configs
+- [x] **TDD §6** — Add `GameLauncher` to React Islands component inventory table
+- [x] **TDD §7.1** — Add `terminal-tactics` to supported commands table
+- [x] **conductor/product.md** — Add "Game Launcher" to Desktop Mode Core Features
+- [x] **conductor/tech-stack.md** — Add Track 6D change log entry
 
 #### Acceptance Criteria
 
 ```
 ✅ Desktop icon "Terminal Tactics" opens XP window with iframe → itch.io embed URL
 ✅ iframe renders game at full window size with no scrollbars
-✅ "Loading Terminal Tactics..." shown with progress bar until iframe loads
-✅ "Game failed to load" error state offers "Open in new tab" fallback
+✅ "Loading Terminal Tactics..." shown with XP progress bar until iframe loads
+✅ If iframe doesn't load within 15 seconds, error state shows "Open in new tab" fallback
 ✅ Escape key closes game window correctly
-✅ CMD: `play terminal-tactics` opens game window
-✅ CMD: `terminal-tactics` also opens game window (standalone command)
-✅ CMD: `play nonexistent` shows "'nonexistent' is not a recognized game"
-✅ All existing tests continue to pass
+✅ CMD: `terminal-tactics` opens game window
+✅ URL deep-linking works: `?w=terminal-tactics` opens the game window on page load
+✅ aria-live="polite" on loading/error state containers for screen readers
+✅ prefers-reduced-motion: reduce disables progress bar animation
+✅ All existing tests continue to pass (824 tests, 58 files)
 ✅ All src/ files under 500 lines
 ```
 
 #### Key Files Created
 
 ```
-src/components/apps/GameLauncher.tsx — iframe wrapper with loading/error states
-public/icons/terminal-tactics.svg — 48×48 XP-styled game icon
-tests/GameLauncher.test.tsx — iframe, loading, error state tests
+src/components/apps/GameLauncher.tsx — iframe wrapper with loading/error states + XP progress bar
+src/lib/game-launcher-config.ts — GAME_LAUNCHER_URLS registry for embed URLs
+public/icons/terminal-tactics.svg — 48×48 XP-styled game icon (military/terminal aesthetic)
+tests/GameLauncher.test.tsx — 8 tests: iframe, loading, error, timeout, aria-live
 ```
 
 #### Docs Updated
 
-| Document           | Sections             | What Changed                                                            |
-| :----------------- | :------------------- | :---------------------------------------------------------------------- |
-| [PRD.md](./PRD.md) | §5 (new §5.6), §4    | Added Game Launcher spec + Terminal Tactics to desktop icons table      |
-| [TDD.md](./TDD.md) | §3.1, §3.2, §6, §7.1 | Updated WindowId type, configs, component inventory, CMD commands table |
+| Document                  | Sections                 | What Changed                                                                |
+| :------------------------ | :----------------------- | :-------------------------------------------------------------------------- |
+| [PRD.md](./PRD.md)        | §5 (new §5.6), §4        | Added Game Launcher spec + Terminal Tactics to desktop icons table          |
+| [TDD.md](./TDD.md)        | §2, §3.1, §3.2, §6, §7.1 | Updated URL strategy, WindowId type, configs, component inventory, commands |
+| [conductor/product.md]    | Core Features            | Added "Game Launcher" to Desktop Mode features list                         |
+| [conductor/tech-stack.md] | Change Log               | Added Track 6D entry with files created/modified and test counts            |
 
 #### Key Files Modified
 
 ```
-src/stores/windows.ts — Added terminal-tactics window ID + config
-src/components/window/WindowLayer.tsx — Render GameLauncher component
-src/pages/index.astro — Add desktop icon
-src/components/taskbar/StartMenu.tsx — Add to pinned apps
-src/lib/commands.ts — Add play + terminal-tactics commands
-src/components/apps/GameLauncher.tsx (modified) — Embed URL config
-docs/PRD.md — §5.6 Game Launcher, §4 Desktop Icons
-docs/TDD.md — §3.1, §3.2, §6, §7.1
+src/stores/windows.ts — Added terminal-tactics to WindowId type + default config (800×600)
+src/stores/url-sync.ts — Fixed VALID_WINDOW_IDS to include pong, minesweeper, terminal-tactics
+src/components/window/WindowLayer.tsx — Import + render GameLauncher component
+src/lib/commands.ts — Added COMMANDS metadata + handlerTerminalTactics + registry entry
+src/pages/index.astro — Added DesktopIcon for Terminal Tactics
+src/components/taskbar/StartMenu.tsx — Added Terminal Tactics to LEFT_ITEMS pinned apps
+src/styles/global.css — Added game-launcher-progress keyframe + reduced-motion override
 ```
 
 ---
@@ -484,7 +514,7 @@ graph TD
 ```
 Week 1:    6A (Safe Mode) + 6B (Games)         — parallel, pure code
 Week 1-2:  6C (Content)                         — starts when you provide material
-Week 2:    6D (Terminal Tactics)                 — when game is published on itch.io
+Week 2:    6D (Terminal Tactics)                 — complete ✅
 Week 2-3:  6E (Performance)                      — last, covers all new apps
 ```
 
