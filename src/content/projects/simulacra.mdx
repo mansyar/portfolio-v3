@@ -1,0 +1,59 @@
+---
+title: Simulacra
+slug: simulacra
+drive: C
+description: An experimental data simulation and synthesis framework for generating realistic synthetic datasets, with a focus on preserving statistical properties while ensuring privacy compliance.
+repoUrl: https://github.com/mansyar/simulacra
+language: Python
+techStack:
+  - Python
+  - PyTorch
+  - FastAPI
+  - PostgreSQL
+  - Docker
+  - Apache Arrow
+stars: 0
+lastCommit: '2026-04-15'
+commits: 89
+status: wip
+icon: data
+---
+
+## Simulacra — Data Simulation Framework
+
+Simulacra is an experimental framework for generating high-fidelity synthetic datasets that preserve the statistical properties of real data while ensuring privacy compliance. Currently in active development.
+
+### Core Concepts
+
+- **Distribution Learning**: Learn the underlying probability distributions of real datasets using a combination of statistical methods and deep learning
+- **Privacy Preservation**: Differential privacy guarantees built into the generation pipeline — configurable epsilon budgets
+- **Schema Fidelity**: Generated data strictly adheres to user-defined schemas with support for relational constraints, referential integrity, and domain-specific validation rules
+
+### Architecture
+
+The framework follows a pipeline architecture with discrete, composable stages:
+
+```
+Raw Data → Profile → Model → Sample → Validate → Export
+```
+
+Each stage is independently implementable as a plugin, allowing users to swap out generators (e.g., GAN-based vs. VAE-based) without affecting downstream stages.
+
+### Current State (WIP)
+
+The project is currently in its second development cycle:
+
+- **Profile Stage**: Functional — detects column types, distributions, correlations, and missing value patterns
+- **Model Stage**: PyTorch-based VAE implementation in active development — basic training pipeline works, generation quality tuning in progress
+- **Sample & Validate**: Basic implementations exist for tabular data — relational data support is next priority
+- **Export**: Supports Parquet, CSV, and JSON output formats
+
+### Use Cases
+
+- **Data Engineering**: Generate realistic test data for pipeline development without accessing production data
+- **Machine Learning**: Create balanced training datasets from imbalanced originals using conditional sampling
+- **Compliance**: Share synthetic datasets with external teams while meeting GDPR/CCPA privacy requirements
+
+### Tech Stack
+
+The core simulation engine is written in Python with PyTorch for the deep learning components. FastAPI provides the REST API for dataset generation job management, and PostgreSQL stores metadata about generation profiles and job history.

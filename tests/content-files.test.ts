@@ -10,6 +10,7 @@ const projectFiles = [
   'chasing-chapters.mdx',
   'tubular-bexus-osw.mdx',
   'terminal-tactics.mdx',
+  'simulacra.mdx',
 ];
 
 const articleFiles = [
@@ -96,6 +97,19 @@ describe('Project MDX Files', () => {
     const content = readFileSync(resolve(projectsDir, 'tubular-bexus-osw.mdx'), 'utf-8');
     const fm = parseFrontmatter(content);
     expect(fm.drive).toBe('D');
+  });
+
+  it('terminal-tactics should be on C: drive', () => {
+    const content = readFileSync(resolve(projectsDir, 'terminal-tactics.mdx'), 'utf-8');
+    const fm = parseFrontmatter(content);
+    expect(fm.drive).toBe('C');
+  });
+
+  it('simulacra should be on C: drive with status wip', () => {
+    const content = readFileSync(resolve(projectsDir, 'simulacra.mdx'), 'utf-8');
+    const fm = parseFrontmatter(content);
+    expect(fm.drive).toBe('C');
+    expect(fm.status).toBe('wip');
   });
 });
 

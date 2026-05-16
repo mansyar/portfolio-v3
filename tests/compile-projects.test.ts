@@ -51,6 +51,14 @@ describe('compile-projects script', () => {
               language: 'TypeScript',
               commits: 120,
             },
+            'mansyar/simulacra': {
+              name: 'simulacra',
+              stargazers_count: 0,
+              pushed_at: '2026-04-15T10:00:00Z',
+              default_branch: 'main',
+              language: 'Python',
+              commits: 89,
+            },
           },
           null,
           2,
@@ -87,6 +95,7 @@ describe('compile-projects script', () => {
     expect(data).toHaveProperty('chasing-chapters');
     expect(data).toHaveProperty('tubular-bexus-osw');
     expect(data).toHaveProperty('terminal-tactics');
+    expect(data).toHaveProperty('simulacra');
   });
 
   it('should have correct metadata structure for icarus-server-manager', () => {
@@ -135,15 +144,16 @@ describe('compile-projects script', () => {
     expect(entry.frontmatter.techStack).toContain('PySide6');
   });
 
-  it('should have all 4 projects with correct slugs', () => {
+  it('should have all 5 projects with correct slugs', () => {
     const raw = readFileSync(outputFile, 'utf-8');
     const data = JSON.parse(raw);
     const slugs = Object.keys(data);
-    expect(slugs).toHaveLength(4);
+    expect(slugs).toHaveLength(5);
     expect(slugs).toContain('icarus-server-manager');
     expect(slugs).toContain('chasing-chapters');
     expect(slugs).toContain('tubular-bexus-osw');
     expect(slugs).toContain('terminal-tactics');
+    expect(slugs).toContain('simulacra');
   });
 
   it('should include repoUrl, status, and icon fields in frontmatter', () => {
