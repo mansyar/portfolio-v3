@@ -31,6 +31,7 @@ A nostalgic yet high-performance portfolio that showcases a DevOps & Data Engine
 - **Start Menu:** Two-column layout with pinned apps, system folders, and Shut Down button
 - **Pong:** Canvas-based Pong game with difficulty selection (Easy/Medium/Hard), AI opponent with configurable speed/accuracy, first-to-5 scoring, W/S or Arrow keys controls, and rAF-powered game loop
 - **Minesweeper:** Canvas-based 9×9 Minesweeper with 10 mines, left-click reveal, right-click flag, flood-fill, timer, mine counter, and canvas-drawn smiley face button
+- **Game Launcher:** Iframe-based game launcher for embedded itch.io games (Terminal Tactics). Animated XP progress bar loading state with 15-second error timeout and fallback link
 
 ### Mobile Safe Mode (< 768px viewport)
 
