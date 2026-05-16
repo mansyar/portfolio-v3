@@ -44,21 +44,21 @@
 
 ## Phase 3 — Desktop Icon, Start Menu & CMD Command
 
-- [ ] Task: Write unit test for CMD command handler
-  - [ ] Test in `tests/lib/commands.test.ts`: `COMMAND_REGISTRY['terminal-tactics']` returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
-  - [ ] Test: `COMMANDS` object includes 'terminal-tactics' key with description
-- [ ] Task: Write integration tests
-  - [ ] Test: Desktop icon click opens terminal-tactics window (via `luna:open-window` event)
-  - [ ] Test: CMD `terminal-tactics` command opens game window (via CmdPrompt integration test)
-  - [ ] Test: Start Menu "Terminal Tactics" item opens the correct window
-- [ ] Task: Create `public/icons/terminal-tactics.svg` — 48×48 XP-styled icon (military/terminal aesthetic)
-- [ ] Task: Add desktop icon to `index.astro` in desktop icons list
-- [ ] Task: Add "Terminal Tactics" to StartMenu.tsx LEFT_ITEMS pinned apps
-- [ ] Task: Register CMD command in `commands.ts`
-  - [ ] Add `'terminal-tactics': 'Starts the Terminal Tactics game'` to `COMMANDS` metadata
-  - [ ] Create `handlerTerminalTactics` → returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
-  - [ ] Register `terminal-tactics` → `handlerTerminalTactics` in `COMMAND_REGISTRY`
-  - [ ] Follows exact same pattern as `pong`/`minesweeper` (standalone, no `play` subcommand)
+- [x] Task: Write unit test for CMD command handler [2a0934a]
+  - [x] Test in `tests/lib/commands.test.ts`: `COMMAND_REGISTRY['terminal-tactics']` returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
+  - [x] Test: `COMMANDS` object includes 'terminal-tactics' key with description
+- [x] Task: Write integration tests [2a0934a]
+  - [x] Test: Desktop icon click opens terminal-tactics window (via `luna:open-window` event)
+  - [x] Test: CMD `terminal-tactics` command opens game window (via CmdPrompt integration test)
+  - [x] Test: Start Menu "Terminal Tactics" item opens the correct window
+- [x] Task: Create `public/icons/terminal-tactics.svg` — 48×48 XP-styled icon (military/terminal aesthetic) [2a0934a]
+- [x] Task: Add desktop icon to `index.astro` in desktop icons list [2a0934a]
+- [x] Task: Add "Terminal Tactics" to StartMenu.tsx LEFT_ITEMS pinned apps [2a0934a]
+- [x] Task: Register CMD command in `commands.ts` [2a0934a]
+  - [x] Add `'terminal-tactics': 'Starts the Terminal Tactics game'` to `COMMANDS` metadata
+  - [x] Create `handlerTerminalTactics` → returns `{ lines: ['Starting Terminal Tactics...'], openWindow: 'terminal-tactics' }`
+  - [x] Register `terminal-tactics` → `handlerTerminalTactics` in `COMMAND_REGISTRY`
+  - [x] Follows exact same pattern as `pong`/`minesweeper` (standalone, no `play` subcommand)
 - [ ] Task: Conductor - User Manual Verification 'Phase 3 — Desktop Icon, Start Menu & CMD Command' (Protocol in workflow.md)
 
 ## Phase 4 — Documentation Updates
