@@ -96,7 +96,13 @@
   - [x] Run `pnpm test` — all **826 tests** pass across 58 test files (was 817 → +9 tests)
   - [x] Run `pnpm build` — must succeed with zero errors ✅
   - [x] Verify all `src/` files remain under 500 lines ✅
-- [~] Task: Update documentation
-  - [ ] Update `conductor/product.md` — ensure wallpaper description matches inline SVG implementation
-  - [ ] Update `conductor/tech-stack.md` — add Track 6E change log entry
-- [ ] Task: Conductor — User Manual Verification "Performance Verification & Documentation" (Protocol in workflow.md)
+- [x] Task: Update documentation [c808ffd]
+  - [x] Update `conductor/product.md` — wallpaper description already accurate ("Bliss wallpaper")
+  - [x] Update `conductor/tech-stack.md` — added Track 6E change log entry
+- [x] Task: Conductor — User Manual Verification "Performance Verification & Documentation" ✅ — All verified, docs synced
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions [00901af]
+  - [x] Fix structural lazy-import test to be more robust
+  - [x] Convert AppLoadingFallback inline styles to Tailwind classes where possible
