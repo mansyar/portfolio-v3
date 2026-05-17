@@ -222,3 +222,11 @@ prebuild.mjs
 - **Files modified:** `vitest.config.ts`
 - **Files created:** `tests/helpers/benchmark.ts`, `tests/helpers/benchmark.test.ts`
 - **Benchmark results:** Per-worker efficiency improved: transform -74%, environment -47%, import -46%. Wall time remains ~29s (constrained by deploy-prerequisites build test).
+
+### 2026-05-17 — Track 6E: Performance Optimization
+
+- **Reason:** Full performance pass targeting Lighthouse scores, bundle size, and Core Web Vitals. Bundle-split window apps via React.lazy(), applied React.memo to Explorer sub-components (ExplorerFileList, ExplorerBreadcrumb, ExplorerDetailPane), removed unnecessary useCallback wrapper in CmdPrompt, verified font-display:swap and inline SVG wallpaper.
+- **Impact:** WindowLayer.js reduced from 55KB to 17KB (69% reduction). 7 app chunks load on demand (82KB total lazy). Explorer callbacks (handleUp, handleFolderNavigate) stabilized with useCallback as React.memo prerequisite. Clock excluded from memoization (trivial 25-line component, zero props).
+- **Packages added:** None (pure React + API changes).
+- **Files modified:** `src/components/window/WindowLayer.tsx`, `src/components/apps/Explorer.tsx`, `src/components/apps/ExplorerFileList.tsx`, `src/components/apps/ExplorerBreadcrumb.tsx`, `src/components/apps/ExplorerDetailPane.tsx`, `src/components/apps/CmdPrompt.tsx`, `tests/window/windowlayer.test.tsx`, `tests/explorer.test.tsx`
+- **Tests added:** 5 lazy-loading tests + 4 React.memo tests. Total: 826 tests.
