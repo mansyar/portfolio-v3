@@ -44,16 +44,12 @@ const GameLauncher = lazy(() =>
 function AppLoadingFallback({ label }: { label: string }) {
   return (
     <div
+      className="flex h-full items-center justify-center select-none"
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
         background: '#ece9d8',
         fontFamily: '"Tahoma", sans-serif',
         fontSize: 12,
         color: '#666',
-        userSelect: 'none',
       }}
       aria-busy="true"
       aria-label={`Loading ${label}`}
