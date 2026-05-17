@@ -823,3 +823,44 @@ Push is rejected if either step fails. This acts as the sole staging gate (no se
 - **Smoke test:** `node scripts/smoke-test.mjs` — validates HTTP 200, content-type, HSTS header, and title tag
 - **Cloudflare CDN** caches all assets with immutable hashes
 - **Build time:** ~3.44s (including prebuild)
+
+### Bundle Splitting & Lazy Loading (Track 6E)
+
+Window app components are **not** included in the initial JS bundle. Instead, each is imported via `React.lazy()` inside `WindowLayer.tsx`:
+
+```tsx
+// Named-export wrapper pattern — no component file needs `export default`
+const Explorer = lazy(() =>
+  import('@/components/apps/Explorer').then((m) => ({ default: m.Explorer })),
+);
+```
+
+Each lazy component is wrapped in a `<Suspense>` boundary with an XP-styled `AppLoadingFallback` component (aria-busy, aria-label, role="status"):
+
+```tsx
+<Suspense fallback={<AppLoadingFallback label="File Explorer" />}>
+  <Explorer windowId={id} />
+</Suspense>
+```
+
+**Affected components (7 lazy-loaded apps):**
+
+| App           | Chunk Size (raw) | Loaded When                    |
+| :------------ | :--------------- | :----------------------------- |
+| Explorer      | 29 KB            | First open of Explorer/My Docs |
+| TaskManager   | 15 KB            | First open of Task Manager     |
+| CmdPrompt     | 11 KB            | First open of Command Prompt   |
+| Minesweeper   | 8 KB             | First open of Minesweeper      |
+| Pong          | 8 KB             | First open of Pong             |
+| KnowledgeBase | 8 KB             | First open of Help Center      |
+| GameLauncher  | 3 KB             | First open of Terminal Tactics |
+
+**Before:** WindowLayer.js — 55 KB (all apps inlined)
+**After:** WindowLayer.js — 17 KB (framework only), apps loaded on demand
+
+**Component-level memoization:**
+
+- `ExplorerFileList`, `ExplorerBreadcrumb`, `ExplorerDetailPane` wrapped in `React.memo`
+- **Clock excluded** (25 lines, zero props — memo overhead outweighs benefit)
+- **Prerequisite:** `handleUp` and `handleFolderNavigate` in `Explorer.tsx` stabilized with `useCallback`
+- **Cleanup:** Unnecessary `useCallback` removed from `CmdPrompt.executeCommand` (only caller was inline `handleKeyDown`)

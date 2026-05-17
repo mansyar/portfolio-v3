@@ -1,8 +1,0 @@
-{
-  "track_id": "performance-optimization_20260517",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-05-17T09:21:00Z",
-  "updated_at": "2026-05-17T09:21:00Z",
-  "description": "Full performance pass targeting Lighthouse scores, bundle size, and Core Web Vitals."
-}
