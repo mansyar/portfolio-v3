@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { getChildren } from '@/lib/filesystem';
 import type { FSNode } from '@/lib/constants';
 
@@ -8,7 +9,7 @@ interface ExplorerFileListProps {
   selectedSlug: string | null;
 }
 
-export function ExplorerFileList({
+export const ExplorerFileList = memo(function ExplorerFileList({
   path,
   onFileClick,
   onFolderNavigate,
@@ -66,7 +67,7 @@ export function ExplorerFileList({
       </table>
     </div>
   );
-}
+});
 
 function FileListItem({
   node,

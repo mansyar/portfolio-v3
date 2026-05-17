@@ -357,4 +357,37 @@ describe('Resume.pdf click', () => {
     fireEvent.click(screen.getByText('Resume.pdf'));
     expect(window.open).toHaveBeenCalledWith('/resume.pdf', '_blank');
   });
+
+  describe('React.memo', () => {
+    it('should export ExplorerFileList with memo (exotic component)', async () => {
+      const mod = await import('@/components/apps/ExplorerFileList');
+      const component = mod.ExplorerFileList as { $$typeof?: symbol };
+      // React.memo returns a MemoExoticComponent with $$typeof = Symbol(react.memo)
+      expect(component.$$typeof?.toString()).toContain('react.memo');
+    });
+
+    it('should export ExplorerBreadcrumb with memo (exotic component)', async () => {
+      const mod = await import('@/components/apps/ExplorerBreadcrumb');
+      const component = mod.ExplorerBreadcrumb as { $$typeof?: symbol };
+      expect(component.$$typeof?.toString()).toContain('react.memo');
+    });
+
+    it('should export ExplorerDetailPane with memo (exotic component)', async () => {
+      const mod = await import('@/components/apps/ExplorerDetailPane');
+      const component = mod.ExplorerDetailPane as { $$typeof?: symbol };
+      expect(component.$$typeof?.toString()).toContain('react.memo');
+    });
+
+    it('ExplorerFileList + ExplorerBreadcrumb should render inside Explorer', async () => {
+      const stores = await import('@/stores/windows');
+      stores.openWindow('explorer');
+
+      render(<Explorer windowId="explorer" />);
+
+      // Explorer renders breadcrumb navigation
+      expect(screen.getByLabelText('Current path')).toBeDefined();
+      // Explorer renders file list
+      expect(screen.getByLabelText('File list')).toBeDefined();
+    });
+  });
 });

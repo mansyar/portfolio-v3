@@ -1,9 +1,14 @@
+import { memo } from 'react';
+
 interface ExplorerBreadcrumbProps {
   segments: string[];
   onNavigate: (index: number) => void;
 }
 
-export function ExplorerBreadcrumb({ segments, onNavigate }: ExplorerBreadcrumbProps) {
+export const ExplorerBreadcrumb = memo(function ExplorerBreadcrumb({
+  segments,
+  onNavigate,
+}: ExplorerBreadcrumbProps) {
   if (segments.length === 0) return null;
 
   return (
@@ -18,4 +23,4 @@ export function ExplorerBreadcrumb({ segments, onNavigate }: ExplorerBreadcrumbP
       ))}
     </nav>
   );
-}
+});

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import projectsContent from '@/lib/generated/projects-content.json';
 import {
   ARTICLES_METADATA,
@@ -37,7 +38,9 @@ interface ProjectEntry {
 
 type ProjectsContentMap = Record<string, ProjectEntry>;
 
-export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
+export const ExplorerDetailPane = memo(function ExplorerDetailPane({
+  slug,
+}: ExplorerDetailPaneProps) {
   if (!slug) return null;
 
   // ── Contact card ─────────────────────────────────────────────
@@ -249,4 +252,4 @@ export function ExplorerDetailPane({ slug }: ExplorerDetailPaneProps) {
       )}
     </div>
   );
-}
+});
