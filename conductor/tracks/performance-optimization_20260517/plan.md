@@ -30,25 +30,25 @@
   - [x] Ensure `prefers-reduced-motion: reduce` disables any loading animations (N/A — no animations in fallback)
 - [x] Task: Conductor — User Manual Verification "Bundle-Split Window Apps" ✅ — Checkpoint complete (822/822 tests passing)
 
-## Phase 3 — Component-Level Optimizations
+## Phase 3 — Component-Level Optimizations [checkpoint: d91bbba]
 
-- [ ] Task: Prerequisite — Stabilize Explorer callback props for React.memo
-  - [ ] Wrap `handleUp` in `Explorer.tsx` with `useCallback` (currently a regular function)
-  - [ ] Wrap `handleFolderNavigate` in `Explorer.tsx` with `useCallback`
-  - [ ] Verify all callback props passed to `ExplorerFileList` and `ExplorerBreadcrumb` have stable references
-- [ ] Task: Write tests for memoized components
-  - [ ] Write test verifying `React.memo` wrapped components exist
-  - [ ] Write test confirming re-render behavior is correct (stable props don't trigger re-render)
-- [ ] Task: Add React.memo to targeted components
-  - [ ] Wrap `ExplorerFileList` with `React.memo`
-  - [ ] Wrap `ExplorerBreadcrumb` with `React.memo`
-  - [ ] Wrap `ExplorerDetailPane` with `React.memo`
-  - [ ] **Clock excluded** — trivial component (25 lines, zero props), memo overhead outweighs benefit
-- [ ] Task: Audit and remove unnecessary useCallback/useMemo
-  - [ ] Review all components for redundant memoization wrappers
-  - [ ] Remove `useCallback`/`useMemo` that add overhead without benefit
-  - [ ] Verify `TaskManager` CPU cell updates use ref-based DOM writes (no regression)
-- [ ] Task: Conductor — User Manual Verification "Component-Level Optimizations" (Protocol in workflow.md)
+- [x] Task: Prerequisite — Stabilize Explorer callback props for React.memo [78a544e]
+  - [x] Wrap `handleUp` in `Explorer.tsx` with `useCallback` (currently a regular function)
+  - [x] Wrap `handleFolderNavigate` in `Explorer.tsx` with `useCallback`
+  - [x] Verify all callback props passed to `ExplorerFileList` and `ExplorerBreadcrumb` have stable references
+- [x] Task: Write tests for memoized components [966b5dd]
+  - [x] Write test verifying `React.memo` wrapped components exist
+  - [x] Write test confirming re-render behavior is correct (stable props don't trigger re-render)
+- [x] Task: Add React.memo to targeted components [966b5dd]
+  - [x] Wrap `ExplorerFileList` with `React.memo`
+  - [x] Wrap `ExplorerBreadcrumb` with `React.memo`
+  - [x] Wrap `ExplorerDetailPane` with `React.memo`
+  - [x] **Clock excluded** — trivial component (25 lines, zero props), memo overhead outweighs benefit
+- [x] Task: Audit and remove unnecessary useCallback/useMemo [d91bbba]
+  - [x] Review all components for redundant memoization wrappers
+  - [x] Remove `useCallback`/`useMemo` that add overhead without benefit — Removed `useCallback` from `CmdPrompt.executeCommand` (only caller was inline function)
+  - [x] Verify `TaskManager` CPU cell updates use ref-based DOM writes (no regression) — confirmed, still uses ref-based writes
+- [x] Task: Conductor — User Manual Verification "Component-Level Optimizations" ✅ — 826/826 tests passing
 
 ## Phase 4 — Font & Wallpaper Optimization
 
