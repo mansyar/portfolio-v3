@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, type KeyboardEvent } from 'react';
+import { useState, useRef, useEffect, type KeyboardEvent } from 'react';
 import { useStore } from '@/lib/useStore';
 import { $windows, $activeWindow, focusWindow, openWindow } from '@/stores/windows';
 import { COMMAND_REGISTRY, parseCommand } from '@/lib/commands';
@@ -120,83 +120,80 @@ export function CmdPrompt({ windowId }: CmdPromptProps) {
     }
   }, [activeWindow, windowId]);
 
-  const executeCommand = useCallback(
-    (text: string) => {
-      const { command, args } = parseCommand(text);
+  function executeCommand(text: string) {
+    const { command, args } = parseCommand(text);
 
-      if (!command) return; // Empty input, do nothing
+    if (!command) return; // Empty input, do nothing
 
-      // Add to history (don't add duplicates of the last entry)
-      setHistory((prev) => {
-        if (prev.length > 0 && prev[prev.length - 1] === text) return prev;
-        return [...prev, text];
-      });
-      setHistoryIndex(-1);
+    // Add to history (don't add duplicates of the last entry)
+    setHistory((prev) => {
+      if (prev.length > 0 && prev[prev.length - 1] === text) return prev;
+      return [...prev, text];
+    });
+    setHistoryIndex(-1);
 
-      const handler = COMMAND_REGISTRY[command];
+    const handler = COMMAND_REGISTRY[command];
 
-      if (!handler) {
-        // Unknown command — XP-style error
-        setOutputLines((prev) => [
-          ...prev,
-          `${getPrompt(cmdPath)}${text}`,
-          `'${command}' is not recognized as an internal or external command,`,
-          'operable program or batch file.',
-          '',
-        ]);
-        return;
+    if (!handler) {
+      // Unknown command — XP-style error
+      setOutputLines((prev) => [
+        ...prev,
+        `${getPrompt(cmdPath)}${text}`,
+        `'${command}' is not recognized as an internal or external command,`,
+        'operable program or batch file.',
+        '',
+      ]);
+      return;
+    }
+
+    const result: CmdOutput = handler(args, { cmdPath });
+
+    if (result.clear) {
+      setOutputLines([WELCOME_BANNER]);
+      return;
+    }
+
+    const newLines: (string | string[])[] = [`${getPrompt(cmdPath)}${text}`];
+
+    if (result.lines.length > 0) {
+      newLines.push(result.lines);
+    } else {
+      newLines.push('');
+    }
+
+    // Handle newCmdPath - update the store
+    if (result.newCmdPath !== undefined) {
+      const current = $windows.get();
+      const state = current[windowId as WindowId];
+      if (state && state.cmdPath !== result.newCmdPath) {
+        const updated = { ...state, cmdPath: result.newCmdPath };
+        $windows.set({ ...current, [windowId as WindowId]: updated });
       }
+    }
 
-      const result: CmdOutput = handler(args, { cmdPath });
-
-      if (result.clear) {
-        setOutputLines([WELCOME_BANNER]);
-        return;
+    // Handle openExplorer - open Explorer and navigate to the path
+    if (result.openExplorer) {
+      openWindow('explorer');
+      const current = $windows.get();
+      const explorer = current.explorer;
+      if (explorer) {
+        const updated = { ...explorer, explorerPath: result.openExplorer };
+        $windows.set({ ...current, explorer: updated });
       }
+    }
 
-      const newLines: (string | string[])[] = [`${getPrompt(cmdPath)}${text}`];
+    // Handle openUrl - open in new tab
+    if (result.openUrl) {
+      window.open(result.openUrl, '_blank');
+    }
 
-      if (result.lines.length > 0) {
-        newLines.push(result.lines);
-      } else {
-        newLines.push('');
-      }
+    // Handle openWindow - open a game/app window
+    if (result.openWindow) {
+      openWindow(result.openWindow);
+    }
 
-      // Handle newCmdPath - update the store
-      if (result.newCmdPath !== undefined) {
-        const current = $windows.get();
-        const state = current[windowId as WindowId];
-        if (state && state.cmdPath !== result.newCmdPath) {
-          const updated = { ...state, cmdPath: result.newCmdPath };
-          $windows.set({ ...current, [windowId as WindowId]: updated });
-        }
-      }
-
-      // Handle openExplorer - open Explorer and navigate to the path
-      if (result.openExplorer) {
-        openWindow('explorer');
-        const current = $windows.get();
-        const explorer = current.explorer;
-        if (explorer) {
-          const updated = { ...explorer, explorerPath: result.openExplorer };
-          $windows.set({ ...current, explorer: updated });
-        }
-      }
-
-      // Handle openUrl - open in new tab
-      if (result.openUrl) {
-        window.open(result.openUrl, '_blank');
-      }
-
-      // Handle openWindow - open a game/app window
-      if (result.openWindow) {
-        openWindow(result.openWindow);
-      }
-
-      setOutputLines((prev) => [...prev, ...newLines]);
-    },
-    [cmdPath, windowId],
-  );
+    setOutputLines((prev) => [...prev, ...newLines]);
+  }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
